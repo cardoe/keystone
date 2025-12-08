@@ -35,9 +35,10 @@ that user and projects the user can access.
 An IdP has exactly one mapping specified per protocol. Mappings themselves can
 be used multiple times by different combinations of IdP and protocol.
 
--------------------------
+.. _important-prerequisites:
+
 Important Prerequisites
--------------------------
+------------------------
 
 Before creating federated mappings, it's critical to understand how keystone
 handles different resource types during federated authentication. The behavior
@@ -119,7 +120,7 @@ A mapping looks as follows:
 
 ``local``
   A JSON object containing information on what local attributes will be mapped.
-  The mapping engine processes this using the ``context`` (defined below) and
+  The mapping engine processes this using the ``mapping context`` (defined below) and
   the result is a representation of the user from keystone's perspective.
 
   ``user``
@@ -151,29 +152,31 @@ A mapping looks as follows:
   A JSON object containing information on what remote attributes will be mapped.
 
   ``type``
-    The assertion attribute name to match. This creates a direct mapping that
-    can be referenced in the ``local`` section using indices like ``{0}``,
-    ``{1}``, etc.
+    The attribute name from the mapping context to match (typically an
+    environment variable name like ``FirstName``, ``Email``, or
+    ``OIDC_GROUPS``). This creates a direct mapping that can be referenced in
+    the ``local`` section using indices like ``{0}``, ``{1}``, etc.
 
   Conditions (optional):
-    Additional fields that filter which assertions match this rule. Can include
-    ``any_one_of``, ``not_any_of``, ``whitelist``, ``blacklist``, or ``regex``.
-
-``direct mapping``
-  The mapping engine keeps track of each match and makes them available to the
-  local rule for substitution.
-
-``assertion``
-  Data provided to keystone by the IdP to assert facts (name, groups, etc)
-  about the authenticating user. This is an XML document when using the SAML2
-  protocol.
+    Additional fields that filter which attribute values match this rule. Can
+    include ``any_one_of``, ``not_any_of``, ``whitelist``, ``blacklist``, or
+    ``regex``.
 
 ``mapping context``
   The data, represented as key-value pairs, that is used by the mapping engine
   to turn the ``local`` object into a representation of the user from
-  keystone's perspective. The mapping context contains the environment of the
-  keystone process and any ``direct mapping`` values calculated when processing
-  the ``remote`` list.
+  keystone's perspective. The mapping context contains:
+
+  * Environment variables from the keystone process (these contain the IdP's
+    input data in SAML2 or claims data in OpenID Connect, transformed into
+    environment variables by the authentication module)
+  * Any ``direct mapping`` values calculated when processing the ``remote``
+    list
+
+``direct mapping``
+  The mapping engine keeps track of each match from the ``remote`` section and
+  makes them available to the ``local`` section for substitution using indices
+  like ``{0}``, ``{1}``, etc.
 
 --------------------------
 How Mappings Are Processed
@@ -250,10 +253,7 @@ the direct mappings. This is simply looking for the pattern `{#}` and
 substituting it with values from the direct mappings list. The index of the
 direct mapping starts at zero.
 
--------------
-Mapping Rules
--------------
-
+--------------
 Mapping Engine
 --------------
 
@@ -265,9 +265,9 @@ tested with the ``keystone-manage mapping_engine`` command:
    $ keystone-manage mapping_engine --rules <file> --input <file>
 
 .. NOTE::
-    Although the rules file is formatted as JSON, the input file of assertion
-    data is formatted as individual lines of key: value pairs, see
-    `keystone-manage mapping_engine --help` for details.
+    Although the rules file is formatted as JSON, the input file containing
+    the mapping context data is formatted as individual lines of key: value
+    pairs, see `keystone-manage mapping_engine --help` for details.
 
 
 Mapping Conditions
@@ -286,13 +286,13 @@ is passed as input.
 in the remote attribute type. Condition result is boolean, not the argument that
 is passed as input.
 
-``blacklist``: This rule removes all groups matched from the assertion. It is
+``blacklist``: This rule removes all groups matched from the IdP's data. It is
 not intended to be used as a way to prevent users, or groups of users, from
 accessing the service provider. The output from filtering through a blacklist
-will be all groups from the assertion that were not listed in the blacklist.
+will be all groups from the IdP's data that were not listed in the blacklist.
 
 ``whitelist``: This rule explicitly states which groups should be carried over
-from the assertion. The result is the groups present in the assertion and in
+from the IdP's data. The result is the groups present in the IdP's data and in
 the whitelist.
 
 .. NOTE::
@@ -311,9 +311,9 @@ an explanation of what it does and when to use it.
 empty condition
 ~~~~~~~~~~~~~~~
 
-The ``empty`` condition matches any assertion that contains the specified
+The ``empty`` condition matches any mapping context that contains the specified
 attribute type, regardless of its value. This is useful when you want to
-extract values from the assertion for variable substitution.
+extract values from the IdP's data for variable substitution.
 
 .. code-block:: json
 
@@ -371,7 +371,7 @@ the remote attributes in order:
 **Requirements for this mapping:**
 
 * The group "0cd5e9" must exist (referenced by ID)
-* Groups from OIDC_GROUPS must exist (referenced by name from assertion)
+* Groups from OIDC_GROUPS must exist (referenced by name from the IdP data)
 * If any group doesn't exist, it will be silently skipped
 
 **Multi-valued attributes:**
@@ -383,7 +383,7 @@ Groups can have multiple values separated by semicolons:
 
 **Example mapping output:**
 
-Given the above mapping with the following assertion data:
+Given the above mapping with the following input data:
 
 .. code-block:: none
 
@@ -526,7 +526,7 @@ A blacklist can map the user into all groups except those matched:
 
 **Example whitelist output:**
 
-Given a mapping with the whitelist example above and this assertion data:
+Given a mapping with the whitelist example above and this input data:
 
 .. code-block:: none
 
@@ -564,7 +564,7 @@ in domain "abc1234" for the user to receive their roles.
 
 **Example blacklist output:**
 
-With the blacklist example above and the same assertion data, the output would be:
+With the blacklist example above and the same input data, the output would be:
 
 .. code-block:: json
 
@@ -594,7 +594,7 @@ With the blacklist example above and the same assertion data, the output would b
    }
 
 **Note:** All groups except "Finance" are included. The blacklist removes
-"Finance" from the assertion's group list.
+"Finance" from the IdP's group list.
 
 Regular expressions can be used in any condition for more flexible matches:
 
@@ -650,6 +650,8 @@ When mapping into groups, either ids or names can be provided in the local secti
            }
        ]
    }
+
+.. _local-vs-ephemeral:
 
 Mapping to Local vs Ephemeral Users
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -741,9 +743,9 @@ Use this approach for purely federated users that don't need local accounts.
 * The user does **not** need to exist beforehand
 * The user becomes a member of the identity provider's domain (or a domain
   specified in the mapping)
-* All user attributes must come from the IdP assertion and mapping rules
+* All user attributes must come from the IdP's data and mapping rules
 * The user's groups and roles are determined entirely by the mapping
-* Each authentication may result in a different user ID (based on the assertion)
+* Each authentication may result in a different user ID (based on the IdP's data)
 
 **When to use ephemeral users:**
 
@@ -858,7 +860,7 @@ for every value in the ``HTTP_OIDC_GROUPIDS`` claim matching the string
 
 **Example regex output:**
 
-Given the above mapping with this assertion data:
+Given the above mapping with this input data:
 
 .. code-block:: none
 
@@ -1042,7 +1044,7 @@ The above assigns groups membership basing on ``orgPersonType`` values:
 
 **Example multiple rules output:**
 
-Given the above mapping with this assertion data:
+Given the above mapping with this input data:
 
 .. code-block:: none
 
@@ -1144,6 +1146,8 @@ global username mapping.
        }]
     }
 
+.. _auto-provisioning:
+
 Auto-Provisioning
 -----------------
 
@@ -1152,28 +1156,18 @@ user authenticates. This allows you to create a mapping that grants users
 access to specific projects, and those projects will be created automatically
 if they don't already exist.
 
-**What Gets Auto-Provisioned:**
+.. note::
 
-* **Projects only** - Defined in the ``projects`` section of the local mapping
-* Projects are created in the IdP's domain (or a domain specified in the mapping)
-* Role assignments are automatically created for the user on these projects
+   See the `Important Prerequisites`_ section for details on what resources
+   are auto-provisioned versus what must exist beforehand. In summary:
 
-**What Does NOT Get Auto-Provisioned:**
+   * **Auto-created:** Projects (defined in the ``projects`` section)
+   * **Must pre-exist:** Groups, roles, domains, and local users
 
-* **Groups** - Must exist beforehand; missing groups are silently skipped
-* **Users with type=local** - Must exist; authentication fails if they don't
-* **Roles** - Must exist in the deployment; mapping fails if they don't
-* **Domains** - Must exist; mapping fails if they don't
-
-**Important Notes:**
-
-* Auto-provisioning is **idempotent** - if the assertion hasn't changed,
-  no new projects are created on subsequent authentications
-* Projects created through auto-provisioning have only the basic attributes
-  (name, domain) - no description or other metadata
-* The ``projects`` section must include a ``roles`` section or the mapping
-  will be invalid
-* Direct role assignments are created for the user (not through group membership)
+The ``projects`` section must include a ``roles`` array. Direct role
+assignments are created for the user on these projects (not through group
+membership), and these assignments persist in keystone's database even if the
+mapping is later changed.
 
 Auto-Provisioning Example
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1234,7 +1228,7 @@ Consider the following mapping that auto-provisions projects:
 The ``projects`` section within the ``local`` rules defines which projects
 the federated user will be granted access to. When a user authenticates:
 
-1. The mapping engine processes the assertion and applies the remote rules
+1. The mapping engine processes the IdP's data and applies the remote rules
 2. Variable substitution occurs (e.g., ``{0}`` is replaced with the UserName)
 3. For each project in the ``projects`` list:
 
@@ -1258,7 +1252,7 @@ into the project name (making it unique per user).
 
 **Example mapping output:**
 
-Given the above mapping with the following assertion data:
+Given the above mapping with the following input data:
 
 .. code-block:: none
 
@@ -1304,58 +1298,18 @@ The ``keystone-manage mapping_engine`` would produce:
 6. Grants "jsmith" the "admin" role on "Project for jsmith" (creates role assignment)
 7. Returns a token that can be scoped to any of these three projects
 
-Auto-Provisioning Constraints and Requirements
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. note::
 
-**Critical Requirements:**
+   Auto-provisioning is **idempotent** - if the IdP's attributes haven't
+   changed, keystone checks for existing projects by name and domain before
+   creating. If UserName is still "jsmith", no new "Project for jsmith" will
+   be created on subsequent authentications.
 
-1. **Roles must pre-exist**
+Combining Projects with Groups
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   * All roles referenced in the ``projects`` section must already exist
-   * Roles are typically defined at the deployment or domain level
-   * If a role doesn't exist, the mapping will fail during authentication
-   * Since roles often require policy changes across services, create them
-     before setting up federation
-
-2. **Projects section requires roles**
-
-   * The ``projects`` attribute must include a ``roles`` section
-   * You cannot auto-provision a project without specifying roles
-   * This ensures users always have defined permissions on auto-created projects
-
-3. **Domain handling**
-
-   * Projects are created in the IdP's domain by default
-   * With schema version 2.0+, you can specify a domain per project
-   * The domain must already exist (domains are never auto-created)
-
-4. **Assignment behavior**
-
-   * Direct role assignments are created for the user on the projects
-   * This differs from group-based authorization where assignments are ephemeral
-   * The assignments persist in keystone's database
-   * If you later revoke the federated mapping, existing assignments remain
-
-5. **Idempotency**
-
-   * Federated authentication is idempotent if assertion attributes don't change
-   * If UserName is still "jsmith", no new "Project for jsmith" will be created
-   * Keystone checks for existing projects by name and domain before creating
-
-Combining Auto-Provisioned Projects with Groups
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can mix ``groups`` and ``projects`` in the same mapping to give users both:
-
-* **Direct role assignments** on auto-provisioned projects
-* **Group memberships** that provide additional roles through group grants
-
-**Important distinction:**
-
-* Projects in the ``projects`` section: Direct assignments, auto-created
-* Groups in the mapping: Memberships only, **must pre-exist**, not auto-created
-
-The following example shows how to combine both approaches:
+You can mix ``groups`` and ``projects`` in the same mapping. Projects provide
+direct role assignments (persistent), while groups provide ephemeral memberships:
 
 .. code-block:: json
 
@@ -1406,86 +1360,12 @@ The following example shows how to combine both approaches:
        ]
    }
 
-**In this example:**
+This mapping gives users:
 
-A federated user with UserName "jsmith" will receive:
+* **Persistent assignments:** Direct roles on auto-provisioned projects (Marketing and a per-user Development project)
+* **Ephemeral membership:** Finance group (must pre-exist in domain 6fe767), which provides additional roles through group grants
 
-**Direct role assignments (from projects section):**
-
-* ``member`` role on the ``Marketing`` project (auto-created if missing)
-* ``admin`` role on ``Development project for jsmith`` (auto-created if missing)
-
-**Group memberships (from group section):**
-
-* Membership in the ``Finance`` group (must already exist in domain 6fe767)
-* All roles that the Finance group has been granted on any projects/domains
-
-**Key differences:**
-
-* **Project assignments are persistent** - stored in keystone's database as
-  direct user-to-project-role assignments
-* **Group memberships are ephemeral** - exist only for the duration of the
-  token; evaluated fresh on each authentication
-* If the ``Finance`` group doesn't exist, the user will still authenticate
-  successfully but won't receive the group membership (warning logged only)
-
-**Example mapping output:**
-
-Given the above mapping with the following assertion data:
-
-.. code-block:: none
-
-   UserName: jsmith
-
-The ``keystone-manage mapping_engine`` would produce:
-
-.. code-block:: json
-
-   {
-       "user": {
-           "name": "jsmith",
-           "type": "ephemeral",
-           "domain": {
-               "id": "Federated"
-           }
-       },
-       "group_ids": [],
-       "group_names": [
-           {
-               "name": "Finance",
-               "domain": {"id": "6fe767"}
-           }
-       ],
-       "projects": [
-           {
-               "name": "Marketing",
-               "roles": [{"name": "member"}]
-           },
-           {
-               "name": "Development project for jsmith",
-               "roles": [{"name": "admin"}]
-           }
-       ]
-   }
-
-**What happens during authentication:**
-
-1. **Projects are auto-provisioned** (if they don't exist):
-
-   * Creates "Marketing" project → grants "jsmith" member role (persistent assignment)
-   * Creates "Development project for jsmith" → grants "jsmith" admin role (persistent assignment)
-
-2. **Group membership is assigned** (if group exists):
-
-   * Checks if "Finance" group exists in domain "6fe767"
-   * If it exists: adds "jsmith" to Finance group for this token only (ephemeral)
-   * If it doesn't exist: logs warning, user still authenticates, but no Finance group roles
-
-3. **Final user access:**
-
-   * Direct access to Marketing and Development projects (via persistent assignments)
-   * Access to any projects/domains where Finance group has roles (via ephemeral group membership)
-   * All Finance group roles are evaluated fresh on each authentication
+See `Important Prerequisites`_ for details on the differences between persistent assignments and ephemeral group memberships.
 
 Troubleshooting Federation Mappings
 ------------------------------------
@@ -1500,7 +1380,7 @@ Common Issues and Solutions
 1. **Local user doesn't exist**
 
    * If using ``type: local``, the user must exist in keystone's identity backend
-   * Solution: Create the user first, or switch to ephemeral users
+   * Solution: Create the user first, or switch to ephemeral users (see local-vs-ephemeral_)
 
 2. **REMOTE_USER not mapped**
 
@@ -1534,32 +1414,31 @@ Common Issues and Solutions
 
 **Problem: Projects aren't being auto-created**
 
+See the auto-provisioning_ section for details on project auto-creation.
+
 *Possible causes:*
 
 1. **Using groups instead of projects section**
 
    * Only ``projects`` in local mapping are auto-created
    * Projects accessed via group membership are NOT auto-created
-   * Solution: Use the ``projects`` section for auto-provisioning
 
 2. **Missing roles section**
 
    * ``projects`` must include ``roles``
-   * Solution: Add roles array to each project definition
 
 3. **Domain doesn't exist**
 
    * Target domain must exist
-   * Solution: Create domain before federation or use existing domain
 
-**Problem: Mapping rules don't match assertion**
+**Problem: Mapping rules don't match IdP data**
 
 *Possible causes:*
 
 1. **Incorrect attribute names**
 
-   * Assertion attribute names are case-sensitive
-   * Solution: Check IdP configuration and actual assertion data
+   * Attribute names in the mapping context are case-sensitive
+   * Solution: Check IdP configuration and actual input data
    * Use ``keystone-manage mapping_engine`` to test
 
 2. **Condition logic issues**
@@ -1582,7 +1461,7 @@ Use the mapping engine test command:
 
 .. code-block:: console
 
-   $ keystone-manage mapping_engine --rules mapping.json --input assertion.txt
+   $ keystone-manage mapping_engine --rules mapping.json --input attributes.txt
 
 **Enable debug logging:**
 
@@ -1593,9 +1472,9 @@ Set keystone logging to DEBUG to see:
 * Variable substitution results
 * Assertion data received from IdP
 
-**Check assertion data:**
+**Check input data:**
 
-The assertion data is logged at DEBUG level. Look for:
+The input data is logged at DEBUG level. Look for:
 
 * Actual attribute names (case-sensitive)
 * Actual values being sent by IdP
@@ -1729,10 +1608,10 @@ IdP to groups in the keystone SP:
 
 ``openstack_user``, and ``openstack_groups`` will be matched by service
 provider to the attribute names we have in the Identity Provider. It will
-take the ``openstack_user`` attribute and finds in the assertion then inserts
+take the ``openstack_user`` attribute from the mapping context and inserts
 it directly in the mapping.  The identity provider will set the value of
 ``openstack_groups`` by group name and domain name to which the user belongs
-in the Idp. Suppose the user belongs to 'group1' in domain 'Default' in the IdP
+in the IdP. Suppose the user belongs to 'group1' in domain 'Default' in the IdP
 then it will map to a group with the same name and same domain's name in the SP.
 
 The possible attributes that can be used in a mapping are `openstack_user`,
