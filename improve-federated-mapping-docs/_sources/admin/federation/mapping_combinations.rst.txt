@@ -21,12 +21,12 @@ Description
 During the authentication process an identity provider (IdP) will present
 keystone with a set of user attributes about the user that is authenticating.
 For example, in the SAML2 flow this comes to keystone in the form of a SAML
-document.
+document and for the OpenID flow this comes from the token's claims.
 
 The attributes are typically processed by third-party software and are presented
 to keystone as environment variables. The original document from the IdP is
-generally not available to keystone. This is how the `Shibboleth` and `Mellon`
-implementations work.
+generally not available to keystone. This is how the `Shibboleth`, `Mellon` and
+`mod_auth_openidc` implementations work.
 
 The mapping format described in this document maps these environment variables
 to a local keystone user. The mapping may also define group membership for
@@ -107,42 +107,73 @@ A mapping looks as follows:
        ]
    }
 
-* `mapping`: a JSON object containing a list of rules.
-* `rules`: a property in the mapping that contains the list of rules.
-* `rule`: a JSON object containing `local` and `remote` properties to define
-  the rule. There is no explicit `rule` property.
-* `local`: a JSON object containing information on what local attributes will
-  be mapped. The mapping engine processes this using the `context` (defined
-  below) and the result is a representation of the user from keystone's
-  perspective.
+``mapping``
+  A JSON object containing a list of rules.
 
-  * `<user>`: the local user that will be mapped to the federated user.
-  * `<group>`: (optional) the local groups the federated user will be placed in.
-  * `<projects>`: (optional) the local projects mapped to the federated user.
-  * `<domain>`: (optional) the local domain mapped to the federated user,
-    projects, and groups. Projects and groups can also override this default
-    domain by defining a domain of their own. Moreover, if no domain is
-    defined in this configuration, the attribute mapping schema will use the
-    identity provider OpenStack domain.
+``rules``
+  A property in the mapping that contains the list of rules.
 
-* `remote`: a JSON object containing information on what remote attributes will be mapped.
+``rule``
+  A JSON object containing ``local`` and ``remote`` properties to define the
+  rule. There is no explicit ``rule`` property.
 
-  * `<match>`: a JSON object that tells the mapping engine what federated attribute
-    to make available for substitution in the local object. There can be one or more
-    of these objects in the `remote` list.
-  * `<condition>`: a JSON object containing conditions that allow a rule. There can be
-    zero or more of these objects in the `remote` list.
+``local``
+  A JSON object containing information on what local attributes will be mapped.
+  The mapping engine processes this using the ``context`` (defined below) and
+  the result is a representation of the user from keystone's perspective.
 
-* `direct mapping`: the mapping engine keeps track of each match and makes them
-  available to the local rule for substitution.
-* `assertion`: data provided to keystone by the IdP to assert facts
-  (name, groups, etc) about the authenticating user. This is an XML document when
-  using the SAML2 protocol.
-* `mapping context`: the data, represented as key-value pairs, that is used by the
-  mapping engine to turn the `local` object into a representation of the user
-  from keystone's perspective. The mapping context contains the environment of the
-  keystone process and any `direct mapping` values calculated when processing the
-  `remote` list.
+  ``user``
+    The local user that will be mapped to the federated user. The nested fields
+    (``name``, ``id``, ``type``, ``domain``, etc.) can contain variable
+    substitutions like ``{0}``, ``{1}``.
+
+  ``group``
+    (optional) A single local group the federated user will be placed in. Can
+    reference groups by ``name`` or ``id``, with optional ``domain``.
+
+  ``groups``
+    (optional) A string containing semicolon-delimited group names (e.g.,
+    ``"group1;group2;group3"``) that will be expanded into multiple group
+    memberships for the federated user.
+
+  ``projects``
+    (optional) The local projects mapped to the federated user. Each project
+    must include a ``roles`` array.
+
+  ``domain``
+    (optional) The local domain mapped to the federated user, projects, and
+    groups. Projects and groups can also override this default domain by
+    defining a domain of their own. Moreover, if no domain is defined in this
+    configuration, the attribute mapping schema will use the identity provider
+    OpenStack domain.
+
+``remote``
+  A JSON object containing information on what remote attributes will be mapped.
+
+  ``type``
+    The assertion attribute name to match. This creates a direct mapping that
+    can be referenced in the ``local`` section using indices like ``{0}``,
+    ``{1}``, etc.
+
+  Conditions (optional):
+    Additional fields that filter which assertions match this rule. Can include
+    ``any_one_of``, ``not_any_of``, ``whitelist``, ``blacklist``, or ``regex``.
+
+``direct mapping``
+  The mapping engine keeps track of each match and makes them available to the
+  local rule for substitution.
+
+``assertion``
+  Data provided to keystone by the IdP to assert facts (name, groups, etc)
+  about the authenticating user. This is an XML document when using the SAML2
+  protocol.
+
+``mapping context``
+  The data, represented as key-value pairs, that is used by the mapping engine
+  to turn the ``local`` object into a representation of the user from
+  keystone's perspective. The mapping context contains the environment of the
+  keystone process and any ``direct mapping`` values calculated when processing
+  the ``remote`` list.
 
 --------------------------
 How Mappings Are Processed

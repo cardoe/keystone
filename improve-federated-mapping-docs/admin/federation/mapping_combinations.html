@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Mapping Combinations &#8212; keystone 28.1.0.dev22 documentation</title>
+    <title>Mapping Combinations &#8212; keystone 28.1.0.dev24 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fe63c2af" />
     <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=5c69cfe2" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../_static/support-matrix.css" />
-    <script src="../../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../../_static/documentation_options.js?v=7c93c08d"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -209,11 +209,11 @@ ga('send', 'pageview');
 <p>During the authentication process an identity provider (IdP) will present
 keystone with a set of user attributes about the user that is authenticating.
 For example, in the SAML2 flow this comes to keystone in the form of a SAML
-document.</p>
+document and for the OpenID flow this comes from the token’s claims.</p>
 <p>The attributes are typically processed by third-party software and are presented
 to keystone as environment variables. The original document from the IdP is
-generally not available to keystone. This is how the <cite>Shibboleth</cite> and <cite>Mellon</cite>
-implementations work.</p>
+generally not available to keystone. This is how the <cite>Shibboleth</cite>, <cite>Mellon</cite> and
+<cite>mod_auth_openidc</cite> implementations work.</p>
 <p>The mapping format described in this document maps these environment variables
 to a local keystone user. The mapping may also define group membership for
 that user and projects the user can access.</p>
@@ -282,46 +282,65 @@ references a non-existent domain, authentication will fail.</p>
 }
 </pre></div>
 </div>
-<ul class="simple">
-<li><p><cite>mapping</cite>: a JSON object containing a list of rules.</p></li>
-<li><p><cite>rules</cite>: a property in the mapping that contains the list of rules.</p></li>
-<li><p><cite>rule</cite>: a JSON object containing <cite>local</cite> and <cite>remote</cite> properties to define
-the rule. There is no explicit <cite>rule</cite> property.</p></li>
-<li><p><cite>local</cite>: a JSON object containing information on what local attributes will
-be mapped. The mapping engine processes this using the <cite>context</cite> (defined
-below) and the result is a representation of the user from keystone’s
-perspective.</p>
-<ul>
-<li><p><cite>&lt;user&gt;</cite>: the local user that will be mapped to the federated user.</p></li>
-<li><p><cite>&lt;group&gt;</cite>: (optional) the local groups the federated user will be placed in.</p></li>
-<li><p><cite>&lt;projects&gt;</cite>: (optional) the local projects mapped to the federated user.</p></li>
-<li><p><cite>&lt;domain&gt;</cite>: (optional) the local domain mapped to the federated user,
-projects, and groups. Projects and groups can also override this default
-domain by defining a domain of their own. Moreover, if no domain is
-defined in this configuration, the attribute mapping schema will use the
-identity provider OpenStack domain.</p></li>
-</ul>
-</li>
-<li><p><cite>remote</cite>: a JSON object containing information on what remote attributes will be mapped.</p>
-<ul>
-<li><p><cite>&lt;match&gt;</cite>: a JSON object that tells the mapping engine what federated attribute
-to make available for substitution in the local object. There can be one or more
-of these objects in the <cite>remote</cite> list.</p></li>
-<li><p><cite>&lt;condition&gt;</cite>: a JSON object containing conditions that allow a rule. There can be
-zero or more of these objects in the <cite>remote</cite> list.</p></li>
-</ul>
-</li>
-<li><p><cite>direct mapping</cite>: the mapping engine keeps track of each match and makes them
-available to the local rule for substitution.</p></li>
-<li><p><cite>assertion</cite>: data provided to keystone by the IdP to assert facts
-(name, groups, etc) about the authenticating user. This is an XML document when
-using the SAML2 protocol.</p></li>
-<li><p><cite>mapping context</cite>: the data, represented as key-value pairs, that is used by the
-mapping engine to turn the <cite>local</cite> object into a representation of the user
-from keystone’s perspective. The mapping context contains the environment of the
-keystone process and any <cite>direct mapping</cite> values calculated when processing the
-<cite>remote</cite> list.</p></li>
-</ul>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">mapping</span></code></dt><dd><p>A JSON object containing a list of rules.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">rules</span></code></dt><dd><p>A property in the mapping that contains the list of rules.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">rule</span></code></dt><dd><p>A JSON object containing <code class="docutils literal notranslate"><span class="pre">local</span></code> and <code class="docutils literal notranslate"><span class="pre">remote</span></code> properties to define the
+rule. There is no explicit <code class="docutils literal notranslate"><span class="pre">rule</span></code> property.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">local</span></code></dt><dd><p>A JSON object containing information on what local attributes will be mapped.
+The mapping engine processes this using the <code class="docutils literal notranslate"><span class="pre">context</span></code> (defined below) and
+the result is a representation of the user from keystone’s perspective.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">user</span></code></dt><dd><p>The local user that will be mapped to the federated user. The nested fields
+(<code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">type</span></code>, <code class="docutils literal notranslate"><span class="pre">domain</span></code>, etc.) can contain variable
+substitutions like <code class="docutils literal notranslate"><span class="pre">{0}</span></code>, <code class="docutils literal notranslate"><span class="pre">{1}</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">group</span></code></dt><dd><p>(optional) A single local group the federated user will be placed in. Can
+reference groups by <code class="docutils literal notranslate"><span class="pre">name</span></code> or <code class="docutils literal notranslate"><span class="pre">id</span></code>, with optional <code class="docutils literal notranslate"><span class="pre">domain</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">groups</span></code></dt><dd><p>(optional) A string containing semicolon-delimited group names (e.g.,
+<code class="docutils literal notranslate"><span class="pre">&quot;group1;group2;group3&quot;</span></code>) that will be expanded into multiple group
+memberships for the federated user.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">projects</span></code></dt><dd><p>(optional) The local projects mapped to the federated user. Each project
+must include a <code class="docutils literal notranslate"><span class="pre">roles</span></code> array.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">domain</span></code></dt><dd><p>(optional) The local domain mapped to the federated user, projects, and
+groups. Projects and groups can also override this default domain by
+defining a domain of their own. Moreover, if no domain is defined in this
+configuration, the attribute mapping schema will use the identity provider
+OpenStack domain.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">remote</span></code></dt><dd><p>A JSON object containing information on what remote attributes will be mapped.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">type</span></code></dt><dd><p>The assertion attribute name to match. This creates a direct mapping that
+can be referenced in the <code class="docutils literal notranslate"><span class="pre">local</span></code> section using indices like <code class="docutils literal notranslate"><span class="pre">{0}</span></code>,
+<code class="docutils literal notranslate"><span class="pre">{1}</span></code>, etc.</p>
+</dd>
+<dt>Conditions (optional):</dt><dd><p>Additional fields that filter which assertions match this rule. Can include
+<code class="docutils literal notranslate"><span class="pre">any_one_of</span></code>, <code class="docutils literal notranslate"><span class="pre">not_any_of</span></code>, <code class="docutils literal notranslate"><span class="pre">whitelist</span></code>, <code class="docutils literal notranslate"><span class="pre">blacklist</span></code>, or <code class="docutils literal notranslate"><span class="pre">regex</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">direct</span> <span class="pre">mapping</span></code></dt><dd><p>The mapping engine keeps track of each match and makes them available to the
+local rule for substitution.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">assertion</span></code></dt><dd><p>Data provided to keystone by the IdP to assert facts (name, groups, etc)
+about the authenticating user. This is an XML document when using the SAML2
+protocol.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">mapping</span> <span class="pre">context</span></code></dt><dd><p>The data, represented as key-value pairs, that is used by the mapping engine
+to turn the <code class="docutils literal notranslate"><span class="pre">local</span></code> object into a representation of the user from
+keystone’s perspective. The mapping context contains the environment of the
+keystone process and any <code class="docutils literal notranslate"><span class="pre">direct</span> <span class="pre">mapping</span></code> values calculated when processing
+the <code class="docutils literal notranslate"><span class="pre">remote</span></code> list.</p>
+</dd>
+</dl>
 </section>
 <section id="how-mappings-are-processed">
 <h2>How Mappings Are Processed<a class="headerlink" href="#how-mappings-are-processed" title="Link to this heading">¶</a></h2>
@@ -1789,7 +1808,7 @@ then it will map to a group with the same name and same domain’s name in the S
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">this page last updated: 2025-12-06 00:17:43</div>
+            <div class="docs-updated">this page last updated: 2025-12-08 11:25:51</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -1837,7 +1856,7 @@ then it will map to a group with the same name and same domain’s name in the S
   </div>
   <div class="docs-sidebar-toc">
     <div class="docs-sidebar-section" id="table-of-contents">
-      <a href="../../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev24</h4></a>
       <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../install/index.html">Keystone Installation Tutorial</a></li>
 </ul>
@@ -2011,7 +2030,7 @@ then it will map to a group with the same name and same domain’s name in the S
     gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
 
     /* gitsha, project and bug_tag rely on variables in conf.py */
-    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var gitSha = "SHA: dab1b770405decf683fa2bbd3ca3128e5d7b7bd0";
     var repositoryName = "openstack/keystone";
     var bugProject = "keystone";
     var bugTitle = "Mapping Combinations in keystone";
@@ -2021,7 +2040,7 @@ then it will map to a group with the same name and same domain’s name in the S
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 28.1.0.dev22 on 2025-12-06 00:17:43";
+    var buildstring = "Release: 28.1.0.dev24 on 2025-12-08 11:25:51";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
