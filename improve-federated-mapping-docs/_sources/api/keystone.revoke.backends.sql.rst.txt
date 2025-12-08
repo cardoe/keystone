@@ -1,0 +1,7 @@
+keystone.revoke.backends.sql module
+===================================
+
+.. automodule:: keystone.revoke.backends.sql
+   :members:
+   :undoc-members:
+   :show-inheritance:

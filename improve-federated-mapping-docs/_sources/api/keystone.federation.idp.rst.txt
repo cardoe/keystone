@@ -1,0 +1,7 @@
+keystone.federation.idp module
+==============================
+
+.. automodule:: keystone.federation.idp
+   :members:
+   :undoc-members:
+   :show-inheritance:

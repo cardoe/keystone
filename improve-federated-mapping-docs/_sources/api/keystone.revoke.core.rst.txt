@@ -1,0 +1,7 @@
+keystone.revoke.core module
+===========================
+
+.. automodule:: keystone.revoke.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

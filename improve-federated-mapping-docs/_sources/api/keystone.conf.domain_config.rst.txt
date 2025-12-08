@@ -1,0 +1,7 @@
+keystone.conf.domain\_config module
+===================================
+
+.. automodule:: keystone.conf.domain_config
+   :members:
+   :undoc-members:
+   :show-inheritance:

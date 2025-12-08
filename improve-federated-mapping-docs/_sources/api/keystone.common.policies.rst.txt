@@ -1,0 +1,53 @@
+keystone.common.policies package
+================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.common.policies.access_rule
+   keystone.common.policies.access_token
+   keystone.common.policies.application_credential
+   keystone.common.policies.auth
+   keystone.common.policies.base
+   keystone.common.policies.consumer
+   keystone.common.policies.credential
+   keystone.common.policies.domain
+   keystone.common.policies.domain_config
+   keystone.common.policies.ec2_credential
+   keystone.common.policies.ec2tokens
+   keystone.common.policies.endpoint
+   keystone.common.policies.endpoint_group
+   keystone.common.policies.grant
+   keystone.common.policies.group
+   keystone.common.policies.identity_provider
+   keystone.common.policies.implied_role
+   keystone.common.policies.limit
+   keystone.common.policies.mapping
+   keystone.common.policies.policy
+   keystone.common.policies.policy_association
+   keystone.common.policies.project
+   keystone.common.policies.project_endpoint
+   keystone.common.policies.protocol
+   keystone.common.policies.region
+   keystone.common.policies.registered_limit
+   keystone.common.policies.revoke_event
+   keystone.common.policies.role
+   keystone.common.policies.role_assignment
+   keystone.common.policies.s3tokens
+   keystone.common.policies.service
+   keystone.common.policies.service_provider
+   keystone.common.policies.token
+   keystone.common.policies.token_revocation
+   keystone.common.policies.trust
+   keystone.common.policies.user
+
+Module contents
+---------------
+
+.. automodule:: keystone.common.policies
+   :members:
+   :undoc-members:
+   :show-inheritance:

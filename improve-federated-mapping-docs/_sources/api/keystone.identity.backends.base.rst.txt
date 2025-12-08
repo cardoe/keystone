@@ -1,0 +1,7 @@
+keystone.identity.backends.base module
+======================================
+
+.. automodule:: keystone.identity.backends.base
+   :members:
+   :undoc-members:
+   :show-inheritance:

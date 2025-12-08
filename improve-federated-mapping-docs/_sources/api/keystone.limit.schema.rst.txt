@@ -1,0 +1,7 @@
+keystone.limit.schema module
+============================
+
+.. automodule:: keystone.limit.schema
+   :members:
+   :undoc-members:
+   :show-inheritance:

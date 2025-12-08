@@ -1,0 +1,27 @@
+keystone.trust package
+======================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.trust.backends
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.trust.core
+   keystone.trust.schema
+
+Module contents
+---------------
+
+.. automodule:: keystone.trust
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,28 @@
+keystone.oauth1 package
+=======================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.oauth1.backends
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.oauth1.core
+   keystone.oauth1.schema
+   keystone.oauth1.validator
+
+Module contents
+---------------
+
+.. automodule:: keystone.oauth1
+   :members:
+   :undoc-members:
+   :show-inheritance:

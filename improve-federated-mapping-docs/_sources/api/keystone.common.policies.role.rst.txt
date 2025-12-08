@@ -1,0 +1,7 @@
+keystone.common.policies.role module
+====================================
+
+.. automodule:: keystone.common.policies.role
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keystone.federation.idp &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/support-matrix.css" />
+    <script src="../../../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../../../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- TEMPLATE_NAME: _modules/keystone/federation/idp -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../../../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>keystone.federation.idp</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <h1>Source code for keystone.federation.idp</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may</span>
+<span class="c1"># not use this file except in compliance with the License. You may obtain</span>
+<span class="c1"># a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#      http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT</span>
+<span class="c1"># WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the</span>
+<span class="c1"># License for the specific language governing permissions and limitations</span>
+<span class="c1"># under the License.</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>  <span class="c1"># nosec : see comments in the code below</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_log</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">fileutils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">timeutils</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">saml2</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">saml2</span><span class="w"> </span><span class="kn">import</span> <span class="n">client_base</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">saml2</span><span class="w"> </span><span class="kn">import</span> <span class="n">md</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">saml2.profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">ecp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">saml2</span><span class="w"> </span><span class="kn">import</span> <span class="n">saml</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">saml2</span><span class="w"> </span><span class="kn">import</span> <span class="n">samlp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">saml2.schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">soapenv</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">saml2</span><span class="w"> </span><span class="kn">import</span> <span class="n">sigver</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">saml2</span><span class="w"> </span><span class="kn">import</span> <span class="n">xmldsig</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">keystone.conf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone</span><span class="w"> </span><span class="kn">import</span> <span class="n">exception</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.i18n</span><span class="w"> </span><span class="kn">import</span> <span class="n">_</span>
+
+<span class="n">LOG</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">CONF</span> <span class="o">=</span> <span class="n">keystone</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">CONF</span>
+
+
+<div class="viewcode-block" id="SAMLGenerator">
+<a class="viewcode-back" href="../../../api/keystone.federation.idp.html#keystone.federation.idp.SAMLGenerator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SAMLGenerator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A class to generate SAML assertions.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertion_id</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span>
+
+<div class="viewcode-block" id="SAMLGenerator.samlize_token">
+<a class="viewcode-back" href="../../../api/keystone.federation.idp.html#keystone.federation.idp.SAMLGenerator.samlize_token">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">samlize_token</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">issuer</span><span class="p">,</span>
+        <span class="n">recipient</span><span class="p">,</span>
+        <span class="n">user</span><span class="p">,</span>
+        <span class="n">user_domain_name</span><span class="p">,</span>
+        <span class="n">roles</span><span class="p">,</span>
+        <span class="n">project</span><span class="p">,</span>
+        <span class="n">project_domain_name</span><span class="p">,</span>
+        <span class="n">groups</span><span class="p">,</span>
+        <span class="n">expires_in</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert Keystone attributes to a SAML assertion.</span>
+
+<span class="sd">        :param issuer: URL of the issuing party</span>
+<span class="sd">        :type issuer: string</span>
+<span class="sd">        :param recipient: URL of the recipient</span>
+<span class="sd">        :type recipient: string</span>
+<span class="sd">        :param user: User name</span>
+<span class="sd">        :type user: string</span>
+<span class="sd">        :param user_domain_name: User Domain name</span>
+<span class="sd">        :type user_domain_name: string</span>
+<span class="sd">        :param roles: List of role names</span>
+<span class="sd">        :type roles: list</span>
+<span class="sd">        :param project: Project name</span>
+<span class="sd">        :type project: string</span>
+<span class="sd">        :param project_domain_name: Project Domain name</span>
+<span class="sd">        :type project_domain_name: string</span>
+<span class="sd">        :param groups: List of strings of user groups and domain name, where</span>
+<span class="sd">                       strings are serialized dictionaries.</span>
+<span class="sd">        :type groups: list</span>
+<span class="sd">        :param expires_in: Sets how long the assertion is valid for, in seconds</span>
+<span class="sd">        :type expires_in: int</span>
+
+<span class="sd">        :returns: XML &lt;Response&gt; object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">expiration_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_determine_expiration_time</span><span class="p">(</span><span class="n">expires_in</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_status</span><span class="p">()</span>
+        <span class="n">saml_issuer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_issuer</span><span class="p">(</span><span class="n">issuer</span><span class="p">)</span>
+        <span class="n">subject</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_subject</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">expiration_time</span><span class="p">,</span> <span class="n">recipient</span><span class="p">)</span>
+        <span class="n">attribute_statement</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_attribute_statement</span><span class="p">(</span>
+            <span class="n">user</span><span class="p">,</span> <span class="n">user_domain_name</span><span class="p">,</span> <span class="n">roles</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">project_domain_name</span><span class="p">,</span> <span class="n">groups</span>
+        <span class="p">)</span>
+        <span class="n">authn_statement</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_authn_statement</span><span class="p">(</span><span class="n">issuer</span><span class="p">,</span> <span class="n">expiration_time</span><span class="p">)</span>
+        <span class="n">signature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_signature</span><span class="p">()</span>
+
+        <span class="n">assertion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_assertion</span><span class="p">(</span>
+            <span class="n">saml_issuer</span><span class="p">,</span>
+            <span class="n">signature</span><span class="p">,</span>
+            <span class="n">subject</span><span class="p">,</span>
+            <span class="n">authn_statement</span><span class="p">,</span>
+            <span class="n">attribute_statement</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">assertion</span> <span class="o">=</span> <span class="n">_sign_assertion</span><span class="p">(</span><span class="n">assertion</span><span class="p">)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_response</span><span class="p">(</span>
+            <span class="n">saml_issuer</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">assertion</span><span class="p">,</span> <span class="n">recipient</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_determine_expiration_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expires_in</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">expires_in</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">expires_in</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">assertion_expiration_time</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">timeutils</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+        <span class="n">future</span> <span class="o">=</span> <span class="n">now</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">expires_in</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">isotime</span><span class="p">(</span><span class="n">future</span><span class="p">,</span> <span class="n">subsecond</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an object that represents a SAML Status.</span>
+
+<span class="sd">        &lt;ns0:Status xmlns:ns0=&quot;urn:oasis:names:tc:SAML:2.0:protocol&quot;&gt;</span>
+<span class="sd">            &lt;ns0:StatusCode</span>
+<span class="sd">              Value=&quot;urn:oasis:names:tc:SAML:2.0:status:Success&quot; /&gt;</span>
+<span class="sd">        &lt;/ns0:Status&gt;</span>
+
+<span class="sd">        :returns: XML &lt;Status&gt; object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">samlp</span><span class="o">.</span><span class="n">Status</span><span class="p">()</span>
+        <span class="n">status_code</span> <span class="o">=</span> <span class="n">samlp</span><span class="o">.</span><span class="n">StatusCode</span><span class="p">()</span>
+        <span class="n">status_code</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">samlp</span><span class="o">.</span><span class="n">STATUS_SUCCESS</span>
+        <span class="n">status_code</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">status</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="n">status_code</span>
+        <span class="k">return</span> <span class="n">status</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_issuer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">issuer_url</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an object that represents a SAML Issuer.</span>
+
+<span class="sd">        &lt;ns0:Issuer</span>
+<span class="sd">          xmlns:ns0=&quot;urn:oasis:names:tc:SAML:2.0:assertion&quot;</span>
+<span class="sd">          Format=&quot;urn:oasis:names:tc:SAML:2.0:nameid-format:entity&quot;&gt;</span>
+<span class="sd">          https://acme.com/FIM/sps/openstack/saml20&lt;/ns0:Issuer&gt;</span>
+
+<span class="sd">        :returns: XML &lt;Issuer&gt; object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">issuer</span> <span class="o">=</span> <span class="n">saml</span><span class="o">.</span><span class="n">Issuer</span><span class="p">()</span>
+        <span class="n">issuer</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="n">saml</span><span class="o">.</span><span class="n">NAMEID_FORMAT_ENTITY</span>
+        <span class="n">issuer</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">issuer_url</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">issuer</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">expiration_time</span><span class="p">,</span> <span class="n">recipient</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an object that represents a SAML Subject.</span>
+
+<span class="sd">        &lt;ns0:Subject&gt;</span>
+<span class="sd">            &lt;ns0:NameID&gt;</span>
+<span class="sd">                john@smith.com&lt;/ns0:NameID&gt;</span>
+<span class="sd">            &lt;ns0:SubjectConfirmation</span>
+<span class="sd">              Method=&quot;urn:oasis:names:tc:SAML:2.0:cm:bearer&quot;&gt;</span>
+<span class="sd">                &lt;ns0:SubjectConfirmationData</span>
+<span class="sd">                  NotOnOrAfter=&quot;2014-08-19T11:53:57.243106Z&quot;</span>
+<span class="sd">                  Recipient=&quot;http://beta.com/Shibboleth.sso/SAML2/POST&quot; /&gt;</span>
+<span class="sd">            &lt;/ns0:SubjectConfirmation&gt;</span>
+<span class="sd">        &lt;/ns0:Subject&gt;</span>
+
+<span class="sd">        :returns: XML &lt;Subject&gt; object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name_id</span> <span class="o">=</span> <span class="n">saml</span><span class="o">.</span><span class="n">NameID</span><span class="p">()</span>
+        <span class="n">name_id</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">subject_conf_data</span> <span class="o">=</span> <span class="n">saml</span><span class="o">.</span><span class="n">SubjectConfirmationData</span><span class="p">()</span>
+        <span class="n">subject_conf_data</span><span class="o">.</span><span class="n">recipient</span> <span class="o">=</span> <span class="n">recipient</span>
+        <span class="n">subject_conf_data</span><span class="o">.</span><span class="n">not_on_or_after</span> <span class="o">=</span> <span class="n">expiration_time</span>
+        <span class="n">subject_conf</span> <span class="o">=</span> <span class="n">saml</span><span class="o">.</span><span class="n">SubjectConfirmation</span><span class="p">()</span>
+        <span class="n">subject_conf</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">saml</span><span class="o">.</span><span class="n">SCM_BEARER</span>
+        <span class="n">subject_conf</span><span class="o">.</span><span class="n">subject_confirmation_data</span> <span class="o">=</span> <span class="n">subject_conf_data</span>
+        <span class="n">subject</span> <span class="o">=</span> <span class="n">saml</span><span class="o">.</span><span class="n">Subject</span><span class="p">()</span>
+        <span class="n">subject</span><span class="o">.</span><span class="n">subject_confirmation</span> <span class="o">=</span> <span class="n">subject_conf</span>
+        <span class="n">subject</span><span class="o">.</span><span class="n">name_id</span> <span class="o">=</span> <span class="n">name_id</span>
+        <span class="k">return</span> <span class="n">subject</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_attribute_statement</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">user</span><span class="p">,</span>
+        <span class="n">user_domain_name</span><span class="p">,</span>
+        <span class="n">roles</span><span class="p">,</span>
+        <span class="n">project</span><span class="p">,</span>
+        <span class="n">project_domain_name</span><span class="p">,</span>
+        <span class="n">groups</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an object that represents a SAML AttributeStatement.</span>
+
+<span class="sd">        &lt;ns0:AttributeStatement&gt;</span>
+<span class="sd">            &lt;ns0:Attribute Name=&quot;openstack_user&quot;&gt;</span>
+<span class="sd">                &lt;ns0:AttributeValue</span>
+<span class="sd">                  xsi:type=&quot;xs:string&quot;&gt;test_user&lt;/ns0:AttributeValue&gt;</span>
+<span class="sd">            &lt;/ns0:Attribute&gt;</span>
+<span class="sd">            &lt;ns0:Attribute Name=&quot;openstack_user_domain&quot;&gt;</span>
+<span class="sd">                &lt;ns0:AttributeValue</span>
+<span class="sd">                  xsi:type=&quot;xs:string&quot;&gt;Default&lt;/ns0:AttributeValue&gt;</span>
+<span class="sd">            &lt;/ns0:Attribute&gt;</span>
+<span class="sd">            &lt;ns0:Attribute Name=&quot;openstack_roles&quot;&gt;</span>
+<span class="sd">                &lt;ns0:AttributeValue</span>
+<span class="sd">                  xsi:type=&quot;xs:string&quot;&gt;admin&lt;/ns0:AttributeValue&gt;</span>
+<span class="sd">                &lt;ns0:AttributeValue</span>
+<span class="sd">                  xsi:type=&quot;xs:string&quot;&gt;member&lt;/ns0:AttributeValue&gt;</span>
+<span class="sd">            &lt;/ns0:Attribute&gt;</span>
+<span class="sd">            &lt;ns0:Attribute Name=&quot;openstack_project&quot;&gt;</span>
+<span class="sd">                &lt;ns0:AttributeValue</span>
+<span class="sd">                  xsi:type=&quot;xs:string&quot;&gt;development&lt;/ns0:AttributeValue&gt;</span>
+<span class="sd">            &lt;/ns0:Attribute&gt;</span>
+<span class="sd">            &lt;ns0:Attribute Name=&quot;openstack_project_domain&quot;&gt;</span>
+<span class="sd">                &lt;ns0:AttributeValue</span>
+<span class="sd">                  xsi:type=&quot;xs:string&quot;&gt;Default&lt;/ns0:AttributeValue&gt;</span>
+<span class="sd">            &lt;/ns0:Attribute&gt;</span>
+<span class="sd">            &lt;ns0:Attribute Name=&quot;openstack_groups&quot;&gt;</span>
+<span class="sd">                &lt;ns0:AttributeValue</span>
+<span class="sd">                   xsi:type=&quot;xs:string&quot;&gt;JSON:{&quot;name&quot;:&quot;group1&quot;,&quot;domain&quot;:{&quot;name&quot;:&quot;Default&quot;}}</span>
+<span class="sd">                &lt;/ns0:AttributeValue&gt;</span>
+<span class="sd">                &lt;ns0:AttributeValue</span>
+<span class="sd">                   xsi:type=&quot;xs:string&quot;&gt;JSON:{&quot;name&quot;:&quot;group2&quot;,&quot;domain&quot;:{&quot;name&quot;:&quot;Default&quot;}}</span>
+<span class="sd">                &lt;/ns0:AttributeValue&gt;</span>
+<span class="sd">            &lt;/ns0:Attribute&gt;</span>
+
+<span class="sd">        &lt;/ns0:AttributeStatement&gt;</span>
+
+<span class="sd">        :returns: XML &lt;AttributeStatement&gt; object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">_build_attribute</span><span class="p">(</span><span class="n">attribute_name</span><span class="p">,</span> <span class="n">attribute_values</span><span class="p">):</span>
+            <span class="n">attribute</span> <span class="o">=</span> <span class="n">saml</span><span class="o">.</span><span class="n">Attribute</span><span class="p">()</span>
+            <span class="n">attribute</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">attribute_name</span>
+
+            <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">attribute_values</span><span class="p">:</span>
+                <span class="n">attribute_value</span> <span class="o">=</span> <span class="n">saml</span><span class="o">.</span><span class="n">AttributeValue</span><span class="p">()</span>
+                <span class="n">attribute_value</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="n">attribute</span><span class="o">.</span><span class="n">attribute_value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attribute_value</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">attribute</span>
+
+        <span class="n">user_attribute</span> <span class="o">=</span> <span class="n">_build_attribute</span><span class="p">(</span><span class="s1">&#39;openstack_user&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">user</span><span class="p">])</span>
+        <span class="n">roles_attribute</span> <span class="o">=</span> <span class="n">_build_attribute</span><span class="p">(</span><span class="s1">&#39;openstack_roles&#39;</span><span class="p">,</span> <span class="n">roles</span><span class="p">)</span>
+        <span class="n">project_attribute</span> <span class="o">=</span> <span class="n">_build_attribute</span><span class="p">(</span><span class="s1">&#39;openstack_project&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">project</span><span class="p">])</span>
+        <span class="n">project_domain_attribute</span> <span class="o">=</span> <span class="n">_build_attribute</span><span class="p">(</span>
+            <span class="s1">&#39;openstack_project_domain&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">project_domain_name</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">user_domain_attribute</span> <span class="o">=</span> <span class="n">_build_attribute</span><span class="p">(</span>
+            <span class="s1">&#39;openstack_user_domain&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">user_domain_name</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="n">attribute_statement</span> <span class="o">=</span> <span class="n">saml</span><span class="o">.</span><span class="n">AttributeStatement</span><span class="p">()</span>
+        <span class="n">attribute_statement</span><span class="o">.</span><span class="n">attribute</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">user_attribute</span><span class="p">)</span>
+        <span class="n">attribute_statement</span><span class="o">.</span><span class="n">attribute</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">roles_attribute</span><span class="p">)</span>
+        <span class="n">attribute_statement</span><span class="o">.</span><span class="n">attribute</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">project_attribute</span><span class="p">)</span>
+        <span class="n">attribute_statement</span><span class="o">.</span><span class="n">attribute</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">project_domain_attribute</span><span class="p">)</span>
+        <span class="n">attribute_statement</span><span class="o">.</span><span class="n">attribute</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">user_domain_attribute</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">groups</span><span class="p">:</span>
+            <span class="n">groups_attribute</span> <span class="o">=</span> <span class="n">_build_attribute</span><span class="p">(</span><span class="s1">&#39;openstack_groups&#39;</span><span class="p">,</span> <span class="n">groups</span><span class="p">)</span>
+            <span class="n">attribute_statement</span><span class="o">.</span><span class="n">attribute</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">groups_attribute</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">attribute_statement</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_authn_statement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">issuer</span><span class="p">,</span> <span class="n">expiration_time</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an object that represents a SAML AuthnStatement.</span>
+
+<span class="sd">        &lt;ns0:AuthnStatement xmlns:ns0=&quot;urn:oasis:names:tc:SAML:2.0:assertion&quot;</span>
+<span class="sd">          AuthnInstant=&quot;2014-07-30T03:04:25Z&quot; SessionIndex=&quot;47335964efb&quot;</span>
+<span class="sd">          SessionNotOnOrAfter=&quot;2014-07-30T03:04:26Z&quot;&gt;</span>
+<span class="sd">            &lt;ns0:AuthnContext&gt;</span>
+<span class="sd">                &lt;ns0:AuthnContextClassRef&gt;</span>
+<span class="sd">                  urn:oasis:names:tc:SAML:2.0:ac:classes:Password</span>
+<span class="sd">                &lt;/ns0:AuthnContextClassRef&gt;</span>
+<span class="sd">                &lt;ns0:AuthenticatingAuthority&gt;</span>
+<span class="sd">                  https://acme.com/FIM/sps/openstack/saml20</span>
+<span class="sd">                &lt;/ns0:AuthenticatingAuthority&gt;</span>
+<span class="sd">            &lt;/ns0:AuthnContext&gt;</span>
+<span class="sd">        &lt;/ns0:AuthnStatement&gt;</span>
+
+<span class="sd">        :returns: XML &lt;AuthnStatement&gt; object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">authn_statement</span> <span class="o">=</span> <span class="n">saml</span><span class="o">.</span><span class="n">AuthnStatement</span><span class="p">()</span>
+        <span class="n">authn_statement</span><span class="o">.</span><span class="n">authn_instant</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">isotime</span><span class="p">()</span>
+        <span class="n">authn_statement</span><span class="o">.</span><span class="n">session_index</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span>
+        <span class="n">authn_statement</span><span class="o">.</span><span class="n">session_not_on_or_after</span> <span class="o">=</span> <span class="n">expiration_time</span>
+
+        <span class="n">authn_context</span> <span class="o">=</span> <span class="n">saml</span><span class="o">.</span><span class="n">AuthnContext</span><span class="p">()</span>
+        <span class="n">authn_context_class</span> <span class="o">=</span> <span class="n">saml</span><span class="o">.</span><span class="n">AuthnContextClassRef</span><span class="p">()</span>
+        <span class="n">authn_context_class</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">saml</span><span class="o">.</span><span class="n">AUTHN_PASSWORD</span><span class="p">)</span>
+
+        <span class="n">authn_authority</span> <span class="o">=</span> <span class="n">saml</span><span class="o">.</span><span class="n">AuthenticatingAuthority</span><span class="p">()</span>
+        <span class="n">authn_authority</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">issuer</span><span class="p">)</span>
+        <span class="n">authn_context</span><span class="o">.</span><span class="n">authn_context_class_ref</span> <span class="o">=</span> <span class="n">authn_context_class</span>
+        <span class="n">authn_context</span><span class="o">.</span><span class="n">authenticating_authority</span> <span class="o">=</span> <span class="n">authn_authority</span>
+
+        <span class="n">authn_statement</span><span class="o">.</span><span class="n">authn_context</span> <span class="o">=</span> <span class="n">authn_context</span>
+
+        <span class="k">return</span> <span class="n">authn_statement</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_assertion</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">issuer</span><span class="p">,</span> <span class="n">signature</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">authn_statement</span><span class="p">,</span> <span class="n">attribute_statement</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an object that represents a SAML Assertion.</span>
+
+<span class="sd">        &lt;ns0:Assertion</span>
+<span class="sd">          ID=&quot;35daed258ba647ba8962e9baff4d6a46&quot;</span>
+<span class="sd">          IssueInstant=&quot;2014-06-11T15:45:58Z&quot;</span>
+<span class="sd">          Version=&quot;2.0&quot;&gt;</span>
+<span class="sd">            &lt;ns0:Issuer&gt; ... &lt;/ns0:Issuer&gt;</span>
+<span class="sd">            &lt;ns1:Signature&gt; ... &lt;/ns1:Signature&gt;</span>
+<span class="sd">            &lt;ns0:Subject&gt; ... &lt;/ns0:Subject&gt;</span>
+<span class="sd">            &lt;ns0:AuthnStatement&gt; ... &lt;/ns0:AuthnStatement&gt;</span>
+<span class="sd">            &lt;ns0:AttributeStatement&gt; ... &lt;/ns0:AttributeStatement&gt;</span>
+<span class="sd">        &lt;/ns0:Assertion&gt;</span>
+
+<span class="sd">        :returns: XML &lt;Assertion&gt; object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">assertion</span> <span class="o">=</span> <span class="n">saml</span><span class="o">.</span><span class="n">Assertion</span><span class="p">()</span>
+        <span class="n">assertion</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertion_id</span>
+        <span class="n">assertion</span><span class="o">.</span><span class="n">issue_instant</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">isotime</span><span class="p">()</span>
+        <span class="n">assertion</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;2.0&#39;</span>
+        <span class="n">assertion</span><span class="o">.</span><span class="n">issuer</span> <span class="o">=</span> <span class="n">issuer</span>
+        <span class="n">assertion</span><span class="o">.</span><span class="n">signature</span> <span class="o">=</span> <span class="n">signature</span>
+        <span class="n">assertion</span><span class="o">.</span><span class="n">subject</span> <span class="o">=</span> <span class="n">subject</span>
+        <span class="n">assertion</span><span class="o">.</span><span class="n">authn_statement</span> <span class="o">=</span> <span class="n">authn_statement</span>
+        <span class="n">assertion</span><span class="o">.</span><span class="n">attribute_statement</span> <span class="o">=</span> <span class="n">attribute_statement</span>
+        <span class="k">return</span> <span class="n">assertion</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">issuer</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">assertion</span><span class="p">,</span> <span class="n">recipient</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an object that represents a SAML Response.</span>
+
+<span class="sd">        &lt;ns0:Response</span>
+<span class="sd">          Destination=&quot;http://beta.com/Shibboleth.sso/SAML2/POST&quot;</span>
+<span class="sd">          ID=&quot;c5954543230e4e778bc5b92923a0512d&quot;</span>
+<span class="sd">          IssueInstant=&quot;2014-07-30T03:19:45Z&quot;</span>
+<span class="sd">          Version=&quot;2.0&quot; /&gt;</span>
+<span class="sd">            &lt;ns0:Issuer&gt; ... &lt;/ns0:Issuer&gt;</span>
+<span class="sd">            &lt;ns0:Assertion&gt; ... &lt;/ns0:Assertion&gt;</span>
+<span class="sd">            &lt;ns0:Status&gt; ... &lt;/ns0:Status&gt;</span>
+<span class="sd">        &lt;/ns0:Response&gt;</span>
+
+<span class="sd">        :returns: XML &lt;Response&gt; object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">samlp</span><span class="o">.</span><span class="n">Response</span><span class="p">()</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">destination</span> <span class="o">=</span> <span class="n">recipient</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">issue_instant</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">isotime</span><span class="p">()</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;2.0&#39;</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">issuer</span> <span class="o">=</span> <span class="n">issuer</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">assertion</span> <span class="o">=</span> <span class="n">assertion</span>
+        <span class="k">return</span> <span class="n">response</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_signature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an object that represents a SAML &lt;Signature&gt;.</span>
+
+<span class="sd">        This must be filled with algorithms that the signing binary will apply</span>
+<span class="sd">        in order to sign the whole message.</span>
+<span class="sd">        Currently we enforce X509 signing.</span>
+<span class="sd">        Example of the template::</span>
+
+<span class="sd">        &lt;Signature xmlns=&quot;http://www.w3.org/2000/09/xmldsig#&quot;&gt;</span>
+<span class="sd">          &lt;SignedInfo&gt;</span>
+<span class="sd">            &lt;CanonicalizationMethod</span>
+<span class="sd">              Algorithm=&quot;http://www.w3.org/2001/10/xml-exc-c14n#&quot;/&gt;</span>
+<span class="sd">            &lt;SignatureMethod</span>
+<span class="sd">              Algorithm=&quot;http://www.w3.org/2000/09/xmldsig#rsa-sha1&quot;/&gt;</span>
+<span class="sd">            &lt;Reference URI=&quot;#&lt;Assertion ID&gt;&quot;&gt;</span>
+<span class="sd">              &lt;Transforms&gt;</span>
+<span class="sd">                &lt;Transform</span>
+<span class="sd">            Algorithm=&quot;http://www.w3.org/2000/09/xmldsig#enveloped-signature&quot;/&gt;</span>
+<span class="sd">               &lt;Transform Algorithm=&quot;http://www.w3.org/2001/10/xml-exc-c14n#&quot;/&gt;</span>
+<span class="sd">              &lt;/Transforms&gt;</span>
+<span class="sd">             &lt;DigestMethod Algorithm=&quot;http://www.w3.org/2000/09/xmldsig#sha1&quot;/&gt;</span>
+<span class="sd">             &lt;DigestValue /&gt;</span>
+<span class="sd">            &lt;/Reference&gt;</span>
+<span class="sd">          &lt;/SignedInfo&gt;</span>
+<span class="sd">          &lt;SignatureValue /&gt;</span>
+<span class="sd">          &lt;KeyInfo&gt;</span>
+<span class="sd">            &lt;X509Data /&gt;</span>
+<span class="sd">          &lt;/KeyInfo&gt;</span>
+<span class="sd">        &lt;/Signature&gt;</span>
+
+<span class="sd">        :returns: XML &lt;Signature&gt; object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">canonicalization_method</span> <span class="o">=</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">CanonicalizationMethod</span><span class="p">()</span>
+        <span class="c1"># TODO(stephenfin): Drop when we remove support for pysaml &lt; 7.1.0</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">xmldsig</span><span class="p">,</span> <span class="s1">&#39;TRANSFORM_C14N&#39;</span><span class="p">):</span>  <span class="c1"># &gt;= 7.1.0</span>
+            <span class="n">canonicalization_method</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">TRANSFORM_C14N</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># &lt; 7.1.0</span>
+            <span class="n">canonicalization_method</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">ALG_EXC_C14N</span>
+        <span class="n">signature_method</span> <span class="o">=</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">SignatureMethod</span><span class="p">(</span>
+            <span class="n">algorithm</span><span class="o">=</span><span class="n">xmldsig</span><span class="o">.</span><span class="n">SIG_RSA_SHA1</span>
+        <span class="p">)</span>
+
+        <span class="n">transforms</span> <span class="o">=</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">Transforms</span><span class="p">()</span>
+        <span class="n">envelope_transform</span> <span class="o">=</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">Transform</span><span class="p">(</span>
+            <span class="n">algorithm</span><span class="o">=</span><span class="n">xmldsig</span><span class="o">.</span><span class="n">TRANSFORM_ENVELOPED</span>
+        <span class="p">)</span>
+
+        <span class="c1"># TODO(stephenfin): Drop when we remove support for pysaml &lt; 7.1.0</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">xmldsig</span><span class="p">,</span> <span class="s1">&#39;TRANSFORM_C14N&#39;</span><span class="p">):</span>  <span class="c1"># &gt;= 7.1.0</span>
+            <span class="n">c14_transform</span> <span class="o">=</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">Transform</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="n">xmldsig</span><span class="o">.</span><span class="n">TRANSFORM_C14N</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># &lt; 7.1.0</span>
+            <span class="n">c14_transform</span> <span class="o">=</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">Transform</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="n">xmldsig</span><span class="o">.</span><span class="n">ALG_EXC_C14N</span><span class="p">)</span>
+        <span class="n">transforms</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="p">[</span><span class="n">envelope_transform</span><span class="p">,</span> <span class="n">c14_transform</span><span class="p">]</span>
+
+        <span class="n">digest_method</span> <span class="o">=</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">DigestMethod</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="n">xmldsig</span><span class="o">.</span><span class="n">DIGEST_SHA1</span><span class="p">)</span>
+        <span class="n">digest_value</span> <span class="o">=</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">DigestValue</span><span class="p">()</span>
+
+        <span class="n">reference</span> <span class="o">=</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">Reference</span><span class="p">()</span>
+        <span class="n">reference</span><span class="o">.</span><span class="n">uri</span> <span class="o">=</span> <span class="s1">&#39;#&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertion_id</span>
+        <span class="n">reference</span><span class="o">.</span><span class="n">digest_method</span> <span class="o">=</span> <span class="n">digest_method</span>
+        <span class="n">reference</span><span class="o">.</span><span class="n">digest_value</span> <span class="o">=</span> <span class="n">digest_value</span>
+        <span class="n">reference</span><span class="o">.</span><span class="n">transforms</span> <span class="o">=</span> <span class="n">transforms</span>
+
+        <span class="n">signed_info</span> <span class="o">=</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">SignedInfo</span><span class="p">()</span>
+        <span class="n">signed_info</span><span class="o">.</span><span class="n">canonicalization_method</span> <span class="o">=</span> <span class="n">canonicalization_method</span>
+        <span class="n">signed_info</span><span class="o">.</span><span class="n">signature_method</span> <span class="o">=</span> <span class="n">signature_method</span>
+        <span class="n">signed_info</span><span class="o">.</span><span class="n">reference</span> <span class="o">=</span> <span class="n">reference</span>
+
+        <span class="n">key_info</span> <span class="o">=</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">KeyInfo</span><span class="p">()</span>
+        <span class="n">key_info</span><span class="o">.</span><span class="n">x509_data</span> <span class="o">=</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">X509Data</span><span class="p">()</span>
+
+        <span class="n">signature</span> <span class="o">=</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">Signature</span><span class="p">()</span>
+        <span class="n">signature</span><span class="o">.</span><span class="n">signed_info</span> <span class="o">=</span> <span class="n">signed_info</span>
+        <span class="n">signature</span><span class="o">.</span><span class="n">signature_value</span> <span class="o">=</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">SignatureValue</span><span class="p">()</span>
+        <span class="n">signature</span><span class="o">.</span><span class="n">key_info</span> <span class="o">=</span> <span class="n">key_info</span>
+
+        <span class="k">return</span> <span class="n">signature</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_verify_assertion_binary_is_installed</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make sure the specified xmlsec binary is installed.</span>
+
+<span class="sd">    If the binary specified in configuration isn&#39;t installed, make sure we</span>
+<span class="sd">    leave some sort of useful error message for operators since the absense of</span>
+<span class="sd">    it is going to throw an HTTP 500.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># `check_output` just returns the output of whatever is passed in</span>
+        <span class="c1"># (hence the name). We don&#39;t really care about where the location of</span>
+        <span class="c1"># the binary exists, though. We just want to make sure it&#39;s actually</span>
+        <span class="c1"># installed and if an `CalledProcessError` isn&#39;t thrown, it is.</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span>  <span class="c1"># nosec : The contents of this command are</span>
+            <span class="c1"># coming from either the default</span>
+            <span class="c1"># configuration value for</span>
+            <span class="c1"># CONF.saml.xmlsec1_binary or an operator</span>
+            <span class="c1"># supplied location for that binary. In</span>
+            <span class="c1"># either case, it is safe to assume this</span>
+            <span class="c1"># input is coming from a trusted source and</span>
+            <span class="c1"># not a possible attacker (over the API).</span>
+            <span class="p">[</span><span class="s1">&#39;/usr/bin/which&#39;</span><span class="p">,</span> <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">xmlsec1_binary</span><span class="p">]</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;Unable to locate </span><span class="si">{</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">xmlsec1_binary</span><span class="si">}</span><span class="s1"> binary on the system. Check to make &#39;</span>
+            <span class="s1">&#39;sure it is installed.&#39;</span>
+        <span class="p">)</span>
+        <span class="n">tr_msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+            <span class="s1">&#39;Unable to locate </span><span class="si">%(binary)s</span><span class="s1"> binary on the system. Check to &#39;</span>
+            <span class="s1">&#39;make sure it is installed.&#39;</span>
+        <span class="p">)</span> <span class="o">%</span> <span class="p">{</span><span class="s1">&#39;binary&#39;</span><span class="p">:</span> <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">xmlsec1_binary</span><span class="p">}</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">SAMLSigningError</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="n">tr_msg</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_sign_assertion</span><span class="p">(</span><span class="n">assertion</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sign a SAML assertion.</span>
+
+<span class="sd">    This method utilizes ``xmlsec1`` binary and signs SAML assertions in a</span>
+<span class="sd">    separate process. ``xmlsec1`` cannot read input data from stdin so the</span>
+<span class="sd">    prepared assertion needs to be serialized and stored in a temporary file.</span>
+<span class="sd">    This file will be deleted immediately after ``xmlsec1`` returns. The signed</span>
+<span class="sd">    assertion is redirected to a standard output and read using</span>
+<span class="sd">    ``subprocess.PIPE`` redirection. A ``saml.Assertion`` class is created from</span>
+<span class="sd">    the signed string again and returned.</span>
+
+<span class="sd">    Parameters that are required in the CONF::</span>
+<span class="sd">    * xmlsec_binary</span>
+<span class="sd">    * private key file path</span>
+<span class="sd">    * public key file path</span>
+<span class="sd">    :returns: XML &lt;Assertion&gt; object</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Ensure that the configured certificate paths do not contain any commas,</span>
+    <span class="c1"># before we string format a comma in between them and cause xmlsec1 to</span>
+    <span class="c1"># explode like a thousand fiery supernovas made entirely of unsigned SAML.</span>
+    <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;keyfile&#39;</span><span class="p">,</span> <span class="s1">&#39;certfile&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;,&#39;</span> <span class="ow">in</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">UnexpectedError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;The configuration value in `keystone.conf [saml] </span><span class="si">{</span><span class="n">option</span><span class="si">}</span><span class="s1">` cannot &#39;</span>
+                <span class="s1">&#39;contain a comma (`,`). Please fix your configuration.&#39;</span>
+            <span class="p">)</span>
+
+    <span class="c1"># xmlsec1 --sign --privkey-pem privkey,cert --id-attr:ID &lt;tag&gt; &lt;file&gt;</span>
+    <span class="n">certificates</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">keyfile</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">certfile</span><span class="si">}</span><span class="s1">&#39;</span>
+
+    <span class="c1"># Verify that the binary used to create the assertion actually exists on</span>
+    <span class="c1"># the system. If it doesn&#39;t, log a warning for operators to go and install</span>
+    <span class="c1"># it. Requests for assertions will fail with HTTP 500s until the package is</span>
+    <span class="c1"># installed, so providing something useful in the logs is about the best we</span>
+    <span class="c1"># can do.</span>
+    <span class="n">_verify_assertion_binary_is_installed</span><span class="p">()</span>
+
+    <span class="n">command_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">xmlsec1_binary</span><span class="p">,</span>
+        <span class="s1">&#39;--sign&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;--privkey-pem&#39;</span><span class="p">,</span>
+        <span class="n">certificates</span><span class="p">,</span>
+        <span class="s1">&#39;--id-attr:ID&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Assertion&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="n">file_path</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># NOTE(gyee): need to make the namespace prefixes explicit so</span>
+        <span class="c1"># they won&#39;t get reassigned when we wrap the assertion into</span>
+        <span class="c1"># SAML2 response</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">fileutils</span><span class="o">.</span><span class="n">write_to_tempfile</span><span class="p">(</span>
+            <span class="n">assertion</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span>
+                <span class="n">nspair</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;saml&#39;</span><span class="p">:</span> <span class="n">saml2</span><span class="o">.</span><span class="n">NAMESPACE</span><span class="p">,</span> <span class="s1">&#39;xmldsig&#39;</span><span class="p">:</span> <span class="n">xmldsig</span><span class="o">.</span><span class="n">NAMESPACE</span><span class="p">}</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">command_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="n">stdout</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span>
+            <span class="n">command_list</span><span class="p">,</span>  <span class="c1"># nosec : The contents</span>
+            <span class="c1"># of the command list are coming from</span>
+            <span class="c1"># a trusted source because the</span>
+            <span class="c1"># executable and arguments all either</span>
+            <span class="c1"># come from the config file or are</span>
+            <span class="c1"># hardcoded. The command list is</span>
+            <span class="c1"># initialized earlier in this function</span>
+            <span class="c1"># to a list and it&#39;s still a list at</span>
+            <span class="c1"># this point in the function. There is</span>
+            <span class="c1"># no opportunity for an attacker to</span>
+            <span class="c1"># attempt command injection via string</span>
+            <span class="c1"># parsing.</span>
+            <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Error when signing assertion, reason: </span><span class="si">%(reason)s%(output)s</span><span class="s1">&#39;</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="n">msg</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;reason&#39;</span><span class="p">:</span> <span class="n">e</span><span class="p">,</span>
+                <span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="n">output</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s1">&#39;output&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">SAMLSigningError</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">file_path</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>  <span class="c1"># nosec</span>
+            <span class="c1"># The file is already gone, good.</span>
+            <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="n">saml2</span><span class="o">.</span><span class="n">create_class_from_xml_string</span><span class="p">(</span><span class="n">saml</span><span class="o">.</span><span class="n">Assertion</span><span class="p">,</span> <span class="n">stdout</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MetadataGenerator">
+<a class="viewcode-back" href="../../../api/keystone.federation.idp.html#keystone.federation.idp.MetadataGenerator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MetadataGenerator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A class for generating SAML IdP Metadata.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MetadataGenerator.generate_metadata">
+<a class="viewcode-back" href="../../../api/keystone.federation.idp.html#keystone.federation.idp.MetadataGenerator.generate_metadata">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate Identity Provider Metadata.</span>
+
+<span class="sd">        Generate and format metadata into XML that can be exposed and</span>
+<span class="sd">        consumed by a federated Service Provider.</span>
+
+<span class="sd">        :returns: XML &lt;EntityDescriptor&gt; object.</span>
+<span class="sd">        :raises keystone.exception.ValidationError: If the required</span>
+<span class="sd">            config options aren&#39;t set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_required_values_present</span><span class="p">()</span>
+        <span class="n">entity_descriptor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_entity_descriptor</span><span class="p">()</span>
+        <span class="n">entity_descriptor</span><span class="o">.</span><span class="n">idpsso_descriptor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_idp_sso_descriptor</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">entity_descriptor</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_entity_descriptor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ed</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">EntityDescriptor</span><span class="p">()</span>
+        <span class="n">ed</span><span class="o">.</span><span class="n">entity_id</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_entity_id</span>
+        <span class="k">return</span> <span class="n">ed</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_idp_sso_descriptor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">get_cert</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">sigver</span><span class="o">.</span><span class="n">read_cert_from_file</span><span class="p">(</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">certfile</span><span class="p">,</span> <span class="s1">&#39;pem&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="n">sigver</span><span class="o">.</span><span class="n">CertificateError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;Cannot open certificate </span><span class="si">{</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">certfile</span><span class="si">}</span><span class="s1">.Reason: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="p">)</span>
+                <span class="n">tr_msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+                    <span class="s1">&#39;Cannot open certificate </span><span class="si">%(cert_file)s</span><span class="s1">.Reason: </span><span class="si">%(reason)s</span><span class="s1">&#39;</span>
+                <span class="p">)</span> <span class="o">%</span> <span class="p">{</span><span class="s1">&#39;cert_file&#39;</span><span class="p">:</span> <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">certfile</span><span class="p">,</span> <span class="s1">&#39;reason&#39;</span><span class="p">:</span> <span class="n">e</span><span class="p">}</span>
+                <span class="n">LOG</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="n">tr_msg</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">key_descriptor</span><span class="p">():</span>
+            <span class="n">cert</span> <span class="o">=</span> <span class="n">get_cert</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">md</span><span class="o">.</span><span class="n">KeyDescriptor</span><span class="p">(</span>
+                <span class="n">key_info</span><span class="o">=</span><span class="n">xmldsig</span><span class="o">.</span><span class="n">KeyInfo</span><span class="p">(</span>
+                    <span class="n">x509_data</span><span class="o">=</span><span class="n">xmldsig</span><span class="o">.</span><span class="n">X509Data</span><span class="p">(</span>
+                        <span class="n">x509_certificate</span><span class="o">=</span><span class="n">xmldsig</span><span class="o">.</span><span class="n">X509Certificate</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">cert</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">use</span><span class="o">=</span><span class="s1">&#39;signing&#39;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">single_sign_on_service</span><span class="p">():</span>
+            <span class="n">idp_sso_endpoint</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_sso_endpoint</span>
+            <span class="k">return</span> <span class="n">md</span><span class="o">.</span><span class="n">SingleSignOnService</span><span class="p">(</span>
+                <span class="n">binding</span><span class="o">=</span><span class="n">saml2</span><span class="o">.</span><span class="n">BINDING_URI</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="n">idp_sso_endpoint</span>
+            <span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">organization</span><span class="p">():</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">OrganizationName</span><span class="p">(</span>
+                <span class="n">lang</span><span class="o">=</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_lang</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_organization_name</span>
+            <span class="p">)</span>
+            <span class="n">display_name</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">OrganizationDisplayName</span><span class="p">(</span>
+                <span class="n">lang</span><span class="o">=</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_lang</span><span class="p">,</span>
+                <span class="n">text</span><span class="o">=</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_organization_display_name</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">OrganizationURL</span><span class="p">(</span>
+                <span class="n">lang</span><span class="o">=</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_lang</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_organization_url</span>
+            <span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">md</span><span class="o">.</span><span class="n">Organization</span><span class="p">(</span>
+                <span class="n">organization_display_name</span><span class="o">=</span><span class="n">display_name</span><span class="p">,</span>
+                <span class="n">organization_url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+                <span class="n">organization_name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">contact_person</span><span class="p">():</span>
+            <span class="n">company</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">Company</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_contact_company</span><span class="p">)</span>
+            <span class="n">given_name</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">GivenName</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_contact_name</span><span class="p">)</span>
+            <span class="n">surname</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">SurName</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_contact_surname</span><span class="p">)</span>
+            <span class="n">email</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">EmailAddress</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_contact_email</span><span class="p">)</span>
+            <span class="n">telephone</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">TelephoneNumber</span><span class="p">(</span>
+                <span class="n">text</span><span class="o">=</span><span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_contact_telephone</span>
+            <span class="p">)</span>
+            <span class="n">contact_type</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_contact_type</span>
+
+            <span class="k">return</span> <span class="n">md</span><span class="o">.</span><span class="n">ContactPerson</span><span class="p">(</span>
+                <span class="n">company</span><span class="o">=</span><span class="n">company</span><span class="p">,</span>
+                <span class="n">given_name</span><span class="o">=</span><span class="n">given_name</span><span class="p">,</span>
+                <span class="n">sur_name</span><span class="o">=</span><span class="n">surname</span><span class="p">,</span>
+                <span class="n">email_address</span><span class="o">=</span><span class="n">email</span><span class="p">,</span>
+                <span class="n">telephone_number</span><span class="o">=</span><span class="n">telephone</span><span class="p">,</span>
+                <span class="n">contact_type</span><span class="o">=</span><span class="n">contact_type</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">name_id_format</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">md</span><span class="o">.</span><span class="n">NameIDFormat</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">saml</span><span class="o">.</span><span class="n">NAMEID_FORMAT_TRANSIENT</span><span class="p">)</span>
+
+        <span class="n">idpsso</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">IDPSSODescriptor</span><span class="p">()</span>
+        <span class="n">idpsso</span><span class="o">.</span><span class="n">protocol_support_enumeration</span> <span class="o">=</span> <span class="n">samlp</span><span class="o">.</span><span class="n">NAMESPACE</span>
+        <span class="n">idpsso</span><span class="o">.</span><span class="n">key_descriptor</span> <span class="o">=</span> <span class="n">key_descriptor</span><span class="p">()</span>
+        <span class="n">idpsso</span><span class="o">.</span><span class="n">single_sign_on_service</span> <span class="o">=</span> <span class="n">single_sign_on_service</span><span class="p">()</span>
+        <span class="n">idpsso</span><span class="o">.</span><span class="n">name_id_format</span> <span class="o">=</span> <span class="n">name_id_format</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_organization_values</span><span class="p">():</span>
+            <span class="n">idpsso</span><span class="o">.</span><span class="n">organization</span> <span class="o">=</span> <span class="n">organization</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_contact_person_values</span><span class="p">():</span>
+            <span class="n">idpsso</span><span class="o">.</span><span class="n">contact_person</span> <span class="o">=</span> <span class="n">contact_person</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">idpsso</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_ensure_required_values_present</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure idp_sso_endpoint and idp_entity_id have values.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_entity_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Ensure configuration option idp_entity_id is set.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_sso_endpoint</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Ensure configuration option idp_sso_endpoint is set.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_contact_person_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if contact information is included in metadata.&quot;&quot;&quot;</span>
+        <span class="c1"># Check if we should include contact information</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_contact_company</span><span class="p">,</span>
+            <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_contact_name</span><span class="p">,</span>
+            <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_contact_surname</span><span class="p">,</span>
+            <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_contact_email</span><span class="p">,</span>
+            <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_contact_telephone</span><span class="p">,</span>
+            <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_contact_type</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_organization_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if organization information is included in metadata.&quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_organization_name</span><span class="p">,</span>
+            <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_organization_display_name</span><span class="p">,</span>
+            <span class="n">CONF</span><span class="o">.</span><span class="n">saml</span><span class="o">.</span><span class="n">idp_organization_url</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="ECPGenerator">
+<a class="viewcode-back" href="../../../api/keystone.federation.idp.html#keystone.federation.idp.ECPGenerator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ECPGenerator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A class for generating an ECP assertion.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ECPGenerator.generate_ecp">
+<a class="viewcode-back" href="../../../api/keystone.federation.idp.html#keystone.federation.idp.ECPGenerator.generate_ecp">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_ecp</span><span class="p">(</span><span class="n">saml_assertion</span><span class="p">,</span> <span class="n">relay_state_prefix</span><span class="p">):</span>
+        <span class="n">ecp_generator</span> <span class="o">=</span> <span class="n">ECPGenerator</span><span class="p">()</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">ecp_generator</span><span class="o">.</span><span class="n">_create_header</span><span class="p">(</span><span class="n">relay_state_prefix</span><span class="p">)</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="n">ecp_generator</span><span class="o">.</span><span class="n">_create_body</span><span class="p">(</span><span class="n">saml_assertion</span><span class="p">)</span>
+        <span class="n">envelope</span> <span class="o">=</span> <span class="n">soapenv</span><span class="o">.</span><span class="n">Envelope</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">envelope</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relay_state_prefix</span><span class="p">):</span>
+        <span class="n">relay_state_text</span> <span class="o">=</span> <span class="n">relay_state_prefix</span> <span class="o">+</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span>
+        <span class="n">relay_state</span> <span class="o">=</span> <span class="n">ecp</span><span class="o">.</span><span class="n">RelayState</span><span class="p">(</span>
+            <span class="n">actor</span><span class="o">=</span><span class="n">client_base</span><span class="o">.</span><span class="n">ACTOR</span><span class="p">,</span> <span class="n">must_understand</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">relay_state_text</span>
+        <span class="p">)</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">soapenv</span><span class="o">.</span><span class="n">Header</span><span class="p">()</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">extension_elements</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">saml2</span><span class="o">.</span><span class="n">element_to_extension_element</span><span class="p">(</span><span class="n">relay_state</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="n">header</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">saml_assertion</span><span class="p">):</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="n">soapenv</span><span class="o">.</span><span class="n">Body</span><span class="p">()</span>
+        <span class="n">body</span><span class="o">.</span><span class="n">extension_elements</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">saml2</span><span class="o">.</span><span class="n">element_to_extension_element</span><span class="p">(</span><span class="n">saml_assertion</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="n">body</span></div>
+
+</pre></div>
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2025-12-08 16:08:08</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../../../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../../../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../../../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "_modules/keystone/federation/idp" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "keystone.federation.idp in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2025-12-08 16:08:08";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "_modules/keystone/federation/idp";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

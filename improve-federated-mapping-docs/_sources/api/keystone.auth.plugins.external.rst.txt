@@ -1,0 +1,7 @@
+keystone.auth.plugins.external module
+=====================================
+
+.. automodule:: keystone.auth.plugins.external
+   :members:
+   :undoc-members:
+   :show-inheritance:

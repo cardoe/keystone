@@ -1,0 +1,7 @@
+keystone.conf.totp module
+=========================
+
+.. automodule:: keystone.conf.totp
+   :members:
+   :undoc-members:
+   :show-inheritance:

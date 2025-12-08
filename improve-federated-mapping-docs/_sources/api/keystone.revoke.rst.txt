@@ -1,0 +1,27 @@
+keystone.revoke package
+=======================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.revoke.backends
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.revoke.core
+   keystone.revoke.model
+
+Module contents
+---------------
+
+.. automodule:: keystone.revoke
+   :members:
+   :undoc-members:
+   :show-inheritance:

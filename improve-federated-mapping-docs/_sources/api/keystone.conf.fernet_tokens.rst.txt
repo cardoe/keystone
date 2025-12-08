@@ -1,0 +1,7 @@
+keystone.conf.fernet\_tokens module
+===================================
+
+.. automodule:: keystone.conf.fernet_tokens
+   :members:
+   :undoc-members:
+   :show-inheritance:

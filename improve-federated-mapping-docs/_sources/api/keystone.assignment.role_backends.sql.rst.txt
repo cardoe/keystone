@@ -1,0 +1,7 @@
+keystone.assignment.role\_backends.sql module
+=============================================
+
+.. automodule:: keystone.assignment.role_backends.sql
+   :members:
+   :undoc-members:
+   :show-inheritance:

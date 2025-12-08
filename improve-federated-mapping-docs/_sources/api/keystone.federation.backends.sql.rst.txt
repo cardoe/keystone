@@ -1,0 +1,7 @@
+keystone.federation.backends.sql module
+=======================================
+
+.. automodule:: keystone.federation.backends.sql
+   :members:
+   :undoc-members:
+   :show-inheritance:

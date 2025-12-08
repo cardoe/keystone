@@ -1,0 +1,7 @@
+keystone.common.authorization module
+====================================
+
+.. automodule:: keystone.common.authorization
+   :members:
+   :undoc-members:
+   :show-inheritance:

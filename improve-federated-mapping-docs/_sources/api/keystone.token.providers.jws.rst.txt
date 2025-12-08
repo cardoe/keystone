@@ -1,0 +1,18 @@
+keystone.token.providers.jws package
+====================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.token.providers.jws.core
+
+Module contents
+---------------
+
+.. automodule:: keystone.token.providers.jws
+   :members:
+   :undoc-members:
+   :show-inheritance:

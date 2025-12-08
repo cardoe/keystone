@@ -1,0 +1,7 @@
+keystone.common.policies.protocol module
+========================================
+
+.. automodule:: keystone.common.policies.protocol
+   :members:
+   :undoc-members:
+   :show-inheritance:

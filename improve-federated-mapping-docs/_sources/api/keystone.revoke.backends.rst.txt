@@ -1,0 +1,19 @@
+keystone.revoke.backends package
+================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.revoke.backends.base
+   keystone.revoke.backends.sql
+
+Module contents
+---------------
+
+.. automodule:: keystone.revoke.backends
+   :members:
+   :undoc-members:
+   :show-inheritance:

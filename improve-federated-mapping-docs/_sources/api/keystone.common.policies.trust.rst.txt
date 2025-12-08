@@ -1,0 +1,7 @@
+keystone.common.policies.trust module
+=====================================
+
+.. automodule:: keystone.common.policies.trust
+   :members:
+   :undoc-members:
+   :show-inheritance:

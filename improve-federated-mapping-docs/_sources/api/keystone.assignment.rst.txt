@@ -1,0 +1,28 @@
+keystone.assignment package
+===========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.assignment.backends
+   keystone.assignment.role_backends
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.assignment.core
+   keystone.assignment.schema
+
+Module contents
+---------------
+
+.. automodule:: keystone.assignment
+   :members:
+   :undoc-members:
+   :show-inheritance:

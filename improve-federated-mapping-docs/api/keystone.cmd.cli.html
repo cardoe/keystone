@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>keystone.cmd.cli module &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/support-matrix.css" />
+    <script src="../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="keystone.cmd.idutils module" href="keystone.cmd.idutils.html" />
+    <link rel="prev" title="keystone.cmd.bootstrap module" href="keystone.cmd.bootstrap.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/api/keystone.cmd.cli.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>keystone.cmd.cli module</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="keystone.cmd.bootstrap.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: keystone.cmd.bootstrap module"></i></a>
+    
+    
+    <a href="keystone.cmd.idutils.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: keystone.cmd.idutils module"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="module-keystone.cmd.cli">
+<span id="keystone-cmd-cli-module"></span><h1>keystone.cmd.cli module<a class="headerlink" href="#module-keystone.cmd.cli" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.BaseApp">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">BaseApp</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#BaseApp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.BaseApp" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.BaseApp.add_argument_parser">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_argument_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#BaseApp.add_argument_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.BaseApp.add_argument_parser" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.BaseApp.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#keystone.cmd.cli.BaseApp.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.BasePermissionsSetup">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">BasePermissionsSetup</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#BasePermissionsSetup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.BasePermissionsSetup" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BaseApp" title="keystone.cmd.cli.BaseApp"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseApp</span></code></a></p>
+<p>Common user/group setup for file permissions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.BasePermissionsSetup.add_argument_parser">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_argument_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#BasePermissionsSetup.add_argument_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.BasePermissionsSetup.add_argument_parser" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.BasePermissionsSetup.get_user_group">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_user_group</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#BasePermissionsSetup.get_user_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.BasePermissionsSetup.get_user_group" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.BasePermissionsSetup.initialize_fernet_repository">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">initialize_fernet_repository</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keystone_user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keystone_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#BasePermissionsSetup.initialize_fernet_repository"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.BasePermissionsSetup.initialize_fernet_repository" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.BasePermissionsSetup.rotate_fernet_repository">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rotate_fernet_repository</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keystone_user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keystone_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#BasePermissionsSetup.rotate_fernet_repository"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.BasePermissionsSetup.rotate_fernet_repository" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.BootStrap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">BootStrap</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#BootStrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.BootStrap" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BaseApp" title="keystone.cmd.cli.BaseApp"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseApp</span></code></a></p>
+<p>Perform the basic bootstrap process.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.BootStrap.add_argument_parser">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_argument_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#BootStrap.add_argument_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.BootStrap.add_argument_parser" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.BootStrap.do_bootstrap">
+<span class="sig-name descname"><span class="pre">do_bootstrap</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#BootStrap.do_bootstrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.BootStrap.do_bootstrap" title="Link to this definition">¶</a></dt>
+<dd><p>Perform the bootstrap actions.</p>
+<p>Create bootstrap user, project, and role so that CMS, humans, or
+scripts can continue to perform initial setup (domains, projects,
+services, endpoints, etc) of Keystone when standing up a new
+deployment.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.BootStrap.main">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#BootStrap.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.BootStrap.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.BootStrap.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bootstrap'</span></em><a class="headerlink" href="#keystone.cmd.cli.BootStrap.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.CreateJWSKeyPair">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">CreateJWSKeyPair</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#CreateJWSKeyPair"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.CreateJWSKeyPair" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BasePermissionsSetup" title="keystone.cmd.cli.BasePermissionsSetup"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePermissionsSetup</span></code></a></p>
+<p>Create a key pair for signing and validating JWS tokens.</p>
+<p>This command creates a public and private key pair to use for signing and
+validating JWS token signatures. The key pair is written to the directory
+where the command is invoked.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.CreateJWSKeyPair.add_argument_parser">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_argument_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#CreateJWSKeyPair.add_argument_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.CreateJWSKeyPair.add_argument_parser" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.CreateJWSKeyPair.main">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#CreateJWSKeyPair.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.CreateJWSKeyPair.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.CreateJWSKeyPair.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'create_jws_keypair'</span></em><a class="headerlink" href="#keystone.cmd.cli.CreateJWSKeyPair.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.CredentialMigrate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">CredentialMigrate</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#CredentialMigrate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.CredentialMigrate" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BasePermissionsSetup" title="keystone.cmd.cli.BasePermissionsSetup"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePermissionsSetup</span></code></a></p>
+<p>Provides the ability to encrypt credentials using a new primary key.</p>
+<p>This assumes that there is already a credential key repository in place and
+that the database backend has been upgraded to at least the Newton schema.
+If the credential repository doesn’t exist yet, you can use
+<code class="docutils literal notranslate"><span class="pre">keystone-manage</span> <span class="pre">credential_setup</span></code> to create one.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.CredentialMigrate.main">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#CredentialMigrate.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.CredentialMigrate.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.CredentialMigrate.migrate_credentials">
+<span class="sig-name descname"><span class="pre">migrate_credentials</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#CredentialMigrate.migrate_credentials"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.CredentialMigrate.migrate_credentials" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.CredentialMigrate.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'credential_migrate'</span></em><a class="headerlink" href="#keystone.cmd.cli.CredentialMigrate.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.CredentialRotate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">CredentialRotate</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#CredentialRotate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.CredentialRotate" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BasePermissionsSetup" title="keystone.cmd.cli.BasePermissionsSetup"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePermissionsSetup</span></code></a></p>
+<p>Rotate Fernet encryption keys for credential encryption.</p>
+<p>This assumes you have already run <cite>keystone-manage credential_setup</cite>.</p>
+<p>A new primary key is placed into rotation only if all credentials are
+encrypted with the current primary key. If any credentials are encrypted
+with a secondary key the rotation will abort. This protects against
+removing a key that is still required to decrypt credentials. Once a key is
+removed from the repository, it is impossible to recover the original data
+without restoring from a backup external to keystone (more on backups
+below). To make sure all credentials are encrypted with the latest primary
+key, please see the <cite>keystone-manage credential_migrate</cite> command. Since the
+maximum number of keys in the credential repository is 3, once all
+credentials are encrypted with the latest primary key we can safely
+introduce a new primary key. All credentials will still be decryptable
+since they are all encrypted with the only secondary key in the repository.</p>
+<p>It is imperitive to understand the importance of backing up keys used to
+encrypt credentials. In the event keys are overrotated, applying a key
+repository from backup can help recover otherwise useless credentials.
+Persisting snapshots of the key repository in secure and encrypted source
+control, or a dedicated key management system are good examples of
+encryption key backups.</p>
+<p>The <cite>keystone-manage credential_rotate</cite> and <cite>keystone-manage
+credential_migrate</cite> commands are intended to be done in sequence. After
+performing a rotation, a migration must be done before performing another
+rotation. This ensures we don’t over-rotate encryption keys.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.CredentialRotate.main">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#CredentialRotate.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.CredentialRotate.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.CredentialRotate.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'credential_rotate'</span></em><a class="headerlink" href="#keystone.cmd.cli.CredentialRotate.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.CredentialRotate.validate_primary_key">
+<span class="sig-name descname"><span class="pre">validate_primary_key</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#CredentialRotate.validate_primary_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.CredentialRotate.validate_primary_key" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.CredentialSetup">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">CredentialSetup</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#CredentialSetup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.CredentialSetup" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BasePermissionsSetup" title="keystone.cmd.cli.BasePermissionsSetup"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePermissionsSetup</span></code></a></p>
+<p>Setup a Fernet key repository for credential encryption.</p>
+<p>The purpose of this command is very similar to <cite>keystone-manage
+fernet_setup</cite> only the keys included in this repository are for encrypting
+and decrypting credential secrets instead of token payloads. Keys can be
+rotated using <cite>keystone-manage credential_rotate</cite>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.CredentialSetup.main">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#CredentialSetup.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.CredentialSetup.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.CredentialSetup.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'credential_setup'</span></em><a class="headerlink" href="#keystone.cmd.cli.CredentialSetup.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DbSync">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">DbSync</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#DbSync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.DbSync" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BaseApp" title="keystone.cmd.cli.BaseApp"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseApp</span></code></a></p>
+<p>Sync the database.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DbSync.add_argument_parser">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_argument_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#DbSync.add_argument_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.DbSync.add_argument_parser" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DbSync.check_db_sync_status">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_db_sync_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#DbSync.check_db_sync_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.DbSync.check_db_sync_status" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DbSync.main">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#DbSync.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.DbSync.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DbSync.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'db_sync'</span></em><a class="headerlink" href="#keystone.cmd.cli.DbSync.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DbVersion">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">DbVersion</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#DbVersion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.DbVersion" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BaseApp" title="keystone.cmd.cli.BaseApp"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseApp</span></code></a></p>
+<p>Print the current migration version of the database.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DbVersion.main">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#DbVersion.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.DbVersion.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DbVersion.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'db_version'</span></em><a class="headerlink" href="#keystone.cmd.cli.DbVersion.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.Doctor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">Doctor</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#Doctor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.Doctor" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BaseApp" title="keystone.cmd.cli.BaseApp"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseApp</span></code></a></p>
+<p>Diagnose common problems with keystone deployments.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.Doctor.add_argument_parser">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_argument_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#Doctor.add_argument_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.Doctor.add_argument_parser" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.Doctor.main">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#Doctor.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.Doctor.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.Doctor.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'doctor'</span></em><a class="headerlink" href="#keystone.cmd.cli.Doctor.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DomainConfigUpload">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">DomainConfigUpload</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#DomainConfigUpload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.DomainConfigUpload" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BaseApp" title="keystone.cmd.cli.BaseApp"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseApp</span></code></a></p>
+<p>Upload the domain specific configuration files to the database.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DomainConfigUpload.add_argument_parser">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_argument_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#DomainConfigUpload.add_argument_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.DomainConfigUpload.add_argument_parser" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DomainConfigUpload.main">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#DomainConfigUpload.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.DomainConfigUpload.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DomainConfigUpload.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'domain_config_upload'</span></em><a class="headerlink" href="#keystone.cmd.cli.DomainConfigUpload.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DomainConfigUploadFiles">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">DomainConfigUploadFiles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain_config_finder=&lt;function</span> <span class="pre">_domain_config_finder&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#DomainConfigUploadFiles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.DomainConfigUploadFiles" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DomainConfigUploadFiles.load_backends">
+<span class="sig-name descname"><span class="pre">load_backends</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#DomainConfigUploadFiles.load_backends"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.DomainConfigUploadFiles.load_backends" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DomainConfigUploadFiles.read_domain_configs_from_files">
+<span class="sig-name descname"><span class="pre">read_domain_configs_from_files</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#DomainConfigUploadFiles.read_domain_configs_from_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.DomainConfigUploadFiles.read_domain_configs_from_files" title="Link to this definition">¶</a></dt>
+<dd><p>Read configs from file(s) and load into database.</p>
+<p>The command line parameters have already been parsed and the CONF
+command option will have been set. It is either set to the name of an
+explicit domain, or it’s None to indicate that we want all domain
+config files.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DomainConfigUploadFiles.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#DomainConfigUploadFiles.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.DomainConfigUploadFiles.run" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.DomainConfigUploadFiles.valid_options">
+<span class="sig-name descname"><span class="pre">valid_options</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#DomainConfigUploadFiles.valid_options"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.DomainConfigUploadFiles.valid_options" title="Link to this definition">¶</a></dt>
+<dd><p>Validate the options, returning True if they are indeed valid.</p>
+<p>It would be nice to use the argparse automated checking for this
+validation, but the only way I can see doing that is to make the
+default (i.e. if no optional parameters are specified) to upload
+all configuration files - and that sounds too dangerous as a
+default. So we use it in a slightly unconventional way, where all
+parameters are optional, but you must specify at least one.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.FernetRotate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">FernetRotate</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#FernetRotate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.FernetRotate" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BasePermissionsSetup" title="keystone.cmd.cli.BasePermissionsSetup"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePermissionsSetup</span></code></a></p>
+<p>Rotate Fernet encryption keys.</p>
+<p>This assumes you have already run keystone-manage fernet_setup.</p>
+<p>A new primary key is placed into rotation, which is used for new tokens.
+The old primary key is demoted to secondary, which can then still be used
+for validating tokens. Excess secondary keys (beyond [fernet_tokens]
+max_active_keys) are revoked. Revoked keys are permanently deleted. A new
+staged key will be created and used to validate tokens. The next time key
+rotation takes place, the staged key will be put into rotation as the
+primary key.</p>
+<p>Rotating keys too frequently, or with [fernet_tokens] max_active_keys set
+too low, will cause tokens to become invalid prior to their expiration.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.FernetRotate.main">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#FernetRotate.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.FernetRotate.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.FernetRotate.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'fernet_rotate'</span></em><a class="headerlink" href="#keystone.cmd.cli.FernetRotate.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.FernetSetup">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">FernetSetup</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#FernetSetup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.FernetSetup" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BasePermissionsSetup" title="keystone.cmd.cli.BasePermissionsSetup"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePermissionsSetup</span></code></a></p>
+<p>Setup key repositories for Fernet tokens and auth receipts.</p>
+<p>This also creates a primary key used for both creating and validating
+Fernet tokens and auth receipts. To improve security, you should rotate
+your keys (using keystone-manage fernet_rotate, for example).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.FernetSetup.main">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#FernetSetup.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.FernetSetup.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.FernetSetup.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'fernet_setup'</span></em><a class="headerlink" href="#keystone.cmd.cli.FernetSetup.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingEngineTester">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">MappingEngineTester</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#MappingEngineTester"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.MappingEngineTester" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BaseApp" title="keystone.cmd.cli.BaseApp"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseApp</span></code></a></p>
+<p>Execute mapping engine locally.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingEngineTester.add_argument_parser">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_argument_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#MappingEngineTester.add_argument_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.MappingEngineTester.add_argument_parser" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingEngineTester.main">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#MappingEngineTester.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.MappingEngineTester.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingEngineTester.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mapping_engine'</span></em><a class="headerlink" href="#keystone.cmd.cli.MappingEngineTester.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingEngineTester.normalize_assertion">
+<span class="sig-name descname"><span class="pre">normalize_assertion</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#MappingEngineTester.normalize_assertion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.MappingEngineTester.normalize_assertion" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingEngineTester.normalize_rules">
+<span class="sig-name descname"><span class="pre">normalize_rules</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#MappingEngineTester.normalize_rules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.MappingEngineTester.normalize_rules" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingEngineTester.read_assertion">
+<span class="sig-name descname"><span class="pre">read_assertion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#MappingEngineTester.read_assertion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.MappingEngineTester.read_assertion" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingEngineTester.read_rules">
+<span class="sig-name descname"><span class="pre">read_rules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#MappingEngineTester.read_rules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.MappingEngineTester.read_rules" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingPopulate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">MappingPopulate</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#MappingPopulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.MappingPopulate" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BaseApp" title="keystone.cmd.cli.BaseApp"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseApp</span></code></a></p>
+<p>Pre-populate entries from domain-specific backends.</p>
+<p>Running this command is not required. It should only be run right after
+the LDAP was configured, when many new users were added, or when
+“mapping_purge” is run.</p>
+<p>This command will take a while to run. It is perfectly fine for it to run
+more than several minutes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingPopulate.add_argument_parser">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_argument_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#MappingPopulate.add_argument_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.MappingPopulate.add_argument_parser" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingPopulate.load_backends">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_backends</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#MappingPopulate.load_backends"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.MappingPopulate.load_backends" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingPopulate.main">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#MappingPopulate.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.MappingPopulate.main" title="Link to this definition">¶</a></dt>
+<dd><p>Process entries for id_mapping_api.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingPopulate.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mapping_populate'</span></em><a class="headerlink" href="#keystone.cmd.cli.MappingPopulate.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingPurge">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">MappingPurge</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#MappingPurge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.MappingPurge" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BaseApp" title="keystone.cmd.cli.BaseApp"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseApp</span></code></a></p>
+<p>Purge the mapping table.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingPurge.add_argument_parser">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_argument_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#MappingPurge.add_argument_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.MappingPurge.add_argument_parser" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingPurge.main">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#MappingPurge.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.MappingPurge.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.MappingPurge.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mapping_purge'</span></em><a class="headerlink" href="#keystone.cmd.cli.MappingPurge.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.ProjectSetup">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">ProjectSetup</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#ProjectSetup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.ProjectSetup" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BaseApp" title="keystone.cmd.cli.BaseApp"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseApp</span></code></a></p>
+<p>Create project with specified UUID.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.ProjectSetup.add_argument_parser">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_argument_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#ProjectSetup.add_argument_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.ProjectSetup.add_argument_parser" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.ProjectSetup.do_project_setup">
+<span class="sig-name descname"><span class="pre">do_project_setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#ProjectSetup.do_project_setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.ProjectSetup.do_project_setup" title="Link to this definition">¶</a></dt>
+<dd><p>Create project with specified UUID.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.ProjectSetup.main">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#ProjectSetup.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.ProjectSetup.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.ProjectSetup.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'project_setup'</span></em><a class="headerlink" href="#keystone.cmd.cli.ProjectSetup.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.ReceiptRotate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">ReceiptRotate</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#ReceiptRotate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.ReceiptRotate" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BasePermissionsSetup" title="keystone.cmd.cli.BasePermissionsSetup"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePermissionsSetup</span></code></a></p>
+<p>Rotate auth receipts encryption keys.</p>
+<p>This assumes you have already run keystone-manage receipt_setup.</p>
+<p>A new primary key is placed into rotation, which is used for new receipts.
+The old primary key is demoted to secondary, which can then still be used
+for validating receipts. Excess secondary keys (beyond [receipt]
+max_active_keys) are revoked. Revoked keys are permanently deleted. A new
+staged key will be created and used to validate receipts. The next time key
+rotation takes place, the staged key will be put into rotation as the
+primary key.</p>
+<p>Rotating keys too frequently, or with [receipt] max_active_keys set
+too low, will cause receipts to become invalid prior to their expiration.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.ReceiptRotate.main">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#ReceiptRotate.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.ReceiptRotate.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.ReceiptRotate.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'receipt_rotate'</span></em><a class="headerlink" href="#keystone.cmd.cli.ReceiptRotate.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.ReceiptSetup">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">ReceiptSetup</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#ReceiptSetup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.ReceiptSetup" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BasePermissionsSetup" title="keystone.cmd.cli.BasePermissionsSetup"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePermissionsSetup</span></code></a></p>
+<p>Setup a key repository for auth receipts.</p>
+<p>This also creates a primary key used for both creating and validating
+receipts. To improve security, you should rotate your keys (using
+keystone-manage receipt_rotate, for example).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.ReceiptSetup.main">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#ReceiptSetup.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.ReceiptSetup.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.ReceiptSetup.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'receipt_setup'</span></em><a class="headerlink" href="#keystone.cmd.cli.ReceiptSetup.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.ResetLastActive">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">ResetLastActive</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#ResetLastActive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.ResetLastActive" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BaseApp" title="keystone.cmd.cli.BaseApp"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseApp</span></code></a></p>
+<p>Reset null values for all users to current time.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.ResetLastActive.add_argument_parser">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_argument_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#ResetLastActive.add_argument_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.ResetLastActive.add_argument_parser" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.ResetLastActive.main">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#ResetLastActive.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.ResetLastActive.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.ResetLastActive.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'reset_last_active'</span></em><a class="headerlink" href="#keystone.cmd.cli.ResetLastActive.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.SamlIdentityProviderMetadata">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">SamlIdentityProviderMetadata</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#SamlIdentityProviderMetadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.SamlIdentityProviderMetadata" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BaseApp" title="keystone.cmd.cli.BaseApp"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseApp</span></code></a></p>
+<p>Generate Identity Provider metadata.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.SamlIdentityProviderMetadata.main">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#SamlIdentityProviderMetadata.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.SamlIdentityProviderMetadata.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.SamlIdentityProviderMetadata.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'saml_idp_metadata'</span></em><a class="headerlink" href="#keystone.cmd.cli.SamlIdentityProviderMetadata.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.TokenRotate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">TokenRotate</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#TokenRotate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.TokenRotate" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BasePermissionsSetup" title="keystone.cmd.cli.BasePermissionsSetup"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePermissionsSetup</span></code></a></p>
+<p>Rotate token encryption keys.</p>
+<p>This assumes you have already run keystone-manage token_setup.</p>
+<p>A new primary key is placed into rotation, which is used for new tokens.
+The old primary key is demoted to secondary, which can then still be used
+for validating tokens. Excess secondary keys (beyond [token]
+max_active_keys) are revoked. Revoked keys are permanently deleted. A new
+staged key will be created and used to validate tokens. The next time key
+rotation takes place, the staged key will be put into rotation as the
+primary key.</p>
+<p>Rotating keys too frequently, or with [token] max_active_keys set
+too low, will cause tokens to become invalid prior to their expiration.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.TokenRotate.main">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#TokenRotate.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.TokenRotate.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.TokenRotate.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'token_rotate'</span></em><a class="headerlink" href="#keystone.cmd.cli.TokenRotate.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.TokenSetup">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">TokenSetup</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#TokenSetup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.TokenSetup" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BasePermissionsSetup" title="keystone.cmd.cli.BasePermissionsSetup"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePermissionsSetup</span></code></a></p>
+<p>Setup a key repository for tokens.</p>
+<p>This also creates a primary key used for both creating and validating
+tokens. To improve security, you should rotate your keys (using
+keystone-manage token_rotate, for example).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.TokenSetup.main">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#TokenSetup.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.TokenSetup.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.TokenSetup.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'token_setup'</span></em><a class="headerlink" href="#keystone.cmd.cli.TokenSetup.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.TrustFlush">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">TrustFlush</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#TrustFlush"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.TrustFlush" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BaseApp" title="keystone.cmd.cli.BaseApp"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseApp</span></code></a></p>
+<p>Flush expired and non-expired soft deleted trusts from the backend.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.TrustFlush.add_argument_parser">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_argument_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#TrustFlush.add_argument_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.TrustFlush.add_argument_parser" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.TrustFlush.main">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#TrustFlush.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.TrustFlush.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.TrustFlush.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'trust_flush'</span></em><a class="headerlink" href="#keystone.cmd.cli.TrustFlush.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.cmd.cli.UserSetup">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">UserSetup</span></span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#UserSetup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.UserSetup" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.cmd.cli.BaseApp" title="keystone.cmd.cli.BaseApp"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseApp</span></code></a></p>
+<p>Create user with specified UUID.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.UserSetup.add_argument_parser">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_argument_parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#UserSetup.add_argument_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.UserSetup.add_argument_parser" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.UserSetup.do_user_setup">
+<span class="sig-name descname"><span class="pre">do_user_setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#UserSetup.do_user_setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.UserSetup.do_user_setup" title="Link to this definition">¶</a></dt>
+<dd><p>Create user with specified UUID.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.cmd.cli.UserSetup.main">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#UserSetup.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.UserSetup.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.cmd.cli.UserSetup.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'user_setup'</span></em><a class="headerlink" href="#keystone.cmd.cli.UserSetup.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.cmd.cli.add_command_parsers">
+<span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">add_command_parsers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#add_command_parsers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.add_command_parsers" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.cmd.cli.main">
+<span class="sig-prename descclassname"><span class="pre">keystone.cmd.cli.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">developer_config_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/cmd/cli.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.cmd.cli.main" title="Link to this definition">¶</a></dt>
+<dd><p>Main entry point into the keystone-manage CLI utility.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>argv</strong> (<em>list</em>) – Arguments supplied via the command line using the <code class="docutils literal notranslate"><span class="pre">sys</span></code>
+standard library.</p></li>
+<li><p><strong>developer_config_file</strong> (<em>string</em>) – The location of a configuration file normally
+found in development environments.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="keystone.cmd.bootstrap.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: keystone.cmd.bootstrap module"></i></a>
+          
+          
+            <a href="keystone.cmd.idutils.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: keystone.cmd.idutils module"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2025-12-08 16:08:08</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html">keystone</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">keystone.cmd.cli module</a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.BaseApp"><code class="docutils literal notranslate"><span class="pre">BaseApp</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.BaseApp.add_argument_parser"><code class="docutils literal notranslate"><span class="pre">BaseApp.add_argument_parser()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.BaseApp.name"><code class="docutils literal notranslate"><span class="pre">BaseApp.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.BasePermissionsSetup"><code class="docutils literal notranslate"><span class="pre">BasePermissionsSetup</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.BasePermissionsSetup.add_argument_parser"><code class="docutils literal notranslate"><span class="pre">BasePermissionsSetup.add_argument_parser()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.BasePermissionsSetup.get_user_group"><code class="docutils literal notranslate"><span class="pre">BasePermissionsSetup.get_user_group()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.BasePermissionsSetup.initialize_fernet_repository"><code class="docutils literal notranslate"><span class="pre">BasePermissionsSetup.initialize_fernet_repository()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.BasePermissionsSetup.rotate_fernet_repository"><code class="docutils literal notranslate"><span class="pre">BasePermissionsSetup.rotate_fernet_repository()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.BootStrap"><code class="docutils literal notranslate"><span class="pre">BootStrap</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.BootStrap.add_argument_parser"><code class="docutils literal notranslate"><span class="pre">BootStrap.add_argument_parser()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.BootStrap.do_bootstrap"><code class="docutils literal notranslate"><span class="pre">BootStrap.do_bootstrap()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.BootStrap.main"><code class="docutils literal notranslate"><span class="pre">BootStrap.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.BootStrap.name"><code class="docutils literal notranslate"><span class="pre">BootStrap.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.CreateJWSKeyPair"><code class="docutils literal notranslate"><span class="pre">CreateJWSKeyPair</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.CreateJWSKeyPair.add_argument_parser"><code class="docutils literal notranslate"><span class="pre">CreateJWSKeyPair.add_argument_parser()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.CreateJWSKeyPair.main"><code class="docutils literal notranslate"><span class="pre">CreateJWSKeyPair.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.CreateJWSKeyPair.name"><code class="docutils literal notranslate"><span class="pre">CreateJWSKeyPair.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.CredentialMigrate"><code class="docutils literal notranslate"><span class="pre">CredentialMigrate</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.CredentialMigrate.main"><code class="docutils literal notranslate"><span class="pre">CredentialMigrate.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.CredentialMigrate.migrate_credentials"><code class="docutils literal notranslate"><span class="pre">CredentialMigrate.migrate_credentials()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.CredentialMigrate.name"><code class="docutils literal notranslate"><span class="pre">CredentialMigrate.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.CredentialRotate"><code class="docutils literal notranslate"><span class="pre">CredentialRotate</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.CredentialRotate.main"><code class="docutils literal notranslate"><span class="pre">CredentialRotate.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.CredentialRotate.name"><code class="docutils literal notranslate"><span class="pre">CredentialRotate.name</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.CredentialRotate.validate_primary_key"><code class="docutils literal notranslate"><span class="pre">CredentialRotate.validate_primary_key()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.CredentialSetup"><code class="docutils literal notranslate"><span class="pre">CredentialSetup</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.CredentialSetup.main"><code class="docutils literal notranslate"><span class="pre">CredentialSetup.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.CredentialSetup.name"><code class="docutils literal notranslate"><span class="pre">CredentialSetup.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.DbSync"><code class="docutils literal notranslate"><span class="pre">DbSync</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.DbSync.add_argument_parser"><code class="docutils literal notranslate"><span class="pre">DbSync.add_argument_parser()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.DbSync.check_db_sync_status"><code class="docutils literal notranslate"><span class="pre">DbSync.check_db_sync_status()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.DbSync.main"><code class="docutils literal notranslate"><span class="pre">DbSync.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.DbSync.name"><code class="docutils literal notranslate"><span class="pre">DbSync.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.DbVersion"><code class="docutils literal notranslate"><span class="pre">DbVersion</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.DbVersion.main"><code class="docutils literal notranslate"><span class="pre">DbVersion.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.DbVersion.name"><code class="docutils literal notranslate"><span class="pre">DbVersion.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.Doctor"><code class="docutils literal notranslate"><span class="pre">Doctor</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.Doctor.add_argument_parser"><code class="docutils literal notranslate"><span class="pre">Doctor.add_argument_parser()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.Doctor.main"><code class="docutils literal notranslate"><span class="pre">Doctor.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.Doctor.name"><code class="docutils literal notranslate"><span class="pre">Doctor.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.DomainConfigUpload"><code class="docutils literal notranslate"><span class="pre">DomainConfigUpload</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.DomainConfigUpload.add_argument_parser"><code class="docutils literal notranslate"><span class="pre">DomainConfigUpload.add_argument_parser()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.DomainConfigUpload.main"><code class="docutils literal notranslate"><span class="pre">DomainConfigUpload.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.DomainConfigUpload.name"><code class="docutils literal notranslate"><span class="pre">DomainConfigUpload.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.DomainConfigUploadFiles"><code class="docutils literal notranslate"><span class="pre">DomainConfigUploadFiles</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.DomainConfigUploadFiles.load_backends"><code class="docutils literal notranslate"><span class="pre">DomainConfigUploadFiles.load_backends()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.DomainConfigUploadFiles.read_domain_configs_from_files"><code class="docutils literal notranslate"><span class="pre">DomainConfigUploadFiles.read_domain_configs_from_files()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.DomainConfigUploadFiles.run"><code class="docutils literal notranslate"><span class="pre">DomainConfigUploadFiles.run()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.DomainConfigUploadFiles.valid_options"><code class="docutils literal notranslate"><span class="pre">DomainConfigUploadFiles.valid_options()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.FernetRotate"><code class="docutils literal notranslate"><span class="pre">FernetRotate</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.FernetRotate.main"><code class="docutils literal notranslate"><span class="pre">FernetRotate.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.FernetRotate.name"><code class="docutils literal notranslate"><span class="pre">FernetRotate.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.FernetSetup"><code class="docutils literal notranslate"><span class="pre">FernetSetup</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.FernetSetup.main"><code class="docutils literal notranslate"><span class="pre">FernetSetup.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.FernetSetup.name"><code class="docutils literal notranslate"><span class="pre">FernetSetup.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingEngineTester"><code class="docutils literal notranslate"><span class="pre">MappingEngineTester</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingEngineTester.add_argument_parser"><code class="docutils literal notranslate"><span class="pre">MappingEngineTester.add_argument_parser()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingEngineTester.main"><code class="docutils literal notranslate"><span class="pre">MappingEngineTester.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingEngineTester.name"><code class="docutils literal notranslate"><span class="pre">MappingEngineTester.name</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingEngineTester.normalize_assertion"><code class="docutils literal notranslate"><span class="pre">MappingEngineTester.normalize_assertion()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingEngineTester.normalize_rules"><code class="docutils literal notranslate"><span class="pre">MappingEngineTester.normalize_rules()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingEngineTester.read_assertion"><code class="docutils literal notranslate"><span class="pre">MappingEngineTester.read_assertion()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingEngineTester.read_rules"><code class="docutils literal notranslate"><span class="pre">MappingEngineTester.read_rules()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingPopulate"><code class="docutils literal notranslate"><span class="pre">MappingPopulate</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingPopulate.add_argument_parser"><code class="docutils literal notranslate"><span class="pre">MappingPopulate.add_argument_parser()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingPopulate.load_backends"><code class="docutils literal notranslate"><span class="pre">MappingPopulate.load_backends()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingPopulate.main"><code class="docutils literal notranslate"><span class="pre">MappingPopulate.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingPopulate.name"><code class="docutils literal notranslate"><span class="pre">MappingPopulate.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingPurge"><code class="docutils literal notranslate"><span class="pre">MappingPurge</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingPurge.add_argument_parser"><code class="docutils literal notranslate"><span class="pre">MappingPurge.add_argument_parser()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingPurge.main"><code class="docutils literal notranslate"><span class="pre">MappingPurge.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.MappingPurge.name"><code class="docutils literal notranslate"><span class="pre">MappingPurge.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.ProjectSetup"><code class="docutils literal notranslate"><span class="pre">ProjectSetup</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.ProjectSetup.add_argument_parser"><code class="docutils literal notranslate"><span class="pre">ProjectSetup.add_argument_parser()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.ProjectSetup.do_project_setup"><code class="docutils literal notranslate"><span class="pre">ProjectSetup.do_project_setup()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.ProjectSetup.main"><code class="docutils literal notranslate"><span class="pre">ProjectSetup.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.ProjectSetup.name"><code class="docutils literal notranslate"><span class="pre">ProjectSetup.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.ReceiptRotate"><code class="docutils literal notranslate"><span class="pre">ReceiptRotate</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.ReceiptRotate.main"><code class="docutils literal notranslate"><span class="pre">ReceiptRotate.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.ReceiptRotate.name"><code class="docutils literal notranslate"><span class="pre">ReceiptRotate.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.ReceiptSetup"><code class="docutils literal notranslate"><span class="pre">ReceiptSetup</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.ReceiptSetup.main"><code class="docutils literal notranslate"><span class="pre">ReceiptSetup.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.ReceiptSetup.name"><code class="docutils literal notranslate"><span class="pre">ReceiptSetup.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.ResetLastActive"><code class="docutils literal notranslate"><span class="pre">ResetLastActive</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.ResetLastActive.add_argument_parser"><code class="docutils literal notranslate"><span class="pre">ResetLastActive.add_argument_parser()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.ResetLastActive.main"><code class="docutils literal notranslate"><span class="pre">ResetLastActive.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.ResetLastActive.name"><code class="docutils literal notranslate"><span class="pre">ResetLastActive.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.SamlIdentityProviderMetadata"><code class="docutils literal notranslate"><span class="pre">SamlIdentityProviderMetadata</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.SamlIdentityProviderMetadata.main"><code class="docutils literal notranslate"><span class="pre">SamlIdentityProviderMetadata.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.SamlIdentityProviderMetadata.name"><code class="docutils literal notranslate"><span class="pre">SamlIdentityProviderMetadata.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.TokenRotate"><code class="docutils literal notranslate"><span class="pre">TokenRotate</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.TokenRotate.main"><code class="docutils literal notranslate"><span class="pre">TokenRotate.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.TokenRotate.name"><code class="docutils literal notranslate"><span class="pre">TokenRotate.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.TokenSetup"><code class="docutils literal notranslate"><span class="pre">TokenSetup</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.TokenSetup.main"><code class="docutils literal notranslate"><span class="pre">TokenSetup.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.TokenSetup.name"><code class="docutils literal notranslate"><span class="pre">TokenSetup.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.TrustFlush"><code class="docutils literal notranslate"><span class="pre">TrustFlush</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.TrustFlush.add_argument_parser"><code class="docutils literal notranslate"><span class="pre">TrustFlush.add_argument_parser()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.TrustFlush.main"><code class="docutils literal notranslate"><span class="pre">TrustFlush.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.TrustFlush.name"><code class="docutils literal notranslate"><span class="pre">TrustFlush.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.UserSetup"><code class="docutils literal notranslate"><span class="pre">UserSetup</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.cmd.cli.UserSetup.add_argument_parser"><code class="docutils literal notranslate"><span class="pre">UserSetup.add_argument_parser()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.UserSetup.do_user_setup"><code class="docutils literal notranslate"><span class="pre">UserSetup.do_user_setup()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.UserSetup.main"><code class="docutils literal notranslate"><span class="pre">UserSetup.main()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.UserSetup.name"><code class="docutils literal notranslate"><span class="pre">UserSetup.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.cmd.cli.add_command_parsers"><code class="docutils literal notranslate"><span class="pre">add_command_parsers()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.cmd.cli.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "api/keystone.cmd.cli" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "keystone.cmd.cli module in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2025-12-08 16:08:08";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "api/keystone.cmd.cli";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

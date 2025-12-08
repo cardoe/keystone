@@ -1,0 +1,7 @@
+keystone.cmd.manage module
+==========================
+
+.. automodule:: keystone.cmd.manage
+   :members:
+   :undoc-members:
+   :show-inheritance:

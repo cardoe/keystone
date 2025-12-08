@@ -1,0 +1,7 @@
+keystone.resource.backends.resource\_options module
+===================================================
+
+.. automodule:: keystone.resource.backends.resource_options
+   :members:
+   :undoc-members:
+   :show-inheritance:

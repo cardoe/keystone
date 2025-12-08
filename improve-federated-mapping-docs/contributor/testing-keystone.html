@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Testing Keystone &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/support-matrix.css" />
+    <script src="../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Developing doctor checks" href="doctor-checks.html" />
+    <link rel="prev" title="Working with Release Notes" href="release-notes.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/contributor/testing-keystone.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Testing Keystone</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="release-notes.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Working with Release Notes"></i></a>
+    
+    
+    <a href="doctor-checks.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Developing doctor checks"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="testing-keystone">
+<h1>Testing Keystone<a class="headerlink" href="#testing-keystone" title="Link to this heading">¶</a></h1>
+<section id="running-tests">
+<h2>Running Tests<a class="headerlink" href="#running-tests" title="Link to this heading">¶</a></h2>
+<p>Before running tests, you should have <code class="docutils literal notranslate"><span class="pre">tox</span></code> installed and available in your
+environment (in addition to the other external dependencies in
+<a class="reference internal" href="set-up-keystone.html#dev-environment"><span class="std std-ref">Setting up Keystone</span></a>):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>tox
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may need to perform both the above operation and the next inside a
+python virtualenv, or prefix the above command with <code class="docutils literal notranslate"><span class="pre">sudo</span></code>, depending on
+your preference.</p>
+</div>
+<p>To execute the full suite of tests maintained within keystone, simply run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>tox
+</pre></div>
+</div>
+<p>This iterates over multiple configuration variations, and uses external
+projects to do light integration testing to verify the Identity API against
+other projects.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The first time you run <code class="docutils literal notranslate"><span class="pre">tox</span></code>, it will take additional time to build
+virtualenvs. You can later use the <code class="docutils literal notranslate"><span class="pre">-r</span></code> option with <code class="docutils literal notranslate"><span class="pre">tox</span></code> to rebuild
+your virtualenv in a similar manner.</p>
+</div>
+<p>To run tests for one or more specific test environments (for example, the most
+common configuration of Python 3.6 and PEP-8), list the environments with the
+<code class="docutils literal notranslate"><span class="pre">-e</span></code> option, separated by spaces:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>py36,pep8
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Keystone dropped the support of <a class="reference external" href="http://www.python.org">python</a> 2.7 in the Ussuri release of Openstack.</p>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">tox</span> <span class="pre">--listenvs</span></code> to list all testing environments specified in keystone’s
+<code class="docutils literal notranslate"><span class="pre">tox.ini</span></code> file.</p>
+<section id="interactive-debugging">
+<h3>Interactive debugging<a class="headerlink" href="#interactive-debugging" title="Link to this heading">¶</a></h3>
+<p>Using <code class="docutils literal notranslate"><span class="pre">pdb</span></code> breakpoints with <code class="docutils literal notranslate"><span class="pre">tox</span></code> and <code class="docutils literal notranslate"><span class="pre">testr</span></code> normally doesn’t work
+since the tests just fail with a <code class="docutils literal notranslate"><span class="pre">BdbQuit</span></code> exception rather than stopping at
+the breakpoint.</p>
+<p>To capture breakpoints while running tests, use the <code class="docutils literal notranslate"><span class="pre">debug</span></code> environment. The
+following example uses the environment while invoking a specific test run.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>debug<span class="w"> </span>keystone.tests.unit.test_module.TestClass.test_case
+</pre></div>
+</div>
+<p>For reference, the <code class="docutils literal notranslate"><span class="pre">debug</span></code> environment implements the instructions here:
+<a class="reference external" href="https://wiki.openstack.org/wiki/Testr#Debugging_.28pdb.29_Tests">https://wiki.openstack.org/wiki/Testr#Debugging_.28pdb.29_Tests</a></p>
+</section>
+</section>
+<section id="building-the-documentation">
+<h2>Building the Documentation<a class="headerlink" href="#building-the-documentation" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">docs</span></code> and <code class="docutils literal notranslate"><span class="pre">api-ref</span></code> environments will automatically generate
+documentation and the API reference respectively. The results are written to
+<code class="docutils literal notranslate"><span class="pre">doc/</span></code> and <code class="docutils literal notranslate"><span class="pre">api-ref/</span></code>.</p>
+<p>For example, use the following command to render all documentation and manual
+pages:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>docs
+</pre></div>
+</div>
+</section>
+<section id="tests-structure">
+<h2>Tests Structure<a class="headerlink" href="#tests-structure" title="Link to this heading">¶</a></h2>
+<p>Not all of the tests in the <code class="docutils literal notranslate"><span class="pre">keystone/tests/unit</span></code> directory are strictly unit
+tests. Keystone intentionally includes tests that run the service locally and
+drives the entire configuration to achieve basic functional testing.</p>
+<p>For the functional tests, an in-memory key-value store or in-memory SQLite
+database is used to keep the tests fast.</p>
+<p>Within the tests directory, the general structure of the backend tests is a
+basic set of tests represented under a test class, and then subclasses of those
+tests under other classes with different configurations to drive different
+backends through the APIs. To add tests covering all drivers, update the base
+test class in <code class="docutils literal notranslate"><span class="pre">test_backend.py</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The structure of backend testing is in transition, migrating from having
+all classes in a single file (<code class="docutils literal notranslate"><span class="pre">test_backend.py</span></code>) to one where there is a
+directory structure to reduce the size of the test files. See:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.tests.unit.backend.role</span></code></p></li>
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.tests.unit.backend.domain_config</span></code></p></li>
+</ul>
+</div></blockquote>
+</div>
+<p>To add new drivers, subclass the base class at <code class="docutils literal notranslate"><span class="pre">test_backend.py</span></code> (look at
+<code class="docutils literal notranslate"><span class="pre">test_backend_sql.py</span></code> for examples) and update the configuration of the test
+class in <code class="docutils literal notranslate"><span class="pre">setUp()</span></code>.</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">test_backend.py</span></code> has a sequence of tests under the class
+<code class="xref py py-class docutils literal notranslate"><span class="pre">keystone.tests.unit.test_backend.IdentityTests</span></code> that will work with the
+default drivers. The <code class="docutils literal notranslate"><span class="pre">test_backend_sql.py</span></code> module subclasses those tests,
+changing the configuration by overriding with configuration files stored in the
+<code class="docutils literal notranslate"><span class="pre">tests/unit/config_files</span></code> directory aimed at enabling the SQL backend for the
+Identity module.</p>
+</section>
+<section id="testing-schema-migrations">
+<h2>Testing Schema Migrations<a class="headerlink" href="#testing-schema-migrations" title="Link to this heading">¶</a></h2>
+<p>Tests for database migrations can be found in
+<code class="docutils literal notranslate"><span class="pre">keystone/tests/unit/test_sql_upgrade.py</span></code> and
+<code class="docutils literal notranslate"><span class="pre">keystone/tests/unit/test_sql_banned_operations.py</span></code>.</p>
+</section>
+<section id="ldap-tests">
+<h2>LDAP Tests<a class="headerlink" href="#ldap-tests" title="Link to this heading">¶</a></h2>
+<p>LDAP has a fake backend that performs rudimentary operations. If you
+are building more significant LDAP functionality, you should test against
+a live LDAP server.  Devstack has an option to set up a directory server for
+Keystone to use.  Add ldap to the <code class="docutils literal notranslate"><span class="pre">ENABLED_SERVICES</span></code> environment variable,
+and set environment variables <code class="docutils literal notranslate"><span class="pre">KEYSTONE_IDENTITY_BACKEND=ldap</span></code> and
+<code class="docutils literal notranslate"><span class="pre">KEYSTONE_CLEAR_LDAP=yes</span></code> in your <code class="docutils literal notranslate"><span class="pre">localrc</span></code> file.</p>
+<p>The unit tests can be run against a live server with
+<code class="docutils literal notranslate"><span class="pre">keystone/tests/unit/test_ldap_livetest.py</span></code> and
+<code class="docutils literal notranslate"><span class="pre">keystone/tests/unit/test_ldap_pool_livetest.py</span></code>. The default password is
+<code class="docutils literal notranslate"><span class="pre">test</span></code> but if you have installed devstack with a different LDAP password,
+modify the file <code class="docutils literal notranslate"><span class="pre">keystone/tests/unit/config_files/backend_liveldap.conf</span></code> and
+<code class="docutils literal notranslate"><span class="pre">keystone/tests/unit/config_files/backend_pool_liveldap.conf</span></code> to reflect your
+password.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To run the live tests you need to set the environment variable
+<code class="docutils literal notranslate"><span class="pre">ENABLE_LDAP_LIVE_TEST</span></code> to a non-negative value.</p>
+</div>
+</section>
+<section id="work-in-progress-tests">
+<h2>“Work in progress” Tests<a class="headerlink" href="#work-in-progress-tests" title="Link to this heading">¶</a></h2>
+<p>Work in progress (WIP) tests are very useful in a variety of situations
+including:</p>
+<ul class="simple">
+<li><p>While doing test-driven-development they can be used to add tests to a review
+while they are not yet working and will not cause test failures. They can be
+removed when the functionality is fixed in a later patch set.</p></li>
+<li><p>A common practice is to recreate bugs by exposing the broken behavior in a
+functional or unit test. To encapsulate the correct behavior in the test, the
+test will usually assert the correct outcome, which will break without a fix.
+Marking the test as WIP gives us the ability to capture the broken behavior
+in code if a fix isn’t ready yet.</p></li>
+</ul>
+<p>The <code class="xref py py-func docutils literal notranslate"><span class="pre">keystone.tests.unit.utils.wip()</span></code> decorator can be used to mark a test
+as WIP. A WIP test will always be run. If the test fails then a SkipTest
+exception is raised because we expect the test to fail. We do not pass
+the test in this case so that it doesn’t count toward the number of
+successfully run tests. If the test passes an AssertionError exception is
+raised so that the developer knows they made the test pass. This is a
+reminder to remove the decorator.</p>
+<p>The <code class="xref py py-func docutils literal notranslate"><span class="pre">keystone.tests.unit.utils.wip()</span></code> decorator requires that the author
+provides a message. This message is important because it will tell other
+developers why this test is marked as a work in progress. Reviewers will
+require that these messages are descriptive and accurate.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="xref py py-func docutils literal notranslate"><span class="pre">keystone.tests.unit.utils.wip()</span></code> decorator is not a replacement
+for skipping tests.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@wip</span><span class="p">(</span><span class="s1">&#39;waiting on bug #000000&#39;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test</span><span class="p">():</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Another strategy is to not use the wip decorator and instead show how the
+code currently incorrectly works. Which strategy is chosen is up to the
+developer.</p>
+</div>
+</section>
+<section id="api-scenario-tests">
+<h2>API &amp; Scenario Tests<a class="headerlink" href="#api-scenario-tests" title="Link to this heading">¶</a></h2>
+<p>Keystone provides API and scenario tests via a <a class="reference external" href="https://docs.openstack.org/tempest/latest/plugin.html">tempest plugin</a> which is
+located in a separate <a class="reference external" href="http://opendev.org/openstack/keystone-tempest-plugin">repository</a>. This tempest plugin is mainly intended for
+specific scenarios that require a special deployment, such as the tests for the
+<code class="docutils literal notranslate"><span class="pre">Federated</span> <span class="pre">Identity</span></code> feature or live testing against LDAP. For the deployment
+of these scenarios, keystone also provides a <a class="reference external" href="https://docs.openstack.org/devstack/latest/plugins.html">devstack plugin</a>.</p>
+<p>For example, to setup a working federated environment, add the following lines
+in your <cite>devstack</cite> <cite>local.conf`</cite> file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[[</span>local<span class="p">|</span>localrc<span class="o">]]</span>
+enable_plugin<span class="w"> </span>keystone<span class="w"> </span>https://opendev.org/openstack/keystone
+enable_service<span class="w"> </span>keystone-saml2-federation
+</pre></div>
+</div>
+<p>Clone and install keystone-tempest-plugin.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://opendev.org/openstack/keystone-tempest-plugin
+sudo<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>./keystone-tempest-plugin
+</pre></div>
+</div>
+<p>Finally, to run keystone’s API and scenario tests, deploy <a class="reference external" href="https://opendev.org/openstack/tempest">tempest</a> with
+<a class="reference external" href="https://opendev.org/openstack/devstack">devstack</a> (using the configuration above) and then run the following command
+from the tempest directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tox<span class="w"> </span>-e<span class="w"> </span>all<span class="w"> </span>--<span class="w"> </span>keystone_tempest_plugin
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Most of keystone’s API tests are implemented in <a class="reference external" href="https://opendev.org/openstack/tempest">tempest</a> and it is usually
+the correct place to add new tests.</p>
+</div>
+<section id="writing-new-api-scenario-tests">
+<h3>Writing new API &amp; Scenario Tests<a class="headerlink" href="#writing-new-api-scenario-tests" title="Link to this heading">¶</a></h3>
+<p>When writing tests for the keystone tempest plugin, we should follow the
+official tempest guidelines, details about the guidelines can be found at the
+<a class="reference external" href="https://docs.openstack.org/tempest/latest/HACKING.html">tempest coding guide</a>. There are also specific guides for the API and
+scenario tests: <a class="reference external" href="https://docs.openstack.org/tempest/latest/field_guide/api.html">Tempest Field Guide to API tests</a> and
+<a class="reference external" href="https://docs.openstack.org/tempest/latest/field_guide/scenario.html">Tempest Field Guide to Scenario tests</a>.</p>
+<p>The keystone tempest plugin also provides a base class. For most cases, the
+tests should inherit from it:
+<code class="xref py py-class docutils literal notranslate"><span class="pre">keystone_tempest_plugin.tests.base.BaseIdentityTest</span></code>. This class
+already setups the identity API version and is the container of all API
+services clients.
+New API services clients <code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone_tempest_plugin.services</span></code>
+(which are used to communicate with the REST API from
+the services) should also be added to this class. For example, below we have a
+snippet from the tests at
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone_tempest_plugin.tests.api.identity.v3.test_identity_providers.py</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">IdentityProvidersTest</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">BaseIdentityTest</span><span class="p">):</span>
+
+<span class="o">...</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_create_idp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idp_id</span><span class="p">,</span> <span class="n">idp_ref</span><span class="p">):</span>
+    <span class="n">idp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">idps_client</span><span class="o">.</span><span class="n">create_identity_provider</span><span class="p">(</span>
+        <span class="n">idp_id</span><span class="p">,</span> <span class="o">**</span><span class="n">idp_ref</span><span class="p">)[</span><span class="s1">&#39;identity_provider&#39;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">addCleanup</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">idps_client</span><span class="o">.</span><span class="n">delete_identity_provider</span><span class="p">,</span> <span class="n">idp_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">idp</span>
+
+<span class="nd">@decorators</span><span class="o">.</span><span class="n">idempotent_id</span><span class="p">(</span><span class="s1">&#39;09450910-b816-4150-8513-a2fd4628a0c3&#39;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_identity_provider_create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">idp_id</span> <span class="o">=</span> <span class="n">data_utils</span><span class="o">.</span><span class="n">rand_uuid_hex</span><span class="p">()</span>
+    <span class="n">idp_ref</span> <span class="o">=</span> <span class="n">fixtures</span><span class="o">.</span><span class="n">idp_ref</span><span class="p">()</span>
+    <span class="n">idp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_idp</span><span class="p">(</span><span class="n">idp_id</span><span class="p">,</span> <span class="n">idp_ref</span><span class="p">)</span>
+
+    <span class="c1"># The identity provider is disabled by default</span>
+    <span class="n">idp_ref</span><span class="p">[</span><span class="s1">&#39;enabled&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># The remote_ids attribute should be set to an empty list by default</span>
+    <span class="n">idp_ref</span><span class="p">[</span><span class="s1">&#39;remote_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_assert_identity_provider_attributes</span><span class="p">(</span><span class="n">idp</span><span class="p">,</span> <span class="n">idp_id</span><span class="p">,</span> <span class="n">idp_ref</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The test class extends
+<code class="xref py py-class docutils literal notranslate"><span class="pre">keystone_tempest_plugin.tests.base.BaseIdentityTest</span></code>. Also, the
+<code class="docutils literal notranslate"><span class="pre">_create_idp</span></code> method calls keystone’s API using the <code class="docutils literal notranslate"><span class="pre">idps_client</span></code>,
+which is an instance from.
+<code class="xref py py-class docutils literal notranslate"><span class="pre">keystone_tempest_plugin.tests.services.identity.v3.identity_providers_client.IdentityProvidersClient</span></code>.</p>
+<p>Additionally, to illustrate the construction of a new test class, below we have
+a snippet from the scenario test that checks the complete federated
+authentication workflow (
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone_tempest_plugin.tests.scenario.test_federated_authentication.py</span></code>).
+In the test setup, all of the needed resources are created using the API
+service clients. Since it is a scenario test, it is common to need some
+customized settings that will come from the environment (in this case, from
+the devstack plugin) - these settings are collected in the <code class="docutils literal notranslate"><span class="pre">_setup_settings</span></code>
+method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">TestSaml2EcpFederatedAuthentication</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">BaseIdentityTest</span><span class="p">):</span>
+
+<span class="o">...</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_setup_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">idp_id</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">fed_scenario</span><span class="o">.</span><span class="n">idp_id</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">idp_url</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">fed_scenario</span><span class="o">.</span><span class="n">idp_ecp_url</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">keystone_v3_endpoint</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">identity</span><span class="o">.</span><span class="n">uri_v3</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">fed_scenario</span><span class="o">.</span><span class="n">idp_password</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">protocol_id</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">fed_scenario</span><span class="o">.</span><span class="n">protocol_id</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">fed_scenario</span><span class="o">.</span><span class="n">idp_username</span>
+
+<span class="o">...</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">TestSaml2EcpFederatedAuthentication</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_setup_settings</span><span class="p">()</span>
+
+    <span class="c1"># Reset client&#39;s session to avoid getting garbage from another runs</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">saml2_client</span><span class="o">.</span><span class="n">reset_session</span><span class="p">()</span>
+
+    <span class="c1"># Setup identity provider, mapping and protocol</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_setup_idp</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_setup_mapping</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_setup_protocol</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Finally, the tests perform the complete workflow of the feature, asserting
+correctness in each step:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_request_unscoped_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saml2_client</span><span class="o">.</span><span class="n">send_service_provider_request</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keystone_v3_endpoint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">idp_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">protocol_id</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">http_client</span><span class="o">.</span><span class="n">OK</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+    <span class="n">saml2_authn_request</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">XML</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+
+    <span class="n">relay_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_str_from_xml</span><span class="p">(</span>
+        <span class="n">saml2_authn_request</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ECP_RELAY_STATE</span><span class="p">)</span>
+    <span class="n">sp_consumer_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_str_from_xml</span><span class="p">(</span>
+        <span class="n">saml2_authn_request</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ECP_SERVICE_PROVIDER_CONSUMER_URL</span><span class="p">)</span>
+
+    <span class="c1"># Perform the authn request to the identity provider</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saml2_client</span><span class="o">.</span><span class="n">send_identity_provider_authn_request</span><span class="p">(</span>
+        <span class="n">saml2_authn_request</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">idp_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">http_client</span><span class="o">.</span><span class="n">OK</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+    <span class="n">saml2_idp_authn_response</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">XML</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+
+    <span class="n">idp_consumer_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_str_from_xml</span><span class="p">(</span>
+        <span class="n">saml2_idp_authn_response</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ECP_IDP_CONSUMER_URL</span><span class="p">)</span>
+
+    <span class="c1"># Assert that both saml2_authn_request and saml2_idp_authn_response</span>
+    <span class="c1"># have the same consumer URL.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">sp_consumer_url</span><span class="p">,</span> <span class="n">idp_consumer_url</span><span class="p">)</span>
+
+    <span class="o">...</span>
+
+
+<span class="nd">@testtools</span><span class="o">.</span><span class="n">skipUnless</span><span class="p">(</span><span class="n">CONF</span><span class="o">.</span><span class="n">identity_feature_enabled</span><span class="o">.</span><span class="n">federation</span><span class="p">,</span>
+                      <span class="s2">&quot;Federated Identity feature not enabled&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_request_unscoped_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_request_unscoped_token</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Notice that the <code class="docutils literal notranslate"><span class="pre">test_request_unscoped_token</span></code> test only executes if the
+<code class="docutils literal notranslate"><span class="pre">federation</span></code> feature flag is enabled.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For each patch submitted upstream, all of the tests from the keystone
+tempest plugin are executed in the
+<code class="docutils literal notranslate"><span class="pre">gate-keystone-dsvm-functional-v3-only-*</span></code> job.</p>
+</div>
+</section>
+</section>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="release-notes.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Working with Release Notes"></i></a>
+          
+          
+            <a href="doctor-checks.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Developing doctor checks"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2024-06-24 10:43:09</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Contributor Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">So You Want to Contribute…</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-can-i-help.html">How Can I Help?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="set-up-keystone.html">Setting up Keystone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http-api.html">Identity API v2.0 and v3 History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="proposing-features.html">Proposing Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release-notes.html">Working with Release Notes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Testing Keystone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doctor-checks.html">Developing <code class="docutils literal notranslate"><span class="pre">doctor</span></code> checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_change_tutorial.html">Making an API Change</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auth-plugins.html">Authentication Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database-migrations.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="id-manage.html">Identity entity ID management for domain-specific backends</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Learning Architecture Internals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services.html">Keystone for Other Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing-drivers.html">Developing Keystone Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service-catalog.html">Service Catalog Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vision-reflection.html">Technical Vision for Keystone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="programming-exercises.html">Programming Exercises for Interns and New Contributors</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Testing Keystone</a><ul>
+<li><a class="reference internal" href="#running-tests">Running Tests</a><ul>
+<li><a class="reference internal" href="#interactive-debugging">Interactive debugging</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#building-the-documentation">Building the Documentation</a></li>
+<li><a class="reference internal" href="#tests-structure">Tests Structure</a></li>
+<li><a class="reference internal" href="#testing-schema-migrations">Testing Schema Migrations</a></li>
+<li><a class="reference internal" href="#ldap-tests">LDAP Tests</a></li>
+<li><a class="reference internal" href="#work-in-progress-tests">“Work in progress” Tests</a></li>
+<li><a class="reference internal" href="#api-scenario-tests">API &amp; Scenario Tests</a><ul>
+<li><a class="reference internal" href="#writing-new-api-scenario-tests">Writing new API &amp; Scenario Tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "contributor/testing-keystone" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "Testing Keystone in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2024-06-24 10:43:09";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "contributor/testing-keystone";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

@@ -1,0 +1,7 @@
+keystone.api.domains module
+===========================
+
+.. automodule:: keystone.api.domains
+   :members:
+   :undoc-members:
+   :show-inheritance:

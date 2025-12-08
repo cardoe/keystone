@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Configuring Keystone for Tokenless Authorization &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/support-matrix.css" />
+    <script src="../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="OAuth1 1.0a" href="oauth1.html" />
+    <link rel="prev" title="Using external authentication with Keystone" href="external-authentication.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/admin/configure_tokenless_x509.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Configuring Keystone for Tokenless Authorization</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="external-authentication.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Using external authentication with Keystone"></i></a>
+    
+    
+    <a href="oauth1.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: OAuth1 1.0a"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="configuring-keystone-for-tokenless-authorization">
+<h1>Configuring Keystone for Tokenless Authorization<a class="headerlink" href="#configuring-keystone-for-tokenless-authorization" title="Link to this heading">¶</a></h1>
+<section id="definitions">
+<h2>Definitions<a class="headerlink" href="#definitions" title="Link to this heading">¶</a></h2>
+<ul>
+<li><p><cite>X.509 Tokenless Authorization</cite>: Provides a means to authorize client
+operations within Keystone by using an X.509 SSL client certificate
+without having to issue a token.</p>
+<p>This feature is designed to reduce the complexity of user token validation
+in Keystone <code class="docutils literal notranslate"><span class="pre">auth_token</span></code> middleware by eliminating the need for service
+user token for authentication and authorization. Therefore, there’s no need
+to having to create and maintain a service user account for the sole purpose
+of user token validation. Furthermore, this feature improves efficiency by
+avoiding service user token handling (i.e. request, cache, and renewal).
+By not having to deal with service user credentials in the configuration
+files, deployers are relieved of the burden of having to protect the
+server user passwords throughout the deployment lifecycle. This feature also
+improve security by using X.509 certificate instead of password for
+authentication.</p>
+<p>For details, please refer to the specs
+<a class="reference external" href="https://specs.openstack.org/openstack/keystone-specs/specs/liberty/keystone-tokenless-authz-with-x509-ssl-client-cert.html">Tokenless Authorization with X.509 Client SSL Certificate</a></p>
+</li>
+<li><p><cite>Public Key Infrastructure or PKI</cite>: a system which utilize public key
+cryptography to achieve authentication, authorization, confidentiality,
+integrity, non-repudiation. In this system, the identities are
+represented by public key certificates. Public key certificate handling
+is governed by the <a class="reference external" href="https://en.wikipedia.org/wiki/X.509">X.509</a> standard.</p>
+<p>See <a class="reference external" href="https://en.wikipedia.org/wiki/Public_key_infrastructure">Public Key Infrastructure</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/X.509">X.509</a> for more information.</p>
+</li>
+<li><p><cite>X.509 Certificate</cite>: a time bound digital identity, which is
+certified or digitally signed by its issuer using cryptographic means as
+defined by the <a class="reference external" href="https://en.wikipedia.org/wiki/X.509">X.509</a> standard. It contains information which can be
+used to uniquely identify its owner. For example, the owner of the
+certificate is identified by the <code class="docutils literal notranslate"><span class="pre">Subject</span></code> attribute while the issuer
+is identified by <code class="docutils literal notranslate"><span class="pre">Issuer</span></code> attribute.</p>
+<p>In operation, certificates are usually stored in
+<a class="reference external" href="https://en.wikipedia.org/wiki/Public_key_certificate">Privacy-Enhanced Mail</a> (PEM) format.</p>
+<p>Here’s an example of what a certificate typically contains:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">Certificate</span><span class="o">:</span>
+<span class="w">    </span><span class="nx">Data</span><span class="o">:</span>
+<span class="w">        </span><span class="nx">Version</span><span class="o">:</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="p">(</span><span class="mh">0x2</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">Serial</span><span class="w"> </span><span class="nb">Number</span><span class="o">:</span><span class="w"> </span><span class="mf">4098</span><span class="w"> </span><span class="p">(</span><span class="mh">0x1002</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">Signature</span><span class="w"> </span><span class="nx">Algorithm</span><span class="o">:</span><span class="w"> </span><span class="nx">sha256WithRSAEncryption</span>
+<span class="w">        </span><span class="nx">Issuer</span><span class="o">:</span><span class="w"> </span><span class="nx">DC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">com</span><span class="p">,</span><span class="w"> </span><span class="nx">DC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">somedemo</span><span class="p">,</span><span class="w"> </span><span class="nx">O</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">openstack</span><span class="p">,</span><span class="w"> </span><span class="nx">OU</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">keystone</span><span class="p">,</span><span class="w"> </span><span class="nx">CN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Intermediate</span><span class="w"> </span><span class="nx">CA</span>
+<span class="w">        </span><span class="nx">Validity</span>
+<span class="w">            </span><span class="nx">Not</span><span class="w"> </span><span class="nx">Before</span><span class="o">:</span><span class="w"> </span><span class="nx">Jul</span><span class="w">  </span><span class="mf">5</span><span class="w"> </span><span class="mf">18</span><span class="o">:</span><span class="mf">42</span><span class="o">:</span><span class="mo">01</span><span class="w"> </span><span class="mf">2019</span><span class="w"> </span><span class="nx">GMT</span>
+<span class="w">            </span><span class="nx">Not</span><span class="w"> </span><span class="nx">After</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">Jul</span><span class="w">  </span><span class="mf">2</span><span class="w"> </span><span class="mf">18</span><span class="o">:</span><span class="mf">42</span><span class="o">:</span><span class="mo">01</span><span class="w"> </span><span class="mf">2029</span><span class="w"> </span><span class="nx">GMT</span>
+<span class="w">        </span><span class="nx">Subject</span><span class="o">:</span><span class="w"> </span><span class="nx">DC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">com</span><span class="p">,</span><span class="w"> </span><span class="nx">DC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">somedemo</span><span class="p">,</span><span class="w"> </span><span class="nx">O</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Default</span><span class="p">,</span><span class="w"> </span><span class="nx">OU</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">keystone</span><span class="p">,</span><span class="w"> </span><span class="nx">CN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">glance</span>
+<span class="w">        </span><span class="nx">Subject</span><span class="w"> </span><span class="nx">Public</span><span class="w"> </span><span class="nx">Key</span><span class="w"> </span><span class="nx">Info</span><span class="o">:</span>
+<span class="w">            </span><span class="nx">Public</span><span class="w"> </span><span class="nx">Key</span><span class="w"> </span><span class="nx">Algorithm</span><span class="o">:</span><span class="w"> </span><span class="nx">rsaEncryption</span>
+<span class="w">                </span><span class="nx">Public</span><span class="o">-</span><span class="nx">Key</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="mf">2048</span><span class="w"> </span><span class="nx">bit</span><span class="p">)</span>
+<span class="w">                </span><span class="nx">Modulus</span><span class="o">:</span>
+<span class="w">                    </span><span class="mo">00</span><span class="o">:</span><span class="nx">cf</span><span class="o">:</span><span class="mf">35</span><span class="o">:</span><span class="mf">8</span><span class="nx">b</span><span class="o">:</span><span class="nx">cd</span><span class="o">:</span><span class="mf">4</span><span class="nx">f</span><span class="o">:</span><span class="mf">17</span><span class="o">:</span><span class="mf">28</span><span class="o">:</span><span class="mf">38</span><span class="o">:</span><span class="mf">25</span><span class="o">:</span><span class="nx">f7</span><span class="o">:</span><span class="nx">e2</span><span class="o">:</span><span class="nx">ac</span><span class="o">:</span><span class="nx">ce</span><span class="o">:</span><span class="mf">4</span><span class="nx">e</span><span class="o">:</span>
+<span class="w">                    </span><span class="nx">d7</span><span class="o">:</span><span class="mo">05</span><span class="o">:</span><span class="mf">74</span><span class="o">:</span><span class="mf">2</span><span class="nx">f</span><span class="o">:</span><span class="mf">99</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="nx">f8</span><span class="o">:</span><span class="nx">c2</span><span class="o">:</span><span class="mf">13</span><span class="o">:</span><span class="mf">14</span><span class="o">:</span><span class="mf">50</span><span class="o">:</span><span class="mf">18</span><span class="o">:</span><span class="mf">70</span><span class="o">:</span><span class="nx">d6</span><span class="o">:</span><span class="nx">b0</span><span class="o">:</span>
+<span class="w">                    </span><span class="mf">53</span><span class="o">:</span><span class="mf">62</span><span class="o">:</span><span class="mf">15</span><span class="o">:</span><span class="mf">60</span><span class="o">:</span><span class="mf">59</span><span class="o">:</span><span class="mf">99</span><span class="o">:</span><span class="mf">90</span><span class="o">:</span><span class="mf">47</span><span class="o">:</span><span class="nx">e2</span><span class="o">:</span><span class="mf">7</span><span class="nx">e</span><span class="o">:</span><span class="nx">bf</span><span class="o">:</span><span class="nx">ca</span><span class="o">:</span><span class="mf">30</span><span class="o">:</span><span class="mf">4</span><span class="nx">a</span><span class="o">:</span><span class="mf">18</span><span class="o">:</span>
+<span class="w">                    </span><span class="nx">f5</span><span class="o">:</span><span class="nx">b8</span><span class="o">:</span><span class="mf">29</span><span class="o">:</span><span class="mf">1</span><span class="nx">e</span><span class="o">:</span><span class="nx">cc</span><span class="o">:</span><span class="nx">d4</span><span class="o">:</span><span class="nx">b8</span><span class="o">:</span><span class="mf">49</span><span class="o">:</span><span class="mf">9</span><span class="nx">c</span><span class="o">:</span><span class="mf">4</span><span class="nx">a</span><span class="o">:</span><span class="nx">aa</span><span class="o">:</span><span class="nx">d9</span><span class="o">:</span><span class="mf">10</span><span class="o">:</span><span class="nx">b9</span><span class="o">:</span><span class="nx">d7</span><span class="o">:</span>
+<span class="w">                    </span><span class="mf">9</span><span class="nx">f</span><span class="o">:</span><span class="mf">55</span><span class="o">:</span><span class="mf">85</span><span class="o">:</span><span class="nx">cf</span><span class="o">:</span><span class="nx">e3</span><span class="o">:</span><span class="mf">44</span><span class="o">:</span><span class="nx">d2</span><span class="o">:</span><span class="mf">3</span><span class="nx">c</span><span class="o">:</span><span class="mf">95</span><span class="o">:</span><span class="mf">42</span><span class="o">:</span><span class="mf">5</span><span class="nx">a</span><span class="o">:</span><span class="nx">b0</span><span class="o">:</span><span class="mf">53</span><span class="o">:</span><span class="mf">3</span><span class="nx">e</span><span class="o">:</span><span class="mf">49</span><span class="o">:</span>
+<span class="w">                    </span><span class="mf">9</span><span class="nx">d</span><span class="o">:</span><span class="mf">6</span><span class="nx">b</span><span class="o">:</span><span class="nx">b2</span><span class="o">:</span><span class="nx">a0</span><span class="o">:</span><span class="mf">9</span><span class="nx">f</span><span class="o">:</span><span class="mf">72</span><span class="o">:</span><span class="mf">9</span><span class="nx">d</span><span class="o">:</span><span class="mf">76</span><span class="o">:</span><span class="mf">96</span><span class="o">:</span><span class="mf">55</span><span class="o">:</span><span class="mf">8</span><span class="nx">b</span><span class="o">:</span><span class="nx">ee</span><span class="o">:</span><span class="nx">c4</span><span class="o">:</span><span class="mf">71</span><span class="o">:</span><span class="mf">46</span><span class="o">:</span>
+<span class="w">                    </span><span class="nx">ab</span><span class="o">:</span><span class="nx">bd</span><span class="o">:</span><span class="mf">12</span><span class="o">:</span><span class="mf">71</span><span class="o">:</span><span class="mf">42</span><span class="o">:</span><span class="nx">a0</span><span class="o">:</span><span class="mf">60</span><span class="o">:</span><span class="mf">29</span><span class="o">:</span><span class="mf">7</span><span class="nx">a</span><span class="o">:</span><span class="mf">66</span><span class="o">:</span><span class="mf">16</span><span class="o">:</span><span class="nx">e1</span><span class="o">:</span><span class="nx">fd</span><span class="o">:</span><span class="mo">03</span><span class="o">:</span><span class="mf">17</span><span class="o">:</span>
+<span class="w">                    </span><span class="nx">af</span><span class="o">:</span><span class="nx">a3</span><span class="o">:</span><span class="nx">c7</span><span class="o">:</span><span class="mf">26</span><span class="o">:</span><span class="nx">c3</span><span class="o">:</span><span class="nx">c3</span><span class="o">:</span><span class="mf">8</span><span class="nx">b</span><span class="o">:</span><span class="nx">a7</span><span class="o">:</span><span class="nx">f9</span><span class="o">:</span><span class="nx">c0</span><span class="o">:</span><span class="mf">22</span><span class="o">:</span><span class="mf">08</span><span class="o">:</span><span class="mf">2</span><span class="nx">d</span><span class="o">:</span><span class="nx">e4</span><span class="o">:</span><span class="mf">5</span><span class="nx">c</span><span class="o">:</span>
+<span class="w">                    </span><span class="mo">07</span><span class="o">:</span><span class="nx">e1</span><span class="o">:</span><span class="mf">44</span><span class="o">:</span><span class="mf">58</span><span class="o">:</span><span class="nx">c1</span><span class="o">:</span><span class="nx">b1</span><span class="o">:</span><span class="mf">88</span><span class="o">:</span><span class="nx">ae</span><span class="o">:</span><span class="mf">45</span><span class="o">:</span><span class="mf">5</span><span class="nx">e</span><span class="o">:</span><span class="mo">03</span><span class="o">:</span><span class="mf">10</span><span class="o">:</span><span class="nx">bb</span><span class="o">:</span><span class="nx">b4</span><span class="o">:</span><span class="nx">c2</span><span class="o">:</span>
+<span class="w">                    </span><span class="mf">42</span><span class="o">:</span><span class="mf">52</span><span class="o">:</span><span class="nx">da</span><span class="o">:</span><span class="mf">4</span><span class="nx">e</span><span class="o">:</span><span class="nx">b5</span><span class="o">:</span><span class="mf">1</span><span class="nx">b</span><span class="o">:</span><span class="nx">d6</span><span class="o">:</span><span class="mf">6</span><span class="nx">f</span><span class="o">:</span><span class="mf">49</span><span class="o">:</span><span class="nx">db</span><span class="o">:</span><span class="nx">a4</span><span class="o">:</span><span class="mf">5</span><span class="nx">f</span><span class="o">:</span><span class="mf">8</span><span class="nx">f</span><span class="o">:</span><span class="nx">e5</span><span class="o">:</span><span class="mf">79</span><span class="o">:</span>
+<span class="w">                    </span><span class="mf">9</span><span class="nx">f</span><span class="o">:</span><span class="mf">73</span><span class="o">:</span><span class="nx">c2</span><span class="o">:</span><span class="mf">37</span><span class="o">:</span><span class="nx">de</span><span class="o">:</span><span class="mf">99</span><span class="o">:</span><span class="nx">a7</span><span class="o">:</span><span class="mf">4</span><span class="nx">d</span><span class="o">:</span><span class="mf">6</span><span class="nx">f</span><span class="o">:</span><span class="nx">cb</span><span class="o">:</span><span class="nx">b5</span><span class="o">:</span><span class="nx">f9</span><span class="o">:</span><span class="mf">7</span><span class="nx">e</span><span class="o">:</span><span class="mf">97</span><span class="o">:</span><span class="nx">e0</span><span class="o">:</span>
+<span class="w">                    </span><span class="mf">77</span><span class="o">:</span><span class="nx">c8</span><span class="o">:</span><span class="mf">40</span><span class="o">:</span><span class="mf">21</span><span class="o">:</span><span class="mf">40</span><span class="o">:</span><span class="nx">ef</span><span class="o">:</span><span class="nx">ab</span><span class="o">:</span><span class="nx">d3</span><span class="o">:</span><span class="mf">55</span><span class="o">:</span><span class="mf">72</span><span class="o">:</span><span class="mf">37</span><span class="o">:</span><span class="mf">6</span><span class="nx">c</span><span class="o">:</span><span class="mf">28</span><span class="o">:</span><span class="mf">0</span><span class="nx">f</span><span class="o">:</span><span class="nx">bd</span><span class="o">:</span>
+<span class="w">                    </span><span class="mf">37</span><span class="o">:</span><span class="mf">8</span><span class="nx">c</span><span class="o">:</span><span class="mf">3</span><span class="nx">a</span><span class="o">:</span><span class="mf">9</span><span class="nx">c</span><span class="o">:</span><span class="nx">e9</span><span class="o">:</span><span class="nx">a0</span><span class="o">:</span><span class="mf">21</span><span class="o">:</span><span class="mf">6</span><span class="nx">b</span><span class="o">:</span><span class="mf">63</span><span class="o">:</span><span class="mf">3</span><span class="nx">f</span><span class="o">:</span><span class="mf">7</span><span class="nx">a</span><span class="o">:</span><span class="nx">dd</span><span class="o">:</span><span class="mf">1</span><span class="nx">b</span><span class="o">:</span><span class="mf">2</span><span class="nx">c</span><span class="o">:</span><span class="mf">90</span><span class="o">:</span>
+<span class="w">                    </span><span class="mo">07</span><span class="o">:</span><span class="mf">37</span><span class="o">:</span><span class="mf">66</span><span class="o">:</span><span class="mf">86</span><span class="o">:</span><span class="mf">66</span><span class="o">:</span><span class="mf">36</span><span class="o">:</span><span class="nx">ef</span><span class="o">:</span><span class="mf">21</span><span class="o">:</span><span class="nx">bb</span><span class="o">:</span><span class="mf">43</span><span class="o">:</span><span class="nx">df</span><span class="o">:</span><span class="nx">d5</span><span class="o">:</span><span class="mf">37</span><span class="o">:</span><span class="nx">a9</span><span class="o">:</span><span class="nx">fa</span><span class="o">:</span>
+<span class="w">                    </span><span class="mf">4</span><span class="nx">b</span><span class="o">:</span><span class="mf">74</span><span class="o">:</span><span class="mf">9</span><span class="nx">a</span><span class="o">:</span><span class="mf">7</span><span class="nx">c</span><span class="o">:</span><span class="mf">4</span><span class="nx">b</span><span class="o">:</span><span class="nx">cd</span><span class="o">:</span><span class="mf">8</span><span class="nx">b</span><span class="o">:</span><span class="mf">9</span><span class="nx">d</span><span class="o">:</span><span class="mf">3</span><span class="nx">b</span><span class="o">:</span><span class="nx">af</span><span class="o">:</span><span class="mf">6</span><span class="nx">d</span><span class="o">:</span><span class="mf">50</span><span class="o">:</span><span class="nx">fe</span><span class="o">:</span><span class="nx">c9</span><span class="o">:</span><span class="mf">0</span><span class="nx">a</span><span class="o">:</span>
+<span class="w">                    </span><span class="mf">25</span><span class="o">:</span><span class="mf">35</span><span class="o">:</span><span class="nx">c5</span><span class="o">:</span><span class="mf">1</span><span class="nx">d</span><span class="o">:</span><span class="mf">40</span><span class="o">:</span><span class="mf">35</span><span class="o">:</span><span class="mf">1</span><span class="nx">d</span><span class="o">:</span><span class="mf">1</span><span class="nx">f</span><span class="o">:</span><span class="nx">f9</span><span class="o">:</span><span class="mf">10</span><span class="o">:</span><span class="nx">fd</span><span class="o">:</span><span class="nx">b6</span><span class="o">:</span><span class="mf">5</span><span class="nx">c</span><span class="o">:</span><span class="mf">45</span><span class="o">:</span><span class="mf">11</span><span class="o">:</span>
+<span class="w">                    </span><span class="nx">bb</span><span class="o">:</span><span class="mf">67</span><span class="o">:</span><span class="mf">11</span><span class="o">:</span><span class="mf">81</span><span class="o">:</span><span class="mf">3</span><span class="nx">f</span><span class="o">:</span><span class="nx">ed</span><span class="o">:</span><span class="nx">d6</span><span class="o">:</span><span class="mf">27</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">98</span><span class="o">:</span><span class="mf">8</span><span class="nx">f</span><span class="o">:</span><span class="mf">9</span><span class="nx">e</span><span class="o">:</span><span class="mf">99</span><span class="o">:</span><span class="nx">a1</span><span class="o">:</span><span class="nx">c8</span><span class="o">:</span>
+<span class="w">                    </span><span class="nx">c1</span><span class="o">:</span><span class="mf">2</span><span class="nx">d</span>
+<span class="w">                </span><span class="nx">Exponent</span><span class="o">:</span><span class="w"> </span><span class="mf">65537</span><span class="w"> </span><span class="p">(</span><span class="mh">0x10001</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">X509v3</span><span class="w"> </span><span class="nx">extensions</span><span class="o">:</span>
+<span class="w">            </span><span class="nx">X509v3</span><span class="w"> </span><span class="nx">Basic</span><span class="w"> </span><span class="nx">Constraints</span><span class="o">:</span>
+<span class="w">                </span><span class="nx">CA</span><span class="o">:</span><span class="nx">FALSE</span>
+<span class="w">            </span><span class="nx">Netscape</span><span class="w"> </span><span class="nx">Cert</span><span class="w"> </span><span class="nx">Type</span><span class="o">:</span>
+<span class="w">                </span><span class="nx">SSL</span><span class="w"> </span><span class="nx">Client</span><span class="p">,</span><span class="w"> </span><span class="nx">S</span><span class="o">/</span><span class="nx">MIME</span>
+<span class="w">            </span><span class="nx">Netscape</span><span class="w"> </span><span class="nx">Comment</span><span class="o">:</span>
+<span class="w">                </span><span class="nx">OpenSSL</span><span class="w"> </span><span class="nx">Generated</span><span class="w"> </span><span class="nx">Client</span><span class="w"> </span><span class="nx">Certificate</span>
+<span class="w">            </span><span class="nx">X509v3</span><span class="w"> </span><span class="nx">Subject</span><span class="w"> </span><span class="nx">Key</span><span class="w"> </span><span class="nx">Identifier</span><span class="o">:</span>
+<span class="w">                </span><span class="nx">EE</span><span class="o">:</span><span class="mf">38</span><span class="o">:</span><span class="nx">FB</span><span class="o">:</span><span class="mf">60</span><span class="o">:</span><span class="mf">65</span><span class="o">:</span><span class="nx">CD</span><span class="o">:</span><span class="mf">81</span><span class="o">:</span><span class="nx">CE</span><span class="o">:</span><span class="nx">B2</span><span class="o">:</span><span class="mo">01</span><span class="o">:</span><span class="nx">E3</span><span class="o">:</span><span class="nx">A5</span><span class="o">:</span><span class="mf">99</span><span class="o">:</span><span class="mf">1</span><span class="nx">B</span><span class="o">:</span><span class="mf">34</span><span class="o">:</span><span class="mf">6</span><span class="nx">C</span><span class="o">:</span><span class="mf">1</span><span class="nx">A</span><span class="o">:</span><span class="mf">74</span><span class="o">:</span><span class="mf">97</span><span class="o">:</span><span class="nx">BB</span>
+<span class="w">            </span><span class="nx">X509v3</span><span class="w"> </span><span class="nx">Authority</span><span class="w"> </span><span class="nx">Key</span><span class="w"> </span><span class="nx">Identifier</span><span class="o">:</span>
+<span class="w">                </span><span class="nx">keyid</span><span class="o">:</span><span class="mf">64</span><span class="o">:</span><span class="mf">17</span><span class="o">:</span><span class="mf">77</span><span class="o">:</span><span class="mf">31</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="nx">F2</span><span class="o">:</span><span class="nx">ED</span><span class="o">:</span><span class="mf">90</span><span class="o">:</span><span class="mf">9</span><span class="nx">A</span><span class="o">:</span><span class="nx">A8</span><span class="o">:</span><span class="mf">1</span><span class="nx">D</span><span class="o">:</span><span class="nx">B5</span><span class="o">:</span><span class="mf">7</span><span class="nx">D</span><span class="o">:</span><span class="mf">75</span><span class="o">:</span><span class="mo">06</span><span class="o">:</span><span class="mo">03</span><span class="o">:</span><span class="nx">B5</span><span class="o">:</span><span class="nx">FD</span><span class="o">:</span><span class="nx">B9</span><span class="o">:</span><span class="nx">C0</span>
+
+<span class="w">            </span><span class="nx">X509v3</span><span class="w"> </span><span class="nx">Key</span><span class="w"> </span><span class="nx">Usage</span><span class="o">:</span><span class="w"> </span><span class="nx">critical</span>
+<span class="w">                </span><span class="nx">Digital</span><span class="w"> </span><span class="nx">Signature</span><span class="p">,</span><span class="w"> </span><span class="nx">Non</span><span class="w"> </span><span class="nx">Repudiation</span><span class="p">,</span><span class="w"> </span><span class="nx">Key</span><span class="w"> </span><span class="nx">Encipherment</span>
+<span class="w">            </span><span class="nx">X509v3</span><span class="w"> </span><span class="nx">Extended</span><span class="w"> </span><span class="nx">Key</span><span class="w"> </span><span class="nx">Usage</span><span class="o">:</span>
+<span class="w">                </span><span class="nx">TLS</span><span class="w"> </span><span class="nx">Web</span><span class="w"> </span><span class="nx">Client</span><span class="w"> </span><span class="nx">Authentication</span><span class="p">,</span><span class="w"> </span><span class="nx">E</span><span class="o">-</span><span class="nx">mail</span><span class="w"> </span><span class="nx">Protection</span>
+<span class="w">    </span><span class="nx">Signature</span><span class="w"> </span><span class="nx">Algorithm</span><span class="o">:</span><span class="w"> </span><span class="nx">sha256WithRSAEncryption</span>
+<span class="w">         </span><span class="mf">82</span><span class="o">:</span><span class="mf">8</span><span class="nx">b</span><span class="o">:</span><span class="mf">17</span><span class="o">:</span><span class="nx">c6</span><span class="o">:</span><span class="nx">f4</span><span class="o">:</span><span class="mf">63</span><span class="o">:</span><span class="nx">eb</span><span class="o">:</span><span class="mf">8</span><span class="nx">d</span><span class="o">:</span><span class="mf">69</span><span class="o">:</span><span class="mo">03</span><span class="o">:</span><span class="mf">7</span><span class="nx">a</span><span class="o">:</span><span class="nx">bf</span><span class="o">:</span><span class="mf">54</span><span class="o">:</span><span class="mf">7</span><span class="nx">f</span><span class="o">:</span><span class="mf">37</span><span class="o">:</span><span class="mo">02</span><span class="o">:</span><span class="nx">eb</span><span class="o">:</span><span class="mf">94</span><span class="o">:</span>
+<span class="w">         </span><span class="nx">ef</span><span class="o">:</span><span class="mf">57</span><span class="o">:</span><span class="nx">fd</span><span class="o">:</span><span class="mf">27</span><span class="o">:</span><span class="mf">8</span><span class="nx">f</span><span class="o">:</span><span class="nx">f8</span><span class="o">:</span><span class="mf">67</span><span class="o">:</span><span class="nx">e9</span><span class="o">:</span><span class="mf">0</span><span class="nx">e</span><span class="o">:</span><span class="mf">3</span><span class="nx">b</span><span class="o">:</span><span class="mf">0</span><span class="nx">a</span><span class="o">:</span><span class="mf">40</span><span class="o">:</span><span class="mf">66</span><span class="o">:</span><span class="mf">11</span><span class="o">:</span><span class="mf">68</span><span class="o">:</span><span class="nx">e6</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">1</span><span class="nx">a</span><span class="o">:</span>
+<span class="w">         </span><span class="mf">8</span><span class="nx">a</span><span class="o">:</span><span class="nx">da</span><span class="o">:</span><span class="mf">47</span><span class="o">:</span><span class="nx">ed</span><span class="o">:</span><span class="mf">83</span><span class="o">:</span><span class="nx">eb</span><span class="o">:</span><span class="mf">54</span><span class="o">:</span><span class="mf">34</span><span class="o">:</span><span class="mf">3</span><span class="nx">b</span><span class="o">:</span><span class="mf">5</span><span class="nx">b</span><span class="o">:</span><span class="mf">70</span><span class="o">:</span><span class="mf">18</span><span class="o">:</span><span class="nx">cf</span><span class="o">:</span><span class="mf">62</span><span class="o">:</span><span class="nx">e2</span><span class="o">:</span><span class="mf">6</span><span class="nx">d</span><span class="o">:</span><span class="mf">7</span><span class="nx">c</span><span class="o">:</span><span class="mf">74</span><span class="o">:</span>
+<span class="w">         </span><span class="mf">4</span><span class="nx">c</span><span class="o">:</span><span class="nx">cf</span><span class="o">:</span><span class="mf">14</span><span class="o">:</span><span class="nx">b3</span><span class="o">:</span><span class="nx">a9</span><span class="o">:</span><span class="mf">70</span><span class="o">:</span><span class="nx">b2</span><span class="o">:</span><span class="mf">68</span><span class="o">:</span><span class="nx">ed</span><span class="o">:</span><span class="mf">19</span><span class="o">:</span><span class="mf">19</span><span class="o">:</span><span class="mf">71</span><span class="o">:</span><span class="mf">6</span><span class="nx">f</span><span class="o">:</span><span class="mf">7</span><span class="nx">d</span><span class="o">:</span><span class="mf">87</span><span class="o">:</span><span class="mf">22</span><span class="o">:</span><span class="mf">38</span><span class="o">:</span><span class="mf">8</span><span class="nx">d</span><span class="o">:</span>
+<span class="w">         </span><span class="mf">83</span><span class="o">:</span><span class="nx">c6</span><span class="o">:</span><span class="mf">59</span><span class="o">:</span><span class="mf">15</span><span class="o">:</span><span class="mf">74</span><span class="o">:</span><span class="mf">19</span><span class="o">:</span><span class="mf">5</span><span class="nx">b</span><span class="o">:</span><span class="nx">a2</span><span class="o">:</span><span class="mf">64</span><span class="o">:</span><span class="mf">6</span><span class="nx">f</span><span class="o">:</span><span class="nx">b9</span><span class="o">:</span><span class="mf">9</span><span class="nx">a</span><span class="o">:</span><span class="mf">81</span><span class="o">:</span><span class="mf">3</span><span class="nx">d</span><span class="o">:</span><span class="mf">0</span><span class="nx">a</span><span class="o">:</span><span class="mf">67</span><span class="o">:</span><span class="mf">58</span><span class="o">:</span><span class="nx">d1</span><span class="o">:</span>
+<span class="w">         </span><span class="nx">e2</span><span class="o">:</span><span class="nx">b2</span><span class="o">:</span><span class="mf">9</span><span class="nx">b</span><span class="o">:</span><span class="mf">9</span><span class="nx">b</span><span class="o">:</span><span class="mf">8</span><span class="nx">f</span><span class="o">:</span><span class="mf">60</span><span class="o">:</span><span class="mf">7</span><span class="nx">a</span><span class="o">:</span><span class="mf">8</span><span class="nx">c</span><span class="o">:</span><span class="mf">0</span><span class="nx">e</span><span class="o">:</span><span class="mf">61</span><span class="o">:</span><span class="nx">d9</span><span class="o">:</span><span class="nx">d7</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">63</span><span class="o">:</span><span class="nx">cc</span><span class="o">:</span><span class="mf">58</span><span class="o">:</span><span class="nx">af</span><span class="o">:</span><span class="mf">36</span><span class="o">:</span>
+<span class="w">         </span><span class="nx">a4</span><span class="o">:</span><span class="mf">61</span><span class="o">:</span><span class="mf">86</span><span class="o">:</span><span class="mf">44</span><span class="o">:</span><span class="mf">1</span><span class="nx">c</span><span class="o">:</span><span class="mf">64</span><span class="o">:</span><span class="nx">e2</span><span class="o">:</span><span class="mf">9</span><span class="nx">b</span><span class="o">:</span><span class="nx">bd</span><span class="o">:</span><span class="nx">f3</span><span class="o">:</span><span class="mf">21</span><span class="o">:</span><span class="mf">87</span><span class="o">:</span><span class="nx">dd</span><span class="o">:</span><span class="mf">18</span><span class="o">:</span><span class="mf">81</span><span class="o">:</span><span class="mf">80</span><span class="o">:</span><span class="nx">af</span><span class="o">:</span><span class="mf">0</span><span class="nx">f</span><span class="o">:</span>
+<span class="w">         </span><span class="nx">d6</span><span class="o">:</span><span class="mf">4</span><span class="nx">c</span><span class="o">:</span><span class="mf">9</span><span class="nx">f</span><span class="o">:</span><span class="nx">ae</span><span class="o">:</span><span class="mf">0</span><span class="nx">f</span><span class="o">:</span><span class="mo">01</span><span class="o">:</span><span class="nx">e0</span><span class="o">:</span><span class="mf">0</span><span class="nx">e</span><span class="o">:</span><span class="mf">38</span><span class="o">:</span><span class="mf">4</span><span class="nx">d</span><span class="o">:</span><span class="mf">5</span><span class="nx">d</span><span class="o">:</span><span class="mf">71</span><span class="o">:</span><span class="nx">da</span><span class="o">:</span><span class="mf">0</span><span class="nx">b</span><span class="o">:</span><span class="mf">11</span><span class="o">:</span><span class="mf">39</span><span class="o">:</span><span class="nx">bd</span><span class="o">:</span><span class="nx">c3</span><span class="o">:</span>
+<span class="w">         </span><span class="mf">5</span><span class="nx">d</span><span class="o">:</span><span class="mf">0</span><span class="nx">c</span><span class="o">:</span><span class="nx">db</span><span class="o">:</span><span class="mf">14</span><span class="o">:</span><span class="nx">ca</span><span class="o">:</span><span class="nx">bf</span><span class="o">:</span><span class="mf">7</span><span class="nx">f</span><span class="o">:</span><span class="mo">07</span><span class="o">:</span><span class="mf">37</span><span class="o">:</span><span class="nx">c9</span><span class="o">:</span><span class="mf">36</span><span class="o">:</span><span class="nx">bd</span><span class="o">:</span><span class="mf">22</span><span class="o">:</span><span class="nx">a5</span><span class="o">:</span><span class="mf">73</span><span class="o">:</span><span class="nx">c6</span><span class="o">:</span><span class="nx">e1</span><span class="o">:</span><span class="mf">13</span><span class="o">:</span>
+<span class="w">         </span><span class="mf">53</span><span class="o">:</span><span class="mf">15</span><span class="o">:</span><span class="nx">de</span><span class="o">:</span><span class="nx">ac</span><span class="o">:</span><span class="mf">4</span><span class="nx">a</span><span class="o">:</span><span class="mf">4</span><span class="nx">b</span><span class="o">:</span><span class="nx">dc</span><span class="o">:</span><span class="mf">48</span><span class="o">:</span><span class="mf">90</span><span class="o">:</span><span class="mf">47</span><span class="o">:</span><span class="mo">06</span><span class="o">:</span><span class="nx">fa</span><span class="o">:</span><span class="nx">d4</span><span class="o">:</span><span class="nx">d2</span><span class="o">:</span><span class="mf">5</span><span class="nx">d</span><span class="o">:</span><span class="nx">c6</span><span class="o">:</span><span class="nx">d2</span><span class="o">:</span><span class="nx">d4</span><span class="o">:</span>
+<span class="w">         </span><span class="mf">3</span><span class="nx">f</span><span class="o">:</span><span class="mf">0</span><span class="nx">f</span><span class="o">:</span><span class="mf">49</span><span class="o">:</span><span class="mf">0</span><span class="nx">f</span><span class="o">:</span><span class="mf">27</span><span class="o">:</span><span class="nx">de</span><span class="o">:</span><span class="mf">21</span><span class="o">:</span><span class="nx">b0</span><span class="o">:</span><span class="nx">bd</span><span class="o">:</span><span class="nx">a3</span><span class="o">:</span><span class="mf">92</span><span class="o">:</span><span class="nx">c3</span><span class="o">:</span><span class="nx">cb</span><span class="o">:</span><span class="mf">69</span><span class="o">:</span><span class="nx">b6</span><span class="o">:</span><span class="mf">8</span><span class="nx">d</span><span class="o">:</span><span class="mf">94</span><span class="o">:</span><span class="nx">e1</span><span class="o">:</span>
+<span class="w">         </span><span class="nx">e3</span><span class="o">:</span><span class="mf">40</span><span class="o">:</span><span class="nx">b4</span><span class="o">:</span><span class="mf">80</span><span class="o">:</span><span class="nx">c7</span><span class="o">:</span><span class="nx">e6</span><span class="o">:</span><span class="nx">e2</span><span class="o">:</span><span class="nx">df</span><span class="o">:</span><span class="mf">0</span><span class="nx">a</span><span class="o">:</span><span class="mf">94</span><span class="o">:</span><span class="mf">52</span><span class="o">:</span><span class="nx">d1</span><span class="o">:</span><span class="mf">16</span><span class="o">:</span><span class="mf">41</span><span class="o">:</span><span class="mf">0</span><span class="nx">f</span><span class="o">:</span><span class="nx">bc</span><span class="o">:</span><span class="mf">29</span><span class="o">:</span><span class="nx">a8</span><span class="o">:</span>
+<span class="w">         </span><span class="mf">93</span><span class="o">:</span><span class="mf">40</span><span class="o">:</span><span class="mf">1</span><span class="nx">b</span><span class="o">:</span><span class="mf">77</span><span class="o">:</span><span class="mf">28</span><span class="o">:</span><span class="nx">a3</span><span class="o">:</span><span class="nx">f2</span><span class="o">:</span><span class="nx">cb</span><span class="o">:</span><span class="mf">3</span><span class="nx">c</span><span class="o">:</span><span class="mf">7</span><span class="nx">f</span><span class="o">:</span><span class="nx">bb</span><span class="o">:</span><span class="nx">ae</span><span class="o">:</span><span class="nx">a6</span><span class="o">:</span><span class="mf">0</span><span class="nx">e</span><span class="o">:</span><span class="nx">b3</span><span class="o">:</span><span class="mo">01</span><span class="o">:</span><span class="mf">78</span><span class="o">:</span><span class="mf">09</span><span class="o">:</span>
+<span class="w">         </span><span class="nx">d3</span><span class="o">:</span><span class="mf">2</span><span class="nx">b</span><span class="o">:</span><span class="nx">cf</span><span class="o">:</span><span class="mf">2</span><span class="nx">f</span><span class="o">:</span><span class="mf">47</span><span class="o">:</span><span class="mf">83</span><span class="o">:</span><span class="mf">91</span><span class="o">:</span><span class="mf">36</span><span class="o">:</span><span class="mf">37</span><span class="o">:</span><span class="mf">43</span><span class="o">:</span><span class="mf">34</span><span class="o">:</span><span class="mf">6</span><span class="nx">e</span><span class="o">:</span><span class="mf">80</span><span class="o">:</span><span class="mf">2</span><span class="nx">b</span><span class="o">:</span><span class="mf">81</span><span class="o">:</span><span class="mf">10</span><span class="o">:</span><span class="mf">27</span><span class="o">:</span><span class="mf">95</span><span class="o">:</span>
+<span class="w">         </span><span class="mf">95</span><span class="o">:</span><span class="nx">ae</span><span class="o">:</span><span class="mf">1</span><span class="nx">e</span><span class="o">:</span><span class="mf">93</span><span class="o">:</span><span class="mf">42</span><span class="o">:</span><span class="mf">94</span><span class="o">:</span><span class="nx">a6</span><span class="o">:</span><span class="mf">23</span><span class="o">:</span><span class="nx">b8</span><span class="o">:</span><span class="mo">07</span><span class="o">:</span><span class="nx">c0</span><span class="o">:</span><span class="mf">0</span><span class="nx">f</span><span class="o">:</span><span class="mf">38</span><span class="o">:</span><span class="mf">23</span><span class="o">:</span><span class="mf">70</span><span class="o">:</span><span class="nx">b0</span><span class="o">:</span><span class="mf">8</span><span class="nx">e</span><span class="o">:</span><span class="mf">79</span><span class="o">:</span>
+<span class="w">         </span><span class="mf">14</span><span class="o">:</span><span class="nx">cd</span><span class="o">:</span><span class="mf">72</span><span class="o">:</span><span class="mf">8</span><span class="nx">a</span><span class="o">:</span><span class="mf">90</span><span class="o">:</span><span class="nx">bf</span><span class="o">:</span><span class="mf">77</span><span class="o">:</span><span class="nx">ad</span><span class="o">:</span><span class="mf">74</span><span class="o">:</span><span class="mf">3</span><span class="nx">c</span><span class="o">:</span><span class="mf">23</span><span class="o">:</span><span class="mf">9</span><span class="nx">e</span><span class="o">:</span><span class="mf">67</span><span class="o">:</span><span class="mf">5</span><span class="nx">d</span><span class="o">:</span><span class="mf">0</span><span class="nx">e</span><span class="o">:</span><span class="mf">26</span><span class="o">:</span><span class="mf">15</span><span class="o">:</span><span class="mf">6</span><span class="nx">e</span><span class="o">:</span>
+<span class="w">         </span><span class="mf">20</span><span class="o">:</span><span class="mf">95</span><span class="o">:</span><span class="mf">6</span><span class="nx">d</span><span class="o">:</span><span class="nx">d0</span><span class="o">:</span><span class="mf">89</span><span class="o">:</span><span class="nx">be</span><span class="o">:</span><span class="nx">a3</span><span class="o">:</span><span class="mf">6</span><span class="nx">c</span><span class="o">:</span><span class="mf">4</span><span class="nx">a</span><span class="o">:</span><span class="mf">13</span><span class="o">:</span><span class="mf">1</span><span class="nx">d</span><span class="o">:</span><span class="mf">39</span><span class="o">:</span><span class="nx">fb</span><span class="o">:</span><span class="mf">21</span><span class="o">:</span><span class="nx">e3</span><span class="o">:</span><span class="mf">9</span><span class="nx">c</span><span class="o">:</span><span class="mf">9</span><span class="nx">f</span><span class="o">:</span><span class="nx">f3</span><span class="o">:</span>
+<span class="w">         </span><span class="nx">ff</span><span class="o">:</span><span class="mf">15</span><span class="o">:</span><span class="nx">da</span><span class="o">:</span><span class="mf">0</span><span class="nx">a</span><span class="o">:</span><span class="mf">28</span><span class="o">:</span><span class="mf">29</span><span class="o">:</span><span class="mf">4</span><span class="nx">e</span><span class="o">:</span><span class="nx">f4</span><span class="o">:</span><span class="mf">7</span><span class="nx">f</span><span class="o">:</span><span class="mf">5</span><span class="nx">e</span><span class="o">:</span><span class="mf">0</span><span class="nx">f</span><span class="o">:</span><span class="mf">70</span><span class="o">:</span><span class="mf">84</span><span class="o">:</span><span class="mf">80</span><span class="o">:</span><span class="mf">7</span><span class="nx">c</span><span class="o">:</span><span class="mf">09</span><span class="o">:</span><span class="mf">5</span><span class="nx">a</span><span class="o">:</span><span class="mf">1</span><span class="nx">c</span><span class="o">:</span>
+<span class="w">         </span><span class="nx">f4</span><span class="o">:</span><span class="nx">ac</span><span class="o">:</span><span class="nx">c9</span><span class="o">:</span><span class="mf">1</span><span class="nx">b</span><span class="o">:</span><span class="mf">9</span><span class="nx">d</span><span class="o">:</span><span class="mf">38</span><span class="o">:</span><span class="mf">43</span><span class="o">:</span><span class="nx">dd</span><span class="o">:</span><span class="mf">27</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mf">95</span><span class="o">:</span><span class="nx">ef</span><span class="o">:</span><span class="mf">14</span><span class="o">:</span><span class="nx">a0</span><span class="o">:</span><span class="mf">57</span><span class="o">:</span><span class="mf">3</span><span class="nx">e</span><span class="o">:</span><span class="mf">26</span><span class="o">:</span><span class="mf">0</span><span class="nx">b</span><span class="o">:</span>
+<span class="w">         </span><span class="nx">d8</span><span class="o">:</span><span class="nx">bb</span><span class="o">:</span><span class="mf">40</span><span class="o">:</span><span class="nx">d6</span><span class="o">:</span><span class="mf">1</span><span class="nx">f</span><span class="o">:</span><span class="mf">91</span><span class="o">:</span><span class="mf">92</span><span class="o">:</span><span class="nx">f0</span><span class="o">:</span><span class="mf">4</span><span class="nx">e</span><span class="o">:</span><span class="mf">5</span><span class="nx">d</span><span class="o">:</span><span class="mf">93</span><span class="o">:</span><span class="mf">1</span><span class="nx">c</span><span class="o">:</span><span class="nx">b7</span><span class="o">:</span><span class="mf">3</span><span class="nx">d</span><span class="o">:</span><span class="nx">bd</span><span class="o">:</span><span class="mf">83</span><span class="o">:</span><span class="nx">ef</span><span class="o">:</span><span class="mf">79</span><span class="o">:</span>
+<span class="w">         </span><span class="nx">ee</span><span class="o">:</span><span class="mf">47</span><span class="o">:</span><span class="nx">ca</span><span class="o">:</span><span class="mf">61</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="nx">e6</span><span class="o">:</span><span class="mf">39</span><span class="o">:</span><span class="mo">05</span><span class="o">:</span><span class="nx">ab</span><span class="o">:</span><span class="nx">f0</span><span class="o">:</span><span class="nx">cd</span><span class="o">:</span><span class="mf">47</span><span class="o">:</span><span class="nx">e9</span><span class="o">:</span><span class="mf">25</span><span class="o">:</span><span class="nx">c8</span><span class="o">:</span><span class="mf">3</span><span class="nx">a</span><span class="o">:</span><span class="mf">4</span><span class="nx">c</span><span class="o">:</span>
+<span class="w">         </span><span class="nx">e5</span><span class="o">:</span><span class="mf">62</span><span class="o">:</span><span class="mf">9</span><span class="nx">f</span><span class="o">:</span><span class="nx">aa</span><span class="o">:</span><span class="mf">8</span><span class="nx">a</span><span class="o">:</span><span class="nx">ba</span><span class="o">:</span><span class="nx">ea</span><span class="o">:</span><span class="mf">46</span><span class="o">:</span><span class="mf">10</span><span class="o">:</span><span class="nx">ef</span><span class="o">:</span><span class="nx">bd</span><span class="o">:</span><span class="mf">1</span><span class="nx">e</span><span class="o">:</span><span class="mf">24</span><span class="o">:</span><span class="mf">5</span><span class="nx">f</span><span class="o">:</span><span class="mf">0</span><span class="nx">c</span><span class="o">:</span><span class="mf">89</span><span class="o">:</span><span class="mf">8</span><span class="nx">a</span><span class="o">:</span><span class="mf">21</span><span class="o">:</span>
+<span class="w">         </span><span class="nx">bb</span><span class="o">:</span><span class="mf">9</span><span class="nx">d</span><span class="o">:</span><span class="nx">c7</span><span class="o">:</span><span class="mf">73</span><span class="o">:</span><span class="mf">0</span><span class="nx">f</span><span class="o">:</span><span class="nx">b9</span><span class="o">:</span><span class="nx">b5</span><span class="o">:</span><span class="mf">72</span><span class="o">:</span><span class="mf">1</span><span class="nx">f</span><span class="o">:</span><span class="mf">1</span><span class="nx">f</span><span class="o">:</span><span class="mf">1</span><span class="nx">b</span><span class="o">:</span><span class="mf">5</span><span class="nx">b</span><span class="o">:</span><span class="nx">ff</span><span class="o">:</span><span class="mf">3</span><span class="nx">a</span><span class="o">:</span><span class="nx">cb</span><span class="o">:</span><span class="nx">d8</span><span class="o">:</span><span class="mf">51</span><span class="o">:</span><span class="nx">bc</span><span class="o">:</span>
+<span class="w">         </span><span class="nx">bb</span><span class="o">:</span><span class="mf">9</span><span class="nx">a</span><span class="o">:</span><span class="mf">40</span><span class="o">:</span><span class="mf">91</span><span class="o">:</span><span class="nx">a9</span><span class="o">:</span><span class="nx">d5</span><span class="o">:</span><span class="nx">fe</span><span class="o">:</span><span class="mf">95</span><span class="o">:</span><span class="nx">ac</span><span class="o">:</span><span class="mf">73</span><span class="o">:</span><span class="nx">a5</span><span class="o">:</span><span class="mf">12</span><span class="o">:</span><span class="mf">6</span><span class="nx">a</span><span class="o">:</span><span class="nx">b2</span><span class="o">:</span><span class="nx">e3</span><span class="o">:</span><span class="nx">b1</span><span class="o">:</span><span class="nx">b2</span><span class="o">:</span><span class="mf">7</span><span class="nx">d</span><span class="o">:</span>
+<span class="w">         </span><span class="nx">bf</span><span class="o">:</span><span class="nx">e7</span><span class="o">:</span><span class="nx">db</span><span class="o">:</span><span class="nx">cd</span><span class="o">:</span><span class="mf">9</span><span class="nx">f</span><span class="o">:</span><span class="mf">24</span><span class="o">:</span><span class="mf">63</span><span class="o">:</span><span class="mf">6</span><span class="nx">e</span><span class="o">:</span><span class="mf">27</span><span class="o">:</span><span class="nx">cf</span><span class="o">:</span><span class="nx">d8</span><span class="o">:</span><span class="mf">82</span><span class="o">:</span><span class="nx">d9</span><span class="o">:</span><span class="nx">ac</span><span class="o">:</span><span class="nx">d8</span><span class="o">:</span><span class="nx">c9</span><span class="o">:</span><span class="mf">88</span><span class="o">:</span><span class="nx">ea</span><span class="o">:</span>
+<span class="w">         </span><span class="mf">4</span><span class="nx">f</span><span class="o">:</span><span class="mf">1</span><span class="nx">c</span><span class="o">:</span><span class="nx">ae</span><span class="o">:</span><span class="mf">7</span><span class="nx">d</span><span class="o">:</span><span class="nx">b7</span><span class="o">:</span><span class="nx">c7</span><span class="o">:</span><span class="mf">81</span><span class="o">:</span><span class="nx">b2</span><span class="o">:</span><span class="mf">1</span><span class="nx">c</span><span class="o">:</span><span class="nx">f8</span><span class="o">:</span><span class="mf">6</span><span class="nx">b</span><span class="o">:</span><span class="mf">6</span><span class="nx">b</span><span class="o">:</span><span class="mf">85</span><span class="o">:</span><span class="mf">3</span><span class="nx">b</span><span class="o">:</span><span class="nx">f2</span><span class="o">:</span><span class="mf">14</span><span class="o">:</span><span class="nx">cb</span><span class="o">:</span><span class="nx">c7</span><span class="o">:</span>
+<span class="w">         </span><span class="mf">61</span><span class="o">:</span><span class="mf">81</span><span class="o">:</span><span class="nx">ad</span><span class="o">:</span><span class="mf">64</span><span class="o">:</span><span class="nx">e7</span><span class="o">:</span><span class="nx">d9</span><span class="o">:</span><span class="mf">90</span><span class="o">:</span><span class="nx">a3</span><span class="o">:</span><span class="nx">ea</span><span class="o">:</span><span class="mf">69</span><span class="o">:</span><span class="mf">7</span><span class="nx">e</span><span class="o">:</span><span class="mf">26</span><span class="o">:</span><span class="mf">7</span><span class="nx">a</span><span class="o">:</span><span class="mf">0</span><span class="nx">a</span><span class="o">:</span><span class="mf">29</span><span class="o">:</span><span class="mf">7</span><span class="nx">b</span><span class="o">:</span><span class="mf">1</span><span class="nx">b</span><span class="o">:</span><span class="mf">2</span><span class="nx">a</span><span class="o">:</span>
+<span class="w">         </span><span class="nx">e0</span><span class="o">:</span><span class="mf">38</span><span class="o">:</span><span class="nx">f7</span><span class="o">:</span><span class="mf">58</span><span class="o">:</span><span class="nx">d1</span><span class="o">:</span><span class="mf">90</span><span class="o">:</span><span class="mf">82</span><span class="o">:</span><span class="mf">44</span><span class="o">:</span><span class="mo">01</span><span class="o">:</span><span class="nx">ab</span><span class="o">:</span><span class="mo">05</span><span class="o">:</span><span class="nx">fd</span><span class="o">:</span><span class="mf">68</span><span class="o">:</span><span class="mf">0</span><span class="nx">c</span><span class="o">:</span><span class="nx">ab</span><span class="o">:</span><span class="mf">9</span><span class="nx">e</span><span class="o">:</span><span class="nx">c6</span><span class="o">:</span><span class="mf">94</span><span class="o">:</span>
+<span class="w">         </span><span class="mf">76</span><span class="o">:</span><span class="mf">34</span><span class="o">:</span><span class="mf">46</span><span class="o">:</span><span class="mf">8</span><span class="nx">b</span><span class="o">:</span><span class="mf">66</span><span class="o">:</span><span class="nx">bb</span><span class="o">:</span><span class="mo">02</span><span class="o">:</span><span class="mo">07</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://en.wikipedia.org/wiki/Public_key_certificate">public key certificate</a> for more information.</p>
+</li>
+<li><p><cite>Issuer</cite>: the issuer of a X.509 certificate. It is also known as
+<a class="reference external" href="https://en.wikipedia.org/wiki/Certificate_authority">Certificate Authority (CA)</a> or Certification Authority. Issuer is
+typically represented in <a class="reference external" href="https://tools.ietf.org/html/rfc2253">RFC 2253</a> format. Throughout this document,
+<code class="docutils literal notranslate"><span class="pre">issuer</span></code>, <code class="docutils literal notranslate"><span class="pre">issuer</span> <span class="pre">DN</span></code>, <code class="docutils literal notranslate"><span class="pre">CA</span></code>, and <code class="docutils literal notranslate"><span class="pre">trusted</span> <span class="pre">issuer</span></code> are used
+interchangeably.</p></li>
+</ul>
+<section id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h3>
+<p>This feature requires Keystone API proxy SSL terminator to validate the
+incoming X.509 SSL client certificate and pass the certificate information
+(i.e. subject DN, issuer DN, etc) to the Keystone application as part of the
+request environment. At the time of this writing the feature has been tested
+with either HAProxy or Apache as Keystone API proxy SSL terminator only.</p>
+<p>The rest of this document required readers to familiar with:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Public_key_infrastructure">Public Key Infrastructure (PKI) and certificate management</a></p></li>
+<li><p><a class="reference external" href="https://tools.ietf.org/html/rfc5246#section-7.4.6">SSL with client authentication</a>, or commonly known as two-way SSL</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Public_key_infrastructure">Public Key Infrastructure (PKI) and certificate management</a></p></li>
+<li><p><a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/mod_ssl.html#ssloptions">Apache SSL configuration</a></p></li>
+<li><p><a class="reference external" href="http://cbonte.github.io/haproxy-dconv/1.7/configuration.html#7.3.4">HAProxy SSL configuration</a></p></li>
+</ul>
+<p>Configuring this feature requires <a class="reference external" href="https://www.openssl.org/docs/manmaster/man1/openssl.html">OpenSSL Command Line Tool (CLI)</a>. Please refer
+to the respective OS installation guide on how to install it.</p>
+</section>
+</section>
+<section id="keystone-configuration">
+<h2>Keystone Configuration<a class="headerlink" href="#keystone-configuration" title="Link to this heading">¶</a></h2>
+<p>This feature utilizes Keystone federation capability to determine the
+authorization associated with the incoming X.509 SSL client certificate by
+mapping the certificate attributes to a Keystone identity. Therefore, the
+direct issuer or trusted Certification Authority (CA) of the client certificate
+is the remote Identity Provider (IDP), and the hexadecimal output of the SHA256
+hash of the issuer distinguished name (DN) is used as the IDP ID.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Client certificate issuer DN may be formatted differently depending on the
+SSL terminator. For example, Apache mod_ssl may use <a class="reference external" href="https://tools.ietf.org/html/rfc2253">RFC 2253</a> while HAProxy
+may use the old format. The old format is used by applications that linked
+with an older version of OpenSSL where the string representation of the
+distinguished name has not yet become a de facto standard. For more
+information on the old formation, please see the <a class="reference external" href="https://www.openssl.org/docs/manmaster/man1/x509.html">nameopt</a> in the
+OpenSSL CLI manual. Therefore, it is critically important to keep the
+format consistent throughout the configuration as Keystone does exact string
+match when comparing certificate attributes.</p>
+</div>
+<section id="how-to-obtain-trusted-issuer-dn">
+<h3>How to obtain trusted issuer DN<a class="headerlink" href="#how-to-obtain-trusted-issuer-dn" title="Link to this heading">¶</a></h3>
+<p>If SSL terminates at either HAProxy or Apache, the client certificate issuer
+DN can be obtained by using the OpenSSL CLI.</p>
+<p>Since version 2.3.11, Apache mod_ssl by default uses <a class="reference external" href="https://tools.ietf.org/html/rfc2253">RFC 2253</a> when handling
+certificate distinguished names. However, deployer have the option to use
+the old format by configuring the <a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/mod_ssl.html#ssloptions">LegacyDNStringFormat</a> option.</p>
+<p>HAProxy, on the other hand, only supports the old format.</p>
+<p>To obtain issuer DN in RFC 2253 format:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-issuer<span class="w"> </span>-noout<span class="w"> </span>-in<span class="w"> </span>client_cert.pem<span class="w"> </span>-nameopt<span class="w"> </span>rfc2253<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;s/^\s*issuer=//&#39;</span>
+</pre></div>
+</div>
+<p>To obtain issuer DN in old format:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-issuer<span class="w"> </span>-noout<span class="w"> </span>-in<span class="w"> </span>client_cert.pem<span class="w"> </span>-nameopt<span class="w"> </span>compat<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;s/^\s*issuer=//&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="how-to-calculate-the-idp-id-from-trusted-issuer-dn">
+<h3>How to calculate the IDP ID from trusted issuer DN<a class="headerlink" href="#how-to-calculate-the-idp-id-from-trusted-issuer-dn" title="Link to this heading">¶</a></h3>
+<p>The hexadecimal output of the SHA256 hash of the trusted issuer DN is being
+used as the Identity Provider ID in Keystone. It can be obtained using
+OpenSSL CLI.</p>
+<p>To calculate the IDP ID for issuer DN in RFC 2253 format:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-issuer<span class="w"> </span>-noout<span class="w"> </span>-in<span class="w"> </span>client_cert.pem<span class="w"> </span>-nameopt<span class="w"> </span>rfc2253<span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;s/^\s*issuer=//&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>dgst<span class="w"> </span>-sha256<span class="w"> </span>-hex<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $2}&#39;</span>
+</pre></div>
+</div>
+<p>To calculate the IDP ID for issuer DN in old format:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-issuer<span class="w"> </span>-noout<span class="w"> </span>-in<span class="w"> </span>client_cert.pem<span class="w"> </span>-nameopt<span class="w"> </span>compat<span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;s/^\s*issuer=//&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>dgst<span class="w"> </span>-sha256<span class="w"> </span>-hex<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $2}&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="keystone-configuration-file-changes">
+<h3>Keystone Configuration File Changes<a class="headerlink" href="#keystone-configuration-file-changes" title="Link to this heading">¶</a></h3>
+<p>The following options in the <code class="docutils literal notranslate"><span class="pre">tokenless_auth</span></code> section of the Keystone
+configuration file <cite>keystone.conf</cite> are used to enable the X.509 tokenless
+authorization feature:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">trusted_issuer</span></code> - A list of trusted issuers for the X.509 SSL client
+certificates. More specifically the list of trusted issuer DNs mentioned in
+the <a class="reference internal" href="#how-to-obtain-trusted-issuer-dn">How to obtain trusted issuer DN</a> section above.
+The format of the trusted issuer DNs must match exactly with what the SSL
+terminator passed into the request environment. For example, if SSL
+terminates in Apache mod_ssl, then the issuer DN should be in RFC 2253
+format. Whereas if SSL terminates in HAProxy, then the issuer DN
+is expected to be in the old format. This is a multi-string list option. The
+absence of any trusted issuers means the X.509 tokenless authorization
+feature is effectively disabled.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">protocol</span></code> - The protocol name for the X.509 tokenless authorization
+along with the option <cite>issuer_attribute</cite> below can look up its
+corresponding mapping. It defaults to <code class="docutils literal notranslate"><span class="pre">x509</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">issuer_attribute</span></code> - The issuer attribute that is served as an IdP ID for
+the X.509 tokenless authorization along with the protocol to look up its
+corresponding mapping. It is the environment variable in the WSGI
+environment that references to the Issuer of the client certificate. It
+defaults to <code class="docutils literal notranslate"><span class="pre">SSL_CLIENT_I_DN</span></code>.</p></li>
+</ul>
+<p>This is a sample configuration for two <cite>trusted_issuer</cite> and a <cite>protocol</cite> set
+to <code class="docutils literal notranslate"><span class="pre">x509</span></code>.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[tokenless_auth]</span>
+<span class="na">trusted_issuer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">emailAddress=admin@foosigner.com,CN=Foo Signer,OU=eng,O=abc,L=San Jose,ST=California,C=US</span>
+<span class="na">trusted_issuer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">emailAddress=admin@openstack.com,CN=OpenStack Cert Signer,OU=keystone,O=openstack,L=Sunnyvale,ST=California,C=US</span>
+<span class="na">protocol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">x509</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="setup-mapping">
+<h2>Setup Mapping<a class="headerlink" href="#setup-mapping" title="Link to this heading">¶</a></h2>
+<p>Like federation, X.509 tokenless authorization also utilizes the mapping
+mechanism to formulate an identity. The identity provider must correspond
+to the issuer of the X.509 SSL client certificate. The protocol for the
+given identity is <code class="docutils literal notranslate"><span class="pre">x509</span></code> by default, but can be configurable.</p>
+<section id="create-an-identity-provider-idp">
+<h3>Create an Identity Provider (IDP)<a class="headerlink" href="#create-an-identity-provider-idp" title="Link to this heading">¶</a></h3>
+<p>As mentioned, the Identity Provider ID is the hexadecimal output of the SHA256
+hash of the issuer distinguished name (DN).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If there are multiple trusted issuers, there must be multiple IDP created,
+one for each trusted issuer.</p>
+</div>
+<p>To create an IDP for a given trusted issuer, follow the instructions in the
+<a class="reference internal" href="#how-to-calculate-the-idp-id-from-trusted-issuer-dn">How to calculate the IDP ID from trusted issuer DN</a> section to calculate
+the IDP ID. Then use OpenStack CLI to create the IDP. i.e.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>openstack<span class="w"> </span>identity<span class="w"> </span>provider<span class="w"> </span>create<span class="w"> </span>--description<span class="w"> </span><span class="s1">&#39;IDP foo&#39;</span><span class="w"> </span>&lt;IDP<span class="w"> </span>ID&gt;
+</pre></div>
+</div>
+</section>
+<section id="create-a-map">
+<h3>Create a Map<a class="headerlink" href="#create-a-map" title="Link to this heading">¶</a></h3>
+<p>A mapping needs to be created to map the <code class="docutils literal notranslate"><span class="pre">Subject</span> <span class="pre">DN</span></code> in the client
+certificate as a user to yield a valid local user if the user’s <code class="docutils literal notranslate"><span class="pre">type</span></code>
+defined as <code class="docutils literal notranslate"><span class="pre">local</span></code> in the mapping. For example, the client certificate
+has <code class="docutils literal notranslate"><span class="pre">Subject</span> <span class="pre">DN</span></code> as <code class="docutils literal notranslate"><span class="pre">CN=alex,OU=eng,O=nice-network,L=Sunnyvale,</span>
+<span class="pre">ST=California,C=US</span></code>, in the following examples, <code class="docutils literal notranslate"><span class="pre">user_name</span></code> will be
+mapped to``alex`` and <code class="docutils literal notranslate"><span class="pre">domain_name</span></code> will be mapped to <code class="docutils literal notranslate"><span class="pre">nice-network</span></code>.
+And it has user’s <code class="docutils literal notranslate"><span class="pre">type</span></code> set to <code class="docutils literal notranslate"><span class="pre">local</span></code>. If user’s <code class="docutils literal notranslate"><span class="pre">type</span></code> is not
+defined, it defaults to <code class="docutils literal notranslate"><span class="pre">ephemeral</span></code>.</p>
+<p>Please refer to <a class="reference external" href="http://httpd.apache.org/docs/current/mod/mod_ssl.html">mod_ssl</a> for the detailed mapping attributes.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;local&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;user&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;{0}&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;domain&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;{1}&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;local&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="s2">&quot;remote&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;SSL_CLIENT_S_DN_CN&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;whitelist&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;glance&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;nova&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;swift&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;neutron&quot;</span><span class="p">]</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                 </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;SSL_CLIENT_S_DN_O&quot;</span><span class="p">,</span>
+<span class="w">                 </span><span class="s2">&quot;whitelist&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Default&quot;</span><span class="p">]</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>When user’s <code class="docutils literal notranslate"><span class="pre">type</span></code> is not defined or set to <code class="docutils literal notranslate"><span class="pre">ephemeral</span></code>, the mapped user
+does not have to be a valid local user but the mapping must yield at least
+one valid local group. For example:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;local&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;user&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;{0}&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;ephemeral&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="s2">&quot;group&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="s2">&quot;domain&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;{1}&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;openstack_services&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="s2">&quot;remote&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;SSL_CLIENT_S_DN_CN&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;whitelist&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;glance&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;nova&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;swift&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;neutron&quot;</span><span class="p">]</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                 </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;SSL_CLIENT_S_DN_O&quot;</span><span class="p">,</span>
+<span class="w">                 </span><span class="s2">&quot;whitelist&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Default&quot;</span><span class="p">]</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The above mapping assume openstack_services group already exist and have
+the proper role assignments (i.e. allow token validation) If not, it will
+need to be created.</p>
+</div>
+<p>To create a mapping using OpenStack CLI, assuming the mapping is saved into
+a file <code class="docutils literal notranslate"><span class="pre">x509_tokenless_mapping.json</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>openstack<span class="w"> </span>mapping<span class="w"> </span>create<span class="w"> </span>--rules<span class="w"> </span>x509_tokenless_mapping.json<span class="w"> </span>x509_tokenless
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The mapping ID is arbitrary and it can be any string as opposed to
+IDP ID.</p>
+</div>
+</section>
+<section id="create-a-protocol">
+<h3>Create a Protocol<a class="headerlink" href="#create-a-protocol" title="Link to this heading">¶</a></h3>
+<p>The name of the protocol must be the same as the one specified by the
+<code class="docutils literal notranslate"><span class="pre">protocol</span></code> option in <code class="docutils literal notranslate"><span class="pre">tokenless_auth</span></code> section of the Keystone
+configuration file. The protocol name is user designed and it can be any
+name as opposed to IDP ID.</p>
+<p>A protocol name and an IDP ID will uniquely identify a mapping.</p>
+<p>To create a protocol using OpenStack CLI:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>openstack<span class="w"> </span>federation<span class="w"> </span>protocol<span class="w"> </span>create<span class="w"> </span>--identity-provider<span class="w"> </span>&lt;IDP<span class="w"> </span>ID&gt;
+<span class="w">  </span>--mapping<span class="w"> </span>x509_tokenless<span class="w"> </span>x509
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If there are multiple trusted issuers, there must be multiple protocol
+created, one for each IDP. All IDP can share a same mapping but the
+combination of IDP ID and protocol must be unique.</p>
+</div>
+</section>
+</section>
+<section id="ssl-terminator-configuration">
+<h2>SSL Terminator Configuration<a class="headerlink" href="#ssl-terminator-configuration" title="Link to this heading">¶</a></h2>
+<section id="apache-configuration">
+<h3>Apache Configuration<a class="headerlink" href="#apache-configuration" title="Link to this heading">¶</a></h3>
+<p>If SSL terminates at Apache mod_ssl, Apache must be configured to handle
+two-way SSL and pass the SSL certificate information to the Keystone
+application as part of the request environment.</p>
+<p>The Client authentication attribute <code class="docutils literal notranslate"><span class="pre">SSLVerifyClient</span></code> should be set
+as <code class="docutils literal notranslate"><span class="pre">optional</span></code> to allow other token authentication methods and
+attribute <code class="docutils literal notranslate"><span class="pre">SSLOptions</span></code> needs to set as <code class="docutils literal notranslate"><span class="pre">+StdEnvVars</span></code> to allow certificate
+attributes to be passed. For example,</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">&lt;VirtualHost *</span><span class="o">:</span><span class="s">443&gt;</span>
+<span class="w">    </span><span class="na">WSGIScriptAlias / /var/www/cgi-bin/keystone/main</span>
+<span class="w">    </span><span class="na">ErrorLog /var/log/apache2/keystone.log</span>
+<span class="w">    </span><span class="na">CustomLog /var/log/apache2/access.log combined</span>
+<span class="w">    </span><span class="na">SSLEngine on</span>
+<span class="w">    </span><span class="na">SSLCertificateFile    /etc/apache2/ssl/apache.cer</span>
+<span class="w">    </span><span class="na">SSLCertificateKeyFile /etc/apache2/ssl/apache.key</span>
+<span class="w">    </span><span class="na">SSLCACertificatePath /etc/apache2/capath</span>
+<span class="w">    </span><span class="na">SSLOptions +StdEnvVars</span>
+<span class="w">    </span><span class="na">SSLVerifyClient optional</span>
+<span class="na">&lt;/VirtualHost&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="haproxy-and-apache-configuration">
+<h3>HAProxy and Apache Configuration<a class="headerlink" href="#haproxy-and-apache-configuration" title="Link to this heading">¶</a></h3>
+<p>If SSL terminates at HAProxy and Apache is the API proxy for the Keystone
+application, HAProxy must configured to handle two-way SSL and convey
+the SSL certificate information via the request headers. Apache in turn will
+need to bring those request headers into the request environment.</p>
+<p>Here’s an example on how to configure HAProxy to handle two-way SSL and
+pass the SSL certificate information via the request headers.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">frontend http-frontend</span>
+<span class="w">    </span><span class="na">mode http</span>
+<span class="w">    </span><span class="na">option forwardfor</span>
+<span class="w">    </span><span class="na">bind 10.1.1.1</span><span class="o">:</span><span class="s">5000 ssl crt /etc/keystone/ssl/keystone.pem ca-file /etc/keystone/ssl/ca.pem verify optional</span>
+
+<span class="w">    </span><span class="na">reqadd X-Forwarded-Proto</span><span class="o">:</span>\<span class="w"> </span><span class="s">https if { ssl_fc }</span>
+<span class="w">    </span><span class="na">http-request set-header X-SSL                   %[ssl_fc]</span>
+<span class="w">    </span><span class="na">http-request set-header X-SSL-Client-Verify     %[ssl_c_verify]</span>
+<span class="w">    </span><span class="na">http-request set-header X-SSL-Client-SHA1       %{+Q}[ssl_c_sha1]</span>
+<span class="w">    </span><span class="na">http-request set-header X-SSL-Client-DN         %{+Q}[ssl_c_s_dn]</span>
+<span class="w">    </span><span class="na">http-request set-header X-SSL-Client-CN         %{+Q}[ssl_c_s_dn(cn)]</span>
+<span class="w">    </span><span class="na">http-request set-header X-SSL-Client-O          %{+Q}[ssl_c_s_dn(o)]</span>
+<span class="w">    </span><span class="na">http-request set-header X-SSL-Issuer            %{+Q}[ssl_c_i_dn]</span>
+<span class="w">    </span><span class="na">http-request set-header X-SSL-Issuer-CN         %{+Q}[ssl_c_i_dn(cn)]</span>
+</pre></div>
+</div>
+<p>When the request gets to the Apache Keystone API Proxy, Apache will need to
+bring those SSL headers into the request environment. Here’s an example on
+how to configure Apache to achieve that.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">&lt;VirtualHost 192.168.0.10</span><span class="o">:</span><span class="s">5000&gt;</span>
+<span class="w">    </span><span class="na">WSGIScriptAlias / /var/www/cgi-bin/keystone/main</span>
+
+<span class="w">    </span><span class="c1"># Bring the needed SSL certificate attributes from HAProxy into the</span>
+<span class="w">    </span><span class="c1"># request environment</span>
+<span class="w">    </span><span class="na">SetEnvIf X-SSL-Issuer &quot;^(.*)$&quot; SSL_CLIENT_I_DN</span><span class="o">=</span><span class="s">$0</span>
+<span class="w">    </span><span class="na">SetEnvIf X-SSL-Issuer-CN &quot;^(.*)$&quot; SSL_CLIENT_I_DN_CN</span><span class="o">=</span><span class="s">$0</span>
+<span class="w">    </span><span class="na">SetEnvIf X-SSL-Client-CN &quot;^(.*)$&quot; SSL_CLIENT_S_DN_CN</span><span class="o">=</span><span class="s">$0</span>
+<span class="w">    </span><span class="na">SetEnvIf X-SSL-Client-O &quot;^(.*)$&quot; SSL_CLIENT_S_DN_O</span><span class="o">=</span><span class="s">$0</span>
+<span class="na">&lt;/VirtualHost&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="setup-auth-token-middleware">
+<h2>Setup <code class="docutils literal notranslate"><span class="pre">auth_token</span></code> middleware<a class="headerlink" href="#setup-auth-token-middleware" title="Link to this heading">¶</a></h2>
+<p>In order to use <code class="docutils literal notranslate"><span class="pre">auth_token</span></code> middleware as the service client for X.509
+tokenless authorization, both configurable options and scope information
+will need to be setup.</p>
+<section id="configurable-options">
+<h3>Configurable Options<a class="headerlink" href="#configurable-options" title="Link to this heading">¶</a></h3>
+<p>The following configurable options in <code class="docutils literal notranslate"><span class="pre">auth_token</span></code> middleware
+should set to the correct values:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">auth_type</span></code> - Must set to <code class="docutils literal notranslate"><span class="pre">v3tokenlessauth</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">certfile</span></code> - Set to the full path of the certificate file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">keyfile</span></code> - Set to the full path of the private key file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cafile</span></code> - Set to the full path of the trusted CA certificate file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">project_name</span></code> or <code class="docutils literal notranslate"><span class="pre">project_id</span></code> - set to the scoped project.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">project_domain_name</span></code> or <code class="docutils literal notranslate"><span class="pre">project_domain_id</span></code> - if <code class="docutils literal notranslate"><span class="pre">project_name</span></code> is
+specified.</p></li>
+</ul>
+<p>Here’s an example of <code class="docutils literal notranslate"><span class="pre">auth_token</span></code> middleware configuration using X.509
+tokenless authorization for user token validation.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[keystone_authtoken]</span>
+<span class="na">memcached_servers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">localhost:11211</span>
+<span class="na">cafile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/etc/keystone/ca.pem</span>
+<span class="na">project_domain_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">Default</span>
+<span class="na">project_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">service</span>
+<span class="na">auth_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://192.168.0.10/identity/v3</span>
+<span class="na">auth_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">v3tokenlessauth</span>
+<span class="na">certfile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/etc/glance/certs/glance.pem</span>
+<span class="na">keyfile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/etc/glance/private/glance_private_key.pem</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="external-authentication.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Using external authentication with Keystone"></i></a>
+          
+          
+            <a href="oauth1.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: OAuth1 1.0a"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2019-07-08 21:55:47</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Administrator Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Keystone Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html">Keystone Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tokens.html">All about keystone tokens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service-api-protection.html">Default Roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="keystone-features.html">Advanced Keystone Features</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="authentication-mechanisms.html">Authentication Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2-usage-guide.html">OAuth2.0 Client Credentials Grant Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure-https.html">Configure HTTPS in Identity Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2-mtls-usage-guide.html">OAuth 2.0 Mutual-TLS Client Authentication Flow</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Configuring Keystone for Tokenless Authorization</a><ul>
+<li><a class="reference internal" href="#definitions">Definitions</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone-configuration">Keystone Configuration</a><ul>
+<li><a class="reference internal" href="#how-to-obtain-trusted-issuer-dn">How to obtain trusted issuer DN</a></li>
+<li><a class="reference internal" href="#how-to-calculate-the-idp-id-from-trusted-issuer-dn">How to calculate the IDP ID from trusted issuer DN</a></li>
+<li><a class="reference internal" href="#keystone-configuration-file-changes">Keystone Configuration File Changes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#setup-mapping">Setup Mapping</a><ul>
+<li><a class="reference internal" href="#create-an-identity-provider-idp">Create an Identity Provider (IDP)</a></li>
+<li><a class="reference internal" href="#create-a-map">Create a Map</a></li>
+<li><a class="reference internal" href="#create-a-protocol">Create a Protocol</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ssl-terminator-configuration">SSL Terminator Configuration</a><ul>
+<li><a class="reference internal" href="#apache-configuration">Apache Configuration</a></li>
+<li><a class="reference internal" href="#haproxy-and-apache-configuration">HAProxy and Apache Configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#setup-auth-token-middleware">Setup <code class="docutils literal notranslate"><span class="pre">auth_token</span></code> middleware</a><ul>
+<li><a class="reference internal" href="#configurable-options">Configurable Options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "admin/configure_tokenless_x509" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "Configuring Keystone for Tokenless Authorization in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2019-07-08 21:55:47";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "admin/configure_tokenless_x509";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

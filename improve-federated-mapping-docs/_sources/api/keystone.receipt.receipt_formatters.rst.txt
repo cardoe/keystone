@@ -1,0 +1,7 @@
+keystone.receipt.receipt\_formatters module
+===========================================
+
+.. automodule:: keystone.receipt.receipt_formatters
+   :members:
+   :undoc-members:
+   :show-inheritance:

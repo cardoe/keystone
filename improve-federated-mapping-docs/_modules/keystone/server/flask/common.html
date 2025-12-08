@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keystone.server.flask.common &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/support-matrix.css" />
+    <script src="../../../../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../../../../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../../../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- TEMPLATE_NAME: _modules/keystone/server/flask/common -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../../../../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>keystone.server.flask.common</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <h1>Source code for keystone.server.flask.common</h1><div class="highlight"><pre>
+<span></span><span class="c1">#    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may</span>
+<span class="c1">#    not use this file except in compliance with the License. You may obtain</span>
+<span class="c1">#    a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#         http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1">#    Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1">#    distributed under the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT</span>
+<span class="c1">#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the</span>
+<span class="c1">#    License for the specific language governing permissions and limitations</span>
+<span class="c1">#    under the License.</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">abc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">http.client</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ty</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">wsgiref.util</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">flask</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">blueprints</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">flask_restful</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">flask_restful.utils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_log</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_log</span><span class="w"> </span><span class="kn">import</span> <span class="n">versionutils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_serialization</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsonutils</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">authorization</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">context</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">driver_hints</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">json_home</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common.rbac_enforcer</span><span class="w"> </span><span class="kn">import</span> <span class="n">enforcer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">keystone.conf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone</span><span class="w"> </span><span class="kn">import</span> <span class="n">exception</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.i18n</span><span class="w"> </span><span class="kn">import</span> <span class="n">_</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone</span><span class="w"> </span><span class="kn">import</span> <span class="n">notifications</span>
+
+<span class="c1"># NOTE(morgan): Capture the relevant part of the flask url route rule for</span>
+<span class="c1"># substitution. In flask arguments (e.g. url elements to be passed to the</span>
+<span class="c1"># &quot;resource&quot; method, e.g. user_id, are specified like `&lt;string:user_id&gt;`</span>
+<span class="c1"># we use this regex to replace the &lt;&gt; with {} for JSON Home purposes and</span>
+<span class="c1"># remove the argument type. Use of this is done like</span>
+<span class="c1"># _URL_SUBST.sub(&#39;{\\1}&#39;, entity_path), which replaces the whole match</span>
+<span class="c1"># match rule bit with the capture group (this is a greedy sub).</span>
+<span class="n">_URL_SUBST</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&lt;[^\s:]+:([^&gt;]+)&gt;&#39;</span><span class="p">)</span>
+<span class="n">CONF</span> <span class="o">=</span> <span class="n">keystone</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">CONF</span>
+<span class="n">LOG</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">ResourceMap</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span>
+    <span class="s1">&#39;ResourceMap&#39;</span><span class="p">,</span>
+    <span class="p">[</span><span class="s1">&#39;resource&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">,</span> <span class="s1">&#39;alternate_urls&#39;</span><span class="p">,</span> <span class="s1">&#39;kwargs&#39;</span><span class="p">,</span> <span class="s1">&#39;json_home_data&#39;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">JsonHomeData</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span>
+    <span class="s1">&#39;JsonHomeData&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;rel&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;path_vars&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">_v3_resource_relation</span> <span class="o">=</span> <span class="n">json_home</span><span class="o">.</span><span class="n">build_v3_resource_relation</span>
+
+
+<div class="viewcode-block" id="construct_resource_map">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.construct_resource_map">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">construct_resource_map</span><span class="p">(</span>
+    <span class="n">resource</span><span class="p">,</span>
+    <span class="n">url</span><span class="p">,</span>
+    <span class="n">resource_kwargs</span><span class="p">,</span>
+    <span class="n">alternate_urls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">rel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">status</span><span class="o">=</span><span class="n">json_home</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">STABLE</span><span class="p">,</span>
+    <span class="n">path_vars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">resource_relation_func</span><span class="o">=</span><span class="n">_v3_resource_relation</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Construct the ResourceMap Named Tuple.</span>
+
+<span class="sd">    :param resource: The flask-RESTful resource class implementing the methods</span>
+<span class="sd">                     for the API.</span>
+<span class="sd">    :type resource: :class:`ResourceMap`</span>
+<span class="sd">    :param url: Flask-standard url route, all flask url routing rules apply.</span>
+<span class="sd">                url variables will be passed to the Resource methods as</span>
+<span class="sd">                arguments.</span>
+<span class="sd">    :type url: str</span>
+<span class="sd">    :param resource_kwargs: a dict of optional value(s) that can further modify</span>
+<span class="sd">                            the handling of the routing.</span>
+
+<span class="sd">                            * endpoint: endpoint name (defaults to</span>
+<span class="sd">                                        :meth:`Resource.__name__.lower`</span>
+<span class="sd">                                        Can be used to reference this route in</span>
+<span class="sd">                                        :class:`fields.Url` fields (str)</span>
+
+<span class="sd">                            * resource_class_args: args to be forwarded to the</span>
+<span class="sd">                                                   constructor of the resource.</span>
+<span class="sd">                                                   (tuple)</span>
+
+<span class="sd">                            * resource_class_kwargs: kwargs to be forwarded to</span>
+<span class="sd">                                                     the constructor of the</span>
+<span class="sd">                                                     resource. (dict)</span>
+
+<span class="sd">                            Additional keyword arguments not specified above</span>
+<span class="sd">                            will be passed as-is to</span>
+<span class="sd">                            :meth:`flask.Flask.add_url_rule`.</span>
+<span class="sd">    :param alternate_urls: An iterable (list) of dictionaries containing urls</span>
+<span class="sd">                           and associated json home REL data. Each element is</span>
+<span class="sd">                           expected to be a dictionary with a &#39;url&#39; key and an</span>
+<span class="sd">                           optional &#39;json_home&#39; key for a &#39;JsonHomeData&#39; named</span>
+<span class="sd">                           tuple  These urls will also map to the resource.</span>
+<span class="sd">                           These are used to ensure API compatibility when a</span>
+<span class="sd">                           &quot;new&quot; path is more correct for the API but old paths</span>
+<span class="sd">                           must continue to work. Example:</span>
+<span class="sd">                           `/auth/domains` being the new path for</span>
+<span class="sd">                           `/OS-FEDERATION/domains`. The `OS-FEDERATION` part</span>
+<span class="sd">                           would be listed as an alternate url. If a</span>
+<span class="sd">                           &#39;json_home&#39; key is provided, the original path</span>
+<span class="sd">                           with the new json_home data will be added to the</span>
+<span class="sd">                           JSON Home Document.</span>
+<span class="sd">    :type: iterable or None</span>
+<span class="sd">    :param rel:</span>
+<span class="sd">    :type rel: str or None</span>
+<span class="sd">    :param status: JSON Home API Status, e.g. &quot;STABLE&quot;</span>
+<span class="sd">    :type status: str</span>
+<span class="sd">    :param path_vars: JSON Home Path Var Data (arguments)</span>
+<span class="sd">    :type path_vars: dict or None</span>
+<span class="sd">    :param resource_relation_func: function to build expected resource rel data</span>
+<span class="sd">    :type resource_relation_func: callable</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">rel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">jh_data</span> <span class="o">=</span> <span class="n">construct_json_home_data</span><span class="p">(</span>
+            <span class="n">rel</span><span class="o">=</span><span class="n">rel</span><span class="p">,</span>
+            <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="n">path_vars</span><span class="p">,</span>
+            <span class="n">resource_relation_func</span><span class="o">=</span><span class="n">resource_relation_func</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">jh_data</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">url</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="k">return</span> <span class="n">ResourceMap</span><span class="p">(</span>
+        <span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span>
+        <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+        <span class="n">alternate_urls</span><span class="o">=</span><span class="n">alternate_urls</span><span class="p">,</span>
+        <span class="n">kwargs</span><span class="o">=</span><span class="n">resource_kwargs</span><span class="p">,</span>
+        <span class="n">json_home_data</span><span class="o">=</span><span class="n">jh_data</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="construct_json_home_data">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.construct_json_home_data">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">construct_json_home_data</span><span class="p">(</span>
+    <span class="n">rel</span><span class="p">,</span>
+    <span class="n">status</span><span class="o">=</span><span class="n">json_home</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">STABLE</span><span class="p">,</span>
+    <span class="n">path_vars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">resource_relation_func</span><span class="o">=</span><span class="n">_v3_resource_relation</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">rel</span> <span class="o">=</span> <span class="n">resource_relation_func</span><span class="p">(</span><span class="n">resource_name</span><span class="o">=</span><span class="n">rel</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">JsonHomeData</span><span class="p">(</span><span class="n">rel</span><span class="o">=</span><span class="n">rel</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span> <span class="n">path_vars</span><span class="o">=</span><span class="p">(</span><span class="n">path_vars</span> <span class="ow">or</span> <span class="p">{}))</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_initialize_rbac_enforcement_check</span><span class="p">():</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">flask</span><span class="o">.</span><span class="n">g</span><span class="p">,</span> <span class="n">enforcer</span><span class="o">.</span><span class="n">_ENFORCEMENT_CHECK_ATTR</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_assert_rbac_enforcement_called</span><span class="p">(</span><span class="n">resp</span><span class="p">):</span>
+    <span class="c1"># assert is intended to be used to ensure code during development works</span>
+    <span class="c1"># as expected, it is fine to be optimized out with `python -O`</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s1">&#39;PROGRAMMING ERROR: enforcement (`keystone.common.rbac_enforcer.&#39;</span>
+        <span class="s1">&#39;enforcer.RBACEnforcer.enforce_call()`) has not been called; API &#39;</span>
+        <span class="s1">&#39;is unenforced.&#39;</span>
+    <span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">g</span>
+    <span class="c1"># NOTE(morgan): OPTIONS is a special case and is handled by flask</span>
+    <span class="c1"># internally. We should never be enforcing on OPTIONS calls.</span>
+    <span class="c1"># Request validation could abort even before we start processing. It</span>
+    <span class="c1"># makes no sense to enfore RBAC</span>
+    <span class="k">if</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">!=</span> <span class="s1">&#39;OPTIONS&#39;</span> <span class="ow">and</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span>
+        <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">BAD_REQUEST</span>
+    <span class="p">]:</span>
+        <span class="k">assert</span> <span class="nb">getattr</span><span class="p">(</span>  <span class="c1"># nosec</span>
+            <span class="n">g</span><span class="p">,</span> <span class="n">enforcer</span><span class="o">.</span><span class="n">_ENFORCEMENT_CHECK_ATTR</span><span class="p">,</span> <span class="kc">False</span>
+        <span class="p">),</span> <span class="n">msg</span>  <span class="c1"># nosec</span>
+    <span class="k">return</span> <span class="n">resp</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_remove_content_type_on_204</span><span class="p">(</span><span class="n">resp</span><span class="p">):</span>
+    <span class="c1"># Remove content-type if the resp is 204.</span>
+    <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">NO_CONTENT</span><span class="p">:</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;content-type&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">resp</span>
+
+
+<div class="viewcode-block" id="APIBase">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.APIBase">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">APIBase</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Override with an attr consisting of the API Name, e.g &#39;users&#39;.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_import_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Override with an attr consisting of the value of `__name__`.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resource_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">ResourceMap</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;An attr containing of an iterable of :class:`ResourceMap`.</span>
+
+<span class="sd">        Each :class:`ResourceMap` is a NamedTuple with the following elements:</span>
+
+<span class="sd">            * resource: a :class:`flask_restful.Resource` class or subclass</span>
+
+<span class="sd">            * url: a url route to match for the resource, standard flask</span>
+<span class="sd">                   routing rules apply. Any url variables will be passed</span>
+<span class="sd">                   to the resource method as args. (str)</span>
+
+<span class="sd">            * alternate_urls: an iterable of url routes to match for the</span>
+<span class="sd">                              resource, standard flask routing rules apply.</span>
+<span class="sd">                              These rules are in addition (for API compat) to</span>
+<span class="sd">                              the primary url. Any url variables will be</span>
+<span class="sd">                              passed to the resource method as args. (iterable)</span>
+
+<span class="sd">            * json_home_data: :class:`JsonHomeData` populated with relevant</span>
+<span class="sd">                              info for populated JSON Home Documents or None.</span>
+
+<span class="sd">            * kwargs: a dict of optional value(s) that can further modify the</span>
+<span class="sd">                      handling of the routing.</span>
+
+<span class="sd">                      * endpoint: endpoint name (defaults to</span>
+<span class="sd">                                  :meth:`Resource.__name__.lower`</span>
+<span class="sd">                                  Can be used to reference this route in</span>
+<span class="sd">                                  :class:`fields.Url` fields (str)</span>
+
+<span class="sd">                      * resource_class_args: args to be forwarded to the</span>
+<span class="sd">                                             constructor of the resource.</span>
+<span class="sd">                                             (tuple)</span>
+
+<span class="sd">                      * resource_class_kwargs: kwargs to be forwarded to the</span>
+<span class="sd">                                               constructor of the resource.</span>
+<span class="sd">                                               (dict)</span>
+
+<span class="sd">                      Additional keyword arguments not specified above will be</span>
+<span class="sd">                      passed as-is to :meth:`flask.Flask.add_url_rule`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resources</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ty</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ty</span><span class="o">.</span><span class="n">Type</span><span class="p">[</span><span class="s2">&quot;ResourceBase&quot;</span><span class="p">]]:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_bp_url_prefix</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
+        <span class="c1"># NOTE(morgan): Keystone only has a V3 API, this is here for future</span>
+        <span class="c1"># proofing and exceptional cases such as root discovery API object(s)</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;/v3&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">prefix</span><span class="p">:</span>
+            <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prefix</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">api</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># The API may be directly accessed via this property</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__api</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">blueprint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># The API Blueprint may be directly accessed via this property</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__blueprint</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">blueprint_url_prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">api_url_prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">default_mediatype</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+        <span class="n">decorators</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">errors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__before_request_functions_added</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__after_request_functions_added</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_default_mediatype</span> <span class="o">=</span> <span class="n">default_mediatype</span>
+        <span class="n">blueprint_url_prefix</span> <span class="o">=</span> <span class="n">blueprint_url_prefix</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+        <span class="n">api_url_prefix</span> <span class="o">=</span> <span class="n">api_url_prefix</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">api_url_prefix</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">api_url_prefix</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_api_url_prefix</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="n">api_url_prefix</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># NOTE(morgan): If the api_url_prefix is empty fall back on the</span>
+            <span class="c1"># class-level defined `_api_url_prefix` if it is set.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_api_url_prefix</span> <span class="o">=</span> <span class="n">api_url_prefix</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_api_url_prefix&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">blueprint_url_prefix</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">blueprint_url_prefix</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_blueprint_url_prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_bp_url_prefix</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="n">blueprint_url_prefix</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_blueprint_url_prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_bp_url_prefix</span><span class="p">(</span>
+                <span class="n">blueprint_url_prefix</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__blueprint</span> <span class="o">=</span> <span class="n">blueprints</span><span class="o">.</span><span class="n">Blueprint</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span>
+            <span class="n">import_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_import_name</span><span class="p">,</span>
+            <span class="n">url_prefix</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_blueprint_url_prefix</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__api</span> <span class="o">=</span> <span class="n">flask_restful</span><span class="o">.</span><span class="n">Api</span><span class="p">(</span>
+            <span class="n">app</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__blueprint</span><span class="p">,</span>
+            <span class="n">prefix</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_api_url_prefix</span><span class="p">,</span>
+            <span class="n">default_mediatype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_default_mediatype</span><span class="p">,</span>
+            <span class="n">decorators</span><span class="o">=</span><span class="n">decorators</span><span class="p">,</span>
+            <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># NOTE(morgan): Make sure we&#39;re using oslo_serialization.jsonutils</span>
+        <span class="c1"># instead of the default json serializer. Keystone has data types that</span>
+        <span class="c1"># the default serializer cannot handle, representation is a decorator</span>
+        <span class="c1"># but since we instantiate the API in-line we need to do some magic</span>
+        <span class="c1"># and call it as a normal method.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__api</span><span class="o">.</span><span class="n">representation</span><span class="p">(</span><span class="s1">&#39;application/json&#39;</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">_output_json</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_resources</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_mapped_resources</span><span class="p">()</span>
+
+        <span class="c1"># Apply Before and After request functions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_before_request_functions</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_after_request_functions</span><span class="p">()</span>
+        <span class="c1"># Assert is intended to ensure code works as expected in development,</span>
+        <span class="c1"># it is fine to optimize out with python -O</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_request functions not registered&#39;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">__before_request_functions_added</span><span class="p">,</span> <span class="n">msg</span> <span class="o">%</span> <span class="s1">&#39;before&#39;</span>  <span class="c1"># nosec</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">__after_request_functions_added</span><span class="p">,</span> <span class="n">msg</span> <span class="o">%</span> <span class="s1">&#39;after&#39;</span>  <span class="c1"># nosec</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Add resources that are standardized. Each resource implements a</span>
+        <span class="c1"># base set of handling for a collection of entities such as</span>
+        <span class="c1"># `users`. Resources are sourced from self.resources. Each resource</span>
+        <span class="c1"># should have an attribute/property containing the `collection_key`</span>
+        <span class="c1"># which is typically the &quot;plural&quot; form of the entity, e.g. `users` and</span>
+        <span class="c1"># `member_key` which is typically the &quot;singular&quot; of the entity, e.g.</span>
+        <span class="c1"># `user`. Resources are sourced from self.resources, each element is</span>
+        <span class="c1"># simply a :class:`flask_restful.Resource`.</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">resources</span><span class="p">:</span>
+            <span class="n">c_key</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s1">&#39;collection_key&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">m_key</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s1">&#39;member_key&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">r_pfx</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s1">&#39;api_prefix&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">c_key</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">m_key</span><span class="p">:</span>
+                <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s1">&#39;Unable to add resource </span><span class="si">%(resource)s</span><span class="s1"> to API &#39;</span>
+                    <span class="s1">&#39;</span><span class="si">%(name)s</span><span class="s1">, both `member_key` and `collection_key` &#39;</span>
+                    <span class="s1">&#39;must be implemented. [collection_key(</span><span class="si">%(col_key)s</span><span class="s1">) &#39;</span>
+                    <span class="s1">&#39;member_key(</span><span class="si">%(m_key)s</span><span class="s1">)]&#39;</span><span class="p">,</span>
+                    <span class="p">{</span>
+                        <span class="s1">&#39;resource&#39;</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span>
+                        <span class="s1">&#39;col_key&#39;</span><span class="p">:</span> <span class="n">c_key</span><span class="p">,</span>
+                        <span class="s1">&#39;m_key&#39;</span><span class="p">:</span> <span class="n">m_key</span><span class="p">,</span>
+                    <span class="p">},</span>
+                <span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">r_pfx</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_url_prefix</span><span class="p">:</span>
+                <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s1">&#39;Unable to add resource </span><span class="si">%(resource)s</span><span class="s1"> to API as the &#39;</span>
+                    <span class="s1">&#39;API Prefixes do not match: </span><span class="si">%(apfx)r</span><span class="s1"> != </span><span class="si">%(rpfx)r</span><span class="s1">&#39;</span><span class="p">,</span>
+                    <span class="p">{</span>
+                        <span class="s1">&#39;resource&#39;</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                        <span class="s1">&#39;rpfx&#39;</span><span class="p">:</span> <span class="n">r_pfx</span><span class="p">,</span>
+                        <span class="s1">&#39;apfx&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_url_prefix</span><span class="p">,</span>
+                    <span class="p">},</span>
+                <span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># NOTE(morgan): The Prefix is automatically added by the API, so</span>
+            <span class="c1"># we do not add it to the paths here.</span>
+            <span class="n">collection_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="n">c_key</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s1">&#39;_id_path_param_name_override&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="c1"># The member_key doesn&#39;t match the &quot;id&quot; key in the url, make</span>
+                <span class="c1"># sure to use the correct path-key for ID.</span>
+                <span class="n">member_id_key</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s1">&#39;_id_path_param_name_override&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">member_id_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">m_key</span><span class="si">}</span><span class="s1">_id&#39;</span>
+
+            <span class="n">entity_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="n">c_key</span><span class="si">}</span><span class="s1">/&lt;string:</span><span class="si">{</span><span class="n">member_id_key</span><span class="si">}</span><span class="s1">&gt;&#39;</span>
+            <span class="c1"># NOTE(morgan): The json-home form of the entity path is different</span>
+            <span class="c1"># from the flask-url routing form. Must also include the prefix</span>
+            <span class="n">jh_e_path</span> <span class="o">=</span> <span class="n">_URL_SUBST</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
+                <span class="s1">&#39;{</span><span class="se">\\</span><span class="s1">1}&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;</span><span class="si">{pfx}</span><span class="s1">/</span><span class="si">{e_path}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">pfx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_api_url_prefix</span><span class="p">,</span> <span class="n">e_path</span><span class="o">=</span><span class="n">entity_path</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+
+            <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s1">&#39;Adding standard routes to API </span><span class="si">%(name)s</span><span class="s1"> for `</span><span class="si">%(resource)s</span><span class="s1">` &#39;</span>
+                <span class="s1">&#39;(API Prefix: </span><span class="si">%(prefix)s</span><span class="s1">) [</span><span class="si">%(collection_path)s</span><span class="s1">, &#39;</span>
+                <span class="s1">&#39;</span><span class="si">%(entity_path)s</span><span class="s1">]&#39;</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span>
+                    <span class="s1">&#39;resource&#39;</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                    <span class="s1">&#39;collection_path&#39;</span><span class="p">:</span> <span class="n">collection_path</span><span class="p">,</span>
+                    <span class="s1">&#39;entity_path&#39;</span><span class="p">:</span> <span class="n">entity_path</span><span class="p">,</span>
+                    <span class="s1">&#39;prefix&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_url_prefix</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">collection_path</span><span class="p">,</span> <span class="n">entity_path</span><span class="p">)</span>
+
+            <span class="c1"># Add JSON Home data</span>
+            <span class="n">resource_rel_func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span>
+                <span class="n">r</span><span class="p">,</span>
+                <span class="s1">&#39;json_home_resource_rel_func&#39;</span><span class="p">,</span>
+                <span class="n">json_home</span><span class="o">.</span><span class="n">build_v3_resource_relation</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">resource_rel_status</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s1">&#39;json_home_resource_status&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">collection_rel_resource_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span>
+                <span class="n">r</span><span class="p">,</span> <span class="s1">&#39;json_home_collection_resource_name_override&#39;</span><span class="p">,</span> <span class="n">c_key</span>
+            <span class="p">)</span>
+            <span class="n">collection_rel</span> <span class="o">=</span> <span class="n">resource_rel_func</span><span class="p">(</span>
+                <span class="n">resource_name</span><span class="o">=</span><span class="n">collection_rel_resource_name</span>
+            <span class="p">)</span>
+            <span class="c1"># NOTE(morgan): Add the prefix explicitly for JSON Home documents</span>
+            <span class="c1"># to the collection path.</span>
+            <span class="n">href_val</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_api_url_prefix</span><span class="si">}{</span><span class="n">collection_path</span><span class="si">}</span><span class="s1">&#39;</span>
+
+            <span class="c1"># If additional parameters exist in the URL, add them to the</span>
+            <span class="c1"># href-vars dict.</span>
+            <span class="n">additional_params</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span>
+                <span class="n">r</span><span class="p">,</span> <span class="s1">&#39;json_home_additional_parameters&#39;</span><span class="p">,</span> <span class="p">{}</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">additional_params</span><span class="p">:</span>
+                <span class="c1"># NOTE(morgan): Special case, we have &#39;additional params&#39; which</span>
+                <span class="c1"># means we know the params are in the &quot;prefix&quot;. This guarantees</span>
+                <span class="c1"># the correct data in the json_home document with href-template</span>
+                <span class="c1"># and href-vars even on the &quot;collection&quot; entry</span>
+                <span class="n">rel_data</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">rel_data</span><span class="p">[</span><span class="s1">&#39;href-template&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_URL_SUBST</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;{</span><span class="se">\\</span><span class="s1">1}&#39;</span><span class="p">,</span> <span class="n">href_val</span><span class="p">)</span>
+                <span class="n">rel_data</span><span class="p">[</span><span class="s1">&#39;href-vars&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">additional_params</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rel_data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;href&#39;</span><span class="p">:</span> <span class="n">href_val</span><span class="p">}</span>
+            <span class="n">member_rel_resource_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span>
+                <span class="n">r</span><span class="p">,</span> <span class="s1">&#39;json_home_member_resource_name_override&#39;</span><span class="p">,</span> <span class="n">m_key</span>
+            <span class="p">)</span>
+
+            <span class="n">entity_rel</span> <span class="o">=</span> <span class="n">resource_rel_func</span><span class="p">(</span>
+                <span class="n">resource_name</span><span class="o">=</span><span class="n">member_rel_resource_name</span>
+            <span class="p">)</span>
+            <span class="n">id_str</span> <span class="o">=</span> <span class="n">member_id_key</span>
+
+            <span class="n">parameter_rel_func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span>
+                <span class="n">r</span><span class="p">,</span>
+                <span class="s1">&#39;json_home_parameter_rel_func&#39;</span><span class="p">,</span>
+                <span class="n">json_home</span><span class="o">.</span><span class="n">build_v3_parameter_relation</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">id_param_rel</span> <span class="o">=</span> <span class="n">parameter_rel_func</span><span class="p">(</span><span class="n">parameter_name</span><span class="o">=</span><span class="n">id_str</span><span class="p">)</span>
+            <span class="n">entity_rel_data</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;href-template&#39;</span><span class="p">:</span> <span class="n">jh_e_path</span><span class="p">,</span>
+                <span class="s1">&#39;href-vars&#39;</span><span class="p">:</span> <span class="p">{</span><span class="n">id_str</span><span class="p">:</span> <span class="n">id_param_rel</span><span class="p">},</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="n">additional_params</span><span class="p">:</span>
+                <span class="n">entity_rel_data</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;href-vars&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="n">additional_params</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">resource_rel_status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">json_home</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">update_resource_data</span><span class="p">(</span>
+                    <span class="n">rel_data</span><span class="p">,</span> <span class="n">resource_rel_status</span>
+                <span class="p">)</span>
+                <span class="n">json_home</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">update_resource_data</span><span class="p">(</span>
+                    <span class="n">entity_rel_data</span><span class="p">,</span> <span class="n">resource_rel_status</span>
+                <span class="p">)</span>
+
+            <span class="n">json_home</span><span class="o">.</span><span class="n">JsonHomeResources</span><span class="o">.</span><span class="n">append_resource</span><span class="p">(</span>
+                <span class="n">collection_rel</span><span class="p">,</span> <span class="n">rel_data</span>
+            <span class="p">)</span>
+            <span class="n">json_home</span><span class="o">.</span><span class="n">JsonHomeResources</span><span class="o">.</span><span class="n">append_resource</span><span class="p">(</span>
+                <span class="n">entity_rel</span><span class="p">,</span> <span class="n">entity_rel_data</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_mapped_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Add resource mappings, non-standard resource connections</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_mapping</span><span class="p">:</span>
+            <span class="n">alt_url_json_home_data</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s1">&#39;Adding resource routes to API </span><span class="si">%(name)s</span><span class="s1">: [</span><span class="si">%(url)r</span><span class="s1"> </span><span class="si">%(kwargs)r</span><span class="s1">]&#39;</span><span class="p">,</span>
+                <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="s1">&#39;kwargs&#39;</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">kwargs</span><span class="p">},</span>
+            <span class="p">)</span>
+            <span class="n">urls</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">url</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">alternate_urls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">alternate_urls</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_url_prefix</span><span class="p">:</span>
+                        <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                            <span class="s1">&#39;Unable to add additional resource route &#39;</span>
+                            <span class="s1">&#39;`</span><span class="si">%(route)s</span><span class="s1">` to API </span><span class="si">%(name)s</span><span class="s1"> because API has a &#39;</span>
+                            <span class="s1">&#39;URL prefix. Only APIs without explicit prefixes &#39;</span>
+                            <span class="s1">&#39;can have alternate URL routes added.&#39;</span><span class="p">,</span>
+                            <span class="p">{</span><span class="s1">&#39;route&#39;</span><span class="p">:</span> <span class="n">element</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">],</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">},</span>
+                        <span class="p">)</span>
+                        <span class="k">continue</span>
+                    <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                        <span class="s1">&#39;Adding additional resource route (alternate) to API &#39;</span>
+                        <span class="s1">&#39;</span><span class="si">%(name)s</span><span class="s1">: [</span><span class="si">%(url)r</span><span class="s1"> </span><span class="si">%(kwargs)r</span><span class="s1">]&#39;</span><span class="p">,</span>
+                        <span class="p">{</span>
+                            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span>
+                            <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="n">element</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">],</span>
+                            <span class="s1">&#39;kwargs&#39;</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">kwargs</span><span class="p">,</span>
+                        <span class="p">},</span>
+                    <span class="p">)</span>
+                    <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;json_home&#39;</span><span class="p">):</span>
+                        <span class="n">alt_url_json_home_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">[</span><span class="s1">&#39;json_home&#39;</span><span class="p">])</span>
+            <span class="c1"># Add all URL routes at once.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">resource</span><span class="p">,</span> <span class="o">*</span><span class="n">urls</span><span class="p">,</span> <span class="o">**</span><span class="n">r</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="c1"># Build the JSON Home data and add it to the relevant JSON Home</span>
+            <span class="c1"># Documents for explicit JSON Home data.</span>
+            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">json_home_data</span><span class="p">:</span>
+                <span class="n">resource_data</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="c1"># NOTE(morgan): JSON Home form of the URL is different</span>
+                <span class="c1"># from FLASK, do the conversion here.</span>
+                <span class="n">conv_url</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{pfx}</span><span class="s1">/</span><span class="si">{url}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">url</span><span class="o">=</span><span class="n">_URL_SUBST</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;{</span><span class="se">\\</span><span class="s1">1}&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">),</span>
+                    <span class="n">pfx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_api_url_prefix</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">json_home_data</span><span class="o">.</span><span class="n">path_vars</span><span class="p">:</span>
+                    <span class="n">resource_data</span><span class="p">[</span><span class="s1">&#39;href-template&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">conv_url</span>
+                    <span class="n">resource_data</span><span class="p">[</span><span class="s1">&#39;href-vars&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json_home_data</span><span class="o">.</span><span class="n">path_vars</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">resource_data</span><span class="p">[</span><span class="s1">&#39;href&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">conv_url</span>
+                <span class="n">json_home</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">update_resource_data</span><span class="p">(</span>
+                    <span class="n">resource_data</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">json_home_data</span><span class="o">.</span><span class="n">status</span>
+                <span class="p">)</span>
+                <span class="n">json_home</span><span class="o">.</span><span class="n">JsonHomeResources</span><span class="o">.</span><span class="n">append_resource</span><span class="p">(</span>
+                    <span class="n">r</span><span class="o">.</span><span class="n">json_home_data</span><span class="o">.</span><span class="n">rel</span><span class="p">,</span> <span class="n">resource_data</span>
+                <span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">alt_url_json_home_data</span><span class="p">:</span>
+                    <span class="c1"># Append the &quot;new&quot; path (resource) data with the old rel</span>
+                    <span class="c1"># reference.</span>
+                    <span class="n">json_home</span><span class="o">.</span><span class="n">JsonHomeResources</span><span class="o">.</span><span class="n">append_resource</span><span class="p">(</span>
+                        <span class="n">element</span><span class="o">.</span><span class="n">rel</span><span class="p">,</span> <span class="n">resource_data</span>
+                    <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_register_before_request_functions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">functions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Register functions to be executed in the `before request` phase.</span>
+
+<span class="sd">        Override this method and pass in via &quot;super&quot; any additional functions</span>
+<span class="sd">        that should be registered. It is assumed that any override will also</span>
+<span class="sd">        accept a &quot;functions&quot; list and append the passed in values to it&#39;s</span>
+<span class="sd">        list prior to calling super.</span>
+
+<span class="sd">        Each function will be called with no arguments and expects a NoneType</span>
+<span class="sd">        return. If the function returns a value, that value will be returned</span>
+<span class="sd">        as the response to the entire request, no further processing will</span>
+<span class="sd">        happen.</span>
+
+<span class="sd">        :param functions: list of functions that will be run in the</span>
+<span class="sd">                          `before_request` phase.</span>
+<span class="sd">        :type functions: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">functions</span> <span class="o">=</span> <span class="n">functions</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="c1"># Assert is intended to ensure code works as expected in development,</span>
+        <span class="c1"># it is fine to optimize out with python -O</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;before_request functions already registered&#39;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__before_request_functions_added</span><span class="p">,</span> <span class="n">msg</span>  <span class="c1"># nosec</span>
+        <span class="c1"># register global before request functions</span>
+        <span class="c1"># e.g. self.__blueprint.before_request(function)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__blueprint</span><span class="o">.</span><span class="n">before_request</span><span class="p">(</span><span class="n">_initialize_rbac_enforcement_check</span><span class="p">)</span>
+
+        <span class="c1"># Add passed-in functions</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">functions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__blueprint</span><span class="o">.</span><span class="n">before_request</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__before_request_functions_added</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_register_after_request_functions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">functions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Register functions to be executed in the `after request` phase.</span>
+
+<span class="sd">        Override this method and pass in via &quot;super&quot; any additional functions</span>
+<span class="sd">        that should be registered. It is assumed that any override will also</span>
+<span class="sd">        accept a &quot;functions&quot; list and append the passed in values to it&#39;s</span>
+<span class="sd">        list prior to calling super.</span>
+
+<span class="sd">        Each function will be called with a single argument of the Response</span>
+<span class="sd">        class type. The function must return either the passed in Response or</span>
+<span class="sd">        a new Response. NOTE: As of flask 0.7, these functions may not be</span>
+<span class="sd">        executed in the case of an unhandled exception.</span>
+
+<span class="sd">        :param functions: list of functions that will be run in the</span>
+<span class="sd">                          `after_request` phase.</span>
+<span class="sd">        :type functions: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">functions</span> <span class="o">=</span> <span class="n">functions</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="c1"># Assert is intended to ensure code works as expected in development,</span>
+        <span class="c1"># it is fine to optimize out with python -O</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;after_request functions already registered&#39;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__after_request_functions_added</span><span class="p">,</span> <span class="n">msg</span>  <span class="c1"># nosec</span>
+        <span class="c1"># register global after request functions</span>
+        <span class="c1"># e.g. self.__blueprint.after_request(function)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__blueprint</span><span class="o">.</span><span class="n">after_request</span><span class="p">(</span><span class="n">_assert_rbac_enforcement_called</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__blueprint</span><span class="o">.</span><span class="n">after_request</span><span class="p">(</span><span class="n">_remove_content_type_on_204</span><span class="p">)</span>
+
+        <span class="c1"># Add Passed-In Functions</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">functions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__blueprint</span><span class="o">.</span><span class="n">after_request</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__after_request_functions_added</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_output_json</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Make a Flask response with a JSON encoded body.</span>
+
+<span class="sd">        This is a replacement of the default that is shipped with flask-RESTful</span>
+<span class="sd">        as we need oslo_serialization for the wider datatypes in our objects</span>
+<span class="sd">        that are serialized to json.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">current_app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;RESTFUL_JSON&#39;</span><span class="p">,</span> <span class="p">{})</span>
+
+        <span class="c1"># If we&#39;re in debug mode, and the indent is not set, we set it to</span>
+        <span class="c1"># a reasonable value here. Note that this won&#39;t override any existing</span>
+        <span class="c1"># value that was set. We also set the &quot;sort_keys&quot; value.</span>
+        <span class="k">if</span> <span class="n">flask</span><span class="o">.</span><span class="n">current_app</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;indent&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;sort_keys&#39;</span><span class="p">,</span> <span class="ow">not</span> <span class="n">flask_restful</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">PY3</span><span class="p">)</span>
+
+        <span class="c1"># always end the json dumps with a new line</span>
+        <span class="c1"># see https://github.com/mitsuhiko/flask/pull/1262</span>
+        <span class="n">dumped</span> <span class="o">=</span> <span class="n">jsonutils</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">settings</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">make_response</span><span class="p">(</span><span class="n">dumped</span><span class="p">,</span> <span class="n">code</span><span class="p">)</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">headers</span> <span class="ow">or</span> <span class="p">{})</span>
+        <span class="k">return</span> <span class="n">resp</span>
+
+<div class="viewcode-block" id="APIBase.instantiate_and_register_to_app">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.APIBase.instantiate_and_register_to_app">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">instantiate_and_register_to_app</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">flask_app</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build the API object and register to the passed in flask_app.</span>
+
+<span class="sd">        This is a simplistic loader that makes assumptions about how the</span>
+<span class="sd">        blueprint is loaded. Anything beyond defaults should be done</span>
+<span class="sd">        explicitly via normal instantiation where more values may be passed</span>
+<span class="sd">        via :meth:`__init__`.</span>
+
+<span class="sd">        :returns: :class:`keystone.server.flask.common.APIBase`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">inst</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+        <span class="n">flask_app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">blueprint</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">inst</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ResourceBase">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.ResourceBase">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ResourceBase</span><span class="p">(</span><span class="n">flask_restful</span><span class="o">.</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="n">collection_key</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">member_key</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">_public_parameters</span><span class="p">:</span> <span class="nb">frozenset</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([])</span>
+    <span class="c1"># NOTE(morgan): This must match the string on the API the resource is</span>
+    <span class="c1"># registered to.</span>
+    <span class="n">api_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">_id_path_param_name_override</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">method_decorators</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ty</span><span class="o">.</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_assign_unique_id</span><span class="p">(</span><span class="n">ref</span><span class="p">):</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">ref</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span>
+        <span class="k">return</span> <span class="n">ref</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_id_format</span><span class="p">(</span><span class="nb">id</span><span class="p">):</span>
+        <span class="n">uval</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">UUID</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span>
+        <span class="k">if</span> <span class="n">uval</span> <span class="o">!=</span> <span class="nb">id</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;badly formed hexadecimal UUID value&#39;</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_require_matching_id</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ref</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure the value matches the reference&#39;s ID, if any.&quot;&quot;&quot;</span>
+        <span class="n">id_arg</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">member_key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">id_arg</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">view_args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">member_key</span><span class="si">}</span><span class="s1">_id&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">id_arg</span> <span class="o">!=</span> <span class="n">ref</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s1">&#39;Cannot change ID&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ResourceBase.filter_params">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.ResourceBase.filter_params">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_params</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ref</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove unspecified parameters from the dictionary.</span>
+
+<span class="sd">        This function removes unspecified parameters from the dictionary.</span>
+<span class="sd">        This method checks only root-level keys from a ref dictionary.</span>
+
+<span class="sd">        :param ref: a dictionary representing deserialized response to be</span>
+<span class="sd">                    serialized</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># NOTE(morgan): if _public_parameters is empty, do nothing. We do not</span>
+        <span class="c1"># filter if we do not have an explicit white-list to work from.</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_public_parameters</span><span class="p">:</span>
+            <span class="n">ref_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="n">blocked_keys</span> <span class="o">=</span> <span class="n">ref_keys</span> <span class="o">-</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_public_parameters</span>
+            <span class="k">for</span> <span class="n">blocked_param</span> <span class="ow">in</span> <span class="n">blocked_keys</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">ref</span><span class="p">[</span><span class="n">blocked_param</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ref</span></div>
+
+
+<div class="viewcode-block" id="ResourceBase.wrap_collection">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.ResourceBase.wrap_collection">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wrap_collection</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">refs</span><span class="p">,</span> <span class="n">hints</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">collection_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wrap a collection, checking for filtering and pagination.</span>
+
+<span class="sd">        Returns the wrapped collection, which includes:</span>
+<span class="sd">        - Executing any filtering not already carried out</span>
+<span class="sd">        - Truncate to a set limit if necessary</span>
+<span class="sd">        - Adds &#39;self&#39; links in every member</span>
+<span class="sd">        - Adds &#39;next&#39;, &#39;self&#39; and &#39;prev&#39; links for the whole collection.</span>
+
+<span class="sd">        :param refs: the list of members of the collection</span>
+<span class="sd">        :param hints: list hints, containing any relevant filters and limit.</span>
+<span class="sd">                      Any filters already satisfied by managers will have been</span>
+<span class="sd">                      removed</span>
+<span class="sd">        :param collection_name: optional override for the &#39;collection key&#39;</span>
+<span class="sd">                                class attribute. This is to be used when</span>
+<span class="sd">                                wrapping a collection for a different api,</span>
+<span class="sd">                                e.g. &#39;roles&#39; from the &#39;trust&#39; api.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check if there are any filters in hints that were not handled by</span>
+        <span class="c1"># the drivers. The driver will not have paginated or limited the</span>
+        <span class="c1"># output if it found there were filters it was unable to handle</span>
+
+        <span class="k">if</span> <span class="n">hints</span><span class="p">:</span>
+            <span class="n">refs</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">filter_by_attributes</span><span class="p">(</span><span class="n">refs</span><span class="p">,</span> <span class="n">hints</span><span class="p">)</span>
+
+        <span class="n">list_limited</span><span class="p">,</span> <span class="n">refs</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">refs</span><span class="p">,</span> <span class="n">hints</span><span class="p">)</span>
+
+        <span class="n">collection</span> <span class="o">=</span> <span class="n">collection_name</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">collection_key</span>
+
+        <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">refs</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_add_self_referential_link</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">collection_name</span><span class="o">=</span><span class="n">collection</span><span class="p">)</span>
+
+        <span class="n">container</span> <span class="o">=</span> <span class="p">{</span><span class="n">collection</span><span class="p">:</span> <span class="n">refs</span><span class="p">}</span>
+        <span class="n">self_url</span> <span class="o">=</span> <span class="n">full_url</span><span class="p">(</span><span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="p">])</span>
+        <span class="n">container</span><span class="p">[</span><span class="s1">&#39;links&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;next&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;self&#39;</span><span class="p">:</span> <span class="n">self_url</span><span class="p">,</span> <span class="s1">&#39;previous&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="c1"># When pagination is enabled generate link to the next page</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">hints</span>
+            <span class="ow">and</span> <span class="p">(</span><span class="n">hints</span><span class="o">.</span><span class="n">limit</span> <span class="ow">or</span> <span class="n">hints</span><span class="o">.</span><span class="n">marker</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">refs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+            <span class="c1"># We do not know whether there are entries on the next page,</span>
+            <span class="c1"># let&#39;s just emit link to the next page if current page is full.</span>
+            <span class="ow">and</span> <span class="n">list_limited</span>
+        <span class="p">):</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+            <span class="c1"># Update the marker with the ID of last entry</span>
+            <span class="n">args</span><span class="p">[</span><span class="s2">&quot;marker&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">refs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+            <span class="n">args</span><span class="p">[</span><span class="s2">&quot;limit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hints</span><span class="o">.</span><span class="n">limit</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">))</span>
+            <span class="n">container</span><span class="p">[</span><span class="s2">&quot;links&quot;</span><span class="p">][</span><span class="s2">&quot;next&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_url</span><span class="p">(</span>
+                <span class="n">flask</span><span class="o">.</span><span class="n">url_for</span><span class="p">(</span><span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">list_limited</span><span class="p">:</span>
+            <span class="n">container</span><span class="p">[</span><span class="s1">&#39;truncated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="n">container</span></div>
+
+
+<div class="viewcode-block" id="ResourceBase.wrap_member">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.ResourceBase.wrap_member">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wrap_member</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">collection_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">member_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_add_self_referential_link</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">collection_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">member_name</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">member_key</span><span class="p">:</span> <span class="n">ref</span><span class="p">}</span></div>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_self_referential_link</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">collection_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">collection_element</span> <span class="o">=</span> <span class="n">collection_name</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">collection_key</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">api_prefix</span><span class="p">:</span>
+            <span class="n">api_prefix</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">api_prefix</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+            <span class="c1"># ensure we have substituted the flask-arg specification</span>
+            <span class="c1"># to the &quot;keystone&quot; mechanism, then format the string</span>
+            <span class="n">api_prefix</span> <span class="o">=</span> <span class="n">_URL_SUBST</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;{</span><span class="se">\\</span><span class="s1">1}&#39;</span><span class="p">,</span> <span class="n">api_prefix</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">view_args</span><span class="p">:</span>
+                <span class="c1"># if a prefix has substitutions it is *required* that the</span>
+                <span class="c1"># values are passed as view_args to the HTTP action method</span>
+                <span class="c1"># (e.g. head/get/post/...).</span>
+                <span class="n">api_prefix</span> <span class="o">=</span> <span class="n">api_prefix</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">view_args</span><span class="p">)</span>
+            <span class="n">collection_element</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">api_prefix</span><span class="p">,</span> <span class="n">collection_name</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">collection_key</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="n">self_link</span> <span class="o">=</span> <span class="n">base_url</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">collection_element</span><span class="p">,</span> <span class="n">ref</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]]))</span>
+        <span class="n">ref</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;links&#39;</span><span class="p">,</span> <span class="p">{})[</span><span class="s1">&#39;self&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">self_link</span>
+
+<div class="viewcode-block" id="ResourceBase.filter_by_attributes">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.ResourceBase.filter_by_attributes">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_by_attributes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">refs</span><span class="p">,</span> <span class="n">hints</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Filter a list of references by filter values.&quot;&quot;&quot;</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">_attr_match</span><span class="p">(</span><span class="n">ref_attr</span><span class="p">,</span> <span class="n">val_attr</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Matche attributes allowing for booleans as strings.</span>
+
+<span class="sd">            We test explicitly for a value that defines it as &#39;False&#39;,</span>
+<span class="sd">            which also means that the existence of the attribute with</span>
+<span class="sd">            no value implies &#39;True&#39;</span>
+
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ref_attr</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">bool</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">ref_attr</span> <span class="o">==</span> <span class="n">utils</span><span class="o">.</span><span class="n">attr_as_boolean</span><span class="p">(</span><span class="n">val_attr</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">ref_attr</span> <span class="o">==</span> <span class="n">val_attr</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">_inexact_attr_match</span><span class="p">(</span><span class="n">inexact_filter</span><span class="p">,</span> <span class="n">ref</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Apply an inexact filter to a result dict.</span>
+
+<span class="sd">            :param inexact_filter: the filter in question</span>
+<span class="sd">            :param ref: the dict to check</span>
+
+<span class="sd">            :returns: True if there is a match</span>
+
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">comparator</span> <span class="o">=</span> <span class="n">inexact_filter</span><span class="p">[</span><span class="s1">&#39;comparator&#39;</span><span class="p">]</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">inexact_filter</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">ref</span><span class="p">:</span>
+                <span class="n">filter_value</span> <span class="o">=</span> <span class="n">inexact_filter</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+                <span class="n">target_value</span> <span class="o">=</span> <span class="n">ref</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">inexact_filter</span><span class="p">[</span><span class="s1">&#39;case_sensitive&#39;</span><span class="p">]:</span>
+                    <span class="c1"># We only support inexact filters on strings so</span>
+                    <span class="c1"># it&#39;s OK to use lower()</span>
+                    <span class="n">filter_value</span> <span class="o">=</span> <span class="n">filter_value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                    <span class="n">target_value</span> <span class="o">=</span> <span class="n">target_value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">comparator</span> <span class="o">==</span> <span class="s1">&#39;contains&#39;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">filter_value</span> <span class="ow">in</span> <span class="n">target_value</span>
+                <span class="k">elif</span> <span class="n">comparator</span> <span class="o">==</span> <span class="s1">&#39;startswith&#39;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">target_value</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">filter_value</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">comparator</span> <span class="o">==</span> <span class="s1">&#39;endswith&#39;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">target_value</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">filter_value</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># We silently ignore unsupported filters</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">hints</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;comparator&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;equals&#39;</span><span class="p">:</span>
+                <span class="n">attr</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+                <span class="n">refs</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">r</span>
+                    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">refs</span>
+                    <span class="k">if</span> <span class="n">_attr_match</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">flatten_dict</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr</span><span class="p">),</span> <span class="n">value</span><span class="p">)</span>
+                <span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># It might be an inexact filter</span>
+                <span class="n">refs</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">refs</span> <span class="k">if</span> <span class="n">_inexact_attr_match</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">r</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="n">refs</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">auth_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">authorization</span><span class="o">.</span><span class="n">AUTH_CONTEXT_ENV</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">oslo_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">REQUEST_CONTEXT_ENV</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">audit_initiator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A pyCADF initiator describing the current authenticated context.</span>
+
+<span class="sd">        As a property.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">notifications</span><span class="o">.</span><span class="n">build_audit_initiator</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ResourceBase.query_filter_is_true">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.ResourceBase.query_filter_is_true">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">query_filter_is_true</span><span class="p">(</span><span class="n">filter_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if bool query param is &#39;True&#39;.</span>
+
+<span class="sd">        We treat this the same way as we do for policy</span>
+<span class="sd">        enforcement:</span>
+
+<span class="sd">        {bool_param}=0 is treated as False</span>
+
+<span class="sd">        Any other value is considered to be equivalent to</span>
+<span class="sd">        True, including the absence of a value (but existence</span>
+<span class="sd">        as a parameter).</span>
+
+<span class="sd">        False Examples for param named `p`:</span>
+
+<span class="sd">           * http://host/url</span>
+<span class="sd">           * http://host/url?p=0</span>
+
+<span class="sd">        All other forms of the param &#39;p&#39; would be result in a True value</span>
+<span class="sd">        including: `http://host/url?param`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">filter_name</span> <span class="ow">in</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
+            <span class="n">filter_value</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">filter_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filter_value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">filter_value</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">val</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">request_body_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">(</span><span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="ResourceBase.build_driver_hints">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.ResourceBase.build_driver_hints">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_driver_hints</span><span class="p">(</span>
+        <span class="n">supported_filters</span><span class="p">,</span> <span class="n">default_limit</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build list hints based on the context query string.</span>
+
+<span class="sd">        :param supported_filters: list of filters supported, so ignore any</span>
+<span class="sd">                                  keys in query_dict that are not in this list.</span>
+<span class="sd">        :param default_limit: default page size (PROVIDER._get_list_limit)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hints</span> <span class="o">=</span> <span class="n">driver_hints</span><span class="o">.</span><span class="n">Hints</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">hints</span>
+
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">multi</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+            <span class="c1"># Check if this is an exact filter</span>
+            <span class="k">if</span> <span class="n">supported_filters</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">supported_filters</span><span class="p">:</span>
+                <span class="n">hints</span><span class="o">.</span><span class="n">add_filter</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Check if it is an inexact filter</span>
+            <span class="k">for</span> <span class="n">valid_key</span> <span class="ow">in</span> <span class="n">supported_filters</span><span class="p">:</span>
+                <span class="c1"># See if this entry in query_dict matches a known key with an</span>
+                <span class="c1"># inexact suffix added.  If it doesn&#39;t match, then that just</span>
+                <span class="c1"># means that there is no inexact filter for that key in this</span>
+                <span class="c1"># query.</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">valid_key</span> <span class="o">+</span> <span class="s1">&#39;__&#39;</span><span class="p">):</span>
+                    <span class="k">continue</span>
+
+                <span class="n">base_key</span><span class="p">,</span> <span class="n">comparator</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+                <span class="c1"># We map the query-style inexact of, for example:</span>
+                <span class="c1">#</span>
+                <span class="c1"># {&#39;email__contains&#39;, &#39;myISP&#39;}</span>
+                <span class="c1">#</span>
+                <span class="c1"># into a list directive add filter call parameters of:</span>
+                <span class="c1">#</span>
+                <span class="c1"># name = &#39;email&#39;</span>
+                <span class="c1"># value = &#39;myISP&#39;</span>
+                <span class="c1"># comparator = &#39;contains&#39;</span>
+                <span class="c1"># case_sensitive = True</span>
+
+                <span class="n">case_sensitive</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">if</span> <span class="n">comparator</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">):</span>
+                    <span class="n">case_sensitive</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="n">comparator</span> <span class="o">=</span> <span class="n">comparator</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+                <span class="n">hints</span><span class="o">.</span><span class="n">add_filter</span><span class="p">(</span>
+                    <span class="n">base_key</span><span class="p">,</span>
+                    <span class="n">value</span><span class="p">,</span>
+                    <span class="n">comparator</span><span class="o">=</span><span class="n">comparator</span><span class="p">,</span>
+                    <span class="n">case_sensitive</span><span class="o">=</span><span class="n">case_sensitive</span><span class="p">,</span>
+                <span class="p">)</span>
+
+        <span class="n">marker</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;marker&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">marker</span><span class="p">:</span>
+            <span class="n">hints</span><span class="o">.</span><span class="n">set_marker</span><span class="p">(</span><span class="n">marker</span><span class="p">)</span>
+        <span class="n">limit</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;limit&quot;</span><span class="p">,</span> <span class="n">default_limit</span><span class="p">)</span>
+        <span class="c1"># Set page limit as whatever requested in query parameters</span>
+        <span class="c1"># or whatever provider uses as a limit. In any way do not exceed the</span>
+        <span class="c1"># maximum page size limit.</span>
+        <span class="c1"># NOTE(gtema): It is important to set limit here (in the API flow)</span>
+        <span class="c1"># otherwise limited pagination is being applied also for internal</span>
+        <span class="c1"># invocations what is most likely not desired.</span>
+        <span class="k">if</span> <span class="n">limit</span><span class="p">:</span>
+            <span class="c1"># NOTE(gtema) remember limit is still conditional</span>
+            <span class="n">hints</span><span class="o">.</span><span class="n">set_limit</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">limit</span><span class="p">),</span> <span class="n">CONF</span><span class="o">.</span><span class="n">max_db_limit</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">hints</span></div>
+
+
+<div class="viewcode-block" id="ResourceBase.limit">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.ResourceBase.limit">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">limit</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">refs</span><span class="p">,</span> <span class="n">hints</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Limit a list of entities.</span>
+
+<span class="sd">        The underlying driver layer may have already truncated the collection</span>
+<span class="sd">        for us, but in case it was unable to handle truncation we check here.</span>
+
+<span class="sd">        :param refs: the list of members of the collection</span>
+<span class="sd">        :param hints: hints, containing, among other things, the limit</span>
+<span class="sd">                      requested</span>
+
+<span class="sd">        :returns: boolean indicating whether the list was truncated, as well</span>
+<span class="sd">                  as the list of (truncated if necessary) entities.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">NOT_LIMITED</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">LIMITED</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="n">hints</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">hints</span><span class="o">.</span><span class="n">limit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># No truncation was requested</span>
+            <span class="k">return</span> <span class="n">NOT_LIMITED</span><span class="p">,</span> <span class="n">refs</span>
+
+        <span class="k">if</span> <span class="n">hints</span><span class="o">.</span><span class="n">limit</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;truncated&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="c1"># The driver did truncate the list</span>
+            <span class="k">return</span> <span class="n">LIMITED</span><span class="p">,</span> <span class="n">refs</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">refs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">hints</span><span class="o">.</span><span class="n">limit</span><span class="p">[</span><span class="s1">&#39;limit&#39;</span><span class="p">]:</span>
+            <span class="c1"># The driver layer wasn&#39;t able to truncate it for us, so we must</span>
+            <span class="c1"># do it here</span>
+            <span class="k">return</span> <span class="n">LIMITED</span><span class="p">,</span> <span class="n">refs</span><span class="p">[:</span> <span class="n">hints</span><span class="o">.</span><span class="n">limit</span><span class="p">[</span><span class="s1">&#39;limit&#39;</span><span class="p">]]</span>
+
+        <span class="k">return</span> <span class="n">NOT_LIMITED</span><span class="p">,</span> <span class="n">refs</span></div>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_normalize_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_normalize_arg</span><span class="p">(</span><span class="n">k</span><span class="p">):</span> <span class="n">v</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_normalize_arg</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">arg</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_domain_id_for_list_request</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the domain_id for a v3 list call.</span>
+
+<span class="sd">        If we running with multiple domain drivers, then the caller must</span>
+<span class="sd">        specify a domain_id either as a filter or as part of the token scope.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">CONF</span><span class="o">.</span><span class="n">identity</span><span class="o">.</span><span class="n">domain_specific_drivers_enabled</span><span class="p">:</span>
+            <span class="c1"># We don&#39;t need to specify a domain ID in this case</span>
+            <span class="k">return</span>
+
+        <span class="n">domain_id</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;domain_id&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">domain_id</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">domain_id</span>
+
+        <span class="n">token_ref</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_token_ref</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">token_ref</span><span class="o">.</span><span class="n">domain_scoped</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">token_ref</span><span class="o">.</span><span class="n">domain_id</span>
+        <span class="k">elif</span> <span class="n">token_ref</span><span class="o">.</span><span class="n">project_scoped</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">token_ref</span><span class="o">.</span><span class="n">project_domain</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">token_ref</span><span class="o">.</span><span class="n">system_scoped</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;No domain information specified as part of list request&#39;</span>
+            <span class="n">tr_msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+                <span class="s1">&#39;No domain information specified as part of list request&#39;</span>
+            <span class="p">)</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">Unauthorized</span><span class="p">(</span><span class="n">tr_msg</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ResourceBase.get_token_ref">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.ResourceBase.get_token_ref">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_token_ref</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve KeystoneToken object from the auth context and returns it.</span>
+
+<span class="sd">        :raises keystone.exception.Unauthorized: If auth context cannot be</span>
+<span class="sd">                                                 found.</span>
+<span class="sd">        :returns: The KeystoneToken object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Retrieve the auth context that was prepared by</span>
+            <span class="c1"># AuthContextMiddleware.</span>
+
+            <span class="n">auth_context</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">authorization</span><span class="o">.</span><span class="n">AUTH_CONTEXT_ENV</span><span class="p">,</span> <span class="p">{}</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">auth_context</span><span class="p">[</span><span class="s1">&#39;token&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t find the auth context.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">Unauthorized</span><span class="p">()</span></div>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_normalize_domain_id</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ref</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fill in domain_id if not specified in a v3 call.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;domain_id&#39;</span><span class="p">):</span>
+            <span class="n">oslo_ctx</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">context</span><span class="o">.</span><span class="n">REQUEST_CONTEXT_ENV</span><span class="p">,</span> <span class="kc">None</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">oslo_ctx</span> <span class="ow">and</span> <span class="n">oslo_ctx</span><span class="o">.</span><span class="n">domain_id</span><span class="p">:</span>
+                <span class="c1"># Domain Scoped Token Scenario.</span>
+                <span class="n">ref</span><span class="p">[</span><span class="s1">&#39;domain_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">oslo_ctx</span><span class="o">.</span><span class="n">domain_id</span>
+            <span class="k">elif</span> <span class="n">oslo_ctx</span><span class="o">.</span><span class="n">is_admin</span><span class="p">:</span>
+                <span class="c1"># Legacy &quot;shared&quot; admin token Scenario</span>
+                <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span>
+                    <span class="n">_</span><span class="p">(</span>
+                        <span class="s1">&#39;You have tried to create a resource using the admin &#39;</span>
+                        <span class="s1">&#39;token. As this token is not within a domain you must &#39;</span>
+                        <span class="s1">&#39;explicitly include a domain for this resource to &#39;</span>
+                        <span class="s1">&#39;belong to.&#39;</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># TODO(henry-nash): We should issue an exception here since if</span>
+                <span class="c1"># a v3 call does not explicitly specify the domain_id in the</span>
+                <span class="c1"># entity, it should be using a domain scoped token.  However,</span>
+                <span class="c1"># the current tempest heat tests issue a v3 call without this.</span>
+                <span class="c1"># This is raised as bug #1283539.  Once this is fixed, we</span>
+                <span class="c1"># should remove the line below and replace it with an error.</span>
+                <span class="c1">#</span>
+                <span class="c1"># Ahead of actually changing the code to raise an exception, we</span>
+                <span class="c1"># issue a deprecation warning.</span>
+                <span class="n">versionutils</span><span class="o">.</span><span class="n">report_deprecated_feature</span><span class="p">(</span>
+                    <span class="n">LOG</span><span class="p">,</span>
+                    <span class="s1">&#39;Not specifying a domain during a create user, group or &#39;</span>
+                    <span class="s1">&#39;project call, and relying on falling back to the &#39;</span>
+                    <span class="s1">&#39;default domain, is deprecated as of Liberty. There is no &#39;</span>
+                    <span class="s1">&#39;plan to remove this compatibility, however, future API &#39;</span>
+                    <span class="s1">&#39;versions may remove this, so please specify the domain &#39;</span>
+                    <span class="s1">&#39;explicitly or use a domain-scoped token.&#39;</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">ref</span><span class="p">[</span><span class="s1">&#39;domain_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">identity</span><span class="o">.</span><span class="n">default_domain_id</span>
+        <span class="k">return</span> <span class="n">ref</span></div>
+
+
+
+<div class="viewcode-block" id="base_url">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.base_url">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">base_url</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">CONF</span><span class="p">[</span><span class="s1">&#39;public_endpoint&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">url</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Endpoint cannot be detected&#39;</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">wsgiref</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">application_uri</span><span class="p">(</span><span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="p">)</span>
+        <span class="c1"># remove version from the URL as it may be part of SCRIPT_NAME but</span>
+        <span class="c1"># it should not be part of base URL</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/v(3|(2\.0))/*$&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+
+        <span class="c1"># now remove the standard port</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">remove_standard_port</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">path</span><span class="p">:</span>
+        <span class="c1"># Cleanup leading /v3 if needed.</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;v3&#39;</span><span class="p">):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s1">&#39;v3&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">url</span></div>
+
+
+
+<div class="viewcode-block" id="full_url">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.full_url">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">full_url</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="n">subs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="n">base_url</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s1">&#39;query_string&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">}</span>
+    <span class="n">qs</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;QUERY_STRING&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">qs</span><span class="p">:</span>
+        <span class="n">subs</span><span class="p">[</span><span class="s1">&#39;query_string&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;?</span><span class="si">{</span><span class="n">qs</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{url}{query_string}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">subs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="set_unenforced_ok">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.set_unenforced_ok">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_unenforced_ok</span><span class="p">():</span>
+    <span class="c1"># Does the work for unenforced_api. This must be used outside of a</span>
+    <span class="c1"># decorator in some limited, such as when a ValidationError is raised up</span>
+    <span class="c1"># from a &quot;before_request&quot; function (body_json checker is a prime example)</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">flask</span><span class="o">.</span><span class="n">g</span><span class="p">,</span> <span class="n">enforcer</span><span class="o">.</span><span class="n">_ENFORCEMENT_CHECK_ATTR</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="unenforced_api">
+<a class="viewcode-back" href="../../../../api/keystone.server.flask.common.html#keystone.server.flask.unenforced_api">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">unenforced_api</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorate a resource method to mark is as an unenforced API.</span>
+
+<span class="sd">    Explicitly exempts an API from receiving the enforced API check,</span>
+<span class="sd">    specifically for cases such as user self-service password changes (or</span>
+<span class="sd">    other APIs that must work without already having a token).</span>
+
+<span class="sd">    This decorator may also be used if the API has extended enforcement</span>
+<span class="sd">    logic/varying enforcement logic (such as some of the AUTH paths) where</span>
+<span class="sd">    the full enforcement will be implemented directly within the methods.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">set_unenforced_ok</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span></div>
+
+</pre></div>
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2025-12-08 16:08:08</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../../../../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../../../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../../../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../../../../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../../../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../../../../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "_modules/keystone/server/flask/common" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "keystone.server.flask.common in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2025-12-08 16:08:08";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "_modules/keystone/server/flask/common";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

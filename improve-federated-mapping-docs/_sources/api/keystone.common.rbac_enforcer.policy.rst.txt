@@ -1,0 +1,7 @@
+keystone.common.rbac\_enforcer.policy module
+============================================
+
+.. automodule:: keystone.common.rbac_enforcer.policy
+   :members:
+   :undoc-members:
+   :show-inheritance:

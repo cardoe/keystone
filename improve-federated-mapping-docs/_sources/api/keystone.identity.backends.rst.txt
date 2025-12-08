@@ -1,0 +1,29 @@
+keystone.identity.backends package
+==================================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.identity.backends.ldap
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.identity.backends.base
+   keystone.identity.backends.resource_options
+   keystone.identity.backends.sql
+   keystone.identity.backends.sql_model
+
+Module contents
+---------------
+
+.. automodule:: keystone.identity.backends
+   :members:
+   :undoc-members:
+   :show-inheritance:

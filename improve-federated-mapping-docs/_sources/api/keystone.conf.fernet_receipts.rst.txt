@@ -1,0 +1,7 @@
+keystone.conf.fernet\_receipts module
+=====================================
+
+.. automodule:: keystone.conf.fernet_receipts
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+keystone.identity.backends.ldap.models module
+=============================================
+
+.. automodule:: keystone.identity.backends.ldap.models
+   :members:
+   :undoc-members:
+   :show-inheritance:

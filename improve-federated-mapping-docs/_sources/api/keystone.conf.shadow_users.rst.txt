@@ -1,0 +1,7 @@
+keystone.conf.shadow\_users module
+==================================
+
+.. automodule:: keystone.conf.shadow_users
+   :members:
+   :undoc-members:
+   :show-inheritance:

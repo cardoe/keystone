@@ -1,0 +1,19 @@
+keystone.assignment.backends package
+====================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.assignment.backends.base
+   keystone.assignment.backends.sql
+
+Module contents
+---------------
+
+.. automodule:: keystone.assignment.backends
+   :members:
+   :undoc-members:
+   :show-inheritance:

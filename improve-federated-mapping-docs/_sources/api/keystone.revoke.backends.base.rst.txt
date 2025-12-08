@@ -1,0 +1,7 @@
+keystone.revoke.backends.base module
+====================================
+
+.. automodule:: keystone.revoke.backends.base
+   :members:
+   :undoc-members:
+   :show-inheritance:

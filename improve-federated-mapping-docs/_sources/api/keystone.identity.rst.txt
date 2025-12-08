@@ -1,0 +1,31 @@
+keystone.identity package
+=========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.identity.backends
+   keystone.identity.id_generators
+   keystone.identity.mapping_backends
+   keystone.identity.shadow_backends
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.identity.core
+   keystone.identity.generator
+   keystone.identity.schema
+
+Module contents
+---------------
+
+.. automodule:: keystone.identity
+   :members:
+   :undoc-members:
+   :show-inheritance:

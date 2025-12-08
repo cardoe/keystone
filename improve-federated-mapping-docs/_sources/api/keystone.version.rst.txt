@@ -1,0 +1,7 @@
+keystone.version module
+=======================
+
+.. automodule:: keystone.version
+   :members:
+   :undoc-members:
+   :show-inheritance:

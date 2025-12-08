@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Keystone Architecture &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/support-matrix.css" />
+    <script src="../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Mapping of policy target to API" href="policy_mapping.html" />
+    <link rel="prev" title="Getting Started" href="index.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/getting-started/architecture.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Keystone Architecture</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="index.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Getting Started"></i></a>
+    
+    
+    <a href="policy_mapping.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Mapping of policy target to API"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="keystone-architecture">
+<h1>Keystone Architecture<a class="headerlink" href="#keystone-architecture" title="Link to this heading">¶</a></h1>
+<p>Much of the design assumes that in most deployments auth backends will be shims
+in front of existing user systems.</p>
+<section id="services">
+<h2>Services<a class="headerlink" href="#services" title="Link to this heading">¶</a></h2>
+<p>Keystone is organized as a group of internal services exposed on one or many
+endpoints. Many of these services are used in a combined fashion by the
+frontend. For example, an authenticate call will validate user/project
+credentials with the Identity service and, upon success, create and return a
+token with the Token service.</p>
+<section id="identity">
+<h3>Identity<a class="headerlink" href="#identity" title="Link to this heading">¶</a></h3>
+<p>The Identity service provides auth credential validation and data about <cite>users</cite>
+and <cite>groups</cite>. In the basic case, this data is managed by the Identity service,
+allowing it to also handle all CRUD operations associated with this data. In
+more complex cases, the data is instead managed by an authoritative backend
+service. An example of this would be when the Identity service acts as a
+frontend for LDAP. In that case the LDAP server is the source of truth and the
+role of the Identity service is to relay that information accurately.</p>
+<section id="users">
+<h4>Users<a class="headerlink" href="#users" title="Link to this heading">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">Users</span></code> represent an individual API consumer. A user itself must be owned by
+a specific domain, and hence all user names are <strong>not</strong> globally unique, but
+only unique to their domain.</p>
+</section>
+<section id="groups">
+<h4>Groups<a class="headerlink" href="#groups" title="Link to this heading">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">Groups</span></code> are a container representing a collection of users. A group itself
+must be owned by a specific domain, and hence all group names are <strong>not</strong>
+globally unique, but only unique to their domain.</p>
+</section>
+</section>
+<section id="resource">
+<h3>Resource<a class="headerlink" href="#resource" title="Link to this heading">¶</a></h3>
+<p>The Resource service provides data about <cite>projects</cite> and <cite>domains</cite>.</p>
+<section id="projects">
+<h4>Projects<a class="headerlink" href="#projects" title="Link to this heading">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">Projects</span></code> represent the base unit of <code class="docutils literal notranslate"><span class="pre">ownership</span></code> in OpenStack, in that all
+resources in OpenStack should be owned by a specific project. A project itself
+must be owned by a specific domain, and hence all project names are <strong>not</strong>
+globally unique, but unique to their domain. If the domain for a project is not
+specified, then it is added to the default domain.</p>
+</section>
+<section id="domains">
+<h4>Domains<a class="headerlink" href="#domains" title="Link to this heading">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">Domains</span></code> are a high-level container for projects, users and groups. Each is
+owned by exactly one domain. Each domain defines a namespace where an
+API-visible name attribute exists. Keystone provides a default domain, aptly
+named ‘Default’.</p>
+<p>In the Identity v3 API, the uniqueness of attributes is as follows:</p>
+<ul class="simple">
+<li><p>Domain Name. Globally unique across all domains.</p></li>
+<li><p>Role Name. Unique within the owning domain.</p></li>
+<li><p>User Name. Unique within the owning domain.</p></li>
+<li><p>Project Name. Unique within the owning domain.</p></li>
+<li><p>Group Name. Unique within the owning domain.</p></li>
+</ul>
+<p>Due to their container architecture, domains may be used as a way to delegate
+management of OpenStack resources. A user in a domain may still access
+resources in another domain, if an appropriate assignment is granted.</p>
+</section>
+</section>
+<section id="assignment">
+<h3>Assignment<a class="headerlink" href="#assignment" title="Link to this heading">¶</a></h3>
+<p>The Assignment service provides data about <cite>roles</cite> and <cite>role assignments</cite>.</p>
+<section id="roles">
+<h4>Roles<a class="headerlink" href="#roles" title="Link to this heading">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">Roles</span></code> dictate the level of authorization the end user can obtain. Roles
+can be granted at either the domain or project level. A role can be assigned at
+the individual user or group level. Role names are unique within the
+owning domain.</p>
+</section>
+<section id="role-assignments">
+<h4>Role Assignments<a class="headerlink" href="#role-assignments" title="Link to this heading">¶</a></h4>
+<p>A 3-tuple that has a <code class="docutils literal notranslate"><span class="pre">Role</span></code>, a <code class="docutils literal notranslate"><span class="pre">Resource</span></code> and an <code class="docutils literal notranslate"><span class="pre">Identity</span></code>.</p>
+</section>
+</section>
+<section id="token">
+<h3>Token<a class="headerlink" href="#token" title="Link to this heading">¶</a></h3>
+<p>The Token service validates and manages tokens used for authenticating requests
+once a user’s credentials have already been verified.</p>
+</section>
+<section id="catalog">
+<h3>Catalog<a class="headerlink" href="#catalog" title="Link to this heading">¶</a></h3>
+<p>The Catalog service provides an endpoint registry used for endpoint discovery.</p>
+</section>
+</section>
+<section id="application-construction">
+<h2>Application Construction<a class="headerlink" href="#application-construction" title="Link to this heading">¶</a></h2>
+<p>Keystone is an HTTP front-end to several services. Since the Rocky release Keystone
+uses the <a class="reference external" href="https://flask-restful.readthedocs.io/en/latest/">Flask-RESTful</a> library to provide a REST API interface to these services.</p>
+<p>Keystone defines functions related to <a class="reference external" href="https://flask-restful.readthedocs.io/en/latest/">Flask-RESTful</a> in
+<a class="reference internal" href="../api/keystone.server.flask.common.html#module-keystone.server.flask.common" title="keystone.server.flask.common"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.server.flask.common</span></code></a>. Keystone creates API resources which
+inherit from class <a class="reference internal" href="../api/keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase" title="keystone.server.flask.common.ResourceBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.server.flask.common.ResourceBase</span></code></a> and exposes methods
+for each supported HTTP methods GET, PUT , POST, PATCH and DELETE. For example, the User
+resource will look like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">UserResource</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">ResourceBase</span><span class="p">):</span>
+    <span class="n">collection_key</span> <span class="o">=</span> <span class="s1">&#39;users&#39;</span>
+    <span class="n">member_key</span> <span class="o">=</span> <span class="s1">&#39;user&#39;</span>
+    <span class="n">get_member_from_driver</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">deferred_provider_lookup</span><span class="p">(</span>
+        <span class="n">api</span><span class="o">=</span><span class="s1">&#39;identity_api&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;get_user&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a user resource or list users.</span>
+<span class="sd">        GET/HEAD /v3/users</span>
+<span class="sd">        GET/HEAD /v3/users/{user_id}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a user.</span>
+<span class="sd">        POST /v3/users</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="o">...</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">UserChangePasswordResource</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">ResourceBase</span><span class="p">):</span>
+    <span class="nd">@ks_flask</span><span class="o">.</span><span class="n">unenforced_api</span>
+     <span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+         <span class="o">...</span>
+</pre></div>
+</div>
+<p>Routes for each API resource are defined by classes which inherit from
+<a class="reference internal" href="../api/keystone.server.flask.common.html#keystone.server.flask.common.APIBase" title="keystone.server.flask.common.APIBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.server.flask.common.APIBase</span></code></a>. For example, the UserAPI will
+look like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">UserAPI</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">APIBase</span><span class="p">):</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;users&#39;</span>
+    <span class="n">_import_name</span> <span class="o">=</span> <span class="vm">__name__</span>
+    <span class="n">resources</span> <span class="o">=</span> <span class="p">[</span><span class="n">UserResource</span><span class="p">]</span>
+    <span class="n">resource_mapping</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">ks_flask</span><span class="o">.</span><span class="n">construct_resource_map</span><span class="p">(</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">UserChangePasswordResource</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="s1">&#39;/users/&lt;string:user_id&gt;/password&#39;</span><span class="p">,</span>
+            <span class="n">resource_kwargs</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;user_change_password&#39;</span><span class="p">,</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">USER_ID</span><span class="p">}</span>
+        <span class="p">),</span>
+     <span class="o">...</span>
+</pre></div>
+</div>
+<p>The methods <code class="docutils literal notranslate"><span class="pre">_add_resources()</span></code> or <code class="docutils literal notranslate"><span class="pre">_add_mapped_resources()</span></code> in
+<a class="reference internal" href="../api/keystone.server.flask.common.html#keystone.server.flask.common.APIBase" title="keystone.server.flask.common.APIBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.server.flask.common.APIBase</span></code></a> bind the resources with the APIs.
+Within each API, one or more managers are loaded (for example, see
+<a class="reference internal" href="../api/keystone.catalog.core.html#keystone.catalog.core.Manager" title="keystone.catalog.core.Manager"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.catalog.core.Manager</span></code></a>), which are thin wrapper classes which load
+the appropriate service driver based on the keystone configuration.</p>
+<ul class="simple">
+<li><p>Assignment</p>
+<ul>
+<li><p><a class="reference internal" href="../api/keystone.api.role_assignments.html#module-keystone.api.role_assignments" title="keystone.api.role_assignments"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.role_assignments</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.api.role_inferences.html#module-keystone.api.role_inferences" title="keystone.api.role_inferences"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.role_inferences</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.api.roles.html#module-keystone.api.roles" title="keystone.api.roles"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.roles</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.api.os_inherit.html#module-keystone.api.os_inherit" title="keystone.api.os_inherit"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.os_inherit</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.api.system.html#module-keystone.api.system" title="keystone.api.system"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.system</span></code></a></p></li>
+</ul>
+</li>
+<li><p>Authentication</p>
+<ul>
+<li><p><a class="reference internal" href="../api/keystone.api.auth.html#module-keystone.api.auth" title="keystone.api.auth"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.auth</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.api.ec2tokens.html#module-keystone.api.ec2tokens" title="keystone.api.ec2tokens"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.ec2tokens</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.api.s3tokens.html#module-keystone.api.s3tokens" title="keystone.api.s3tokens"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.s3tokens</span></code></a></p></li>
+</ul>
+</li>
+<li><p>Catalog</p>
+<ul>
+<li><p><a class="reference internal" href="../api/keystone.api.endpoints.html#module-keystone.api.endpoints" title="keystone.api.endpoints"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.endpoints</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.api.os_ep_filter.html#module-keystone.api.os_ep_filter" title="keystone.api.os_ep_filter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.os_ep_filter</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.api.regions.html#module-keystone.api.regions" title="keystone.api.regions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.regions</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.api.services.html#module-keystone.api.services" title="keystone.api.services"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.services</span></code></a></p></li>
+</ul>
+</li>
+<li><p>Credentials</p>
+<ul>
+<li><p><a class="reference internal" href="../api/keystone.api.credentials.html#module-keystone.api.credentials" title="keystone.api.credentials"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.credentials</span></code></a></p></li>
+</ul>
+</li>
+<li><p>Federation</p>
+<ul>
+<li><p><a class="reference internal" href="../api/keystone.api.os_federation.html#module-keystone.api.os_federation" title="keystone.api.os_federation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.os_federation</span></code></a></p></li>
+</ul>
+</li>
+<li><p>Identity</p>
+<ul>
+<li><p><a class="reference internal" href="../api/keystone.api.groups.html#module-keystone.api.groups" title="keystone.api.groups"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.groups</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.api.users.html#module-keystone.api.users" title="keystone.api.users"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.users</span></code></a></p></li>
+</ul>
+</li>
+<li><p>Limits</p>
+<ul>
+<li><p><a class="reference internal" href="../api/keystone.api.registered_limits.html#module-keystone.api.registered_limits" title="keystone.api.registered_limits"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.registered_limits</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.api.limits.html#module-keystone.api.limits" title="keystone.api.limits"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.limits</span></code></a></p></li>
+</ul>
+</li>
+<li><p>Oauth1</p>
+<ul>
+<li><p><a class="reference internal" href="../api/keystone.api.os_oauth1.html#module-keystone.api.os_oauth1" title="keystone.api.os_oauth1"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.os_oauth1</span></code></a></p></li>
+</ul>
+</li>
+<li><p>Policy</p>
+<ul>
+<li><p><a class="reference internal" href="../api/keystone.api.policy.html#module-keystone.api.policy" title="keystone.api.policy"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.policy</span></code></a></p></li>
+</ul>
+</li>
+<li><p>Resource</p>
+<ul>
+<li><p><a class="reference internal" href="../api/keystone.api.domains.html#module-keystone.api.domains" title="keystone.api.domains"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.domains</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.api.projects.html#module-keystone.api.projects" title="keystone.api.projects"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.projects</span></code></a></p></li>
+</ul>
+</li>
+<li><p>Revoke</p>
+<ul>
+<li><p><a class="reference internal" href="../api/keystone.api.os_revoke.html#module-keystone.api.os_revoke" title="keystone.api.os_revoke"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.os_revoke</span></code></a></p></li>
+</ul>
+</li>
+<li><p>Trust</p>
+<ul>
+<li><p><a class="reference internal" href="../api/keystone.api.trusts.html#module-keystone.api.trusts" title="keystone.api.trusts"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.api.trusts</span></code></a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="service-backends">
+<h2>Service Backends<a class="headerlink" href="#service-backends" title="Link to this heading">¶</a></h2>
+<p>Each of the services can be configured to use a backend to allow keystone to
+fit a variety of environments and needs. The backend for each service is
+defined in the keystone.conf file with the key <code class="docutils literal notranslate"><span class="pre">driver</span></code> under a group
+associated with each service.</p>
+<p>A general class exists under each backend to provide an abstract base class
+for any implementations, identifying the expected service implementations. The
+abstract base classes are stored in the service’s backends directory as
+<code class="docutils literal notranslate"><span class="pre">base.py</span></code>. The corresponding drivers for the services are:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/keystone.assignment.backends.base.html#keystone.assignment.backends.base.AssignmentDriverBase" title="keystone.assignment.backends.base.AssignmentDriverBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.assignment.backends.base.AssignmentDriverBase</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.assignment.role_backends.base.html#keystone.assignment.role_backends.base.RoleDriverBase" title="keystone.assignment.role_backends.base.RoleDriverBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.assignment.role_backends.base.RoleDriverBase</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.auth.plugins.base.html#keystone.auth.plugins.base.AuthMethodHandler" title="keystone.auth.plugins.base.AuthMethodHandler"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.auth.plugins.base.AuthMethodHandler</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.catalog.backends.base.html#keystone.catalog.backends.base.CatalogDriverBase" title="keystone.catalog.backends.base.CatalogDriverBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.catalog.backends.base.CatalogDriverBase</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.credential.backends.base.html#keystone.credential.backends.base.CredentialDriverBase" title="keystone.credential.backends.base.CredentialDriverBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.credential.backends.base.CredentialDriverBase</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.endpoint_policy.backends.base.html#keystone.endpoint_policy.backends.base.EndpointPolicyDriverBase" title="keystone.endpoint_policy.backends.base.EndpointPolicyDriverBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.endpoint_policy.backends.base.EndpointPolicyDriverBase</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.federation.backends.base.html#keystone.federation.backends.base.FederationDriverBase" title="keystone.federation.backends.base.FederationDriverBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.federation.backends.base.FederationDriverBase</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.identity.backends.base.html#keystone.identity.backends.base.IdentityDriverBase" title="keystone.identity.backends.base.IdentityDriverBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.identity.backends.base.IdentityDriverBase</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.identity.mapping_backends.base.html#keystone.identity.mapping_backends.base.MappingDriverBase" title="keystone.identity.mapping_backends.base.MappingDriverBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.identity.mapping_backends.base.MappingDriverBase</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.identity.shadow_backends.base.html#keystone.identity.shadow_backends.base.ShadowUsersDriverBase" title="keystone.identity.shadow_backends.base.ShadowUsersDriverBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.identity.shadow_backends.base.ShadowUsersDriverBase</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.oauth1.backends.base.html#keystone.oauth1.backends.base.Oauth1DriverBase" title="keystone.oauth1.backends.base.Oauth1DriverBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.oauth1.backends.base.Oauth1DriverBase</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.policy.backends.base.html#keystone.policy.backends.base.PolicyDriverBase" title="keystone.policy.backends.base.PolicyDriverBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.policy.backends.base.PolicyDriverBase</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.resource.backends.base.html#keystone.resource.backends.base.ResourceDriverBase" title="keystone.resource.backends.base.ResourceDriverBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.resource.backends.base.ResourceDriverBase</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.resource.config_backends.base.html#keystone.resource.config_backends.base.DomainConfigDriverBase" title="keystone.resource.config_backends.base.DomainConfigDriverBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.resource.config_backends.base.DomainConfigDriverBase</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.revoke.backends.base.html#keystone.revoke.backends.base.RevokeDriverBase" title="keystone.revoke.backends.base.RevokeDriverBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.revoke.backends.base.RevokeDriverBase</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.token.providers.base.html#keystone.token.providers.base.Provider" title="keystone.token.providers.base.Provider"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.token.providers.base.Provider</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.trust.backends.base.html#keystone.trust.backends.base.TrustDriverBase" title="keystone.trust.backends.base.TrustDriverBase"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.trust.backends.base.TrustDriverBase</span></code></a></p></li>
+</ul>
+<p>If you implement a backend driver for one of the keystone services, you’re
+expected to subclass from these classes.</p>
+<section id="templated-backend">
+<h3>Templated Backend<a class="headerlink" href="#templated-backend" title="Link to this heading">¶</a></h3>
+<p>Largely designed for a common use case around service catalogs in the keystone
+project, a templated backend is a catalog backend that simply expands
+pre-configured templates to provide catalog data.</p>
+<p>Example paste.deploy config (uses $ instead of % to avoid ConfigParser’s
+interpolation)</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">catalog.RegionOne.identity.publicURL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">http://localhost:$(public_port)s/v3</span>
+<span class="na">catalog.RegionOne.identity.adminURL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">http://localhost:$(public_port)s/v3</span>
+<span class="na">catalog.RegionOne.identity.internalURL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">http://localhost:$(public_port)s/v3</span>
+<span class="na">catalog.RegionOne.identity.name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;Identity Service&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="data-model">
+<h2>Data Model<a class="headerlink" href="#data-model" title="Link to this heading">¶</a></h2>
+<p>Keystone was designed from the ground up to be amenable to multiple styles of
+backends. As such, many of the methods and data types will happily accept more
+data than they know what to do with and pass them on to a backend.</p>
+<p>There are a few main data types:</p>
+<ul class="simple">
+<li><p><strong>User</strong>: has account credentials, is associated with one or more projects or domains</p></li>
+<li><p><strong>Group</strong>: a collection of users, is associated with one or more projects or domains</p></li>
+<li><p><strong>Project</strong>: unit of ownership in OpenStack, contains one or more users</p></li>
+<li><p><strong>Domain</strong>: unit of ownership in OpenStack, contains users, groups and projects</p></li>
+<li><p><strong>Role</strong>: a first-class piece of metadata associated with many user-project pairs.</p></li>
+<li><p><strong>Token</strong>: identifying credential associated with a user or user and project</p></li>
+<li><p><strong>Extras</strong>: bucket of key-value metadata associated with a user-project pair.</p></li>
+<li><p><strong>Rule</strong>: describes a set of requirements for performing an action.</p></li>
+</ul>
+<p>While the general data model allows a many-to-many relationship between users
+and groups to projects and domains; the actual backend implementations take
+varying levels of advantage of that functionality.</p>
+</section>
+<section id="approach-to-crud">
+<h2>Approach to CRUD<a class="headerlink" href="#approach-to-crud" title="Link to this heading">¶</a></h2>
+<p>While it is expected that any “real” deployment at a large company will manage
+their users and groups in their existing user systems, a variety of CRUD
+operations are provided for the sake of development and testing.</p>
+<p>CRUD is treated as an extension or additional feature to the core feature set,
+in that a backend is not required to support it. It is expected that
+backends for services that don’t support the CRUD operations will raise a
+<a class="reference internal" href="../api/keystone.exception.html#keystone.exception.NotImplemented" title="keystone.exception.NotImplemented"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.exception.NotImplemented</span></code></a>.</p>
+</section>
+<section id="approach-to-authorization-policy">
+<h2>Approach to Authorization (Policy)<a class="headerlink" href="#approach-to-authorization-policy" title="Link to this heading">¶</a></h2>
+<p>Various components in the system require that different actions are allowed
+based on whether the user is authorized to perform that action.</p>
+<p>For the purposes of keystone there are only a couple levels of authorization
+being checked for:</p>
+<ul class="simple">
+<li><p>Require that the performing user is considered an admin.</p></li>
+<li><p>Require that the performing user matches the user being referenced.</p></li>
+</ul>
+<p>Other systems wishing to use the policy engine will require additional styles
+of checks and will possibly write completely custom backends. By default,
+keystone leverages policy enforcement that is maintained in <a class="reference external" href="https://opendev.org/openstack/oslo.policy/">oslo.policy</a>.</p>
+<section id="rules">
+<h3>Rules<a class="headerlink" href="#rules" title="Link to this heading">¶</a></h3>
+<p>Given a list of matches to check for, simply verify that the credentials
+contain the matches. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">credentials</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;is_admin&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;roles&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;nova:netadmin&#39;</span><span class="p">]}</span>
+
+<span class="c1"># An admin only call:</span>
+<span class="n">policy_api</span><span class="o">.</span><span class="n">enforce</span><span class="p">((</span><span class="s1">&#39;is_admin:1&#39;</span><span class="p">,),</span> <span class="n">credentials</span><span class="p">)</span>
+
+<span class="c1"># An admin or owner call:</span>
+<span class="n">policy_api</span><span class="o">.</span><span class="n">enforce</span><span class="p">((</span><span class="s1">&#39;is_admin:1&#39;</span><span class="p">,</span> <span class="s1">&#39;user_id:foo&#39;</span><span class="p">),</span> <span class="n">credentials</span><span class="p">)</span>
+
+<span class="c1"># A netadmin call:</span>
+<span class="n">policy_api</span><span class="o">.</span><span class="n">enforce</span><span class="p">((</span><span class="s1">&#39;roles:nova:netadmin&#39;</span><span class="p">,),</span> <span class="n">credentials</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Credentials are generally built from the user metadata in the ‘extras’ part
+of the Identity API. So, adding a ‘role’ to the user just means adding the role
+to the user metadata.</p>
+</section>
+<section id="capability-rbac">
+<h3>Capability RBAC<a class="headerlink" href="#capability-rbac" title="Link to this heading">¶</a></h3>
+<p>(Not yet implemented.)</p>
+<p>Another approach to authorization can be action-based, with a mapping of roles
+to which capabilities are allowed for that role. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">credentials</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;is_admin&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;roles&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;nova:netadmin&#39;</span><span class="p">]}</span>
+
+<span class="c1"># add a policy</span>
+<span class="n">policy_api</span><span class="o">.</span><span class="n">add_policy</span><span class="p">(</span><span class="s1">&#39;action:nova:add_network&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;roles:nova:netadmin&#39;</span><span class="p">,))</span>
+
+<span class="n">policy_api</span><span class="o">.</span><span class="n">enforce</span><span class="p">((</span><span class="s1">&#39;action:nova:add_network&#39;</span><span class="p">,),</span> <span class="n">credentials</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the backend this would look up the policy for ‘action:nova:add_network’ and
+then do what is effectively a ‘Simple Match’ style match against the credentials.</p>
+</section>
+</section>
+<section id="approach-to-authentication">
+<h2>Approach to Authentication<a class="headerlink" href="#approach-to-authentication" title="Link to this heading">¶</a></h2>
+<p>Keystone provides several authentication plugins that inherit from
+<a class="reference internal" href="../api/keystone.auth.plugins.base.html#module-keystone.auth.plugins.base" title="keystone.auth.plugins.base"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.auth.plugins.base</span></code></a>. The following is a list of available plugins.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/keystone.auth.plugins.external.html#keystone.auth.plugins.external.Base" title="keystone.auth.plugins.external.Base"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.auth.plugins.external.Base</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.auth.plugins.mapped.html#keystone.auth.plugins.mapped.Mapped" title="keystone.auth.plugins.mapped.Mapped"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.auth.plugins.mapped.Mapped</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.auth.plugins.oauth1.html#keystone.auth.plugins.oauth1.OAuth" title="keystone.auth.plugins.oauth1.OAuth"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.auth.plugins.oauth1.OAuth</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.auth.plugins.password.html#keystone.auth.plugins.password.Password" title="keystone.auth.plugins.password.Password"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.auth.plugins.password.Password</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.auth.plugins.token.html#keystone.auth.plugins.token.Token" title="keystone.auth.plugins.token.Token"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.auth.plugins.token.Token</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/keystone.auth.plugins.totp.html#keystone.auth.plugins.totp.TOTP" title="keystone.auth.plugins.totp.TOTP"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keystone.auth.plugins.totp.TOTP</span></code></a></p></li>
+</ul>
+<p>In the most basic plugin <code class="docutils literal notranslate"><span class="pre">password</span></code>, two pieces of information are required
+to authenticate with keystone, a bit of <code class="docutils literal notranslate"><span class="pre">Resource</span></code> information and a bit of
+<code class="docutils literal notranslate"><span class="pre">Identity</span></code>.</p>
+<p>Take the following call POST data for instance:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;auth&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;identity&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="s2">&quot;methods&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;password&quot;</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="s2">&quot;password&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;user&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0ca8f6&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;password&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;secretsecret&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;scope&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="s2">&quot;project&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;263fd9&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The user (ID of 0ca8f6) is attempting to retrieve a token that is scoped to
+project (ID of 263fd9).</p>
+<p>To perform the same call with names instead of IDs, we now need to supply
+information about the domain. This is because usernames are only unique within
+a given domain, but user IDs are supposed to be unique across the deployment.
+Thus, the auth request looks like the following:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;auth&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;identity&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="s2">&quot;methods&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;password&quot;</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="s2">&quot;password&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;user&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="s2">&quot;domain&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;acme&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;userA&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;password&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;secretsecret&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;scope&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="s2">&quot;project&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;domain&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1789d1&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;project-x&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For both the user and the project portion, we must supply either a domain ID
+or a domain name, in order to properly determine the correct user and project.</p>
+<p>Alternatively, if we wanted to represent this as environment variables for a
+command line, it would be:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">OS_PROJECT_DOMAIN_ID</span><span class="o">=</span>1789d1
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">OS_USER_DOMAIN_NAME</span><span class="o">=</span>acme
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">OS_USERNAME</span><span class="o">=</span>userA
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">OS_PASSWORD</span><span class="o">=</span>secretsecret
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">OS_PROJECT_NAME</span><span class="o">=</span>project-x
+</pre></div>
+</div>
+<p>Note that the project the user is attempting to access must be in the same
+domain as the user.</p>
+<section id="what-is-scope">
+<h3>What is Scope?<a class="headerlink" href="#what-is-scope" title="Link to this heading">¶</a></h3>
+<p>Scope is an overloaded term.</p>
+<p>In reference to authenticating, as seen above, scope refers to the portion of
+the POST data that dictates what <code class="docutils literal notranslate"><span class="pre">Resource</span></code> (project, domain, or system) the
+user wants to access.</p>
+<p>In reference to tokens, scope refers to the effectiveness of a token,
+i.e.: a <cite>project-scoped</cite> token is only useful on the project it was initially
+granted for. A <cite>domain-scoped</cite> token may be used to perform domain-related
+function. A <cite>system-scoped</cite> token is only useful for interacting with APIs that
+affect the entire deployment.</p>
+<p>In reference to users, groups, and projects, scope often refers to the domain
+that the entity is owned by. i.e.: a user in domain X is scoped to domain X.</p>
+</section>
+</section>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="index.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Getting Started"></i></a>
+          
+          
+            <a href="policy_mapping.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Mapping of policy target to API"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2020-04-14 18:20:47</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting Started</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Keystone Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policy_mapping.html">Mapping of policy target to API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html">Getting Involved</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Keystone Architecture</a><ul>
+<li><a class="reference internal" href="#services">Services</a><ul>
+<li><a class="reference internal" href="#identity">Identity</a><ul>
+<li><a class="reference internal" href="#users">Users</a></li>
+<li><a class="reference internal" href="#groups">Groups</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#resource">Resource</a><ul>
+<li><a class="reference internal" href="#projects">Projects</a></li>
+<li><a class="reference internal" href="#domains">Domains</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#assignment">Assignment</a><ul>
+<li><a class="reference internal" href="#roles">Roles</a></li>
+<li><a class="reference internal" href="#role-assignments">Role Assignments</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#token">Token</a></li>
+<li><a class="reference internal" href="#catalog">Catalog</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#application-construction">Application Construction</a></li>
+<li><a class="reference internal" href="#service-backends">Service Backends</a><ul>
+<li><a class="reference internal" href="#templated-backend">Templated Backend</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-model">Data Model</a></li>
+<li><a class="reference internal" href="#approach-to-crud">Approach to CRUD</a></li>
+<li><a class="reference internal" href="#approach-to-authorization-policy">Approach to Authorization (Policy)</a><ul>
+<li><a class="reference internal" href="#rules">Rules</a></li>
+<li><a class="reference internal" href="#capability-rbac">Capability RBAC</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#approach-to-authentication">Approach to Authentication</a><ul>
+<li><a class="reference internal" href="#what-is-scope">What is Scope?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "getting-started/architecture" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "Keystone Architecture in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2020-04-14 18:20:47";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "getting-started/architecture";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

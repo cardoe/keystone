@@ -1,0 +1,19 @@
+keystone.catalog.backends package
+=================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.catalog.backends.base
+   keystone.catalog.backends.sql
+
+Module contents
+---------------
+
+.. automodule:: keystone.catalog.backends
+   :members:
+   :undoc-members:
+   :show-inheritance:

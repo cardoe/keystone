@@ -1,0 +1,7 @@
+keystone.receipt.handlers module
+================================
+
+.. automodule:: keystone.receipt.handlers
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+keystone.common.policies.token module
+=====================================
+
+.. automodule:: keystone.common.policies.token
+   :members:
+   :undoc-members:
+   :show-inheritance:

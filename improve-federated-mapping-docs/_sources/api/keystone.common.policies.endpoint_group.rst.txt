@@ -1,0 +1,7 @@
+keystone.common.policies.endpoint\_group module
+===============================================
+
+.. automodule:: keystone.common.policies.endpoint_group
+   :members:
+   :undoc-members:
+   :show-inheritance:

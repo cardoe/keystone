@@ -1,0 +1,7 @@
+keystone.token.providers.jws.core module
+========================================
+
+.. automodule:: keystone.token.providers.jws.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

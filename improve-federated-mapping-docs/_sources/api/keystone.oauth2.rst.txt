@@ -1,0 +1,18 @@
+keystone.oauth2 package
+=======================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.oauth2.handlers
+
+Module contents
+---------------
+
+.. automodule:: keystone.oauth2
+   :members:
+   :undoc-members:
+   :show-inheritance:

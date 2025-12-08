@@ -1,0 +1,7 @@
+keystone.receipt.providers.base module
+======================================
+
+.. automodule:: keystone.receipt.providers.base
+   :members:
+   :undoc-members:
+   :show-inheritance:

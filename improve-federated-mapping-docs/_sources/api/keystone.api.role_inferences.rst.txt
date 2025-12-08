@@ -1,0 +1,7 @@
+keystone.api.role\_inferences module
+====================================
+
+.. automodule:: keystone.api.role_inferences
+   :members:
+   :undoc-members:
+   :show-inheritance:

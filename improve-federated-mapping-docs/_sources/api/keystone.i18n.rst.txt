@@ -1,0 +1,7 @@
+keystone.i18n module
+====================
+
+.. automodule:: keystone.i18n
+   :members:
+   :undoc-members:
+   :show-inheritance:

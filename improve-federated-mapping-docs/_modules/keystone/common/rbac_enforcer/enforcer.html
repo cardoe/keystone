@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keystone.common.rbac_enforcer.enforcer &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/support-matrix.css" />
+    <script src="../../../../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../../../../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../../../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- TEMPLATE_NAME: _modules/keystone/common/rbac_enforcer/enforcer -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../../../../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>keystone.common.rbac_enforcer.enforcer</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <h1>Source code for keystone.common.rbac_enforcer.enforcer</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may</span>
+<span class="c1"># not use this file except in compliance with the License. You may obtain</span>
+<span class="c1"># a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#      http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT</span>
+<span class="c1"># WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the</span>
+<span class="c1"># License for the specific language governing permissions and limitations</span>
+<span class="c1"># under the License.</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">flask</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_log</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_policy</span><span class="w"> </span><span class="kn">import</span> <span class="n">policy</span> <span class="k">as</span> <span class="n">common_policy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">strutils</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">authorization</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">context</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">policies</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">provider_api</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">keystone.conf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone</span><span class="w"> </span><span class="kn">import</span> <span class="n">exception</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.i18n</span><span class="w"> </span><span class="kn">import</span> <span class="n">_</span>
+
+<span class="n">CONF</span> <span class="o">=</span> <span class="n">keystone</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">CONF</span>
+<span class="n">LOG</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">PROVIDER_APIS</span> <span class="o">=</span> <span class="n">provider_api</span><span class="o">.</span><span class="n">ProviderAPIs</span>
+
+
+<span class="n">_POSSIBLE_TARGET_ACTIONS</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">rule</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">policies</span><span class="o">.</span><span class="n">list_rules</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">rule</span><span class="o">.</span><span class="n">deprecated_for_removal</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">_ENFORCEMENT_CHECK_ATTR</span> <span class="o">=</span> <span class="s1">&#39;keystone:RBAC:enforcement_called&#39;</span>
+
+
+<div class="viewcode-block" id="RBACEnforcer">
+<a class="viewcode-back" href="../../../../api/keystone.common.rbac_enforcer.enforcer.html#keystone.common.rbac_enforcer.RBACEnforcer">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RBACEnforcer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enforce RBAC on API calls.&quot;&quot;&quot;</span>
+
+    <span class="n">__shared_state__</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">__ENFORCER</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">ACTION_STORE_ATTR</span> <span class="o">=</span> <span class="s1">&#39;keystone:RBAC:action_name&#39;</span>
+    <span class="c1"># FOR TESTS ONLY</span>
+    <span class="n">suppress_deprecation_warnings</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># NOTE(morgan): All Enforcer Instances use the same shared state;</span>
+        <span class="c1"># BORG pattern.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__shared_state__</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_deprecated_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">_name_is_changing</span><span class="p">(</span><span class="n">rule</span><span class="p">):</span>
+            <span class="n">deprecated_rule</span> <span class="o">=</span> <span class="n">rule</span><span class="o">.</span><span class="n">deprecated_rule</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="n">deprecated_rule</span>
+                <span class="ow">and</span> <span class="n">deprecated_rule</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="n">rule</span><span class="o">.</span><span class="n">name</span>
+                <span class="ow">and</span> <span class="n">deprecated_rule</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enforcer</span><span class="o">.</span><span class="n">file_rules</span>
+            <span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">_check_str_is_changing</span><span class="p">(</span><span class="n">rule</span><span class="p">):</span>
+            <span class="n">deprecated_rule</span> <span class="o">=</span> <span class="n">rule</span><span class="o">.</span><span class="n">deprecated_rule</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="n">deprecated_rule</span>
+                <span class="ow">and</span> <span class="n">deprecated_rule</span><span class="o">.</span><span class="n">check_str</span> <span class="o">!=</span> <span class="n">rule</span><span class="o">.</span><span class="n">check_str</span>
+                <span class="ow">and</span> <span class="n">rule</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enforcer</span><span class="o">.</span><span class="n">file_rules</span>
+            <span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">_is_deprecated_for_removal</span><span class="p">(</span><span class="n">rule</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="n">rule</span><span class="o">.</span><span class="n">deprecated_for_removal</span>
+                <span class="ow">and</span> <span class="n">rule</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enforcer</span><span class="o">.</span><span class="n">file_rules</span>
+            <span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">_emit_warning</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enforcer</span><span class="o">.</span><span class="n">_warning_emitted</span><span class="p">:</span>
+                <span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s2">&quot;Deprecated policy rules found. Use &quot;</span>
+                    <span class="s2">&quot;oslopolicy-policy-generator and &quot;</span>
+                    <span class="s2">&quot;oslopolicy-policy-upgrade to detect and resolve &quot;</span>
+                    <span class="s2">&quot;deprecated policies in your configuration.&quot;</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_enforcer</span><span class="o">.</span><span class="n">_warning_emitted</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">registered_rule</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enforcer</span><span class="o">.</span><span class="n">registered_rules</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">registered_rule</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">_name_is_changing</span><span class="p">(</span><span class="n">registered_rule</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="n">_check_str_is_changing</span><span class="p">(</span><span class="n">registered_rule</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="n">_is_deprecated_for_removal</span><span class="p">(</span><span class="n">registered_rule</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="n">_emit_warning</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_enforce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">credentials</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">do_raise</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Verify that the action is valid on the target in this context.</span>
+
+<span class="sd">        This method is for cases that exceed the base enforcer</span>
+<span class="sd">        functionality (notably for compatibility with `@protected` style</span>
+<span class="sd">        decorators.</span>
+
+<span class="sd">        :param credentials: user credentials</span>
+<span class="sd">        :param action: string representing the action to be checked, which</span>
+<span class="sd">                       should be colon separated for clarity.</span>
+<span class="sd">        :param target: dictionary representing the object of the action for</span>
+<span class="sd">                       object creation this should be a dictionary</span>
+<span class="sd">                       representing the location of the object e.g.</span>
+<span class="sd">                       {&#39;project_id&#39;: object.project_id}</span>
+<span class="sd">        :raises keystone.exception.Forbidden: If verification fails.</span>
+
+<span class="sd">        Actions should be colon separated for clarity. For example:</span>
+
+<span class="sd">        * identity:list_users</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Add the exception arguments if asked to do a raise</span>
+        <span class="n">extra</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">do_raise</span><span class="p">:</span>
+            <span class="n">extra</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="n">exc</span><span class="o">=</span><span class="n">exception</span><span class="o">.</span><span class="n">ForbiddenAction</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">,</span> <span class="n">do_raise</span><span class="o">=</span><span class="n">do_raise</span>
+            <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enforcer</span><span class="o">.</span><span class="n">enforce</span><span class="p">(</span>
+                <span class="n">rule</span><span class="o">=</span><span class="n">action</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="n">creds</span><span class="o">=</span><span class="n">credentials</span><span class="p">,</span> <span class="o">**</span><span class="n">extra</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_check_deprecated_rule</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">except</span> <span class="n">common_policy</span><span class="o">.</span><span class="n">InvalidScope</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">ForbiddenAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># NOTE(morgan): Used for TEST purposes only.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ENFORCER</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_enforcer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># The raw oslo-policy enforcer object</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ENFORCER</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__ENFORCER</span> <span class="o">=</span> <span class="n">common_policy</span><span class="o">.</span><span class="n">Enforcer</span><span class="p">(</span><span class="n">CONF</span><span class="p">)</span>
+            <span class="c1"># NOTE(cmurphy) when running in the keystone server, suppress</span>
+            <span class="c1"># deprecation warnings for individual policy rules. Instead, we log</span>
+            <span class="c1"># a single notification at enforcement time indicating the</span>
+            <span class="c1"># oslo.policy tools the operator can use to detect and resolve</span>
+            <span class="c1"># deprecated policies. If there is no request context here, that</span>
+            <span class="c1"># means external tooling such as the oslo.policy tools are running</span>
+            <span class="c1"># this code, in which case we do want the full deprecation warnings</span>
+            <span class="c1"># emitted for individual polcy rules.</span>
+            <span class="k">if</span> <span class="n">flask</span><span class="o">.</span><span class="n">has_request_context</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__ENFORCER</span><span class="o">.</span><span class="n">suppress_deprecation_warnings</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="c1"># NOTE(cmurphy) Tests may explicitly disable these warnings to</span>
+            <span class="c1"># prevent an explosion of test logs</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">suppress_deprecation_warnings</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__ENFORCER</span><span class="o">.</span><span class="n">suppress_deprecation_warnings</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">register_rules</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ENFORCER</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__ENFORCER</span><span class="o">.</span><span class="n">_warning_emitted</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ENFORCER</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_filter_values</span><span class="p">(</span><span class="n">filters</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract filter data from query params for RBAC enforcement.&quot;&quot;&quot;</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="n">filters</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">i</span><span class="p">:</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">filters</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">args</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">LOG</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">getEffectiveLevel</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">log</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span>
+                <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s1">&#39;RBAC: Adding query filter params (</span><span class="si">%s</span><span class="s1">)&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">items</span><span class="p">()]),</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="n">target</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_member_target_data</span><span class="p">(</span><span class="n">member_target_type</span><span class="p">,</span> <span class="n">member_target</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build some useful target data.</span>
+
+<span class="sd">        :param member_target_type: what type of target, e.g. &#39;user&#39;</span>
+<span class="sd">        :type member_target_type: str or None</span>
+<span class="sd">        :param member_target: reference of the target data</span>
+<span class="sd">        :type member_target: dict or None</span>
+<span class="sd">        :returns: constructed target dict or empty dict</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ret_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">member_target</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">member_target_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="n">member_target</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">member_target_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">):</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s1">&#39;RBAC: Unknown target type or target reference. &#39;</span>
+                <span class="s1">&#39;Rejecting as unauthorized. &#39;</span>
+                <span class="s1">&#39;(member_target_type=</span><span class="si">%(target_type)r</span><span class="s1">, &#39;</span>
+                <span class="s1">&#39;member_target=</span><span class="si">%(target_ref)r</span><span class="s1">)&#39;</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;target_type&#39;</span><span class="p">:</span> <span class="n">member_target_type</span><span class="p">,</span>
+                    <span class="s1">&#39;target_ref&#39;</span><span class="p">:</span> <span class="n">member_target</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">)</span>
+            <span class="c1"># Fast exit.</span>
+            <span class="k">return</span> <span class="n">ret_dict</span>
+
+        <span class="k">if</span> <span class="n">member_target</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">member_target_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ret_dict</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">member_target_type</span><span class="p">:</span> <span class="n">member_target</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Try and do some magic loading based upon the resource we&#39;ve</span>
+            <span class="c1"># matched in our route. This is mostly so we can have a level of</span>
+            <span class="c1"># automatic pulling in the resource; strictly for some added</span>
+            <span class="c1"># DRY capabilities. In an ideal world the target is always passed</span>
+            <span class="c1"># in explicitly.</span>
+            <span class="k">if</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">endpoint</span><span class="p">:</span>
+                <span class="c1"># This only works for cases of Flask-RESTful, or carefully</span>
+                <span class="c1"># crafted endpoints that live on a class. Ultimately, there</span>
+                <span class="c1"># should be more protection against something wonky</span>
+                <span class="c1"># here.</span>
+                <span class="n">resource</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">current_app</span><span class="o">.</span><span class="n">view_functions</span><span class="p">[</span>
+                    <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">endpoint</span>
+                <span class="p">]</span><span class="o">.</span><span class="n">view_class</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">member_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="s1">&#39;member_key&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="c1"># NOTE(morgan): In the case that the ResourceBase keystone</span>
+                    <span class="c1"># class is used, we raise a value error when member_key</span>
+                    <span class="c1"># has not been set on the class. This is perfectly</span>
+                    <span class="c1"># normal and acceptable. Set member_name to None as though</span>
+                    <span class="c1"># it wasn&#39;t set.</span>
+                    <span class="n">member_name</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="s1">&#39;get_member_from_driver&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">member_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">callable</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+                    <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">member_name</span><span class="si">}</span><span class="s1">_id&#39;</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">view_args</span> <span class="ow">or</span> <span class="p">{}):</span>
+                        <span class="c1"># NOTE(morgan): For most correct setup, instantiate the</span>
+                        <span class="c1"># view_class. There is no current support for passing</span>
+                        <span class="c1"># extra args to the constructor of the view_class like</span>
+                        <span class="c1"># .as_view() method would actually do. In this case</span>
+                        <span class="c1"># perform a simple instantiation to represent the</span>
+                        <span class="c1"># `self` pass to the unbound method.</span>
+                        <span class="c1">#</span>
+                        <span class="c1"># TODO(morgan): add (future) support for passing class</span>
+                        <span class="c1"># instantiation args.</span>
+                        <span class="n">ret_dict</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                            <span class="n">member_name</span><span class="p">:</span> <span class="n">func</span><span class="p">(</span><span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">view_args</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">ret_dict</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_policy_check_credentials</span><span class="p">():</span>
+        <span class="c1"># Pull out the auth context</span>
+        <span class="k">return</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">authorization</span><span class="o">.</span><span class="n">AUTH_CONTEXT_ENV</span><span class="p">,</span> <span class="p">{})</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_subject_token_target_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">ret_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">window_seconds</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># NOTE(morgan): Populate the subject token data into</span>
+        <span class="c1"># the policy dict at &quot;target.token&quot;. In all liklyhood</span>
+        <span class="c1"># it is un-interesting to populate this data outside</span>
+        <span class="c1"># of the auth paths.</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="s1">&#39;token&#39;</span>
+        <span class="n">subject_token</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;X-Subject-Token&#39;</span><span class="p">)</span>
+        <span class="n">access_rules_support</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">authorization</span><span class="o">.</span><span class="n">ACCESS_RULES_HEADER</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">subject_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">allow_expired</span> <span class="o">=</span> <span class="n">strutils</span><span class="o">.</span><span class="n">bool_from_string</span><span class="p">(</span>
+                <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;allow_expired&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">allow_expired</span><span class="p">:</span>
+                <span class="n">window_seconds</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">token</span><span class="o">.</span><span class="n">allow_expired_window</span>
+            <span class="n">token</span> <span class="o">=</span> <span class="n">PROVIDER_APIS</span><span class="o">.</span><span class="n">token_provider_api</span><span class="o">.</span><span class="n">validate_token</span><span class="p">(</span>
+                <span class="n">subject_token</span><span class="p">,</span>
+                <span class="n">window_seconds</span><span class="o">=</span><span class="n">window_seconds</span><span class="p">,</span>
+                <span class="n">access_rules_support</span><span class="o">=</span><span class="n">access_rules_support</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="c1"># TODO(morgan): Expand extracted data from the subject token.</span>
+            <span class="n">ret_dict</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">ret_dict</span><span class="p">[</span><span class="n">target</span><span class="p">][</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">user_id</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">user_domain_id</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">user</span><span class="p">[</span><span class="s1">&#39;domain_id&#39;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="n">exception</span><span class="o">.</span><span class="n">UnexpectedError</span><span class="p">:</span>
+                <span class="n">user_domain_id</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">user_domain_id</span><span class="p">:</span>
+                <span class="n">ret_dict</span><span class="p">[</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{})</span>
+                <span class="n">ret_dict</span><span class="p">[</span><span class="n">target</span><span class="p">][</span><span class="s1">&#39;user&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;domain&#39;</span><span class="p">,</span> <span class="p">{})</span>
+                <span class="n">ret_dict</span><span class="p">[</span><span class="n">target</span><span class="p">][</span><span class="s1">&#39;user&#39;</span><span class="p">][</span><span class="s1">&#39;domain&#39;</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_domain_id</span>
+        <span class="k">return</span> <span class="n">ret_dict</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_oslo_req_context</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">REQUEST_CONTEXT_ENV</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_assert_is_authenticated</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_get_oslo_req_context</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ctx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s1">&#39;RBAC: Error reading the request context generated by &#39;</span>
+                <span class="s1">&#39;the Auth Middleware (there is no context). Rejecting &#39;</span>
+                <span class="s1">&#39;request as unauthorized.&#39;</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">Unauthorized</span><span class="p">(</span>
+                <span class="n">_</span><span class="p">(</span>
+                    <span class="s1">&#39;Internal error processing authentication and &#39;</span>
+                    <span class="s1">&#39;authorization.&#39;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span><span class="o">.</span><span class="n">authenticated</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">Unauthorized</span><span class="p">(</span>
+                <span class="n">_</span><span class="p">(</span><span class="s1">&#39;auth_context did not decode anything useful&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_shared_admin_auth_token_set</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_get_oslo_req_context</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s1">&#39;is_admin&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RBACEnforcer.enforce_call">
+<a class="viewcode-back" href="../../../../api/keystone.common.rbac_enforcer.enforcer.html#keystone.common.rbac_enforcer.RBACEnforcer.enforce_call">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">enforce_call</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">enforcer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">target_attr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">member_target_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">member_target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">build_target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Enforce RBAC on the current request.</span>
+
+<span class="sd">        This will do some legwork and then instantiate the Enforcer if an</span>
+<span class="sd">        enforcer is not passed in.</span>
+
+<span class="sd">        :param enforcer: A pre-instantiated Enforcer object (optional)</span>
+<span class="sd">        :type enforcer: :class:`RBACEnforcer`</span>
+<span class="sd">        :param action: the name of the rule/policy enforcement to be checked</span>
+<span class="sd">                       against, e.g. `identity:get_user` (optional may be</span>
+<span class="sd">                       replaced by decorating the method/function with</span>
+<span class="sd">                       `policy_enforcer_action`.</span>
+<span class="sd">        :type action: str</span>
+<span class="sd">        :param target_attr: complete override of the target data. This will</span>
+<span class="sd">                            replace all other generated target data meaning</span>
+<span class="sd">                            `member_target_type` and `member_target` are</span>
+<span class="sd">                            ignored. This will also prevent extraction of</span>
+<span class="sd">                            data from the X-Subject-Token. The `target` dict</span>
+<span class="sd">                            should contain a series of key-value pairs such</span>
+<span class="sd">                            as `{&#39;user&#39;: user_ref_dict}`.</span>
+<span class="sd">        :type target_attr: dict</span>
+<span class="sd">        :param member_target_type: the type of the target, e.g. &#39;user&#39;. Both</span>
+<span class="sd">                                   this and `member_target` must be passed if</span>
+<span class="sd">                                   either is passed.</span>
+<span class="sd">        :type member_target_type: str</span>
+<span class="sd">        :param member_target: the (dict form) reference of the member object.</span>
+<span class="sd">                              Both this and `member_target_type` must be passed</span>
+<span class="sd">                              if either is passed.</span>
+<span class="sd">        :type member_target: dict</span>
+<span class="sd">        :param filters: A variable number of optional string filters, these are</span>
+<span class="sd">                        used to extract values from the query params. The</span>
+<span class="sd">                        filters are added to the request data that is passed to</span>
+<span class="sd">                        the enforcer and may be used to determine policy</span>
+<span class="sd">                        action. In practice these are mainly supplied in the</span>
+<span class="sd">                        various &quot;list&quot; APIs and are un-used in the default</span>
+<span class="sd">                        supplied policies.</span>
+<span class="sd">        :type filters: iterable</span>
+<span class="sd">        :param build_target: A function to build the target for enforcement.</span>
+<span class="sd">                             This is explicitly done after authentication</span>
+<span class="sd">                             in order to not leak existance data before</span>
+<span class="sd">                             auth.</span>
+<span class="sd">        :type build_target: function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># NOTE(morgan) everything in the policy_dict may be used by the policy</span>
+        <span class="c1"># DSL to action on RBAC and request information/response data.</span>
+        <span class="n">policy_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># If &quot;action&quot; has not explicitly been overridden, see if it is set in</span>
+        <span class="c1"># Flask.g app-context (per-request thread local) meaning the</span>
+        <span class="c1"># @policy_enforcer_action decorator was used.</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">action</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">flask</span><span class="o">.</span><span class="n">g</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">ACTION_STORE_ATTR</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">action</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_POSSIBLE_TARGET_ACTIONS</span><span class="p">:</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s1">&#39;RBAC: Unknown enforcement action name `</span><span class="si">%s</span><span class="s1">`. &#39;</span>
+                <span class="s1">&#39;Rejecting as Forbidden, this is a programming error &#39;</span>
+                <span class="s1">&#39;and a bug should be filed with as much information &#39;</span>
+                <span class="s1">&#39;about the request that caused this as possible.&#39;</span><span class="p">,</span>
+                <span class="n">action</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="c1"># NOTE(morgan): While this is an internal error, a 500 is never</span>
+            <span class="c1"># desirable, we have handled the case and the most appropriate</span>
+            <span class="c1"># response here is to issue a 403 (FORBIDDEN) to any API calling</span>
+            <span class="c1"># enforce_call with an inappropriate action/name to look up the</span>
+            <span class="c1"># policy rule. This is simply a short-circuit as the enforcement</span>
+            <span class="c1"># code raises a 403 on an unknown action (in keystone) by default.</span>
+            <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">Forbidden</span><span class="p">(</span>
+                <span class="n">message</span><span class="o">=</span><span class="n">_</span><span class="p">(</span>
+                    <span class="s1">&#39;Internal RBAC enforcement error, invalid rule (action) &#39;</span>
+                    <span class="s1">&#39;name.&#39;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Mark flask.g as &quot;enforce_call&quot; has been called. This should occur</span>
+        <span class="c1"># before anything except the &quot;is this a valid action&quot; check, ensuring</span>
+        <span class="c1"># all proper &quot;after request&quot; checks pass, showing that the API has</span>
+        <span class="c1"># enforcement.</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">flask</span><span class="o">.</span><span class="n">g</span><span class="p">,</span> <span class="n">_ENFORCEMENT_CHECK_ATTR</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Assert we are actually authenticated</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_assert_is_authenticated</span><span class="p">()</span>
+
+        <span class="c1"># Check if &quot;is_admin&quot;, this is in support of the old &quot;admin auth token&quot;</span>
+        <span class="c1"># middleware with a shared &quot;admin&quot; token for auth</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_shared_admin_auth_token_set</span><span class="p">():</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;RBAC: Bypassing authorization&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># NOTE(morgan): !!! ORDER OF THESE OPERATIONS IS IMPORTANT !!!</span>
+        <span class="c1"># The lowest priority values are set first and the highest priority</span>
+        <span class="c1"># values are set last.</span>
+
+        <span class="c1"># Populate the input attributes (view args) directly to the policy</span>
+        <span class="c1"># dict. This is to allow the policy engine to have access to the</span>
+        <span class="c1"># view args for substitution. This is to mirror the old @protected</span>
+        <span class="c1"># mechanism and ensure current policy files continue to work as</span>
+        <span class="c1"># expected.</span>
+        <span class="n">policy_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">view_args</span><span class="p">)</span>
+
+        <span class="c1"># Get the Target Data Set.</span>
+        <span class="k">if</span> <span class="n">target_attr</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">build_target</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">policy_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="bp">cls</span><span class="o">.</span><span class="n">_extract_member_target_data</span><span class="p">(</span>
+                        <span class="n">member_target_type</span><span class="p">,</span> <span class="n">member_target</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="n">exception</span><span class="o">.</span><span class="n">NotFound</span><span class="p">:</span>
+                <span class="c1"># DEBUG LOG and bubble up the 404 error. This is expected</span>
+                <span class="c1"># behavior. This likely should be specific in each API. This</span>
+                <span class="c1"># should be revisited in the future and each API should make</span>
+                <span class="c1"># the explicit &quot;existence&quot; checks before enforcement.</span>
+                <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s1">&#39;Extracting inferred target data resulted in &#39;</span>
+                    <span class="s1">&#39;&quot;NOT FOUND (404)&quot;.&#39;</span>
+                <span class="p">)</span>
+                <span class="k">raise</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># nosec</span>
+                <span class="c1"># NOTE(morgan): Errors should never bubble up at this point,</span>
+                <span class="c1"># if there is an error getting the target, log it and move</span>
+                <span class="c1"># on. Raise an explicit 403, we have failed policy checks.</span>
+                <span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s1">&#39;Unable to extract inferred target data during enforcement&#39;</span>
+                <span class="p">)</span>
+                <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">ForbiddenAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">)</span>
+
+            <span class="c1"># Special Case, extract and add subject_token data.</span>
+            <span class="n">subj_token_target_data</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_extract_subject_token_target_data</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">subj_token_target_data</span><span class="p">:</span>
+                <span class="n">policy_dict</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="n">subj_token_target_data</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">target_attr</span> <span class="ow">and</span> <span class="n">build_target</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;Programming Error: A target_attr or &#39;</span>
+                    <span class="s1">&#39;build_target must be provided, but not both&#39;</span>
+                <span class="p">)</span>
+
+            <span class="n">policy_dict</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_attr</span> <span class="ow">or</span> <span class="n">build_target</span><span class="p">()</span>
+
+        <span class="c1"># Pull the data from the submitted json body to generate</span>
+        <span class="c1"># appropriate input/target attributes, we take an explicit copy here</span>
+        <span class="c1"># to ensure we&#39;re not somehow corrupting</span>
+        <span class="n">json_input</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">policy_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">json_input</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+
+        <span class="c1"># Generate the filter_attr dataset.</span>
+        <span class="n">policy_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_extract_filter_values</span><span class="p">(</span><span class="n">filters</span><span class="p">))</span>
+
+        <span class="n">flattened</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">flatten_dict</span><span class="p">(</span><span class="n">policy_dict</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">LOG</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">getEffectiveLevel</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">log</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span>
+            <span class="c1"># LOG the Args</span>
+            <span class="n">args_str</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&#39;</span>
+                    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">(</span><span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">view_args</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">args_str</span> <span class="o">=</span> <span class="n">strutils</span><span class="o">.</span><span class="n">mask_password</span><span class="p">(</span><span class="n">args_str</span><span class="p">)</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s1">&#39;RBAC: Authorizing `</span><span class="si">%(action)s</span><span class="s1">(</span><span class="si">%(args)s</span><span class="s1">)`&#39;</span><span class="p">,</span>
+                <span class="p">{</span><span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="n">action</span><span class="p">,</span> <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="n">args_str</span><span class="p">},</span>
+            <span class="p">)</span>
+
+        <span class="n">ctxt</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_get_oslo_req_context</span><span class="p">()</span>
+        <span class="c1"># Instantiate the enforcer object if needed.</span>
+        <span class="n">enforcer_obj</span> <span class="o">=</span> <span class="n">enforcer</span> <span class="ow">or</span> <span class="bp">cls</span><span class="p">()</span>
+        <span class="n">enforcer_obj</span><span class="o">.</span><span class="n">_enforce</span><span class="p">(</span>
+            <span class="n">credentials</span><span class="o">=</span><span class="n">ctxt</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">flattened</span>
+        <span class="p">)</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;RBAC: Authorization granted&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RBACEnforcer.policy_enforcer_action">
+<a class="viewcode-back" href="../../../../api/keystone.common.rbac_enforcer.enforcer.html#keystone.common.rbac_enforcer.RBACEnforcer.policy_enforcer_action">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">policy_enforcer_action</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Decorator to set policy enforcement action name.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">action</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_POSSIBLE_TARGET_ACTIONS</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;PROGRAMMING ERROR: Action must reference a &#39;</span>
+                <span class="s1">&#39;valid Keystone policy enforcement name.&#39;</span>
+            <span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+            <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">inner</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="c1"># Set the action in g on a known attr so we can reference it</span>
+                <span class="c1"># later.</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">flask</span><span class="o">.</span><span class="n">g</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">ACTION_STORE_ATTR</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">inner</span>
+
+        <span class="k">return</span> <span class="n">wrapper</span></div>
+
+
+<div class="viewcode-block" id="RBACEnforcer.register_rules">
+<a class="viewcode-back" href="../../../../api/keystone.common.rbac_enforcer.enforcer.html#keystone.common.rbac_enforcer.RBACEnforcer.register_rules">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register_rules</span><span class="p">(</span><span class="n">enforcer</span><span class="p">):</span>
+        <span class="n">enforcer</span><span class="o">.</span><span class="n">register_defaults</span><span class="p">(</span><span class="n">policies</span><span class="o">.</span><span class="n">list_rules</span><span class="p">())</span></div>
+</div>
+
+</pre></div>
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2025-12-08 16:08:08</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../../../../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../../../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../../../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../../../../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../../../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../../../../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "_modules/keystone/common/rbac_enforcer/enforcer" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "keystone.common.rbac_enforcer.enforcer in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2025-12-08 16:08:08";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "_modules/keystone/common/rbac_enforcer/enforcer";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

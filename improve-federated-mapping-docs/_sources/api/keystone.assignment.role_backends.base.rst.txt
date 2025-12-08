@@ -1,0 +1,7 @@
+keystone.assignment.role\_backends.base module
+==============================================
+
+.. automodule:: keystone.assignment.role_backends.base
+   :members:
+   :undoc-members:
+   :show-inheritance:

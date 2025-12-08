@@ -1,0 +1,7 @@
+keystone.token.providers.base module
+====================================
+
+.. automodule:: keystone.token.providers.base
+   :members:
+   :undoc-members:
+   :show-inheritance:

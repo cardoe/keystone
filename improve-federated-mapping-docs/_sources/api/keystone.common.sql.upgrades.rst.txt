@@ -1,0 +1,7 @@
+keystone.common.sql.upgrades module
+===================================
+
+.. automodule:: keystone.common.sql.upgrades
+   :members:
+   :undoc-members:
+   :show-inheritance:

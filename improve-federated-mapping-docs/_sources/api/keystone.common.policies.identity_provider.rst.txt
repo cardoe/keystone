@@ -1,0 +1,7 @@
+keystone.common.policies.identity\_provider module
+==================================================
+
+.. automodule:: keystone.common.policies.identity_provider
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Unified Limits &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/support-matrix.css" />
+    <script src="../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Resource Options" href="resource-options.html" />
+    <link rel="prev" title="Advanced Keystone Features" href="keystone-features.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/admin/unified-limits.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Unified Limits</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="keystone-features.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Advanced Keystone Features"></i></a>
+    
+    
+    <a href="resource-options.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Resource Options"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="unified-limits">
+<h1>Unified Limits<a class="headerlink" href="#unified-limits" title="Link to this heading">¶</a></h1>
+<p>As of the Queens release, keystone has the ability to store and relay
+information known as a limit. Limits can be used by services to enforce quota
+on resources across OpenStack. This section describes the basic concepts of
+limits, how the information can be consumed by services, and how operators can
+manage resource quota across OpenStack using limits.</p>
+<section id="what-is-a-limit">
+<h2>What is a limit?<a class="headerlink" href="#what-is-a-limit" title="Link to this heading">¶</a></h2>
+<p>A limit is a threshold for resource management and helps control resource
+utilization. A process for managing limits allows for reallocation of resources
+to different users or projects as needs change. Some information needed to
+establish a limit may include:</p>
+<ul class="simple">
+<li><p>project_id</p></li>
+<li><p>domain_id</p></li>
+<li><p>API service type (e.g. compute, network, object-storage)</p></li>
+<li><p>a resource type (e.g. ram_mb, vcpus, security-groups)</p></li>
+<li><p>a default limit</p></li>
+<li><p>a project specific limit i.e resource limit</p></li>
+<li><p>user_id (optional)</p></li>
+<li><p>a region (optional depending on the service)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <cite>default limit</cite> of registered limit and the <cite>resource limit</cite> of
+project limit now are limited from <cite>-1</cite> to <cite>2147483647</cite> (integer). <cite>-1</cite> means
+no limit and <cite>2147483647</cite> is the max value for user to define limits.
+The length of unified limit’s <cite>resource type</cite> now is limited from <cite>1</cite>
+to <cite>255</cite> (string).</p>
+</div>
+<p>Since keystone is the source of truth for nearly everything in the above list,
+limits are a natural fit as a keystone resource. Two different limit resources
+exist in this design. The first is a registered limit and the second is a
+project limit.</p>
+<section id="registered-limits">
+<h3>Registered limits<a class="headerlink" href="#registered-limits" title="Link to this heading">¶</a></h3>
+<p>A registered limit accomplishes two important things in order to enforce quota
+across multi-tenant, distributed systems. First, it establishes resource types
+and associates them to services. Second, it sets a default resource limit for
+all projects. The first part maps specific resource types to the services that
+provide them. For example, a registered limit can map <cite>vcpus</cite>, to the compute
+service. The second part sets a default of 20 <cite>vcpus</cite> per project. This
+provides all the information needed for basic quota enforcement for any
+resource provided by a service.</p>
+</section>
+<section id="domain-limits">
+<h3>Domain limits<a class="headerlink" href="#domain-limits" title="Link to this heading">¶</a></h3>
+<p>A domain limit is a limit associated to a specific domain and it acts as an
+override for a registered limit. Similar to registered limits, domain limits
+require a resource type and a service. Additionally, a registered limit must
+exist before you can create a domain-specific override. For example, let’s
+assume a registered limit exists for <cite>vcpus</cite> provided by the compute service.
+It wouldn’t be possible to create a domain limit for <cite>cores</cite> on the compute
+service. Domain limits can only override limits that have already been
+registered. In a general sense, registered limits are likely established when a
+new service or cloud is deployed. Domain limits are used continuously to manage
+the flow of resource allocation.</p>
+<p>Domain limits may affect the limits of projects within the domain. This is
+particularly important to keep in mind when choosing an enforcement model,
+documented below.</p>
+</section>
+<section id="project-limits">
+<h3>Project limits<a class="headerlink" href="#project-limits" title="Link to this heading">¶</a></h3>
+<p>Project limits have the same properties as domain limits, but are specific to
+projects instead of domains. You must register a limit before creating a
+project-specific override. Just like with domain limits, the flow of resources
+between related projects may vary depending on the configured enforcement
+model. The support enforcement models below describe how limit validation and
+enforcement behave between related projects and domains.</p>
+<p>Together, registered limits, domain limits, and project limits give deployments
+the ability to restrict resources across the deployment by default, while being
+flexible enough to freely marshal resources across projects.</p>
+</section>
+</section>
+<section id="limits-and-usage">
+<h2>Limits and usage<a class="headerlink" href="#limits-and-usage" title="Link to this heading">¶</a></h2>
+<p>When we talk about a quota system, we’re really talking about two systems. A
+system for setting and maintaining limits, the theoretical maximum usage, and a
+system for enforcing that usage does not exceed limits. While they are coupled,
+they are distinct.</p>
+<p>Up to this point, we’ve established that keystone is the system for maintaining
+limit information. Keystone’s responsibility is to ensure that any changes to
+limits are consistent with related limits currently stored in keystone.</p>
+<p>Individual services maintain and enforce usage. Services check enforcement
+against the current limits at the time a user requests a resource. Usage
+reflects the actual resource allocation in units to a consumer.</p>
+<p>Given the above, the following is a possible and legal flow:</p>
+<ul class="simple">
+<li><p>User Jane is in project Foo</p></li>
+<li><p>Project Foo has a default CPU limit of 20</p></li>
+<li><p>User Jane allocated 18 CPUs in project Foo</p></li>
+<li><p>Administrator Kelly sets project Foo CPU limit to 10</p></li>
+<li><p>User Jane can no longer allocate instance resources in project Foo, until
+she (or others in the project) have deleted at least 9 CPUs to get under the
+new limit</p></li>
+</ul>
+<p>The following would be another permutation:</p>
+<ul class="simple">
+<li><p>User Jane is in project Foo</p></li>
+<li><p>Project Foo has a default CPU limit of 20</p></li>
+<li><p>User Jane allocated 20 CPUs in project Foo</p></li>
+<li><p>User Jane attempts to create another instance, which results in a failed
+resource request since the request would violate usage based on the current
+limit of CPUs</p></li>
+<li><p>User Jane requests more resources</p></li>
+<li><p>Administrator Kelly adjust the project limit for Foo to be 30 CPUs</p></li>
+<li><p>User Jane resends her request for an instance, which succeeds since the
+usage for project Foo is under the project limit of 30 CPUs</p></li>
+</ul>
+<p>This behavior lets administrators set the policy of what the future should be
+when convenient, and prevent those projects from creating any more resources
+that would exceed the limits in question. Members of a project can fix this for
+themselves by bringing down the project usage to where there is now headroom.
+If they don’t, at some point the administrators can more aggressively delete
+things themselves.</p>
+</section>
+<section id="enforcement-models">
+<h2>Enforcement models<a class="headerlink" href="#enforcement-models" title="Link to this heading">¶</a></h2>
+<p>Project resources in keystone can be organized in hierarchical structures,
+where projects can be nested. As a result, resource limits and usage should
+respect that hierarchy if present. It’s possible to think of different cases
+where limits or usage assume different characteristics, regardless of the
+project structure.  For example, if a project’s usage for a particular resource
+hasn’t been met, should the projects underneath that project assume those
+limits? Should they not assume those limits? These opinionated models are
+referred to as enforcement models. This section is dedicated to describing
+different enforcement models that are implemented.</p>
+<p>It is important to note that enforcement must be consistent across the entire
+deployment. Grouping certain characteristics into a model makes referring to
+behaviors consistent across services. Operators should be aware that switching
+between enforcement models may result in backwards incompatible changes. We
+recommend extremely careful planning and understanding of various enforcement
+models if you’re planning on switching from one model to another in a
+deployment.</p>
+<p>Keystone exposes a <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/limits/model</span></code> endpoint that returns the enforcement
+model selected by the deployment. This allows limit information to be
+discoverable and preserves interoperability between OpenStack deployments with
+different enforcement models.</p>
+<section id="flat">
+<h3>Flat<a class="headerlink" href="#flat" title="Link to this heading">¶</a></h3>
+<p>Flat enforcement ignores all aspects of a project hierarchy. Each project is
+considered a peer to all other projects. The limits associated to the parents,
+siblings, or children have no affect on a particular project. This model
+exercises the most isolation between projects because there are no assumptions
+between limits, regardless of the hierarchy. Validation of limits via the API
+will allow operations that might not be considered accepted in other models.</p>
+<p>For example, assume project <cite>Charlie</cite> is a child of project <cite>Beta</cite>, which is a
+child of project <cite>Alpha</cite>. All projects assume a default limit of 10 cores via a
+registered limit. The labels in the diagrams below use shorthand notation for
+<cite>limit</cite> and <cite>usage</cite> as <cite>l</cite> and <cite>u</cite>, respectively:</p>
+<div class="graphviz"><img src="../_images/graphviz-d58f69cf7d1773c1846ec360b25b41e5550d7703.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha [label=&quot;Alpha (u=0)&quot;];
+   Beta [label=&quot; Beta (u=0)&quot;];
+   Charlie [label=&quot;Charlie (u=0)&quot;];
+}" class="graphviz" /></div>
+<p>Each project may use up to 10 cores because of the registered limit and none of
+the projects have an override. Using flat enforcement, you’re allowed to
+<code class="docutils literal notranslate"><span class="pre">UPDATE</span> <span class="pre">LIMIT</span> <span class="pre">on</span> <span class="pre">Alpha</span> <span class="pre">to</span> <span class="pre">20</span></code>:</p>
+<div class="graphviz"><img src="../_images/graphviz-bbfc19a1e9aaeef71528b1e3a1138f66988a8672.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha [label=&quot;Alpha (l=20, u=0)&quot;, textcolor = &quot;#00af00&quot;];
+   Beta [label=&quot; Beta (u=0)&quot;];
+   Charlie [label=&quot;Charlie (u=0)&quot;];
+}" class="graphviz" /></div>
+<p>You’re also allowed to <code class="docutils literal notranslate"><span class="pre">UPDATE</span> <span class="pre">LIMIT</span> <span class="pre">on</span> <span class="pre">Charlie</span> <span class="pre">to</span> <span class="pre">30</span></code>, even though <cite>Charlie</cite>
+is a sub-project of both <cite>Beta</cite> and <cite>Alpha</cite>.</p>
+<div class="graphviz"><img src="../_images/graphviz-1fa0b187a1de8d141211cce32f5e3750cd15f910.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha [label=&quot;Alpha (l=20, u=0)&quot;];
+   Beta [label=&quot; Beta (u=0)&quot;];
+   Charlie [label=&quot;Charlie (l=30, u=0)&quot;, textcolor = &quot;#00af00&quot;];
+}" class="graphviz" /></div>
+<p>This is allowed with flat enforcement because the hierarchy is not taken into
+consideration during limit validation. Child projects may have a higher limit
+than a parent project.</p>
+<p>Conversely, you can simulate hierarchical enforcement by adjusting limits
+through the project tree manually. For example, let’s still assume 10 is the
+default limit imposed by an existing registered limit:</p>
+<div class="graphviz"><img src="../_images/graphviz-d58f69cf7d1773c1846ec360b25b41e5550d7703.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha [label=&quot;Alpha (u=0)&quot;];
+   Beta [label=&quot; Beta (u=0)&quot;];
+   Charlie [label=&quot;Charlie (u=0)&quot;];
+}" class="graphviz" /></div>
+<p>You may set a project-specific override to <code class="docutils literal notranslate"><span class="pre">UPDATE</span> <span class="pre">LIMIT</span> <span class="pre">on</span> <span class="pre">Alpha</span> <span class="pre">to</span> <span class="pre">30</span></code>:</p>
+<div class="graphviz"><img src="../_images/graphviz-7fd2d4f0a49185947f2e8f950fbd067e9db04554.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha [label=&quot;Alpha (l=30, u=0)&quot;, textcolor = &quot;#00af00&quot;];
+   Beta [label=&quot; Beta (u=0)&quot;];
+   Charlie [label=&quot;Charlie (u=0)&quot;];
+}" class="graphviz" /></div>
+<p>Next you can <code class="docutils literal notranslate"><span class="pre">UPDATE</span> <span class="pre">LIMIT</span> <span class="pre">on</span> <span class="pre">Beta</span> <span class="pre">to</span> <span class="pre">20</span></code>:</p>
+<div class="graphviz"><img src="../_images/graphviz-2d5478dcb138ee08b5d81e9aebdab67ea0e78f17.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha [label=&quot;Alpha (l=30, u=0)&quot;];
+   Beta [label=&quot; Beta (l=20, u=0)&quot;, textcolor = &quot;#00af00&quot;];
+   Charlie [label=&quot;Charlie (u=0)&quot;];
+}" class="graphviz" /></div>
+<p>Theoretically, the entire project tree consisting of <cite>Alpha</cite>, <cite>Beta</cite>, and
+<cite>Charlie</cite> is limited to 60 cores. If you’d like to ensure only 30 cores are
+used within the entire hierarchy, you can <code class="docutils literal notranslate"><span class="pre">UPDATE</span> <span class="pre">LIMIT</span> <span class="pre">on</span> <span class="pre">Alpha</span> <span class="pre">to</span> <span class="pre">0</span></code>:</p>
+<div class="graphviz"><img src="../_images/graphviz-2478960a46fd31afb9455eb70753333ea8bd9ed5.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha [label=&quot;Alpha (l=0, u=0)&quot;, textcolor = &quot;#00af00&quot;];
+   Beta [label=&quot; Beta (l=20, u=0)&quot;];
+   Charlie [label=&quot;Charlie (u=0)&quot;];
+}" class="graphviz" /></div>
+<p>You should use this model if you:</p>
+<ul class="simple">
+<li><p>Have project hierarchies greater than two levels</p></li>
+<li><p>Want extremely strict control of project usage and don’t want resource usage
+to bleed across projects or domains</p></li>
+</ul>
+<section id="advantages">
+<h4>Advantages<a class="headerlink" href="#advantages" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Allows you to model specific and strict limits</p></li>
+<li><p>Works with any project hierarchy or depth</p></li>
+<li><p>Usage is only calculated for the project in question</p></li>
+</ul>
+</section>
+<section id="disadvantages">
+<h4>Disadvantages<a class="headerlink" href="#disadvantages" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Resources aren’t allowed to flow gracefully between projects in a hierarchy</p></li>
+<li><p>Requires intervention and verification to move resources across projects</p></li>
+<li><p>Project limit validation isn’t performed with respect to other projects or
+domains</p></li>
+</ul>
+</section>
+</section>
+<section id="strict-two-level">
+<h3>Strict Two Level<a class="headerlink" href="#strict-two-level" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">strict_two_level</span></code> enforcement model assumes the project hierarchy does
+not exceed two levels. The top layer can consist of projects or domains. For
+example, project <cite>Alpha</cite> can have a sub-project called <cite>Beta</cite> within this
+model. Project <cite>Beta</cite> cannot have a sub-project. The hierarchy is restrained to
+two layers. <cite>Alpha</cite> can also be a domain that contains project <cite>Beta</cite>, but
+<cite>Beta</cite> cannot have a sub-project. Regardless of the top layer consisting of
+projects or domains, the hierarchical depth is limited to two layers.</p>
+<p>Resource utilization is allowed to flow between projects in the hierarchy,
+depending on the limits. This property allows for more flexibility than the
+<code class="docutils literal notranslate"><span class="pre">flat</span></code> enforcement model. The model is strict in that operators can set
+limits on parent projects or domains and the limits of the children may never
+exceed the parent.</p>
+<p>For example, assume domain <cite>Alpha</cite> contains two projects, <cite>Beta</cite> and <cite>Charlie</cite>.
+Projects <cite>Beta</cite> and <cite>Charlie</cite> are siblings so the hierarchy maintains a depth
+of two. A system administrator sets the limit of a resource on <cite>Alpha</cite> to 20.
+Both projects <cite>Beta</cite> and <cite>Charlie</cite> can consume resources until the total usage
+of <cite>Alpha</cite>, <cite>Beta</cite>, and <cite>Charlie</cite> reach 20. At that point, no more resources
+should be allocated to the tree. System administrators can also reserve
+portions of domain <cite>Alpha</cite>’s resource in sub-projects directly. Using the
+previous example, project <cite>Beta</cite> could have a limit of 12 resources, implicitly
+leaving 8 resources for <cite>Charlie</cite> to consume.</p>
+<p>The following diagrams illustrate the behaviors described above, using projects
+named <cite>Alpha</cite>, <cite>Beta</cite>, <cite>Charlie</cite>, and <cite>Delta</cite>. Assume the resource in question
+is cores and the default registered limit for cores is 10. Also assume we have
+the following project hierarchy where <cite>Alpha</cite> has a limit of 20 cores and its
+usage is currently 4:</p>
+<div class="graphviz"><img src="../_images/graphviz-30a84f3f3e7137fe0fd7cb998531c913117409db.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha -&gt; Beta;
+   Alpha -&gt; Charlie;
+
+   Alpha [label=&quot;Alpha (l=20, u=4)&quot;];
+   Beta [label=&quot;Beta (u=0)&quot;];
+   Charlie [label=&quot;Charlie (u=0)&quot;];
+}" class="graphviz" /></div>
+<p>Technically, both <cite>Beta</cite> and <cite>Charlie</cite> can use up to 8 cores each:</p>
+<div class="graphviz"><img src="../_images/graphviz-2b0a2b30da83a9ca8fcadc658b1871e634b08df5.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha -&gt; Beta;
+   Alpha -&gt; Charlie;
+
+   Alpha [label=&quot;Alpha (l=20, u=4)&quot;];
+   Beta [label=&quot;Beta (u=8)&quot;, textcolor = &quot;#00af00&quot;];
+   Charlie [label=&quot;Charlie (u=8)&quot;, textcolor = &quot;#00af00&quot;];
+}" class="graphviz" /></div>
+<p>If <cite>Alpha</cite> attempts to claim two cores the usage check will fail
+because the service will fetch the hierarchy from keystone using <code class="docutils literal notranslate"><span class="pre">oslo.limit</span></code>
+and check the usage of each project in the hierarchy to see that the total
+usage of <cite>Alpha</cite>, <cite>Beta</cite>, and <cite>Charlie</cite> is equal to the limit of the tree, set
+by <cite>Alpha.limit</cite>:</p>
+<div class="graphviz"><img src="../_images/graphviz-3f6f9e772a66e7c125fff1ca9f12f3fd990d7b18.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha -&gt; Beta;
+   Alpha -&gt; Charlie;
+
+   Alpha [label=&quot;Alpha (l=20, u=6)&quot;, textcolor = &quot;#FF0000&quot;];
+   Beta [label=&quot;Beta (u=8)&quot;];
+   Charlie [label=&quot;Charlie (u=8)&quot;];
+}" class="graphviz" /></div>
+<p>Despite the usage of the tree being equal to the limit, we can still add
+children to the tree:</p>
+<div class="graphviz"><img src="../_images/graphviz-d9f3a9b73841ad8454eeb3c4b52d0e314888414b.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha -&gt; Beta;
+   Alpha -&gt; Charlie;
+   Alpha -&gt; Delta;
+
+   Alpha [label=&quot;Alpha (l=20, u=4)&quot;];
+   Beta [label=&quot;Beta (u=8)&quot;];
+   Charlie [label=&quot;Charlie (u=8)&quot;];
+   Delta [label=&quot;Delta (u=0)&quot;, textcolor = &quot;#00af00&quot;];
+}" class="graphviz" /></div>
+<p>Even though the project can be created, the current usage of cores across the
+tree prevents <cite>Delta</cite> from claiming any cores:</p>
+<div class="graphviz"><img src="../_images/graphviz-89f35101302dbe15ba98e857f7d260f67487615a.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha -&gt; Beta;
+   Alpha -&gt; Charlie;
+   Alpha -&gt; Delta;
+
+   Alpha [label=&quot;Alpha (l=20, u=4)&quot;];
+   Beta [label=&quot;Beta (u=8)&quot;];
+   Charlie [label=&quot;Charlie (u=8)&quot;];
+   Delta [label=&quot;Delta (u=2)&quot;, textcolor = &quot;#FF0000&quot;];
+}" class="graphviz" /></div>
+<p>Creating a grandchild of project <cite>Alpha</cite> is forbidden because it violates the
+two-level hierarchical constraint:</p>
+<div class="graphviz"><img src="../_images/graphviz-5445acf6deb0fb5ed5db5b359305126f3feef72f.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha -&gt; Beta;
+   Alpha -&gt; Charlie;
+   Charlie -&gt; Delta;
+
+   Alpha [label=&quot;Alpha (l=20, u=4)&quot;];
+   Beta [label=&quot;Beta (u=8)&quot;];
+   Charlie [label=&quot;Charlie (u=8)&quot;];
+   Delta [label=&quot;Delta (u=0)&quot;, textcolor = &quot;#FF0000&quot;];
+}" class="graphviz" /></div>
+<p>This is a fundamental constraint of this design because it provides a very
+clear escalation path. When a request fails because the tree limit has been
+exceeded, a user has all the information they need to provide meaningful
+context in a support ticket (e.g., their project ID and the parent project ID).
+An administrator should be able to reshuffle usage accordingly. Providing this
+information in tree structures with more than a depth of two is much harder,
+but may be implemented with a separate model.</p>
+<p>Granting <cite>Beta</cite> the ability to claim more cores can be done by giving <cite>Beta</cite> a
+project-specific override for cores</p>
+<div class="graphviz"><img src="../_images/graphviz-a257c42f39a111910b24b25ee96f5dce30b901f8.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha -&gt; Beta;
+   Alpha -&gt; Charlie;
+
+   Alpha [label=&quot;Alpha (l=20, u=4)&quot;];
+   Beta [label=&quot;Beta (l=12, u=8)&quot;, textcolor = &quot;#00af00&quot;];
+   Charlie [label=&quot;Charlie (u=8)&quot;];
+}" class="graphviz" /></div>
+<p>Note that regardless of this update, any subsequent requests to claim more
+cores in the tree will be rejected since the usage is equal to the limit of the
+<cite>Alpha</cite>. <cite>Beta</cite> can claim cores if they are released from <cite>Alpha</cite> or <cite>Charlie</cite>:</p>
+<div class="graphviz"><img src="../_images/graphviz-eb8e4223900597e6ea24e6543b9c41a3f044ecae.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha -&gt; Beta;
+   Alpha -&gt; Charlie;
+
+   Alpha [label=&quot;Alpha (l=20, u=2)&quot;, textcolor = &quot;#00af00&quot;];
+   Beta [label=&quot;Beta (l=12, u=8)&quot;];
+   Charlie [label=&quot;Charlie (u=6)&quot;, textcolor = &quot;#00af00&quot;];
+}" class="graphviz" /></div>
+<div class="graphviz"><img src="../_images/graphviz-e1d56f0fc591753e31cf37e63e7b948d3dc965a5.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha -&gt; Beta;
+   Alpha -&gt; Charlie;
+
+   Alpha [label=&quot;Alpha (l=20, u=2)&quot;];
+   Beta [label=&quot;Beta (l=12, u=12)&quot;, textcolor = &quot;#00af00&quot;];
+   Charlie [label=&quot;Charlie (u=6)&quot;];
+}" class="graphviz" /></div>
+<p>While <cite>Charlie</cite> is still under its default allocation of 10 cores, it won’t be
+able to claim any more cores because the total usage of the tree is equal to
+the limit of <cite>Alpha</cite>, thus preventing <cite>Charlie</cite> from reclaiming the cores it
+had:</p>
+<div class="graphviz"><img src="../_images/graphviz-f335859bcc4dab756aab766c33b15e3f06acb573.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha -&gt; Beta;
+   Alpha -&gt; Charlie;
+
+   Alpha [label=&quot;Alpha (l=20, u=2)&quot;];
+   Beta [label=&quot;Beta (l=12, u=12)&quot;];
+   Charlie [label=&quot;Charlie (u=8)&quot;, textcolor = &quot;#FF0000&quot;];
+}" class="graphviz" /></div>
+<p>Creating or updating a project with a limit that exceeds the limit of <cite>Alpha</cite>
+is forbidden. Even though it is possible for the sum of all limits under
+<cite>Alpha</cite> to exceed the limit of <cite>Alpha</cite>, the total usage is capped at
+<cite>Alpha.limit</cite>. Allowing children to have explicit overrides greater than the
+limit of the parent would result in strange user experience and be misleading
+since the total usage of the tree would be capped at the limit of the parent:</p>
+<div class="graphviz"><img src="../_images/graphviz-d8b12471e18a8e726569eade949f2cb06722a1ac.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha -&gt; Beta;
+   Alpha -&gt; Charlie;
+
+   Alpha [label=&quot;Alpha (l=20, u=0)&quot;];
+   Beta [label=&quot;Beta (l=30, u=0)&quot;, textcolor = &quot;#FF0000&quot;];
+   Charlie [label=&quot;Charlie (u=0)&quot;];
+}" class="graphviz" /></div>
+<div class="graphviz"><img src="../_images/graphviz-e692fc891bafe452c04463a918ae6818f33c587d.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha -&gt; Beta;
+   Alpha -&gt; Charlie;
+   Alpha -&gt; Delta;
+
+   Alpha [label=&quot;Alpha (l=20, u=0)&quot;];
+   Beta [label=&quot;Beta (u=0)&quot;];
+   Charlie [label=&quot;Charlie (u=0)&quot;];
+   Delta [label=&quot;Delta (l=30, u=0)&quot;, textcolor = &quot;#FF0000&quot;];
+}" class="graphviz" /></div>
+<p>Finally, let’s still assume the default registered limit for cores is 10, but
+we’re going to create project <cite>Alpha</cite> with a limit of 6 cores.</p>
+<div class="graphviz"><img src="../_images/graphviz-aa26331030e6c114c56722f3203afb9aedd520cd.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha;
+
+   Alpha [label=&quot;Alpha (l=6, u=0)&quot;, textcolor = &quot;#00af00&quot;];
+}" class="graphviz" /></div>
+<p>When we create project <cite>Beta</cite>, which is a child of project <cite>Alpha</cite>, the limit
+API ensures that project <cite>Beta</cite> doesn’t assume the default of 10, despite the
+registered limit of 10 cores. Instead, the child assumes the parent’s limit
+since no single child limit should exceed the limit of the parent:</p>
+<div class="graphviz"><img src="../_images/graphviz-94a713ccff839c6c4e76276a084fd1854e6b8113.png" alt="digraph {
+   orientation = portrait;
+   node [shape=box]
+
+   Alpha -&gt; Beta;
+
+   Alpha [label=&quot;Alpha (l=6, u=0)&quot;];
+   Beta [label=&quot;Beta (l=6, u=0)&quot;, textcolor = &quot;#00af00&quot;];
+}" class="graphviz" /></div>
+<p>This behavior is consistent regardless of the number of children added under
+project <cite>Alpha</cite>.</p>
+<div class="graphviz"><img src="../_images/graphviz-27096be649a0e36857e95254f88fa03fb1277aaf.png" alt="digraph {
+   node [shape=box]
+   orientation = portrait;
+
+   Alpha -&gt; Beta;
+   Alpha -&gt; Charlie;
+   Alpha -&gt; Delta;
+
+   Alpha [label=&quot;Alpha (l=6, u=0)&quot;];
+   Beta [label=&quot;Beta (l=6, u=0)&quot;];
+   Charlie [label=&quot;Charlie (l=6, u=0)&quot;, textcolor = &quot;#00af00&quot;];
+   Delta [label=&quot;Delta (l=6, u=0)&quot;, textcolor = &quot;#00af00&quot;];
+}" class="graphviz" /></div>
+<p>Creating limit overrides while creating projects seems counter-productive given
+the whole purpose of a registered default, but it also seems unlikely to
+throttle a parent project by specifying it’s default to be less than a
+registered default. This behavior maintains consistency with the requirement
+that the sum of all child limits may exceed the parent limit, but the limit of
+any one child may not.</p>
+<p>You should use this model if you:</p>
+<ul class="simple">
+<li><p>Want resources to flow between projects and domains within a hierarchy</p></li>
+<li><p>Don’t have a project depth greater than two levels</p></li>
+<li><p>Are not concerned about usage calculation performance or don’t have project
+trees that are wide</p></li>
+</ul>
+<section id="id1">
+<h4>Advantages<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Allows resources to flow between projects and domains within a strict
+two-level hierarchy</p></li>
+<li><p>Limits are validated when they are created and updated</p></li>
+</ul>
+</section>
+<section id="id2">
+<h4>Disadvantages<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Project depth cannot exceed two levels</p></li>
+<li><p>Performance may suffer in wide and flat project hierarchies during usage
+calculation</p></li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="keystone-features.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Advanced Keystone Features"></i></a>
+          
+          
+            <a href="resource-options.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Resource Options"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2025-02-25 08:59:43</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Administrator Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Keystone Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html">Keystone Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tokens.html">All about keystone tokens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service-api-protection.html">Default Roles</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="keystone-features.html">Advanced Keystone Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authentication-mechanisms.html">Authentication Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2-usage-guide.html">OAuth2.0 Client Credentials Grant Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure-https.html">Configure HTTPS in Identity Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2-mtls-usage-guide.html">OAuth 2.0 Mutual-TLS Client Authentication Flow</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Unified Limits</a><ul>
+<li><a class="reference internal" href="#what-is-a-limit">What is a limit?</a><ul>
+<li><a class="reference internal" href="#registered-limits">Registered limits</a></li>
+<li><a class="reference internal" href="#domain-limits">Domain limits</a></li>
+<li><a class="reference internal" href="#project-limits">Project limits</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#limits-and-usage">Limits and usage</a></li>
+<li><a class="reference internal" href="#enforcement-models">Enforcement models</a><ul>
+<li><a class="reference internal" href="#flat">Flat</a><ul>
+<li><a class="reference internal" href="#advantages">Advantages</a></li>
+<li><a class="reference internal" href="#disadvantages">Disadvantages</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#strict-two-level">Strict Two Level</a><ul>
+<li><a class="reference internal" href="#id1">Advantages</a></li>
+<li><a class="reference internal" href="#id2">Disadvantages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "admin/unified-limits" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "Unified Limits in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2025-02-25 08:59:43";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "admin/unified-limits";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

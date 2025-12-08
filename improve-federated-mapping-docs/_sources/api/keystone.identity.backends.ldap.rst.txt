@@ -1,0 +1,20 @@
+keystone.identity.backends.ldap package
+=======================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.identity.backends.ldap.common
+   keystone.identity.backends.ldap.core
+   keystone.identity.backends.ldap.models
+
+Module contents
+---------------
+
+.. automodule:: keystone.identity.backends.ldap
+   :members:
+   :undoc-members:
+   :show-inheritance:

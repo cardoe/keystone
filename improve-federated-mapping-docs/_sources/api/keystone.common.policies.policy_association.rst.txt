@@ -1,0 +1,7 @@
+keystone.common.policies.policy\_association module
+===================================================
+
+.. automodule:: keystone.common.policies.policy_association
+   :members:
+   :undoc-members:
+   :show-inheritance:

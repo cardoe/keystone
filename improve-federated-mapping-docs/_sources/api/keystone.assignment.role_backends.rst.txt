@@ -1,0 +1,21 @@
+keystone.assignment.role\_backends package
+==========================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.assignment.role_backends.base
+   keystone.assignment.role_backends.resource_options
+   keystone.assignment.role_backends.sql
+   keystone.assignment.role_backends.sql_model
+
+Module contents
+---------------
+
+.. automodule:: keystone.assignment.role_backends
+   :members:
+   :undoc-members:
+   :show-inheritance:

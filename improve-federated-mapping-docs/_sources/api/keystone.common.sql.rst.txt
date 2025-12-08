@@ -1,0 +1,18 @@
+keystone.common.sql package
+===========================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.common.sql.upgrades
+
+Module contents
+---------------
+
+.. automodule:: keystone.common.sql
+   :members:
+   :undoc-members:
+   :show-inheritance:

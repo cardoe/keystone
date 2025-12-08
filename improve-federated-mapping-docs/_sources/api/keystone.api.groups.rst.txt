@@ -1,0 +1,7 @@
+keystone.api.groups module
+==========================
+
+.. automodule:: keystone.api.groups
+   :members:
+   :undoc-members:
+   :show-inheritance:

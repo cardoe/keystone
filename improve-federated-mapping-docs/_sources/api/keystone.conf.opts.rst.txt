@@ -1,0 +1,7 @@
+keystone.conf.opts module
+=========================
+
+.. automodule:: keystone.conf.opts
+   :members:
+   :undoc-members:
+   :show-inheritance:

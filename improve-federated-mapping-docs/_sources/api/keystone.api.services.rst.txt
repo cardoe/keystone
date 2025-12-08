@@ -1,0 +1,7 @@
+keystone.api.services module
+============================
+
+.. automodule:: keystone.api.services
+   :members:
+   :undoc-members:
+   :show-inheritance:

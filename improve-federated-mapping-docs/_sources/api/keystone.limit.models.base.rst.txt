@@ -1,0 +1,7 @@
+keystone.limit.models.base module
+=================================
+
+.. automodule:: keystone.limit.models.base
+   :members:
+   :undoc-members:
+   :show-inheritance:

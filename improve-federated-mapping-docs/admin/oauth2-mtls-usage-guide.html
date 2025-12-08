@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>OAuth 2.0 Mutual-TLS Client Authentication Flow &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/support-matrix.css" />
+    <script src="../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Keystone Configuration Options" href="../configuration/index.html" />
+    <link rel="prev" title="Configure HTTPS in Identity Service" href="configure-https.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/admin/oauth2-mtls-usage-guide.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>OAuth 2.0 Mutual-TLS Client Authentication Flow</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="configure-https.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Configure HTTPS in Identity Service"></i></a>
+    
+    
+    <a href="../configuration/index.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Keystone Configuration Options"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="oauth-2-0-mutual-tls-client-authentication-flow">
+<h1>OAuth 2.0 Mutual-TLS Client Authentication Flow<a class="headerlink" href="#oauth-2-0-mutual-tls-client-authentication-flow" title="Link to this heading">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>OAuth 2.0 Mutual-TLS Client Authentication based on <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8705">RFC8705</a> is implemented
+as an extension of Keystone. Users can use use_id as client_id to obtain the
+OAuth 2.0 Certificate-Bound access token with TLS certificates. With the same
+TLS certificates, the Certificate-Bound access token can then be used to access
+the protected resources of the OpenStack API, which uses Keystone middleware
+supporting the OAuth 2.0 Mutual-TLS Client Authentication. See the
+<a class="reference external" href="https://docs.openstack.org/api-ref/identity/v3/index.html#os-oauth2-api">Identity API reference</a> for more information on generating OAuth 2.0 access
+token.</p>
+</section>
+<section id="guide">
+<h2>Guide<a class="headerlink" href="#guide" title="Link to this heading">¶</a></h2>
+<p>Enable Keystone identity server to support OAuth 2.0 Mutual-TLS Client
+Authentication by the following steps in this guide. In this example,
+<code class="docutils literal notranslate"><span class="pre">keystone.host</span></code> is the domain name used by the Keystone identity server.</p>
+<section id="create-a-private-public-certificate-authority-ca">
+<h3>Create a private/public Certificate Authority (CA)<a class="headerlink" href="#create-a-private-public-certificate-authority-ca" title="Link to this heading">¶</a></h3>
+<p>In order to use mutual TLS, it is necessary to create a private/public
+Certificate Authority (CA) as a root certificate that will be used to sign
+client and keystone certificates.</p>
+<ol class="arabic simple">
+<li><p>Generate an RSA private key.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>root_a.key<span class="w"> </span><span class="m">4096</span>
+<span class="go">Generating RSA private key, 4096 bit long modulus (2 primes)</span>
+<span class="go">.++++</span>
+<span class="go">.........................++++</span>
+<span class="go">e is 65537 (0x010001)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Generate a self-signed certificate.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-x509<span class="w"> </span>-key<span class="w"> </span>root_a.key<span class="w"> </span>-out<span class="w"> </span>root_a.pem<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span>
+<span class="go">You are about to be asked to enter information that will be incorporated</span>
+<span class="go">into your certificate request.</span>
+<span class="go">What you are about to enter is what is called a Distinguished Name or a DN.</span>
+<span class="go">There are quite a few fields but you can leave some blank</span>
+<span class="go">For some fields there will be a default value,</span>
+<span class="go">If you enter &#39;.&#39;, the field will be left blank.</span>
+<span class="go">-----</span>
+<span class="go">Country Name (2 letter code) [AU]: JP</span>
+<span class="go">State or Province Name (full name) [Some-State]: Tokyo</span>
+<span class="go">Locality Name (eg, city) []: Chiyoda-ku</span>
+<span class="go">Organization Name (eg, company) [Internet Widgits Pty Ltd]: IssuingORG</span>
+<span class="go">Organizational Unit Name (eg, section) []: CertDept</span>
+<span class="go">Common Name (e.g. server FQDN or YOUR name) []: root_a.openstack.host</span>
+<span class="go">Email Address []: root_a@issuing.org</span>
+<span class="go">Please enter the following &#39;extra&#39; attributes</span>
+<span class="go">to be sent with your certificate request</span>
+<span class="go">A challenge password []:</span>
+<span class="go">An optional company name []:</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>If you need to support multiple root certificates, you can refer to step1
+and step2. Because of the needs of the server configuration, you need to
+merge these root certificates into a single file. Multiple root
+certificates are used in this guide, so another root certificate is
+created, the certificate is named root_b, and the CN of the certificate
+is “root_b.openstack.host”.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cat<span class="w"> </span>root_a.pem<span class="w"> </span>&gt;&gt;<span class="w"> </span>multi_ca.pem
+<span class="gp">$ </span>cat<span class="w"> </span>root_b.pem<span class="w"> </span>&gt;&gt;<span class="w"> </span>multi_ca.pem
+<span class="gp">$ </span>cat<span class="w"> </span>multi_ca.pem
+<span class="go">-----BEGIN CERTIFICATE-----</span>
+<span class="go">MIIF1TCCA72gAwIBAgIUN7d0MTiikDjDMLxUQ8SJcV97Nz8wDQYJKoZIhvcNAQEL</span>
+<span class="go">BQAwejELMAkGA1UEBhMCSlAxEDAOBgNVBAgMB2ppYW5nc3UxDzANBgNVBAcMBnN1</span>
+<span class="go">...</span>
+<span class="go">K/k00vZmrZXONglaf/OeMalhiRaOTsK2CzEvg6Xgu1zOjtNshm6qnSEXDYxzJue2</span>
+<span class="go">FPLDGEMKSCLb</span>
+<span class="go">-----END CERTIFICATE-----</span>
+<span class="go">-----BEGIN CERTIFICATE-----</span>
+<span class="go">MIIF1TCCA72gAwIBAgIUOiAEZWTheMS5wFA661G6bushkg4wDQYJKoZIhvcNAQEL</span>
+<span class="go">BQAwejELMAkGA1UEBhMCY24xEDAOBgNVBAgMB2ppYW5nc3UxDzANBgNVBAcMBnN1</span>
+<span class="go">...</span>
+<span class="go">UzvplIZcNZKzgOLLrSkk42/yqxdTZnc3BeBiVsA5T6aapNbY8D6ZpPU2cYYSxrfK</span>
+<span class="go">VpOanJoJy22J</span>
+<span class="go">-----END CERTIFICATE-----</span>
+</pre></div>
+</div>
+</section>
+<section id="enable-keystone-to-support-mutual-tls">
+<h3>Enable Keystone to support mutual TLS<a class="headerlink" href="#enable-keystone-to-support-mutual-tls" title="Link to this heading">¶</a></h3>
+<p>The following parts describe steps to enable mutual TLS only for os-oauth2-api.</p>
+<ol class="arabic simple">
+<li><p>Generate an RSA private key.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>keystone_priv.key<span class="w"> </span><span class="m">4096</span>
+<span class="go">Generating RSA private key, 4096 bit long modulus (2 primes)</span>
+<span class="go">.........................................+++++</span>
+<span class="go">.........................+++++</span>
+<span class="go">e is 65537 (0x010001)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Create a certificate signing request.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-key<span class="w"> </span>keystone_priv.key<span class="w"> </span>-out<span class="w"> </span>keystone_csr.csr
+<span class="go">You are about to be asked to enter information that will be incorporated</span>
+<span class="go">into your certificate request.</span>
+<span class="go">What you are about to enter is what is called a Distinguished Name or a DN.</span>
+<span class="go">There are quite a few fields but you can leave some blank</span>
+<span class="go">For some fields there will be a default value,</span>
+<span class="go">If you enter &#39;.&#39;, the field will be left blank.</span>
+<span class="go">-----</span>
+<span class="go">Country Name (2 letter code) [AU]: JP</span>
+<span class="go">State or Province Name (full name) [Some-State]: Tokyo</span>
+<span class="go">Locality Name (eg, city) []: Chiyoda-ku</span>
+<span class="go">Organization Name (eg, company) [Internet Widgits Pty Ltd]: OpenstackORG</span>
+<span class="go">Organizational Unit Name (eg, section) []: DevDept</span>
+<span class="go">Common Name (e.g. server FQDN or YOUR name) []:keystone.host</span>
+<span class="go">Email Address []: dev@keystone.host</span>
+<span class="go">Please enter the following &#39;extra&#39; attributes</span>
+<span class="go">to be sent with your certificate request</span>
+<span class="go">A challenge password []:</span>
+<span class="go">An optional company name []:</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Use the root certificate to generate a self-signed certificate.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openssl<span class="w"> </span>x509<span class="w"> </span>-req<span class="w"> </span>-in<span class="w"> </span>keystone_csr.csr<span class="w"> </span><span class="se">\</span>
+-CA<span class="w"> </span>root_a.pem<span class="w"> </span>-CAkey<span class="w"> </span>root_a.key<span class="w"> </span>-CAcreateserial<span class="w"> </span><span class="se">\</span>
+-out<span class="w"> </span>keystone_ca.pem<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-sha384
+<span class="go">Signature ok</span>
+<span class="go">subject=C = JP, ST = Tokyo, L = Chiyoda-ku, O = OpenstackORG, OU = DevDept, CN = keystone.host, emailAddress = dev@keystone.host</span>
+<span class="go">Getting CA Private Key</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Modify the apache configuration file and add options to implement mutual TLS
+support for the Keystone service.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Based on the server environment, this command may have to be run to enable
+SSL module in apache2 service when setting up HTTPS protocol for keystone
+server.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>a2enmod<span class="w"> </span>ssl
+</pre></div>
+</div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>vi<span class="w"> </span>/etc/apache2/sites-enabled/keystone-wsgi-public.conf
+<span class="go">ProxyPass &quot;/identity&quot; &quot;unix:/var/run/uwsgi/keystone-wsgi-public.socket|uwsgi://uwsgi-uds-keystone-wsgi-public&quot; retry=0</span>
+<span class="go">&lt;IfModule mod_ssl.c&gt;</span>
+<span class="go">&lt;VirtualHost _default_:443&gt;</span>
+<span class="go">  ServerAdmin webmaster@localhost</span>
+<span class="go">  ErrorLog ${APACHE_LOG_DIR}/error.log</span>
+<span class="go">  CustomLog ${APACHE_LOG_DIR}/access.log combined</span>
+<span class="go">  SSLEngine on</span>
+<span class="go">  SSLCertificateFile      /etc/ssl/certs/keystone_ca.pem</span>
+<span class="go">  SSLCertificateKeyFile   /etc/ssl/private/keystone_priv.key</span>
+<span class="go">  SSLCACertificateFile    /etc/ssl/certs/multi_ca.pem</span>
+<span class="go">  &lt;Location /identity/v3/OS-OAUTH2/token&gt;</span>
+<span class="go">    SSLVerifyClient require</span>
+<span class="go">    SSLOptions +ExportCertData</span>
+<span class="go">    SSLOptions +StdEnvVars</span>
+<span class="go">    SSLRequireSSL</span>
+<span class="go">  &lt;/Location&gt;</span>
+<span class="go">&lt;/VirtualHost&gt;</span>
+<span class="go">&lt;/IfModule&gt;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Restart apache service so that the modified configuration information takes
+effect.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>systemctl<span class="w"> </span>restart<span class="w"> </span>apache2.service
+<span class="go">==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===</span>
+<span class="go">Authentication is required to restart &#39;apache2.service&#39;.</span>
+<span class="go">Authenticating as: Ubuntu (ubuntu)</span>
+<span class="go">Password:</span>
+<span class="go">==== AUTHENTICATION COMPLETE ===</span>
+</pre></div>
+</div>
+</section>
+<section id="create-mapping-rules-for-validating-tls-certificates">
+<h3>Create mapping rules for validating TLS certificates<a class="headerlink" href="#create-mapping-rules-for-validating-tls-certificates" title="Link to this heading">¶</a></h3>
+<p>Because different root certificates have different ways of authenticating TLS
+certificates provided by client, the relevant mapping rules need to be set in
+the system.</p>
+<ol class="arabic simple">
+<li><p>Create a mapping rule file. The mapping used below supports both root
+certificates. When the CN name of the issuer of the client certificate is
+“root_a.openstack.host”, the client certificate must contain the 5 fields
+specified by Mapping, and these fields must match the user information in
+Keystone. When the CN name of the issuer of the client certificate is
+“root_b.openstack.host”, only 2 fields need to be included to keep the
+user information consistent with the keystone. When using Subject
+Distinguished Names, the <code class="docutils literal notranslate"><span class="pre">SSL_CLIENT_SUBJECT_DN_*</span></code> format must be used.
+When using Issuer Distinguished Names, the <code class="docutils literal notranslate"><span class="pre">SSL_CLIENT_ISSUER_DN_*</span></code> format
+must be used. The <code class="docutils literal notranslate"><span class="pre">*</span></code> part is the key of the attribute for Distinguished
+Names converted to uppercase. For more information about the attribute
+types for Distinguished Names, see the relevant RFC documentation
+such as: <a class="reference external" href="https://www.rfc-editor.org/rfc/rfc1779.html">RFC1779</a>, <a class="reference external" href="https://www.rfc-editor.org/rfc/rfc2985.html">RFC2985</a>, <a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4519.html">RFC4519</a>, etc.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The short forms of attribute keys can be found in <a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4514.html#page-7">RFC4514</a>. For the key
+<code class="docutils literal notranslate"><span class="pre">Email</span> <span class="pre">Address</span></code> which is not listed in <a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4514.html#page-7">RFC4514</a>, you can use
+<code class="docutils literal notranslate"><span class="pre">SSL_CLIENT_ISSUER_DN_EMAILADDRESS</span></code> and
+<code class="docutils literal notranslate"><span class="pre">SSL_CLIENT_SUBJECT_DN_EMAILADDRESS</span></code></p>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>vi<span class="w"> </span>oauth2_mapping.json
+<span class="go">[</span>
+<span class="go">  {</span>
+<span class="go">    &quot;local&quot;: [</span>
+<span class="go">      {</span>
+<span class="go">        &quot;user&quot;: {</span>
+<span class="go">          &quot;name&quot;: &quot;{0}&quot;,</span>
+<span class="go">          &quot;id&quot;: &quot;{1}&quot;,</span>
+<span class="go">          &quot;email&quot;: &quot;{2}&quot;,</span>
+<span class="go">          &quot;domain&quot;: {</span>
+<span class="go">            &quot;name&quot;: &quot;{3}&quot;,</span>
+<span class="go">            &quot;id&quot;: &quot;{4}&quot;</span>
+<span class="go">          }</span>
+<span class="go">        }</span>
+<span class="go">      }</span>
+<span class="go">    ],</span>
+<span class="go">    &quot;remote&quot;: [</span>
+<span class="go">      {</span>
+<span class="go">        &quot;type&quot;: &quot;SSL_CLIENT_SUBJECT_DN_CN&quot;</span>
+<span class="go">      },</span>
+<span class="go">      {</span>
+<span class="go">        &quot;type&quot;: &quot;SSL_CLIENT_SUBJECT_DN_UID&quot;</span>
+<span class="go">      },</span>
+<span class="go">      {</span>
+<span class="go">        &quot;type&quot;: &quot;SSL_CLIENT_SUBJECT_DN_EMAILADDRESS&quot;</span>
+<span class="go">      },</span>
+<span class="go">      {</span>
+<span class="go">        &quot;type&quot;: &quot;SSL_CLIENT_SUBJECT_DN_O&quot;</span>
+<span class="go">      },</span>
+<span class="go">      {</span>
+<span class="go">        &quot;type&quot;: &quot;SSL_CLIENT_SUBJECT_DN_DC&quot;</span>
+<span class="go">      },</span>
+<span class="go">      {</span>
+<span class="go">        &quot;type&quot;: &quot;SSL_CLIENT_ISSUER_DN_CN&quot;,</span>
+<span class="go">        &quot;any_one_of&quot;: [</span>
+<span class="go">            &quot;root_a.openstack.host&quot;</span>
+<span class="go">       ]</span>
+<span class="go">      }</span>
+<span class="go">    ]</span>
+<span class="go">  },</span>
+<span class="go">  {</span>
+<span class="go">    &quot;local&quot;: [</span>
+<span class="go">      {</span>
+<span class="go">        &quot;user&quot;: {</span>
+<span class="go">          &quot;id&quot;: &quot;{0}&quot;,</span>
+<span class="go">           &quot;domain&quot;: {</span>
+<span class="go">            &quot;id&quot;: &quot;{1}&quot;</span>
+<span class="go">          }</span>
+<span class="go">        }</span>
+<span class="go">      }</span>
+<span class="go">    ],</span>
+<span class="go">    &quot;remote&quot;: [</span>
+<span class="go">      {</span>
+<span class="go">        &quot;type&quot;: &quot;SSL_CLIENT_SUBJECT_DN_UID&quot;</span>
+<span class="go">      },</span>
+<span class="go">      {</span>
+<span class="go">        &quot;type&quot;: &quot;SSL_CLIENT_SUBJECT_DN_DC&quot;</span>
+<span class="go">      },</span>
+<span class="go">      {</span>
+<span class="go">        &quot;type&quot;: &quot;SSL_CLIENT_ISSUER_DN_CN&quot;,</span>
+<span class="go">        &quot;any_one_of&quot;: [</span>
+<span class="go">            &quot;root_b.openstack.host&quot;</span>
+<span class="go">       ]</span>
+<span class="go">      }</span>
+<span class="go">    ]</span>
+<span class="go">  }</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Use the file to create the mapping rule in keystone.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>mapping<span class="w"> </span>create<span class="w"> </span>--rules<span class="w"> </span>oauth2_mapping.json<span class="w"> </span>oauth2_mapping
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>If it already exists, use the file to update the mapping rule in keystone.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">openstack mapping set --rules oauth2_mapping.json oauth2_mapping</span>
+</pre></div>
+</div>
+</section>
+<section id="enable-keystone-to-support-oauth-2-0-mutual-tls-client-authentication">
+<h3>Enable keystone to support OAuth 2.0 Mutual-TLS Client Authentication<a class="headerlink" href="#enable-keystone-to-support-oauth-2-0-mutual-tls-client-authentication" title="Link to this heading">¶</a></h3>
+<p>Modify the relevant configuration to enable the os-oauth2-api to use TLS
+certificates for user authentication.</p>
+<ol class="arabic simple">
+<li><p>Modify <code class="docutils literal notranslate"><span class="pre">keystone.conf</span></code> to OAuth 2.0 Mutual-TLS Client Authentication.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>vi<span class="w"> </span>/etc/keystone/keystone.conf
+<span class="go">[oauth2]</span>
+<span class="go">oauth2_authn_method = certificate</span>
+<span class="go">oauth2_cert_dn_mapping_id=oauth2_mapping</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Restart Keystone service so that the modified configuration information
+takes effect.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>devstack@keystone.service
+</pre></div>
+</div>
+</section>
+<section id="try-to-access-the-keystone-apis">
+<h3>Try to access the Keystone APIs<a class="headerlink" href="#try-to-access-the-keystone-apis" title="Link to this heading">¶</a></h3>
+<p>At last, try to access the Keystone APIs to confirm that the server is working
+properly.</p>
+<p>1. Create an OAuth 2.0 Mutual-TLS Client Authentication user. Because some
+OpenStack APIs require project information, it is recommended to specify the
+project when creating a user.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>user<span class="w"> </span>create<span class="w"> </span>--domain<span class="w"> </span>default<span class="w"> </span>--email<span class="w"> </span>test@demo.com<span class="w"> </span>--project<span class="w"> </span>demo<span class="w"> </span>--project-domain<span class="w"> </span>default<span class="w"> </span>client01
+<span class="go">+---------------------+----------------------------------+</span>
+<span class="go">| Field               | Value                            |</span>
+<span class="go">+---------------------+----------------------------------+</span>
+<span class="go">| default_project_id  | c5c07949e53a41da816f3c052b37dfe8 |</span>
+<span class="go">| domain_id           | default                          |</span>
+<span class="go">| email               | test@demo.com                    |</span>
+<span class="go">| enabled             | True                             |</span>
+<span class="go">| id                  | 88319190aca54383a38b96eb0e75266e |</span>
+<span class="go">| name                | client01                         |</span>
+<span class="go">| description         | None                             |</span>
+<span class="go">| password_expires_at | None                             |</span>
+<span class="go">+---------------------+----------------------------------+</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Existing users can set the project information through the command.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>user<span class="w"> </span>show<span class="w"> </span>client02
+<span class="go">+---------------------+----------------------------------+</span>
+<span class="go">| Field               | Value                            |</span>
+<span class="go">+---------------------+----------------------------------+</span>
+<span class="go">| default_project_id  | None                             |</span>
+<span class="go">| domain_id           | default                          |</span>
+<span class="go">| email               | test@demo.com                    |</span>
+<span class="go">| enabled             | True                             |</span>
+<span class="go">| id                  | dc8682953ad9443dbda5291d6f675def |</span>
+<span class="go">| name                | client02                         |</span>
+<span class="go">| description         | None                             |</span>
+<span class="go">| password_expires_at | None                             |</span>
+<span class="go">+---------------------+----------------------------------+</span>
+<span class="gp">$ </span>openstack<span class="w"> </span>user<span class="w"> </span><span class="nb">set</span><span class="w"> </span>dc8682953ad9443dbda5291d6f675def<span class="w"> </span>--project<span class="w"> </span>demo<span class="w"> </span>--project-domain<span class="w"> </span>default
+<span class="gp">$ </span>openstack<span class="w"> </span>user<span class="w"> </span>show<span class="w"> </span>client02
+<span class="go">+---------------------+----------------------------------+</span>
+<span class="go">| Field               | Value                            |</span>
+<span class="go">+---------------------+----------------------------------+</span>
+<span class="go">| default_project_id  | c5c07949e53a41da816f3c052b37dfe8 |</span>
+<span class="go">| domain_id           | default                          |</span>
+<span class="go">| email               | test@demo.com                    |</span>
+<span class="go">| enabled             | True                             |</span>
+<span class="go">| id                  | dc8682953ad9443dbda5291d6f675def |</span>
+<span class="go">| name                | client02                         |</span>
+<span class="go">| description         | None                             |</span>
+<span class="go">| password_expires_at | None                             |</span>
+<span class="go">+---------------------+----------------------------------+</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Assign roles to the user.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>add<span class="w"> </span>--project<span class="w"> </span>demo<span class="w"> </span>--user<span class="w"> </span>client01<span class="w"> </span>admin
+<span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--project<span class="w"> </span>demo<span class="w"> </span>--user<span class="w"> </span>client01
+<span class="go">+----------------------------------+----------------------------------+-------+----------------------------------+--------+--------+-----------+</span>
+<span class="go">| Role                             | User                             | Group | Project                          | Domain | System | Inherited |</span>
+<span class="go">+----------------------------------+----------------------------------+-------+----------------------------------+--------+--------+-----------+</span>
+<span class="go">| 1684856368de4c31a7b6e8fefd6654ff | 88319190aca54383a38b96eb0e75266e |       | c5c07949e53a41da816f3c052b37dfe8 |        |        | False     |</span>
+<span class="go">+----------------------------------+----------------------------------+-------+----------------------------------+--------+--------+-----------+</span>
+<span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>add<span class="w"> </span>--project<span class="w"> </span>demo<span class="w"> </span>--user<span class="w"> </span>client02<span class="w"> </span>admin
+<span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--project<span class="w"> </span>demo<span class="w"> </span>--user<span class="w"> </span>client02
+<span class="go">+----------------------------------+----------------------------------+-------+----------------------------------+--------+--------+-----------+</span>
+<span class="go">| Role                             | User                             | Group | Project                          | Domain | System | Inherited |</span>
+<span class="go">+----------------------------------+----------------------------------+-------+----------------------------------+--------+--------+-----------+</span>
+<span class="go">| 1684856368de4c31a7b6e8fefd6654ff | dc8682953ad9443dbda5291d6f675def |       | c5c07949e53a41da816f3c052b37dfe8 |        |        | False     |</span>
+<span class="go">+----------------------------------+----------------------------------+-------+----------------------------------+--------+--------+-----------+</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Generate an RSA private key for the user.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>client01_priv.key<span class="w"> </span><span class="m">4096</span>
+<span class="go">Generating RSA private key, 4096 bit long modulus (2 primes)</span>
+<span class="go">.........................................+++++</span>
+<span class="go">.........................+++++</span>
+<span class="go">e is 65537 (0x010001)</span>
+<span class="gp">$ </span>openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>client02_priv.key<span class="w"> </span><span class="m">4096</span>
+<span class="go">Generating RSA private key, 4096 bit long modulus (2 primes)</span>
+<span class="go">.........................................+++++</span>
+<span class="go">.........................+++++</span>
+<span class="go">e is 65537 (0x010001)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Create a certificate signing request based on the mapping rule of the root
+certificate and on the user information. Because the client certificate is
+subsequently signed with root_a, five fields are specified when the request
+is created. If root_b is used to issue the client certificate, only two
+fields are required when creating the request.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-key<span class="w"> </span>client01_priv.key<span class="w"> </span>-out<span class="w"> </span>client01.csr<span class="w"> </span><span class="se">\</span>
+-subj<span class="w"> </span><span class="s2">&quot;/UID=88319190aca54383a38b96eb0e75266e/O=Default/DC=default/emailAddress=test@demo.com/CN=client01&quot;</span>
+<span class="gp">$ </span>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-key<span class="w"> </span>client02_priv.key<span class="w"> </span>-out<span class="w"> </span>client02.csr<span class="w"> </span><span class="se">\</span>
+-subj<span class="w"> </span><span class="s2">&quot;/UID=dc8682953ad9443dbda5291d6f675def/DC=default/CN=client02&quot;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>Use the root certificate to generate a self-signed certificate for the user.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openssl<span class="w"> </span>x509<span class="w"> </span>-req<span class="w"> </span>-in<span class="w"> </span>client01.csr<span class="w"> </span><span class="se">\</span>
+-CA<span class="w"> </span>root_a.pem<span class="w"> </span>-CAkey<span class="w"> </span>root_a.key<span class="w"> </span>-CAcreateserial<span class="w"> </span>-out<span class="w"> </span><span class="se">\</span>
+client01.pem<span class="w"> </span>-days<span class="w"> </span><span class="m">180</span><span class="w"> </span>-sha256
+<span class="go">Signature ok</span>
+<span class="go">subject=UID = 88319190aca54383a38b96eb0e75266e, O = Default, DC = default, emailAddress = test@demo.com, CN = client01</span>
+<span class="go">Getting CA Private Key</span>
+<span class="gp">$ </span>openssl<span class="w"> </span>x509<span class="w"> </span>-req<span class="w"> </span>-in<span class="w"> </span>client02.csr<span class="w"> </span><span class="se">\</span>
+-CA<span class="w"> </span>root_b.pem<span class="w"> </span>-CAkey<span class="w"> </span>root_b.key<span class="w"> </span>-CAcreateserial<span class="w"> </span>-out<span class="w"> </span><span class="se">\</span>
+client02.pem<span class="w"> </span>-days<span class="w"> </span><span class="m">180</span><span class="w"> </span>-sha256
+<span class="go">Signature ok</span>
+<span class="go">subject=UID = dc8682953ad9443dbda5291d6f675def, DC = default, CN = client02</span>
+<span class="go">Getting CA Private Key</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="7">
+<li><p>Through the HTTP protocol, access the Keystone token API to confirm that the
+X-Auth-Token can be obtained normally.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-si<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://keystone.local/identity/v3/auth/tokens?nocatalog<span class="w"> </span><span class="se">\</span>
+-d<span class="w"> </span><span class="s1">&#39;{&quot;auth&quot;:{&quot;identity&quot;:{&quot;methods&quot;:[&quot;password&quot;],&quot;password&quot;: {&quot;user&quot;:{&quot;domain&quot;:{&quot;name&quot;:&quot;Default&quot;},&quot;name&quot;:&quot;username&quot;,&quot;password&quot;:&quot;test_pwd&quot;}}},&quot;scope&quot;:{&quot;project&quot;:{&quot;domain&quot;:{&quot;name&quot;:&quot;Default&quot;},&quot;name&quot;:&quot;admin&quot;}}}}&#39;</span><span class="w"> </span><span class="se">\</span>
+-H<span class="w"> </span><span class="s1">&#39;Content-type:application/json&#39;</span>
+<span class="go">HTTP/1.1 201 CREATED</span>
+<span class="go">Date: Tue, 24 Dec 2024 16:21:22 GMT</span>
+<span class="go">Server: Apache/2.4.52 (Ubuntu)</span>
+<span class="go">Content-Type: application/json</span>
+<span class="go">Content-Length: 711</span>
+<span class="go">X-Subject-Token: gAAAAABnat-...</span>
+<span class="go">Vary: X-Auth-Token</span>
+<span class="go">x-openstack-request-id: req-37d6a755-a633-4ab1-aa1b-980553804546</span>
+<span class="go">Connection: close</span>
+
+<span class="go">{&quot;token&quot;: {&quot;methods&quot;: [&quot;password&quot;], &quot;user&quot;: {&quot;domain&quot;: {&quot;id&quot;: &quot;default&quot;, &quot;name&quot;: &quot;Default&quot;}, &quot;id&quot;: &quot;3414be74f5df43549088db1d63d33a61&quot;, &quot;name&quot;: &quot;admin&quot;, &quot;password_expires_at&quot;: null}, &quot;audit_ids&quot;: [&quot;wc7QBA2CSMilYrgxzsDLOw&quot;], &quot;expires_at&quot;: &quot;2024-12-24T17:21:22.000000Z&quot;, &quot;issued_at&quot;: &quot;2024-12-24T16:21:22.000000Z&quot;, &quot;project&quot;: {&quot;domain&quot;: {&quot;id&quot;: &quot;default&quot;, &quot;name&quot;: &quot;Default&quot;}, &quot;id&quot;: &quot;6a7d3fa72f7a42b39938e9b3c845d206&quot;, &quot;name&quot;: &quot;admin&quot;}, &quot;is_domain&quot;: false, &quot;roles&quot;: [{&quot;id&quot;: &quot;241e9736dbd0449eb22b7f23289ca6f8&quot;, &quot;name&quot;: &quot;manager&quot;}, {&quot;id&quot;: &quot;73eb16a56be74f6783f0f26a8cd0df36&quot;, &quot;name&quot;: &quot;member&quot;}, {&quot;id&quot;: &quot;1684856368de4c31a7b6e8fefd6654ff&quot;, &quot;name&quot;: &quot;admin&quot;}, {&quot;id&quot;: &quot;b36ac7b62c204727930f41df609a236a&quot;, &quot;name&quot;: &quot;reader&quot;}]}}</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="8">
+<li><p>Obtain OAuth 2.0 Certificate-Bound access tokens through OAuth 2.0
+Mutual-TLS Client Authentication.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-si<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://keystone.local/identity/v3/OS-OAUTH2/token<span class="w"> </span><span class="se">\</span>
+-H<span class="w"> </span><span class="s2">&quot;application/x-www-form-urlencoded&quot;</span><span class="w"> </span><span class="se">\</span>
+-d<span class="w"> </span><span class="s2">&quot;grant_type=client_credentials&amp;client_id=88319190aca54383a38b96eb0e75266e&quot;</span><span class="w"> </span><span class="se">\</span>
+--cacert<span class="w"> </span>root_a.pem<span class="w"> </span><span class="se">\</span>
+--key<span class="w"> </span>client01_priv.key<span class="w"> </span>--cert<span class="w"> </span>client01.pem
+<span class="go">HTTP/1.1 200 OK</span>
+<span class="go">Date: Tue, 24 Dec 2024 16:19:14 GMT</span>
+<span class="go">Server: Apache/2.4.52 (Ubuntu)</span>
+<span class="go">Content-Type: application/json</span>
+<span class="go">Content-Length: 307</span>
+<span class="go">Vary: X-Auth-Token</span>
+<span class="go">x-openstack-request-id: req-8ec8dff2-8c34-4799-aa4b-a855566111dc</span>
+<span class="go">Connection: close</span>
+
+<span class="go">{&quot;access_token&quot;:&quot;gAAAAABnat8...&quot;,&quot;expires_in&quot;:3600,&quot;token_type&quot;:&quot;Bearer&quot;}</span>
+
+<span class="gp">$ </span>curl<span class="w"> </span>-si<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://keystone.local/identity/v3/OS-OAUTH2/token<span class="w"> </span><span class="se">\</span>
+-H<span class="w"> </span><span class="s2">&quot;application/x-www-form-urlencoded&quot;</span><span class="w"> </span><span class="se">\</span>
+-d<span class="w"> </span><span class="s2">&quot;grant_type=client_credentials&amp;client_id=dc8682953ad9443dbda5291d6f675def&quot;</span><span class="w"> </span><span class="se">\</span>
+--cacert<span class="w"> </span>root_a.pem<span class="w"> </span><span class="se">\</span>
+--key<span class="w"> </span>client02_priv.key<span class="w"> </span>--cert<span class="w"> </span>client02.pem
+<span class="go">HTTP/1.1 200 OK</span>
+<span class="go">Date: Tue, 24 Dec 2024 16:27:24 GMT</span>
+<span class="go">Server: Apache/2.4.52 (Ubuntu)</span>
+<span class="go">Content-Type: application/json</span>
+<span class="go">Content-Length: 307</span>
+<span class="go">Vary: X-Auth-Token</span>
+<span class="go">x-openstack-request-id: req-9bf1ad0f-32b7-4e86-8f30-01292bbb49a5</span>
+<span class="go">Connection: close</span>
+
+<span class="go">{&quot;access_token&quot;:&quot;gAAAAABnauD...&quot;,&quot;expires_in&quot;:3600,&quot;token_type&quot;:&quot;Bearer&quot;}</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="9">
+<li><p>Confirm that the OAuth 2.0 Certificate-Bound access tokens contain
+information such as project, roles, thumbprint, etc.</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>-si<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span>http://keystone.local/identity/v3/auth/tokens?nocatalog<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;X-Auth-Token:</span><span class="nv">$x_auth_token</span><span class="s2">&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;X-Subject-Token:</span><span class="nv">$access_token</span><span class="s2">&quot;</span>
+<span class="go">HTTP/1.1 200 OK</span>
+<span class="go">Date: Tue, 24 Dec 2024 16:45:43 GMT</span>
+<span class="go">Server: Apache/2.4.52 (Ubuntu)</span>
+<span class="go">Content-Type: application/json</span>
+<span class="go">Content-Length: 805</span>
+<span class="go">X-Subject-Token: gAAAAABnauU...</span>
+<span class="go">Vary: X-Auth-Token</span>
+<span class="go">x-openstack-request-id: req-fca9bf15-80cc-42c6-9153-769b77ec1b00</span>
+<span class="go">Connection: close</span>
+
+<span class="go">{&quot;token&quot;: {&quot;methods&quot;: [&quot;oauth2_credential&quot;], &quot;user&quot;: {&quot;domain&quot;: {&quot;id&quot;: &quot;default&quot;, &quot;name&quot;: &quot;Default&quot;}, &quot;id&quot;: &quot;88319190aca54383a38b96eb0e75266e&quot;, &quot;name&quot;: &quot;client01&quot;, &quot;password_expires_at&quot;: null}, &quot;audit_ids&quot;: [&quot;yeIlaD7ETe6tJPN7QoJ2Bg&quot;], &quot;expires_at&quot;: &quot;2024-12-24T17:45:39.000000Z&quot;, &quot;issued_at&quot;: &quot;2024-12-24T16:45:39.000000Z&quot;, &quot;project&quot;: {&quot;domain&quot;: {&quot;id&quot;: &quot;default&quot;, &quot;name&quot;: &quot;Default&quot;}, &quot;id&quot;: &quot;c5c07949e53a41da816f3c052b37dfe8&quot;, &quot;name&quot;: &quot;demo&quot;}, &quot;is_domain&quot;: false, &quot;roles&quot;: [{&quot;id&quot;: &quot;241e9736dbd0449eb22b7f23289ca6f8&quot;, &quot;name&quot;: &quot;manager&quot;}, {&quot;id&quot;: &quot;73eb16a56be74f6783f0f26a8cd0df36&quot;, &quot;name&quot;: &quot;member&quot;}, {&quot;id&quot;: &quot;1684856368de4c31a7b6e8fefd6654ff&quot;, &quot;name&quot;: &quot;admin&quot;}, {&quot;id&quot;: &quot;b36ac7b62c204727930f41df609a236a&quot;, &quot;name&quot;: &quot;reader&quot;}], &quot;oauth2_credential&quot;: {&quot;x5t#S256&quot;: &quot;9gRzUFm9Qu5nwFsKr9nCwPZhNTXP4dlvG73GBj5UmwY=&quot;}}}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="configure-https.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Configure HTTPS in Identity Service"></i></a>
+          
+          
+            <a href="../configuration/index.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Keystone Configuration Options"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2022-10-24 11:18:51</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Administrator Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Keystone Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html">Keystone Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tokens.html">All about keystone tokens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service-api-protection.html">Default Roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="keystone-features.html">Advanced Keystone Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authentication-mechanisms.html">Authentication Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2-usage-guide.html">OAuth2.0 Client Credentials Grant Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure-https.html">Configure HTTPS in Identity Service</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">OAuth 2.0 Mutual-TLS Client Authentication Flow</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">OAuth 2.0 Mutual-TLS Client Authentication Flow</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#guide">Guide</a><ul>
+<li><a class="reference internal" href="#create-a-private-public-certificate-authority-ca">Create a private/public Certificate Authority (CA)</a></li>
+<li><a class="reference internal" href="#enable-keystone-to-support-mutual-tls">Enable Keystone to support mutual TLS</a></li>
+<li><a class="reference internal" href="#create-mapping-rules-for-validating-tls-certificates">Create mapping rules for validating TLS certificates</a></li>
+<li><a class="reference internal" href="#enable-keystone-to-support-oauth-2-0-mutual-tls-client-authentication">Enable keystone to support OAuth 2.0 Mutual-TLS Client Authentication</a></li>
+<li><a class="reference internal" href="#try-to-access-the-keystone-apis">Try to access the Keystone APIs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "admin/oauth2-mtls-usage-guide" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "OAuth 2.0 Mutual-TLS Client Authentication Flow in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2022-10-24 11:18:51";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "admin/oauth2-mtls-usage-guide";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

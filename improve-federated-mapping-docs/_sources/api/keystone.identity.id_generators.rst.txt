@@ -1,0 +1,18 @@
+keystone.identity.id\_generators package
+========================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.identity.id_generators.sha256
+
+Module contents
+---------------
+
+.. automodule:: keystone.identity.id_generators
+   :members:
+   :undoc-members:
+   :show-inheritance:

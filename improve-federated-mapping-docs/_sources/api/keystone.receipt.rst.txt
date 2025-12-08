@@ -1,0 +1,28 @@
+keystone.receipt package
+========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.receipt.providers
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.receipt.handlers
+   keystone.receipt.provider
+   keystone.receipt.receipt_formatters
+
+Module contents
+---------------
+
+.. automodule:: keystone.receipt
+   :members:
+   :undoc-members:
+   :show-inheritance:

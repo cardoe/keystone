@@ -1,0 +1,7 @@
+keystone.conf.saml module
+=========================
+
+.. automodule:: keystone.conf.saml
+   :members:
+   :undoc-members:
+   :show-inheritance:

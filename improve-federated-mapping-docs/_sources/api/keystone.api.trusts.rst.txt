@@ -1,0 +1,7 @@
+keystone.api.trusts module
+==========================
+
+.. automodule:: keystone.api.trusts
+   :members:
+   :undoc-members:
+   :show-inheritance:

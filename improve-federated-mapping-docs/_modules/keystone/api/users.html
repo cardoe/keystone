@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keystone.api.users &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/support-matrix.css" />
+    <script src="../../../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../../../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- TEMPLATE_NAME: _modules/keystone/api/users -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../../../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>keystone.api.users</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <h1>Source code for keystone.api.users</h1><div class="highlight"><pre>
+<span></span><span class="c1">#    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may</span>
+<span class="c1">#    not use this file except in compliance with the License. You may obtain</span>
+<span class="c1">#    a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#         http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1">#    Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1">#    distributed under the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT</span>
+<span class="c1">#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the</span>
+<span class="c1">#    License for the specific language governing permissions and limitations</span>
+<span class="c1">#    under the License.</span>
+
+<span class="c1"># This file handles all flask-restful resources for /v3/users</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">http.client</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">flask</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_serialization</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsonutils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">werkzeug</span><span class="w"> </span><span class="kn">import</span> <span class="n">exceptions</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.api._shared</span><span class="w"> </span><span class="kn">import</span> <span class="n">json_home_relations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">validation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.application_credential</span><span class="w"> </span><span class="kn">import</span> <span class="n">schema</span> <span class="k">as</span> <span class="n">app_cred_schema</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">json_home</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">provider_api</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">rbac_enforcer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">validation</span> <span class="k">as</span> <span class="n">ks_validation</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">keystone.conf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone</span><span class="w"> </span><span class="kn">import</span> <span class="n">exception</span> <span class="k">as</span> <span class="n">ks_exception</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.i18n</span><span class="w"> </span><span class="kn">import</span> <span class="n">_</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.identity</span><span class="w"> </span><span class="kn">import</span> <span class="n">schema</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone</span><span class="w"> </span><span class="kn">import</span> <span class="n">notifications</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.server</span><span class="w"> </span><span class="kn">import</span> <span class="n">flask</span> <span class="k">as</span> <span class="n">ks_flask</span>
+
+<span class="n">CRED_TYPE_EC2</span> <span class="o">=</span> <span class="s1">&#39;ec2&#39;</span>
+<span class="n">CONF</span> <span class="o">=</span> <span class="n">keystone</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">CONF</span>
+<span class="n">ENFORCER</span> <span class="o">=</span> <span class="n">rbac_enforcer</span><span class="o">.</span><span class="n">RBACEnforcer</span>
+<span class="n">PROVIDERS</span> <span class="o">=</span> <span class="n">provider_api</span><span class="o">.</span><span class="n">ProviderAPIs</span>
+
+<span class="n">ACCESS_TOKEN_ID_PARAMETER_RELATION</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">json_home_relations</span><span class="o">.</span><span class="n">os_oauth1_parameter_rel_func</span><span class="p">(</span>
+        <span class="n">parameter_name</span><span class="o">=</span><span class="s1">&#39;access_token_id&#39;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_convert_v3_to_ec2_credential</span><span class="p">(</span><span class="n">credential</span><span class="p">):</span>
+    <span class="c1"># Prior to bug #1259584 fix, blob was stored unserialized</span>
+    <span class="c1"># but it should be stored as a json string for compatibility</span>
+    <span class="c1"># with the v3 credentials API.  Fall back to the old behavior</span>
+    <span class="c1"># for backwards compatibility with existing DB contents</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">blob</span> <span class="o">=</span> <span class="n">jsonutils</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">credential</span><span class="p">[</span><span class="s1">&#39;blob&#39;</span><span class="p">])</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="n">blob</span> <span class="o">=</span> <span class="n">credential</span><span class="p">[</span><span class="s1">&#39;blob&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">credential</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;tenant_id&#39;</span><span class="p">:</span> <span class="n">credential</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;project_id&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;access&#39;</span><span class="p">:</span> <span class="n">blob</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;access&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;secret&#39;</span><span class="p">:</span> <span class="n">blob</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;secret&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;trust_id&#39;</span><span class="p">:</span> <span class="n">blob</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;trust_id&#39;</span><span class="p">),</span>
+    <span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_format_token_entity</span><span class="p">(</span><span class="n">entity</span><span class="p">):</span>
+    <span class="n">formatted_entity</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">access_token_id</span> <span class="o">=</span> <span class="n">formatted_entity</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">formatted_entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;authorizing_user_id&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;role_ids&#39;</span> <span class="ow">in</span> <span class="n">entity</span><span class="p">:</span>
+        <span class="n">formatted_entity</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;role_ids&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;access_secret&#39;</span> <span class="ow">in</span> <span class="n">entity</span><span class="p">:</span>
+        <span class="n">formatted_entity</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;access_secret&#39;</span><span class="p">)</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/users/</span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s1">/OS-OAUTH1/access_tokens/</span><span class="si">{</span><span class="n">access_token_id</span><span class="si">}</span><span class="s1">/roles&#39;</span>
+
+    <span class="n">formatted_entity</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;links&#39;</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="n">formatted_entity</span><span class="p">[</span><span class="s1">&#39;links&#39;</span><span class="p">][</span><span class="s1">&#39;roles&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ks_flask</span><span class="o">.</span><span class="n">base_url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">formatted_entity</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_unrestricted_application_credential</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s1">&#39;application_credential&#39;</span> <span class="ow">in</span> <span class="n">token</span><span class="o">.</span><span class="n">methods</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">application_credential</span><span class="p">[</span><span class="s1">&#39;unrestricted&#39;</span><span class="p">]:</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+                <span class="s2">&quot;Using method &#39;application_credential&#39; is not &quot;</span>
+                <span class="s2">&quot;allowed for managing additional application &quot;</span>
+                <span class="s2">&quot;credentials.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ks_exception</span><span class="o">.</span><span class="n">ForbiddenAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_build_user_target_enforcement</span><span class="p">():</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">target</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">identity_api</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span>
+            <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">view_args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">view_args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">):</span>
+            <span class="n">target</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">identity_api</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span>
+                <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">view_args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+    <span class="k">except</span> <span class="n">ks_exception</span><span class="o">.</span><span class="n">NotFound</span><span class="p">:</span>  <span class="c1"># nosec</span>
+        <span class="c1"># Defer existence in the event the user doesn&#39;t exist, we&#39;ll</span>
+        <span class="c1"># check this later anyway.</span>
+        <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="n">target</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_build_enforcer_target_data_owner_and_user_id_match</span><span class="p">():</span>
+    <span class="n">ref</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">view_args</span><span class="p">:</span>
+        <span class="n">credential_id</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">view_args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;credential_id&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">credential_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">hashed_id</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">hash_access_key</span><span class="p">(</span><span class="n">credential_id</span><span class="p">)</span>
+            <span class="n">ref</span><span class="p">[</span><span class="s1">&#39;credential&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">credential_api</span><span class="o">.</span><span class="n">get_credential</span><span class="p">(</span>
+                <span class="n">hashed_id</span>
+            <span class="p">)</span>
+    <span class="k">return</span> <span class="n">ref</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_update_request_user_id_attribute</span><span class="p">():</span>
+    <span class="c1"># This method handles a special case in policy enforcement. The application</span>
+    <span class="c1"># credential API is underneath the user path (e.g.,</span>
+    <span class="c1"># /v3/users/{user_id}/application_credentials/{application_credential_id}).</span>
+    <span class="c1"># The RBAC enforcer thinks the user to evaluate for application credential</span>
+    <span class="c1"># ownership comes from the path, but it should come from the actual</span>
+    <span class="c1"># application credential reference. By ensuring we pull the user ID from</span>
+    <span class="c1"># the application credential, we close a loop hole where users could</span>
+    <span class="c1"># effectively bypass authorization to view or delete any application</span>
+    <span class="c1"># credential in the system, assuming the attacker knows the application</span>
+    <span class="c1"># credential ID of another user. So long as the attacker matches the user</span>
+    <span class="c1"># ID in the request path to the user in the token of the request, they can</span>
+    <span class="c1"># pass the `rule:owner` policy check. This method protects against that by</span>
+    <span class="c1"># ensuring we use the application credential user ID and not something</span>
+    <span class="c1"># determined from the client.</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">app_cred</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">application_credential_api</span><span class="o">.</span><span class="n">get_application_credential</span><span class="p">(</span>
+                <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">view_args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;application_credential_id&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">view_args</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">app_cred</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span>
+
+        <span class="c1"># This target isn&#39;t really used in the default policy for application</span>
+        <span class="c1"># credentials, but we return it since we&#39;re using this method as a hook</span>
+        <span class="c1"># to update the flask request variables, which are used later in the</span>
+        <span class="c1"># keystone RBAC enforcer to populate the policy_dict, which ultimately</span>
+        <span class="c1"># turns into target attributes.</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">app_cred</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">]}</span>
+    <span class="k">except</span> <span class="n">ks_exception</span><span class="o">.</span><span class="n">NotFound</span><span class="p">:</span>  <span class="c1"># nosec</span>
+        <span class="c1"># Defer existance in the event the application credential doesn&#39;t</span>
+        <span class="c1"># exist, we&#39;ll check this later anyway.</span>
+        <span class="k">pass</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_format_role_entity</span><span class="p">(</span><span class="n">role_id</span><span class="p">):</span>
+    <span class="n">role</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">role_api</span><span class="o">.</span><span class="n">get_role</span><span class="p">(</span><span class="n">role_id</span><span class="p">)</span>
+    <span class="n">formatted_entity</span> <span class="o">=</span> <span class="n">role</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="s1">&#39;description&#39;</span> <span class="ow">in</span> <span class="n">role</span><span class="p">:</span>
+        <span class="n">formatted_entity</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;enabled&#39;</span> <span class="ow">in</span> <span class="n">role</span><span class="p">:</span>
+        <span class="n">formatted_entity</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;enabled&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">formatted_entity</span>
+
+
+<div class="viewcode-block" id="UserResource">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserResource">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserResource</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">ResourceBase</span><span class="p">):</span>
+    <span class="n">collection_key</span> <span class="o">=</span> <span class="s1">&#39;users&#39;</span>
+    <span class="n">member_key</span> <span class="o">=</span> <span class="s1">&#39;user&#39;</span>
+    <span class="n">get_member_from_driver</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">deferred_provider_lookup</span><span class="p">(</span>
+        <span class="n">api</span><span class="o">=</span><span class="s1">&#39;identity_api&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;get_user&#39;</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="UserResource.get">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserResource.get">[docs]</a>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">request_query_schema</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">request_body_schema</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">response_body_schema</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">user_get_response_body</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a user resource.</span>
+
+<span class="sd">        GET/HEAD /v3/users/{user_id}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:get_user&#39;</span><span class="p">,</span>
+            <span class="n">build_target</span><span class="o">=</span><span class="n">_build_user_target_enforcement</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">identity_api</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_member</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserResource.patch">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserResource.patch">[docs]</a>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">request_query_schema</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">request_body_schema</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">user_update_request</span><span class="p">)</span>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">response_body_schema</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">user_update_request</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update a user.</span>
+
+<span class="sd">        PATCH /v3/users/{user_id}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:update_user&#39;</span><span class="p">,</span>
+            <span class="n">build_target</span><span class="o">=</span><span class="n">_build_user_target_enforcement</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">identity_api</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="n">user_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_body_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_require_matching_id</span><span class="p">(</span><span class="n">user_data</span><span class="p">)</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">identity_api</span><span class="o">.</span><span class="n">update_user</span><span class="p">(</span>
+            <span class="n">user_id</span><span class="p">,</span> <span class="n">user_data</span><span class="p">,</span> <span class="n">initiator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">audit_initiator</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_member</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserResource.delete">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserResource.delete">[docs]</a>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">request_query_schema</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">request_body_schema</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">response_body_schema</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete a user.</span>
+
+<span class="sd">        DELETE /v3/users/{user_id}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:delete_user&#39;</span><span class="p">,</span>
+            <span class="n">build_target</span><span class="o">=</span><span class="n">_build_user_target_enforcement</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">identity_api</span><span class="o">.</span><span class="n">delete_user</span><span class="p">(</span>
+            <span class="n">user_id</span><span class="p">,</span> <span class="n">initiator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">audit_initiator</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">NO_CONTENT</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UsersResource">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UsersResource">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UsersResource</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">ResourceBase</span><span class="p">):</span>
+    <span class="n">collection_key</span> <span class="o">=</span> <span class="s1">&#39;users&#39;</span>
+    <span class="n">member_key</span> <span class="o">=</span> <span class="s1">&#39;user&#39;</span>
+    <span class="n">get_member_from_driver</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">deferred_provider_lookup</span><span class="p">(</span>
+        <span class="n">api</span><span class="o">=</span><span class="s1">&#39;identity_api&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;get_user&#39;</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="UsersResource.get">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UsersResource.get">[docs]</a>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">request_query_schema</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">user_index_request_query</span><span class="p">)</span>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">request_body_schema</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">response_body_schema</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">user_index_response_body</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List users.</span>
+
+<span class="sd">        GET/HEAD /v3/users</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s1">&#39;domain_id&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;enabled&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;idp_id&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;protocol_id&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;unique_id&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;password_expires_at&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">oslo_context</span><span class="o">.</span><span class="n">domain_id</span><span class="p">:</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;domain_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">oslo_context</span><span class="o">.</span><span class="n">domain_id</span><span class="p">}</span>
+        <span class="n">hints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_driver_hints</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:list_users&#39;</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="n">filters</span><span class="p">,</span> <span class="n">target_attr</span><span class="o">=</span><span class="n">target</span>
+        <span class="p">)</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_domain_id_for_list_request</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">domain</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">oslo_context</span><span class="o">.</span><span class="n">domain_id</span><span class="p">:</span>
+            <span class="n">domain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oslo_context</span><span class="o">.</span><span class="n">domain_id</span>
+        <span class="n">refs</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">identity_api</span><span class="o">.</span><span class="n">list_users</span><span class="p">(</span>
+            <span class="n">domain_scope</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span> <span class="n">hints</span><span class="o">=</span><span class="n">hints</span>
+        <span class="p">)</span>
+
+        <span class="c1"># If the user making the request used a domain-scoped token, let&#39;s make</span>
+        <span class="c1"># sure we filter out users that are not in that domain. Otherwise, we&#39;d</span>
+        <span class="c1"># be exposing users in other domains. This if statement is needed in</span>
+        <span class="c1"># case _get_domain_id_for_list_request() short-circuits due to</span>
+        <span class="c1"># configuration and protects against information from other domains</span>
+        <span class="c1"># leaking to people who shouldn&#39;t see it.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">oslo_context</span><span class="o">.</span><span class="n">domain_id</span><span class="p">:</span>
+            <span class="n">domain_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oslo_context</span><span class="o">.</span><span class="n">domain_id</span>
+            <span class="n">users</span> <span class="o">=</span> <span class="p">[</span><span class="n">user</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">refs</span> <span class="k">if</span> <span class="n">user</span><span class="p">[</span><span class="s1">&#39;domain_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">domain_id</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">users</span> <span class="o">=</span> <span class="n">refs</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_collection</span><span class="p">(</span><span class="n">users</span><span class="p">,</span> <span class="n">hints</span><span class="o">=</span><span class="n">hints</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UsersResource.post">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UsersResource.post">[docs]</a>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">request_query_schema</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">request_body_schema</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">user_create_request</span><span class="p">)</span>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">response_body_schema</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">user_create_request</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a user.</span>
+
+<span class="sd">        POST /v3/users</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">user_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_body_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">user_data</span><span class="p">}</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:create_user&#39;</span><span class="p">,</span> <span class="n">target_attr</span><span class="o">=</span><span class="n">target</span>
+        <span class="p">)</span>
+        <span class="n">user_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_dict</span><span class="p">(</span><span class="n">user_data</span><span class="p">)</span>
+        <span class="n">user_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_domain_id</span><span class="p">(</span><span class="n">user_data</span><span class="p">)</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">identity_api</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>
+            <span class="n">user_data</span><span class="p">,</span> <span class="n">initiator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">audit_initiator</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_member</span><span class="p">(</span><span class="n">ref</span><span class="p">),</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">CREATED</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UserChangePasswordResource">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserChangePasswordResource">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserChangePasswordResource</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">ResourceBase</span><span class="p">):</span>
+<div class="viewcode-block" id="UserChangePasswordResource.get">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserChangePasswordResource.get">[docs]</a>
+    <span class="nd">@ks_flask</span><span class="o">.</span><span class="n">unenforced_api</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+        <span class="c1"># Special case, GET is not allowed.</span>
+        <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">MethodNotAllowed</span><span class="p">(</span><span class="n">valid_methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="UserChangePasswordResource.post">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserChangePasswordResource.post">[docs]</a>
+    <span class="nd">@ks_flask</span><span class="o">.</span><span class="n">unenforced_api</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+        <span class="n">user_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_body_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">ks_validation</span><span class="o">.</span><span class="n">lazy_validate</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">password_change</span><span class="p">,</span> <span class="n">user_data</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">identity_api</span><span class="o">.</span><span class="n">change_password</span><span class="p">(</span>
+                <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span>
+                <span class="n">original_password</span><span class="o">=</span><span class="n">user_data</span><span class="p">[</span><span class="s1">&#39;original_password&#39;</span><span class="p">],</span>
+                <span class="n">new_password</span><span class="o">=</span><span class="n">user_data</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">],</span>
+                <span class="n">initiator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">audit_initiator</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AssertionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ks_exception</span><span class="o">.</span><span class="n">Unauthorized</span><span class="p">(</span>
+                <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Error when changing user password: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">%</span> <span class="n">e</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">NO_CONTENT</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UserProjectsResource">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserProjectsResource">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserProjectsResource</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">ResourceBase</span><span class="p">):</span>
+    <span class="n">collection_key</span> <span class="o">=</span> <span class="s1">&#39;projects&#39;</span>
+    <span class="n">member_key</span> <span class="o">=</span> <span class="s1">&#39;project&#39;</span>
+    <span class="n">get_member_from_driver</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">deferred_provider_lookup</span><span class="p">(</span>
+        <span class="n">api</span><span class="o">=</span><span class="s1">&#39;resource_api&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;get_project&#39;</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="UserProjectsResource.get">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserProjectsResource.get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;domain_id&#39;</span><span class="p">,</span> <span class="s1">&#39;enabled&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:list_user_projects&#39;</span><span class="p">,</span>
+            <span class="n">filters</span><span class="o">=</span><span class="n">filters</span><span class="p">,</span>
+            <span class="n">build_target</span><span class="o">=</span><span class="n">_build_user_target_enforcement</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">hints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_driver_hints</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+        <span class="n">refs</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">assignment_api</span><span class="o">.</span><span class="n">list_projects_for_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_collection</span><span class="p">(</span><span class="n">refs</span><span class="p">,</span> <span class="n">hints</span><span class="o">=</span><span class="n">hints</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UserGroupsResource">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserGroupsResource">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserGroupsResource</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">ResourceBase</span><span class="p">):</span>
+    <span class="n">collection_key</span> <span class="o">=</span> <span class="s1">&#39;groups&#39;</span>
+    <span class="n">member_key</span> <span class="o">=</span> <span class="s1">&#39;group&#39;</span>
+    <span class="n">get_member_from_driver</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">deferred_provider_lookup</span><span class="p">(</span>
+        <span class="n">api</span><span class="o">=</span><span class="s1">&#39;identity_api&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;get_group&#39;</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="UserGroupsResource.get">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserGroupsResource.get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get groups for a user.</span>
+
+<span class="sd">        GET/HEAD /v3/users/{user_id}/groups</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,)</span>
+        <span class="n">hints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_driver_hints</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:list_groups_for_user&#39;</span><span class="p">,</span>
+            <span class="n">build_target</span><span class="o">=</span><span class="n">_build_user_target_enforcement</span><span class="p">,</span>
+            <span class="n">filters</span><span class="o">=</span><span class="n">filters</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">refs</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">identity_api</span><span class="o">.</span><span class="n">list_groups_for_user</span><span class="p">(</span>
+            <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span> <span class="n">hints</span><span class="o">=</span><span class="n">hints</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">oslo_context</span><span class="o">.</span><span class="n">domain_id</span><span class="p">:</span>
+            <span class="n">filtered_refs</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">refs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">ref</span><span class="p">[</span><span class="s1">&#39;domain_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">oslo_context</span><span class="o">.</span><span class="n">domain_id</span><span class="p">:</span>
+                    <span class="n">filtered_refs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+            <span class="n">refs</span> <span class="o">=</span> <span class="n">filtered_refs</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_collection</span><span class="p">(</span><span class="n">refs</span><span class="p">,</span> <span class="n">hints</span><span class="o">=</span><span class="n">hints</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_UserOSEC2CredBaseResource</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">ResourceBase</span><span class="p">):</span>
+    <span class="n">collection_key</span> <span class="o">=</span> <span class="s1">&#39;credentials&#39;</span>
+    <span class="n">member_key</span> <span class="o">=</span> <span class="s1">&#39;credential&#39;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_self_referential_link</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">collection_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># NOTE(morgan): This should be refactored to have an EC2 Cred API with</span>
+        <span class="c1"># a sane prefix instead of overloading the &quot;_add_self_referential_link&quot;</span>
+        <span class="c1"># method. This was chosen as it more closely mirrors the pre-flask</span>
+        <span class="c1"># code (for transition).</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/users/</span><span class="si">%(user_id)s</span><span class="s1">/credentials/OS-EC2/</span><span class="si">%(credential_id)s</span><span class="s1">&#39;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="n">ks_flask</span><span class="o">.</span><span class="n">base_url</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">%</span> <span class="p">{</span>
+            <span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">ref</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;credential_id&#39;</span><span class="p">:</span> <span class="n">ref</span><span class="p">[</span><span class="s1">&#39;access&#39;</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="n">ref</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;links&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">ref</span><span class="p">[</span><span class="s1">&#39;links&#39;</span><span class="p">][</span><span class="s1">&#39;self&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">url</span>
+
+
+<div class="viewcode-block" id="UserOSEC2CredentialsResourceListCreate">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserOSEC2CredentialsResourceListCreate">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserOSEC2CredentialsResourceListCreate</span><span class="p">(</span><span class="n">_UserOSEC2CredBaseResource</span><span class="p">):</span>
+<div class="viewcode-block" id="UserOSEC2CredentialsResourceListCreate.get">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserOSEC2CredentialsResourceListCreate.get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List EC2 Credentials for user.</span>
+
+<span class="sd">        GET/HEAD /v3/users/{user_id}/credentials/OS-EC2</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:ec2_list_credentials&#39;</span><span class="p">)</span>
+        <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">identity_api</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="n">credential_refs</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">credential_api</span><span class="o">.</span><span class="n">list_credentials_for_user</span><span class="p">(</span>
+            <span class="n">user_id</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">CRED_TYPE_EC2</span>
+        <span class="p">)</span>
+        <span class="n">collection_refs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">_convert_v3_to_ec2_credential</span><span class="p">(</span><span class="n">cred</span><span class="p">)</span> <span class="k">for</span> <span class="n">cred</span> <span class="ow">in</span> <span class="n">credential_refs</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_collection</span><span class="p">(</span><span class="n">collection_refs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserOSEC2CredentialsResourceListCreate.post">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserOSEC2CredentialsResourceListCreate.post">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create EC2 Credential for user.</span>
+
+<span class="sd">        POST /v3/users/{user_id}/credentials/OS-EC2</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">target</span><span class="p">[</span><span class="s1">&#39;credential&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">}</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:ec2_create_credential&#39;</span><span class="p">,</span> <span class="n">target_attr</span><span class="o">=</span><span class="n">target</span>
+        <span class="p">)</span>
+        <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">identity_api</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="n">tenant_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_body_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;tenant_id&#39;</span><span class="p">)</span>
+        <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">resource_api</span><span class="o">.</span><span class="n">get_project</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
+        <span class="n">blob</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;access&#39;</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span><span class="p">,</span>
+            <span class="s1">&#39;secret&#39;</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span><span class="p">,</span>
+            <span class="s1">&#39;trust_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">oslo_context</span><span class="o">.</span><span class="n">trust_id</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">credential_id</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">hash_access_key</span><span class="p">(</span><span class="n">blob</span><span class="p">[</span><span class="s1">&#39;access&#39;</span><span class="p">])</span>
+        <span class="n">cred_data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span>
+            <span class="s1">&#39;project_id&#39;</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
+            <span class="s1">&#39;blob&#39;</span><span class="p">:</span> <span class="n">jsonutils</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">blob</span><span class="p">),</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">credential_id</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">CRED_TYPE_EC2</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">credential_api</span><span class="o">.</span><span class="n">create_credential</span><span class="p">(</span><span class="n">credential_id</span><span class="p">,</span> <span class="n">cred_data</span><span class="p">)</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="n">_convert_v3_to_ec2_credential</span><span class="p">(</span><span class="n">cred_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_member</span><span class="p">(</span><span class="n">ref</span><span class="p">),</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">CREATED</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UserOSEC2CredentialsResourceGetDelete">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserOSEC2CredentialsResourceGetDelete">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserOSEC2CredentialsResourceGetDelete</span><span class="p">(</span><span class="n">_UserOSEC2CredBaseResource</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_cred_data</span><span class="p">(</span><span class="n">credential_id</span><span class="p">):</span>
+        <span class="n">cred</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">credential_api</span><span class="o">.</span><span class="n">get_credential</span><span class="p">(</span><span class="n">credential_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cred</span> <span class="ow">or</span> <span class="n">cred</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">CRED_TYPE_EC2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ks_exception</span><span class="o">.</span><span class="n">Unauthorized</span><span class="p">(</span>
+                <span class="n">message</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;EC2 access key not found.&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">_convert_v3_to_ec2_credential</span><span class="p">(</span><span class="n">cred</span><span class="p">)</span>
+
+<div class="viewcode-block" id="UserOSEC2CredentialsResourceGetDelete.get">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserOSEC2CredentialsResourceGetDelete.get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">credential_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a specific EC2 credential.</span>
+
+<span class="sd">        GET/HEAD /users/{user_id}/credentials/OS-EC2/{credential_id}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="n">_build_enforcer_target_data_owner_and_user_id_match</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:ec2_get_credential&#39;</span><span class="p">,</span> <span class="n">build_target</span><span class="o">=</span><span class="n">func</span>
+        <span class="p">)</span>
+        <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">identity_api</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="n">ec2_cred_id</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">hash_access_key</span><span class="p">(</span><span class="n">credential_id</span><span class="p">)</span>
+        <span class="n">cred_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_cred_data</span><span class="p">(</span><span class="n">ec2_cred_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_member</span><span class="p">(</span><span class="n">cred_data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserOSEC2CredentialsResourceGetDelete.delete">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserOSEC2CredentialsResourceGetDelete.delete">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">credential_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete a specific EC2 credential.</span>
+
+<span class="sd">        DELETE /users/{user_id}/credentials/OS-EC2/{credential_id}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="n">_build_enforcer_target_data_owner_and_user_id_match</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:ec2_delete_credential&#39;</span><span class="p">,</span> <span class="n">build_target</span><span class="o">=</span><span class="n">func</span>
+        <span class="p">)</span>
+        <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">identity_api</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="n">ec2_cred_id</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">hash_access_key</span><span class="p">(</span><span class="n">credential_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_cred_data</span><span class="p">(</span><span class="n">ec2_cred_id</span><span class="p">)</span>
+        <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">credential_api</span><span class="o">.</span><span class="n">delete_credential</span><span class="p">(</span><span class="n">ec2_cred_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">NO_CONTENT</span></div>
+</div>
+
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_OAuth1ResourceBase</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">ResourceBase</span><span class="p">):</span>
+    <span class="n">collection_key</span> <span class="o">=</span> <span class="s1">&#39;access_tokens&#39;</span>
+    <span class="n">member_key</span> <span class="o">=</span> <span class="s1">&#39;access_token&#39;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_self_referential_link</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">collection_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># NOTE(morgan): This should be refactored to have an OAuth1 API with</span>
+        <span class="c1"># a sane prefix instead of overloading the &quot;_add_self_referential_link&quot;</span>
+        <span class="c1"># method. This was chosen as it more closely mirrors the pre-flask</span>
+        <span class="c1"># code (for transition).</span>
+        <span class="n">ref</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;links&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/users/</span><span class="si">{user_id}</span><span class="s1">/OS-OAUTH1/access_tokens&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">user_id</span><span class="o">=</span><span class="n">ref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;authorizing_user_id&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">ref</span><span class="p">[</span><span class="s1">&#39;links&#39;</span><span class="p">][</span><span class="s1">&#39;self&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ks_flask</span><span class="o">.</span><span class="n">base_url</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">ref</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="OAuth1ListAccessTokensResource">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.OAuth1ListAccessTokensResource">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OAuth1ListAccessTokensResource</span><span class="p">(</span><span class="n">_OAuth1ResourceBase</span><span class="p">):</span>
+<div class="viewcode-block" id="OAuth1ListAccessTokensResource.get">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.OAuth1ListAccessTokensResource.get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List OAuth1 Access Tokens for user.</span>
+
+<span class="sd">        GET /v3/users/{user_id}/OS-OAUTH1/access_tokens</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:list_access_tokens&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">oslo_context</span><span class="o">.</span><span class="n">is_delegated_auth</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ks_exception</span><span class="o">.</span><span class="n">Forbidden</span><span class="p">(</span>
+                <span class="n">_</span><span class="p">(</span>
+                    <span class="s1">&#39;Cannot list request tokens with a token &#39;</span>
+                    <span class="s1">&#39;issued via delegation.&#39;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">refs</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">oauth_api</span><span class="o">.</span><span class="n">list_access_tokens</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="n">formatted_refs</span> <span class="o">=</span> <span class="p">[</span><span class="n">_format_token_entity</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">refs</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_collection</span><span class="p">(</span><span class="n">formatted_refs</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="OAuth1AccessTokenCRUDResource">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.OAuth1AccessTokenCRUDResource">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OAuth1AccessTokenCRUDResource</span><span class="p">(</span><span class="n">_OAuth1ResourceBase</span><span class="p">):</span>
+<div class="viewcode-block" id="OAuth1AccessTokenCRUDResource.get">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.OAuth1AccessTokenCRUDResource.get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">access_token_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get specific access token.</span>
+
+<span class="sd">        GET/HEAD /v3/users/{user_id}/OS-OAUTH1/access_tokens/{access_token_id}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:get_access_token&#39;</span><span class="p">)</span>
+        <span class="n">access_token</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">oauth_api</span><span class="o">.</span><span class="n">get_access_token</span><span class="p">(</span><span class="n">access_token_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">access_token</span><span class="p">[</span><span class="s1">&#39;authorizing_user_id&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">user_id</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ks_exception</span><span class="o">.</span><span class="n">NotFound</span><span class="p">()</span>
+        <span class="n">access_token</span> <span class="o">=</span> <span class="n">_format_token_entity</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_member</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OAuth1AccessTokenCRUDResource.delete">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.OAuth1AccessTokenCRUDResource.delete">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">access_token_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete specific access token.</span>
+
+<span class="sd">        DELETE /v3/users/{user_id}/OS-OAUTH1/access_tokens/{access_token_id}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:ec2_delete_credential&#39;</span><span class="p">,</span>
+            <span class="n">build_target</span><span class="o">=</span><span class="n">_build_enforcer_target_data_owner_and_user_id_match</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">access_token</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">oauth_api</span><span class="o">.</span><span class="n">get_access_token</span><span class="p">(</span><span class="n">access_token_id</span><span class="p">)</span>
+        <span class="n">reason</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s1">&#39;Invalidating the token cache because an access token for &#39;</span>
+            <span class="s1">&#39;consumer </span><span class="si">{consumer_id}</span><span class="s1"> has been deleted. Authorization for &#39;</span>
+            <span class="s1">&#39;users with OAuth tokens will be recalculated and enforced &#39;</span>
+            <span class="s1">&#39;accordingly the next time they authenticate or validate a &#39;</span>
+            <span class="s1">&#39;token.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">consumer_id</span><span class="o">=</span><span class="n">access_token</span><span class="p">[</span><span class="s1">&#39;consumer_id&#39;</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="n">notifications</span><span class="o">.</span><span class="n">invalidate_token_cache_notification</span><span class="p">(</span><span class="n">reason</span><span class="p">)</span>
+        <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">oauth_api</span><span class="o">.</span><span class="n">delete_access_token</span><span class="p">(</span>
+            <span class="n">user_id</span><span class="p">,</span> <span class="n">access_token_id</span><span class="p">,</span> <span class="n">initiator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">audit_initiator</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">NO_CONTENT</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="OAuth1AccessTokenRoleListResource">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.OAuth1AccessTokenRoleListResource">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OAuth1AccessTokenRoleListResource</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">ResourceBase</span><span class="p">):</span>
+    <span class="n">collection_key</span> <span class="o">=</span> <span class="s1">&#39;roles&#39;</span>
+    <span class="n">member_key</span> <span class="o">=</span> <span class="s1">&#39;role&#39;</span>
+
+<div class="viewcode-block" id="OAuth1AccessTokenRoleListResource.get">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.OAuth1AccessTokenRoleListResource.get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">access_token_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List roles for a user access token.</span>
+
+<span class="sd">        GET/HEAD /v3/users/{user_id}/OS-OAUTH1/access_tokens/</span>
+<span class="sd">                 {access_token_id}/roles</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:list_access_token_roles&#39;</span><span class="p">)</span>
+        <span class="n">access_token</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">oauth_api</span><span class="o">.</span><span class="n">get_access_token</span><span class="p">(</span><span class="n">access_token_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">access_token</span><span class="p">[</span><span class="s1">&#39;authorizing_user_id&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">user_id</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ks_exception</span><span class="o">.</span><span class="n">NotFound</span><span class="p">()</span>
+        <span class="n">authed_role_ids</span> <span class="o">=</span> <span class="n">access_token</span><span class="p">[</span><span class="s1">&#39;role_ids&#39;</span><span class="p">]</span>
+        <span class="n">authed_role_ids</span> <span class="o">=</span> <span class="n">jsonutils</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">authed_role_ids</span><span class="p">)</span>
+        <span class="n">refs</span> <span class="o">=</span> <span class="p">[</span><span class="n">_format_role_entity</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">authed_role_ids</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_collection</span><span class="p">(</span><span class="n">refs</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="OAuth1AccessTokenRoleResource">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.OAuth1AccessTokenRoleResource">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OAuth1AccessTokenRoleResource</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">ResourceBase</span><span class="p">):</span>
+    <span class="n">collection_key</span> <span class="o">=</span> <span class="s1">&#39;roles&#39;</span>
+    <span class="n">member_key</span> <span class="o">=</span> <span class="s1">&#39;role&#39;</span>
+
+<div class="viewcode-block" id="OAuth1AccessTokenRoleResource.get">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.OAuth1AccessTokenRoleResource.get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">access_token_id</span><span class="p">,</span> <span class="n">role_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get role for access token.</span>
+
+<span class="sd">        GET/HEAD /v3/users/{user_id}/OS-OAUTH1/access_tokens/</span>
+<span class="sd">                 {access_token_id}/roles/{role_id}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:get_access_token_role&#39;</span><span class="p">)</span>
+        <span class="n">access_token</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">oauth_api</span><span class="o">.</span><span class="n">get_access_token</span><span class="p">(</span><span class="n">access_token_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">access_token</span><span class="p">[</span><span class="s1">&#39;authorizing_user_id&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">user_id</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ks_exception</span><span class="o">.</span><span class="n">Unauthorized</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;User IDs do not match&#39;</span><span class="p">))</span>
+        <span class="n">authed_role_ids</span> <span class="o">=</span> <span class="n">access_token</span><span class="p">[</span><span class="s1">&#39;role_ids&#39;</span><span class="p">]</span>
+        <span class="n">authed_role_ids</span> <span class="o">=</span> <span class="n">jsonutils</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">authed_role_ids</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">authed_role_id</span> <span class="ow">in</span> <span class="n">authed_role_ids</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">authed_role_id</span> <span class="o">==</span> <span class="n">role_id</span><span class="p">:</span>
+                <span class="n">role</span> <span class="o">=</span> <span class="n">_format_role_entity</span><span class="p">(</span><span class="n">role_id</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_member</span><span class="p">(</span><span class="n">role</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">ks_exception</span><span class="o">.</span><span class="n">RoleNotFound</span><span class="p">(</span><span class="n">role_id</span><span class="o">=</span><span class="n">role_id</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UserAppCredListCreateResource">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserAppCredListCreateResource">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserAppCredListCreateResource</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">ResourceBase</span><span class="p">):</span>
+    <span class="n">collection_key</span> <span class="o">=</span> <span class="s1">&#39;application_credentials&#39;</span>
+    <span class="n">member_key</span> <span class="o">=</span> <span class="s1">&#39;application_credential&#39;</span>
+    <span class="n">_public_parameters</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;expires_at&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;project_id&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;roles&#39;</span><span class="p">,</span>
+            <span class="c1"># secret is only exposed after create, it is not stored</span>
+            <span class="s1">&#39;secret&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;links&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;unrestricted&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;access_rules&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_secret</span><span class="p">():</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="mi">64</span>
+        <span class="n">secret</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+        <span class="n">secret</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">secret</span><span class="p">)</span>
+        <span class="n">secret</span> <span class="o">=</span> <span class="n">secret</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+        <span class="n">secret</span> <span class="o">=</span> <span class="n">secret</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">secret</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_normalize_role_list</span><span class="p">(</span><span class="n">app_cred_roles</span><span class="p">):</span>
+        <span class="n">roles</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">role</span> <span class="ow">in</span> <span class="n">app_cred_roles</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">role</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">):</span>
+                <span class="n">roles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">role</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">roles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">role_api</span><span class="o">.</span><span class="n">get_unique_role_by_name</span><span class="p">(</span><span class="n">role</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="n">roles</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_roles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_cred_data</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">app_cred_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;roles&#39;</span><span class="p">):</span>
+            <span class="n">roles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_role_list</span><span class="p">(</span><span class="n">app_cred_data</span><span class="p">[</span><span class="s1">&#39;roles&#39;</span><span class="p">])</span>
+            <span class="c1"># When &quot;roles&quot; passed into the application credentials creation</span>
+            <span class="c1"># we need to ensure also all implied roles are included similarly</span>
+            <span class="c1"># to how it behaves when no roles are passed and current user roles</span>
+            <span class="c1"># are being used.</span>
+            <span class="c1"># So loop over all roles implied by the current role and add it</span>
+            <span class="c1"># explicitly if not already there</span>
+            <span class="k">for</span> <span class="n">role</span> <span class="ow">in</span> <span class="n">roles</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">implied_role</span> <span class="ow">in</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">role_api</span><span class="o">.</span><span class="n">list_implied_roles</span><span class="p">(</span>
+                    <span class="n">role</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+                <span class="p">):</span>
+                    <span class="n">imp_role_obj</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">role_api</span><span class="o">.</span><span class="n">get_role</span><span class="p">(</span>
+                        <span class="n">implied_role</span><span class="p">[</span><span class="s1">&#39;implied_role_id&#39;</span><span class="p">]</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">imp_role_obj</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">roles</span><span class="p">]:</span>
+                        <span class="n">roles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">imp_role_obj</span><span class="p">)</span>
+            <span class="c1"># NOTE(cmurphy): The user is not allowed to add a role that is not</span>
+            <span class="c1"># in their token. This is to prevent trustees or application</span>
+            <span class="c1"># credential users from escallating their privileges to include</span>
+            <span class="c1"># additional roles that the trustor or application credential</span>
+            <span class="c1"># creator has assigned on the project.</span>
+            <span class="n">token_roles</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">token</span><span class="o">.</span><span class="n">roles</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">role</span> <span class="ow">in</span> <span class="n">roles</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">role</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">token_roles</span><span class="p">:</span>
+                    <span class="n">detail</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+                        <span class="s1">&#39;Cannot create an application credential with &#39;</span>
+                        <span class="s1">&#39;unassigned role&#39;</span>
+                    <span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">ks_exception</span><span class="o">.</span><span class="n">ApplicationCredentialValidationError</span><span class="p">(</span>
+                        <span class="n">detail</span><span class="o">=</span><span class="n">detail</span>
+                    <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">roles</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">roles</span>
+        <span class="k">return</span> <span class="n">roles</span>
+
+<div class="viewcode-block" id="UserAppCredListCreateResource.get">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserAppCredListCreateResource.get">[docs]</a>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">request_query_schema</span><span class="p">(</span>
+        <span class="n">app_cred_schema</span><span class="o">.</span><span class="n">application_credential_index_request_query</span>
+    <span class="p">)</span>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">response_body_schema</span><span class="p">(</span>
+        <span class="n">app_cred_schema</span><span class="o">.</span><span class="n">application_credential_index_response_body</span>
+    <span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List application credentials for user.</span>
+
+<span class="sd">        GET/HEAD /v3/users/{user_id}/application_credentials</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,)</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:list_application_credentials&#39;</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="n">filters</span>
+        <span class="p">)</span>
+        <span class="n">app_cred_api</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">application_credential_api</span>
+        <span class="n">hints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_driver_hints</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+        <span class="n">refs</span> <span class="o">=</span> <span class="n">app_cred_api</span><span class="o">.</span><span class="n">list_application_credentials</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">hints</span><span class="o">=</span><span class="n">hints</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_collection</span><span class="p">(</span><span class="n">refs</span><span class="p">,</span> <span class="n">hints</span><span class="o">=</span><span class="n">hints</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserAppCredListCreateResource.post">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserAppCredListCreateResource.post">[docs]</a>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">request_body_schema</span><span class="p">(</span>
+        <span class="n">app_cred_schema</span><span class="o">.</span><span class="n">application_credential_create_request_body</span>
+    <span class="p">)</span>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">response_body_schema</span><span class="p">(</span>
+        <span class="n">app_cred_schema</span><span class="o">.</span><span class="n">application_credential_create_response_body</span>
+    <span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create application credential.</span>
+
+<span class="sd">        POST /v3/users/{user_id}/application_credentials</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:create_application_credential&#39;</span><span class="p">)</span>
+        <span class="n">app_cred_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_body_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s1">&#39;application_credential&#39;</span><span class="p">,</span> <span class="p">{}</span>
+        <span class="p">)</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_context</span><span class="p">[</span><span class="s1">&#39;token&#39;</span><span class="p">]</span>
+        <span class="n">_check_unrestricted_application_credential</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">oslo_context</span><span class="o">.</span><span class="n">user_id</span> <span class="o">!=</span> <span class="n">user_id</span><span class="p">:</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+                <span class="s1">&#39;Cannot create an application credential for another user.&#39;</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ks_exception</span><span class="o">.</span><span class="n">ForbiddenAction</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">)</span>
+        <span class="n">project_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oslo_context</span><span class="o">.</span><span class="n">project_id</span>
+        <span class="n">app_cred_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_assign_unique_id</span><span class="p">(</span><span class="n">app_cred_data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">app_cred_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;secret&#39;</span><span class="p">):</span>
+            <span class="n">app_cred_data</span><span class="p">[</span><span class="s1">&#39;secret&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_secret</span><span class="p">()</span>
+        <span class="n">app_cred_data</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_id</span>
+        <span class="n">app_cred_data</span><span class="p">[</span><span class="s1">&#39;project_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">project_id</span>
+        <span class="n">app_cred_data</span><span class="p">[</span><span class="s1">&#39;roles&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_roles</span><span class="p">(</span><span class="n">app_cred_data</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">app_cred_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;expires_at&#39;</span><span class="p">):</span>
+            <span class="n">app_cred_data</span><span class="p">[</span><span class="s1">&#39;expires_at&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">parse_expiration_date</span><span class="p">(</span>
+                <span class="n">app_cred_data</span><span class="p">[</span><span class="s1">&#39;expires_at&#39;</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">app_cred_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;access_rules&#39;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">access_rule</span> <span class="ow">in</span> <span class="n">app_cred_data</span><span class="p">[</span><span class="s1">&#39;access_rules&#39;</span><span class="p">]:</span>
+                <span class="c1"># If user provides an access rule by ID, it will be looked up</span>
+                <span class="c1"># by ID. If user provides an access rule that is identical to</span>
+                <span class="c1"># an existing one, the ID generated here will be ignored and</span>
+                <span class="c1"># the pre-existing access rule will be used.</span>
+                <span class="k">if</span> <span class="s1">&#39;id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">access_rule</span><span class="p">:</span>
+                    <span class="c1"># Generate directly, rather than using _assign_unique_id,</span>
+                    <span class="c1"># so that there is no deep copy made</span>
+                    <span class="n">access_rule</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span>
+        <span class="n">app_cred_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_dict</span><span class="p">(</span><span class="n">app_cred_data</span><span class="p">)</span>
+        <span class="n">app_cred_api</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">application_credential_api</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ref</span> <span class="o">=</span> <span class="n">app_cred_api</span><span class="o">.</span><span class="n">create_application_credential</span><span class="p">(</span>
+                <span class="n">app_cred_data</span><span class="p">,</span> <span class="n">initiator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">audit_initiator</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">ks_exception</span><span class="o">.</span><span class="n">RoleAssignmentNotFound</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># Raise a Bad Request, not a Not Found, in accordance with the</span>
+            <span class="c1"># API-SIG recommendations:</span>
+            <span class="c1"># https://specs.openstack.org/openstack/api-wg/guidelines/http.html#failure-code-clarifications</span>
+            <span class="k">raise</span> <span class="n">ks_exception</span><span class="o">.</span><span class="n">ApplicationCredentialValidationError</span><span class="p">(</span>
+                <span class="n">detail</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_member</span><span class="p">(</span><span class="n">ref</span><span class="p">),</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">CREATED</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UserAppCredGetDeleteResource">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserAppCredGetDeleteResource">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserAppCredGetDeleteResource</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">ResourceBase</span><span class="p">):</span>
+    <span class="n">collection_key</span> <span class="o">=</span> <span class="s1">&#39;application_credentials&#39;</span>
+    <span class="n">member_key</span> <span class="o">=</span> <span class="s1">&#39;application_credential&#39;</span>
+
+<div class="viewcode-block" id="UserAppCredGetDeleteResource.get">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserAppCredGetDeleteResource.get">[docs]</a>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">request_body_schema</span><span class="p">(</span>
+        <span class="n">app_cred_schema</span><span class="o">.</span><span class="n">application_credential_request_body</span>
+    <span class="p">)</span>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">response_body_schema</span><span class="p">(</span>
+        <span class="n">app_cred_schema</span><span class="o">.</span><span class="n">application_credential_response_body</span>
+    <span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">application_credential_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get application credential resource.</span>
+
+<span class="sd">        GET/HEAD /v3/users/{user_id}/application_credentials/</span>
+<span class="sd">                 {application_credential_id}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">_update_request_user_id_attribute</span><span class="p">()</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:get_application_credential&#39;</span><span class="p">,</span> <span class="n">target_attr</span><span class="o">=</span><span class="n">target</span>
+        <span class="p">)</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">application_credential_api</span><span class="o">.</span><span class="n">get_application_credential</span><span class="p">(</span>
+            <span class="n">application_credential_id</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_member</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserAppCredGetDeleteResource.delete">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserAppCredGetDeleteResource.delete">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">application_credential_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete application credential resource.</span>
+
+<span class="sd">        DELETE /v3/users/{user_id}/application_credentials/</span>
+<span class="sd">               {application_credential_id}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">_update_request_user_id_attribute</span><span class="p">()</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:delete_application_credential&#39;</span><span class="p">,</span> <span class="n">target_attr</span><span class="o">=</span><span class="n">target</span>
+        <span class="p">)</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_context</span><span class="p">[</span><span class="s1">&#39;token&#39;</span><span class="p">]</span>
+        <span class="n">_check_unrestricted_application_credential</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">application_credential_api</span><span class="o">.</span><span class="n">delete_application_credential</span><span class="p">(</span>
+            <span class="n">application_credential_id</span><span class="p">,</span> <span class="n">initiator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">audit_initiator</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">NO_CONTENT</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UserAccessRuleListResource">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserAccessRuleListResource">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserAccessRuleListResource</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">ResourceBase</span><span class="p">):</span>
+    <span class="n">collection_key</span> <span class="o">=</span> <span class="s1">&#39;access_rules&#39;</span>
+    <span class="n">member_key</span> <span class="o">=</span> <span class="s1">&#39;access_rule&#39;</span>
+
+<div class="viewcode-block" id="UserAccessRuleListResource.get">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserAccessRuleListResource.get">[docs]</a>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">request_query_schema</span><span class="p">(</span>
+        <span class="n">app_cred_schema</span><span class="o">.</span><span class="n">access_rule_index_request_query</span>
+    <span class="p">)</span>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">response_body_schema</span><span class="p">(</span>
+        <span class="n">app_cred_schema</span><span class="o">.</span><span class="n">access_rule_index_response_body</span>
+    <span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List access rules for user.</span>
+
+<span class="sd">        GET/HEAD /v3/users/{user_id}/access_rules</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;service&#39;</span><span class="p">,</span> <span class="s1">&#39;path&#39;</span><span class="p">,</span> <span class="s1">&#39;method&#39;</span><span class="p">)</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:list_access_rules&#39;</span><span class="p">,</span>
+            <span class="n">filters</span><span class="o">=</span><span class="n">filters</span><span class="p">,</span>
+            <span class="n">build_target</span><span class="o">=</span><span class="n">_build_user_target_enforcement</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">app_cred_api</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">application_credential_api</span>
+        <span class="n">hints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_driver_hints</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+        <span class="n">refs</span> <span class="o">=</span> <span class="n">app_cred_api</span><span class="o">.</span><span class="n">list_access_rules_for_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">hints</span><span class="o">=</span><span class="n">hints</span><span class="p">)</span>
+        <span class="n">hints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_driver_hints</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_collection</span><span class="p">(</span><span class="n">refs</span><span class="p">,</span> <span class="n">hints</span><span class="o">=</span><span class="n">hints</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UserAccessRuleGetDeleteResource">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserAccessRuleGetDeleteResource">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserAccessRuleGetDeleteResource</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">ResourceBase</span><span class="p">):</span>
+    <span class="n">collection_key</span> <span class="o">=</span> <span class="s1">&#39;access_rules&#39;</span>
+    <span class="n">member_key</span> <span class="o">=</span> <span class="s1">&#39;access_rule&#39;</span>
+
+<div class="viewcode-block" id="UserAccessRuleGetDeleteResource.get">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserAccessRuleGetDeleteResource.get">[docs]</a>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">request_query_schema</span><span class="p">(</span>
+        <span class="n">app_cred_schema</span><span class="o">.</span><span class="n">access_rule_show_request_query</span>
+    <span class="p">)</span>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">response_body_schema</span><span class="p">(</span>
+        <span class="n">app_cred_schema</span><span class="o">.</span><span class="n">access_rule_show_response_body</span>
+    <span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">access_rule_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get access rule resource.</span>
+
+<span class="sd">        GET/HEAD /v3/users/{user_id}/access_rules/{access_rule_id}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:get_access_rule&#39;</span><span class="p">,</span>
+            <span class="n">build_target</span><span class="o">=</span><span class="n">_build_user_target_enforcement</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">application_credential_api</span><span class="o">.</span><span class="n">get_access_rule</span><span class="p">(</span>
+            <span class="n">access_rule_id</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrap_member</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserAccessRuleGetDeleteResource.delete">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserAccessRuleGetDeleteResource.delete">[docs]</a>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">request_body_schema</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="nd">@validation</span><span class="o">.</span><span class="n">response_body_schema</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">access_rule_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete access rule resource.</span>
+
+<span class="sd">        DELETE /v3/users/{user_id}/access_rules/{access_rule_id}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ENFORCER</span><span class="o">.</span><span class="n">enforce_call</span><span class="p">(</span>
+            <span class="n">action</span><span class="o">=</span><span class="s1">&#39;identity:delete_access_rule&#39;</span><span class="p">,</span>
+            <span class="n">build_target</span><span class="o">=</span><span class="n">_build_user_target_enforcement</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">application_credential_api</span><span class="o">.</span><span class="n">delete_access_rule</span><span class="p">(</span>
+            <span class="n">access_rule_id</span><span class="p">,</span> <span class="n">initiator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">audit_initiator</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">NO_CONTENT</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UserAPI">
+<a class="viewcode-back" href="../../../api/keystone.api.users.html#keystone.api.users.UserAPI">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserAPI</span><span class="p">(</span><span class="n">ks_flask</span><span class="o">.</span><span class="n">APIBase</span><span class="p">):</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;users&#39;</span>
+    <span class="n">_import_name</span> <span class="o">=</span> <span class="vm">__name__</span>
+    <span class="n">resource_mapping</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">ks_flask</span><span class="o">.</span><span class="n">construct_resource_map</span><span class="p">(</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">UsersResource</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span>
+            <span class="n">resource_kwargs</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;users&#39;</span><span class="p">,</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="p">{},</span>
+        <span class="p">),</span>
+        <span class="n">ks_flask</span><span class="o">.</span><span class="n">construct_resource_map</span><span class="p">(</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">UserResource</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="s1">&#39;/users/&lt;string:user_id&gt;&#39;</span><span class="p">,</span>
+            <span class="n">resource_kwargs</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;user&#39;</span><span class="p">,</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">USER_ID</span><span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">ks_flask</span><span class="o">.</span><span class="n">construct_resource_map</span><span class="p">(</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">UserChangePasswordResource</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="s1">&#39;/users/&lt;string:user_id&gt;/password&#39;</span><span class="p">,</span>
+            <span class="n">resource_kwargs</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;user_change_password&#39;</span><span class="p">,</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">USER_ID</span><span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">ks_flask</span><span class="o">.</span><span class="n">construct_resource_map</span><span class="p">(</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">UserGroupsResource</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="s1">&#39;/users/&lt;string:user_id&gt;/groups&#39;</span><span class="p">,</span>
+            <span class="n">resource_kwargs</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;user_groups&#39;</span><span class="p">,</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">USER_ID</span><span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">ks_flask</span><span class="o">.</span><span class="n">construct_resource_map</span><span class="p">(</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">UserProjectsResource</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="s1">&#39;/users/&lt;string:user_id&gt;/projects&#39;</span><span class="p">,</span>
+            <span class="n">resource_kwargs</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;user_projects&#39;</span><span class="p">,</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">USER_ID</span><span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">ks_flask</span><span class="o">.</span><span class="n">construct_resource_map</span><span class="p">(</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">UserOSEC2CredentialsResourceListCreate</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="s1">&#39;/users/&lt;string:user_id&gt;/credentials/OS-EC2&#39;</span><span class="p">,</span>
+            <span class="n">resource_kwargs</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;user_credentials&#39;</span><span class="p">,</span>
+            <span class="n">resource_relation_func</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">json_home_relations</span><span class="o">.</span><span class="n">os_ec2_resource_rel_func</span>
+            <span class="p">),</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">USER_ID</span><span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">ks_flask</span><span class="o">.</span><span class="n">construct_resource_map</span><span class="p">(</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">UserOSEC2CredentialsResourceGetDelete</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="p">(</span>
+                <span class="s1">&#39;/users/&lt;string:user_id&gt;/credentials/OS-EC2/&#39;</span>
+                <span class="s1">&#39;&lt;string:credential_id&gt;&#39;</span>
+            <span class="p">),</span>
+            <span class="n">resource_kwargs</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;user_credential&#39;</span><span class="p">,</span>
+            <span class="n">resource_relation_func</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">json_home_relations</span><span class="o">.</span><span class="n">os_ec2_resource_rel_func</span>
+            <span class="p">),</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;credential_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">build_v3_parameter_relation</span><span class="p">(</span>
+                    <span class="s1">&#39;credential_id&#39;</span>
+                <span class="p">),</span>
+                <span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">USER_ID</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">ks_flask</span><span class="o">.</span><span class="n">construct_resource_map</span><span class="p">(</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">OAuth1ListAccessTokensResource</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="s1">&#39;/users/&lt;string:user_id&gt;/OS-OAUTH1/access_tokens&#39;</span><span class="p">,</span>
+            <span class="n">resource_kwargs</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;user_access_tokens&#39;</span><span class="p">,</span>
+            <span class="n">resource_relation_func</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">json_home_relations</span><span class="o">.</span><span class="n">os_oauth1_resource_rel_func</span>
+            <span class="p">),</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">USER_ID</span><span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">ks_flask</span><span class="o">.</span><span class="n">construct_resource_map</span><span class="p">(</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">OAuth1AccessTokenCRUDResource</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="p">(</span>
+                <span class="s1">&#39;/users/&lt;string:user_id&gt;/OS-OAUTH1/&#39;</span>
+                <span class="s1">&#39;access_tokens/&lt;string:access_token_id&gt;&#39;</span>
+            <span class="p">),</span>
+            <span class="n">resource_kwargs</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;user_access_token&#39;</span><span class="p">,</span>
+            <span class="n">resource_relation_func</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">json_home_relations</span><span class="o">.</span><span class="n">os_oauth1_resource_rel_func</span>
+            <span class="p">),</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;access_token_id&#39;</span><span class="p">:</span> <span class="n">ACCESS_TOKEN_ID_PARAMETER_RELATION</span><span class="p">,</span>
+                <span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">USER_ID</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">ks_flask</span><span class="o">.</span><span class="n">construct_resource_map</span><span class="p">(</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">OAuth1AccessTokenRoleListResource</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="p">(</span>
+                <span class="s1">&#39;/users/&lt;string:user_id&gt;/OS-OAUTH1/access_tokens/&#39;</span>
+                <span class="s1">&#39;&lt;string:access_token_id&gt;/roles&#39;</span>
+            <span class="p">),</span>
+            <span class="n">resource_kwargs</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;user_access_token_roles&#39;</span><span class="p">,</span>
+            <span class="n">resource_relation_func</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">json_home_relations</span><span class="o">.</span><span class="n">os_oauth1_resource_rel_func</span>
+            <span class="p">),</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;access_token_id&#39;</span><span class="p">:</span> <span class="n">ACCESS_TOKEN_ID_PARAMETER_RELATION</span><span class="p">,</span>
+                <span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">USER_ID</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">ks_flask</span><span class="o">.</span><span class="n">construct_resource_map</span><span class="p">(</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">OAuth1AccessTokenRoleResource</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="p">(</span>
+                <span class="s1">&#39;/users/&lt;string:user_id&gt;/OS-OAUTH1/access_tokens/&#39;</span>
+                <span class="s1">&#39;&lt;string:access_token_id&gt;/roles/&lt;string:role_id&gt;&#39;</span>
+            <span class="p">),</span>
+            <span class="n">resource_kwargs</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;user_access_token_role&#39;</span><span class="p">,</span>
+            <span class="n">resource_relation_func</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">json_home_relations</span><span class="o">.</span><span class="n">os_oauth1_resource_rel_func</span>
+            <span class="p">),</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;access_token_id&#39;</span><span class="p">:</span> <span class="n">ACCESS_TOKEN_ID_PARAMETER_RELATION</span><span class="p">,</span>
+                <span class="s1">&#39;role_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">ROLE_ID</span><span class="p">,</span>
+                <span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">USER_ID</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">ks_flask</span><span class="o">.</span><span class="n">construct_resource_map</span><span class="p">(</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">UserAppCredListCreateResource</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="s1">&#39;/users/&lt;string:user_id&gt;/application_credentials&#39;</span><span class="p">,</span>
+            <span class="n">resource_kwargs</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;application_credentials&#39;</span><span class="p">,</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">USER_ID</span><span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">ks_flask</span><span class="o">.</span><span class="n">construct_resource_map</span><span class="p">(</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">UserAppCredGetDeleteResource</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="p">(</span>
+                <span class="s1">&#39;/users/&lt;string:user_id&gt;/application_credentials/&#39;</span>
+                <span class="s1">&#39;&lt;string:application_credential_id&gt;&#39;</span>
+            <span class="p">),</span>
+            <span class="n">resource_kwargs</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;application_credential&#39;</span><span class="p">,</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">USER_ID</span><span class="p">,</span>
+                <span class="s1">&#39;application_credential_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">APPLICATION_CRED_ID</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">ks_flask</span><span class="o">.</span><span class="n">construct_resource_map</span><span class="p">(</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">UserAccessRuleListResource</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="s1">&#39;/users/&lt;string:user_id&gt;/access_rules&#39;</span><span class="p">,</span>
+            <span class="n">resource_kwargs</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;access_rules&#39;</span><span class="p">,</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">USER_ID</span><span class="p">},</span>
+        <span class="p">),</span>
+        <span class="n">ks_flask</span><span class="o">.</span><span class="n">construct_resource_map</span><span class="p">(</span>
+            <span class="n">resource</span><span class="o">=</span><span class="n">UserAccessRuleGetDeleteResource</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="p">(</span>
+                <span class="s1">&#39;/users/&lt;string:user_id&gt;/access_rules/&lt;string:access_rule_id&gt;&#39;</span>
+            <span class="p">),</span>
+            <span class="n">resource_kwargs</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;access_rule&#39;</span><span class="p">,</span>
+            <span class="n">path_vars</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">USER_ID</span><span class="p">,</span>
+                <span class="s1">&#39;access_rule_id&#39;</span><span class="p">:</span> <span class="n">json_home</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">ACCESS_RULE_ID</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">),</span>
+    <span class="p">]</span></div>
+
+
+
+<span class="n">APIs</span> <span class="o">=</span> <span class="p">(</span><span class="n">UserAPI</span><span class="p">,)</span>
+</pre></div>
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2025-12-08 16:08:08</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../../../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../../../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../../../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "_modules/keystone/api/users" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "keystone.api.users in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2025-12-08 16:08:08";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "_modules/keystone/api/users";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

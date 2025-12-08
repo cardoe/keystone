@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>API Examples using Curl &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/support-matrix.css" />
+    <script src="_static/documentation_options.js?v=1362d459"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Multi-Factor Authentication" href="user/multi-factor-authentication.html" />
+    <link rel="prev" title="API Discovery with JSON Home" href="user/json_home.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/api_curl_examples.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>API Examples using Curl</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="user/json_home.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: API Discovery with JSON Home"></i></a>
+    
+    
+    <a href="user/multi-factor-authentication.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Multi-Factor Authentication"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="api-examples-using-curl">
+<h1>API Examples using Curl<a class="headerlink" href="#api-examples-using-curl" title="Link to this heading">¶</a></h1>
+<section id="v3-api-examples-using-curl">
+<h2>v3 API Examples Using Curl<a class="headerlink" href="#v3-api-examples-using-curl" title="Link to this heading">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Following are some API examples using curl. Note that these examples are not
+automatically generated. They can be outdated as things change and are subject
+to regular updates and changes.</p>
+</div>
+<section id="get">
+<h3>GET /<a class="headerlink" href="#get" title="Link to this heading">¶</a></h3>
+<p>Discover API version information, links to documentation (PDF, HTML, WADL),
+and supported media types:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The v2.0 portion of this response will be removed in the T release. It is
+only advertised here because the v2.0 API supports the ec2tokens API until
+the T release. All other functionality of the v2.0 has been removed as of
+the Queens release. Use v3 for all functionality as it is more complete and
+secure.</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>curl<span class="w"> </span><span class="s2">&quot;http://localhost:5000&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;versions&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;values&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;v3.10&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="s2">&quot;href&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://127.0.0.1:5000/v3/&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">&quot;rel&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;self&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="s2">&quot;media-types&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="s2">&quot;base&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;application/vnd.openstack.identity-v3+json&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="s2">&quot;status&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;stable&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;updated&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;2018-02-28T00:00:00Z&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;v2.0&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="s2">&quot;href&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://127.0.0.1:5000/v2.0/&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">&quot;rel&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;self&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="s2">&quot;href&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;https://docs.openstack.org/&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">&quot;rel&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;describedby&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;text/html&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="s2">&quot;media-types&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="s2">&quot;base&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;application/vnd.openstack.identity-v2.0+json&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="s2">&quot;status&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;deprecated&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;updated&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;2016-08-04T00:00:00Z&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="tokens">
+<h3>Tokens<a class="headerlink" href="#tokens" title="Link to this heading">¶</a></h3>
+<section id="unscoped">
+<h4>Unscoped<a class="headerlink" href="#unscoped" title="Link to this heading">¶</a></h4>
+<p>Get an unscoped token:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-i<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;</span>
+<span class="s1">{ &quot;auth&quot;: {</span>
+<span class="s1">    &quot;identity&quot;: {</span>
+<span class="s1">      &quot;methods&quot;: [&quot;password&quot;],</span>
+<span class="s1">      &quot;password&quot;: {</span>
+<span class="s1">        &quot;user&quot;: {</span>
+<span class="s1">          &quot;name&quot;: &quot;admin&quot;,</span>
+<span class="s1">          &quot;domain&quot;: { &quot;id&quot;: &quot;default&quot; },</span>
+<span class="s1">          &quot;password&quot;: &quot;adminpwd&quot;</span>
+<span class="s1">        }</span>
+<span class="s1">      }</span>
+<span class="s1">    }</span>
+<span class="s1">  }</span>
+<span class="s1">}&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;http://localhost:5000/v3/auth/tokens&quot;</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="nb">echo</span>
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>HTTP/1.1<span class="w"> </span><span class="m">201</span><span class="w"> </span>Created
+X-Subject-Token:<span class="w"> </span>MIIFvgY...
+Vary:<span class="w"> </span>X-Auth-Token
+Content-Type:<span class="w"> </span>application/json
+Content-Length:<span class="w"> </span><span class="m">312</span>
+Date:<span class="w"> </span>Fri,<span class="w"> </span><span class="m">11</span><span class="w"> </span>May<span class="w"> </span><span class="m">2018</span><span class="w"> </span><span class="m">03</span>:15:01<span class="w"> </span>GMT
+
+<span class="o">{</span>
+<span class="w">  </span><span class="s2">&quot;token&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">      </span><span class="s2">&quot;issued_at&quot;</span>:<span class="w"> </span><span class="s2">&quot;2018-05-11T03:15:01.000000Z&quot;</span>,
+<span class="w">      </span><span class="s2">&quot;audit_ids&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">          </span><span class="s2">&quot;0PKh_BDKTWqqaFONE-Sxbg&quot;</span>
+<span class="w">      </span><span class="o">]</span>,
+<span class="w">      </span><span class="s2">&quot;methods&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">          </span><span class="s2">&quot;password&quot;</span>
+<span class="w">      </span><span class="o">]</span>,
+<span class="w">      </span><span class="s2">&quot;expires_at&quot;</span>:<span class="w"> </span><span class="s2">&quot;2018-05-11T04:15:01.000000Z&quot;</span>,
+<span class="w">      </span><span class="s2">&quot;user&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span><span class="s2">&quot;password_expires_at&quot;</span>:<span class="w"> </span>null,
+<span class="w">          </span><span class="s2">&quot;domain&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;default&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;Default&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;9a7e43333cc44ef4b988f05fc3d3a49d&quot;</span>,
+<span class="w">          </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;admin&quot;</span>
+<span class="w">      </span><span class="o">}</span>
+<span class="w">  </span><span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</section>
+<section id="project-scoped">
+<h4>Project-scoped<a class="headerlink" href="#project-scoped" title="Link to this heading">¶</a></h4>
+<p>Get a project-scoped token:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-i<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;</span>
+<span class="s1">{ &quot;auth&quot;: {</span>
+<span class="s1">    &quot;identity&quot;: {</span>
+<span class="s1">      &quot;methods&quot;: [&quot;password&quot;],</span>
+<span class="s1">      &quot;password&quot;: {</span>
+<span class="s1">        &quot;user&quot;: {</span>
+<span class="s1">          &quot;name&quot;: &quot;admin&quot;,</span>
+<span class="s1">          &quot;domain&quot;: { &quot;id&quot;: &quot;default&quot; },</span>
+<span class="s1">          &quot;password&quot;: &quot;adminpwd&quot;</span>
+<span class="s1">        }</span>
+<span class="s1">      }</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;scope&quot;: {</span>
+<span class="s1">      &quot;project&quot;: {</span>
+<span class="s1">        &quot;name&quot;: &quot;admin&quot;,</span>
+<span class="s1">        &quot;domain&quot;: { &quot;id&quot;: &quot;default&quot; }</span>
+<span class="s1">      }</span>
+<span class="s1">    }</span>
+<span class="s1">  }</span>
+<span class="s1">}&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;http://localhost:5000/v3/auth/tokens&quot;</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="nb">echo</span>
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>HTTP/1.1<span class="w"> </span><span class="m">201</span><span class="w"> </span>Created
+X-Subject-Token:<span class="w"> </span>MIIFfQ...
+Vary:<span class="w"> </span>X-Auth-Token
+Content-Type:<span class="w"> </span>application/json
+Content-Length:<span class="w"> </span><span class="m">3518</span>
+Date:<span class="w"> </span>Fri,<span class="w"> </span><span class="m">11</span><span class="w"> </span>May<span class="w"> </span><span class="m">2018</span><span class="w"> </span><span class="m">03</span>:38:39<span class="w"> </span>GMT
+
+<span class="o">{</span>
+<span class="w">  </span><span class="s2">&quot;token&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">      </span><span class="s2">&quot;is_domain&quot;</span>:<span class="w"> </span>false,
+<span class="w">      </span><span class="s2">&quot;methods&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">          </span><span class="s2">&quot;password&quot;</span>
+<span class="w">      </span><span class="o">]</span>,
+<span class="w">      </span><span class="s2">&quot;roles&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;b57680c826b44b5ca6122d0f792c3184&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;Member&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;3a7bd258345f47479a26aea11a6cc2bb&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;admin&quot;</span>
+<span class="w">          </span><span class="o">}</span>
+<span class="w">      </span><span class="o">]</span>,
+<span class="w">      </span><span class="s2">&quot;expires_at&quot;</span>:<span class="w"> </span><span class="s2">&quot;2018-05-11T04:38:39.000000Z&quot;</span>,
+<span class="w">      </span><span class="s2">&quot;project&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span><span class="s2">&quot;domain&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;default&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;Default&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;3a705b9f56bb439381b43c4fe59dccce&quot;</span>,
+<span class="w">          </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;admin&quot;</span>
+<span class="w">      </span><span class="o">}</span>,
+<span class="w">      </span><span class="s2">&quot;catalog&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost/identity&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;public&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;30a91932e4e94a8ca4dc145bb1bb6b4b&quot;</span>
+<span class="w">                  </span><span class="o">}</span>,
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost/identity&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;admin&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;94d4768735104c9091f0468e7d31c189&quot;</span>
+<span class="w">                  </span><span class="o">}</span>
+<span class="w">              </span><span class="o">]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;identity&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;09af9253500b41ef976a07322b2fa388&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;keystone&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost/volume/v2/3a705b9f56bb439381b43c4fe59dccce&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;public&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;1c4ffe935e7643d99b55938cb12bc38d&quot;</span>
+<span class="w">                  </span><span class="o">}</span>
+<span class="w">              </span><span class="o">]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;volumev2&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;413a44234e1a4c3781d4a3c7a7e4c895&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;cinderv2&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost/image&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;public&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;33237fdd1a744d0fb40f9127f21ddad4&quot;</span>
+<span class="w">                  </span><span class="o">}</span>
+<span class="w">              </span><span class="o">]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;image&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;4d473252145546d2aa589605f1e177c7&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;glance&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost/placement&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;public&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;1a421e2f97684d3f86ab4d2cc9c86362&quot;</span>
+<span class="w">                  </span><span class="o">}</span>
+<span class="w">              </span><span class="o">]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;placement&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;5dcecbdd4a1d44d0855c560301b27bb5&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;placement&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost/compute/v2.1&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;public&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;8e7ea663cc41477c9629cc710bbb1c7d&quot;</span>
+<span class="w">                  </span><span class="o">}</span>
+<span class="w">              </span><span class="o">]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;compute&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;87d49efa8fb64006bdb123d223ddcae2&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;nova&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost/volume/v1/3a705b9f56bb439381b43c4fe59dccce&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;public&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;97a2c0ac7e304316a1eb58a3757e6ef8&quot;</span>
+<span class="w">                  </span><span class="o">}</span>
+<span class="w">              </span><span class="o">]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;volume&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;9408080f1970482aa0e38bc2d4ea34b7&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;cinder&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost:8080/v1/AUTH_3a705b9f56bb439381b43c4fe59dccce&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;public&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;d0d823615b0747a9aeca8b83fba105f0&quot;</span>
+<span class="w">                  </span><span class="o">}</span>,
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost:8080&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;admin&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;e4cb86d9232349f091e0a02390deeb79&quot;</span>
+<span class="w">                  </span><span class="o">}</span>
+<span class="w">              </span><span class="o">]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;object-store&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;957ba1fe8b0443f0afe64bfd0858ba5e&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;swift&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost:9696/&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;public&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;aa4a0e61cdc54372967ee9e2298f1d53&quot;</span>
+<span class="w">                  </span><span class="o">}</span>
+<span class="w">              </span><span class="o">]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;network&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;960fbc66bfcb4fa7900023f647fdc3a5&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;neutron&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost/volume/v3/3a705b9f56bb439381b43c4fe59dccce&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;public&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;0c38045a91c34d798e0d2008fee7521d&quot;</span>
+<span class="w">                  </span><span class="o">}</span>
+<span class="w">              </span><span class="o">]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;volumev3&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;98adb083914f423d9cb74ad5527e37cb&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;cinderv3&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost/compute/v2/3a705b9f56bb439381b43c4fe59dccce&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;public&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;562e12b9ee9549e8b857218ccf2ae321&quot;</span>
+<span class="w">                  </span><span class="o">}</span>
+<span class="w">              </span><span class="o">]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;compute_legacy&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;a31e688016614430b28cddddf12d7b88&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;nova_legacy&quot;</span>
+<span class="w">          </span><span class="o">}</span>
+<span class="w">      </span><span class="o">]</span>,
+<span class="w">      </span><span class="s2">&quot;user&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span><span class="s2">&quot;password_expires_at&quot;</span>:<span class="w"> </span>null,
+<span class="w">          </span><span class="s2">&quot;domain&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;default&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;Default&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;9a7e43333cc44ef4b988f05fc3d3a49d&quot;</span>,
+<span class="w">          </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;admin&quot;</span>
+<span class="w">      </span><span class="o">}</span>,
+<span class="w">      </span><span class="s2">&quot;audit_ids&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">          </span><span class="s2">&quot;TbdrnW4MQDq_GPAVN9-JOQ&quot;</span>
+<span class="w">      </span><span class="o">]</span>,
+<span class="w">      </span><span class="s2">&quot;issued_at&quot;</span>:<span class="w"> </span><span class="s2">&quot;2018-05-11T03:38:39.000000Z&quot;</span>
+<span class="w">  </span><span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</section>
+<section id="domain-scoped">
+<h4>Domain-Scoped<a class="headerlink" href="#domain-scoped" title="Link to this heading">¶</a></h4>
+<p>Get a domain-scoped token (Note that you’re going to need a role-assignment on
+the domain first!):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-i<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;</span>
+<span class="s1">{ &quot;auth&quot;: {</span>
+<span class="s1">    &quot;identity&quot;: {</span>
+<span class="s1">      &quot;methods&quot;: [&quot;password&quot;],</span>
+<span class="s1">      &quot;password&quot;: {</span>
+<span class="s1">        &quot;user&quot;: {</span>
+<span class="s1">          &quot;name&quot;: &quot;admin&quot;,</span>
+<span class="s1">          &quot;domain&quot;: { &quot;id&quot;: &quot;default&quot; },</span>
+<span class="s1">          &quot;password&quot;: &quot;adminpwd&quot;</span>
+<span class="s1">        }</span>
+<span class="s1">      }</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;scope&quot;: {</span>
+<span class="s1">      &quot;domain&quot;: {</span>
+<span class="s1">        &quot;id&quot;: &quot;default&quot;</span>
+<span class="s1">      }</span>
+<span class="s1">    }</span>
+<span class="s1">  }</span>
+<span class="s1">}&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;http://localhost:5000/v3/auth/tokens&quot;</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="nb">echo</span>
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>HTTP/1.1<span class="w"> </span><span class="m">201</span><span class="w"> </span>Created
+X-Subject-Token:<span class="w"> </span>MIIFNg...
+Vary:<span class="w"> </span>X-Auth-Token
+Content-Type:<span class="w"> </span>application/json
+Content-Length:<span class="w"> </span><span class="m">2590</span>
+Date:<span class="w"> </span>Fri,<span class="w"> </span><span class="m">11</span><span class="w"> </span>May<span class="w"> </span><span class="m">2018</span><span class="w"> </span><span class="m">03</span>:37:09<span class="w"> </span>GMT
+
+<span class="o">{</span>
+<span class="w">  </span><span class="s2">&quot;token&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">      </span><span class="s2">&quot;domain&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;default&quot;</span>,
+<span class="w">          </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;Default&quot;</span>
+<span class="w">      </span><span class="o">}</span>,
+<span class="w">      </span><span class="s2">&quot;methods&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">          </span><span class="s2">&quot;password&quot;</span>
+<span class="w">      </span><span class="o">]</span>,
+<span class="w">      </span><span class="s2">&quot;roles&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;b57680c826b44b5ca6122d0f792c3184&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;Member&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;3a7bd258345f47479a26aea11a6cc2bb&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;admin&quot;</span>
+<span class="w">          </span><span class="o">}</span>
+<span class="w">      </span><span class="o">]</span>,
+<span class="w">      </span><span class="s2">&quot;expires_at&quot;</span>:<span class="w"> </span><span class="s2">&quot;2018-05-11T04:37:09.000000Z&quot;</span>,
+<span class="w">      </span><span class="s2">&quot;catalog&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost/identity&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;public&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;30a91932e4e94a8ca4dc145bb1bb6b4b&quot;</span>
+<span class="w">                  </span><span class="o">}</span>,
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost/identity&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;admin&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;94d4768735104c9091f0468e7d31c189&quot;</span>
+<span class="w">                  </span><span class="o">}</span>
+<span class="w">              </span><span class="o">]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;identity&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;09af9253500b41ef976a07322b2fa388&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;keystone&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;volumev2&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;413a44234e1a4c3781d4a3c7a7e4c895&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;cinderv2&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost/image&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;public&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;33237fdd1a744d0fb40f9127f21ddad4&quot;</span>
+<span class="w">                  </span><span class="o">}</span>
+<span class="w">              </span><span class="o">]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;image&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;4d473252145546d2aa589605f1e177c7&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;glance&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost/placement&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;public&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;1a421e2f97684d3f86ab4d2cc9c86362&quot;</span>
+<span class="w">                  </span><span class="o">}</span>
+<span class="w">              </span><span class="o">]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;placement&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;5dcecbdd4a1d44d0855c560301b27bb5&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;placement&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost/compute/v2.1&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;public&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;8e7ea663cc41477c9629cc710bbb1c7d&quot;</span>
+<span class="w">                  </span><span class="o">}</span>
+<span class="w">              </span><span class="o">]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;compute&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;87d49efa8fb64006bdb123d223ddcae2&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;nova&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;volume&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;9408080f1970482aa0e38bc2d4ea34b7&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;cinder&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost:8080&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;admin&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;e4cb86d9232349f091e0a02390deeb79&quot;</span>
+<span class="w">                  </span><span class="o">}</span>
+<span class="w">              </span><span class="o">]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;object-store&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;957ba1fe8b0443f0afe64bfd0858ba5e&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;swift&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">                  </span><span class="o">{</span>
+<span class="w">                      </span><span class="s2">&quot;region_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://localhost:9696/&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;region&quot;</span>:<span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;interface&quot;</span>:<span class="w"> </span><span class="s2">&quot;public&quot;</span>,
+<span class="w">                      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;aa4a0e61cdc54372967ee9e2298f1d53&quot;</span>
+<span class="w">                  </span><span class="o">}</span>
+<span class="w">              </span><span class="o">]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;network&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;960fbc66bfcb4fa7900023f647fdc3a5&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;neutron&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;volumev3&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;98adb083914f423d9cb74ad5527e37cb&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;cinderv3&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;endpoints&quot;</span>:<span class="w"> </span><span class="o">[]</span>,
+<span class="w">              </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;compute_legacy&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;a31e688016614430b28cddddf12d7b88&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;nova_legacy&quot;</span>
+<span class="w">          </span><span class="o">}</span>
+<span class="w">      </span><span class="o">]</span>,
+<span class="w">      </span><span class="s2">&quot;user&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span><span class="s2">&quot;password_expires_at&quot;</span>:<span class="w"> </span>null,
+<span class="w">          </span><span class="s2">&quot;domain&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;default&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;Default&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;9a7e43333cc44ef4b988f05fc3d3a49d&quot;</span>,
+<span class="w">          </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;admin&quot;</span>
+<span class="w">      </span><span class="o">}</span>,
+<span class="w">      </span><span class="s2">&quot;audit_ids&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">          </span><span class="s2">&quot;Sfc8_kywQx-tWNkEVqA1Iw&quot;</span>
+<span class="w">      </span><span class="o">]</span>,
+<span class="w">      </span><span class="s2">&quot;issued_at&quot;</span>:<span class="w"> </span><span class="s2">&quot;2018-05-11T03:37:09.000000Z&quot;</span>
+<span class="w">  </span><span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</section>
+<section id="getting-a-token-from-a-token">
+<h4>Getting a token from a token<a class="headerlink" href="#getting-a-token-from-a-token" title="Link to this heading">¶</a></h4>
+<p>Get a token from a token:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-i<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;</span>
+<span class="s1">{ &quot;auth&quot;: {</span>
+<span class="s1">    &quot;identity&quot;: {</span>
+<span class="s1">      &quot;methods&quot;: [&quot;token&quot;],</span>
+<span class="s1">      &quot;token&quot;: {</span>
+<span class="s1">        &quot;id&quot;: &quot;&#39;</span><span class="nv">$OS_TOKEN</span><span class="s1">&#39;&quot;</span>
+<span class="s1">      }</span>
+<span class="s1">    }</span>
+<span class="s1">  }</span>
+<span class="s1">}&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;http://localhost:5000/v3/auth/tokens&quot;</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="nb">echo</span>
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>HTTP/1.1<span class="w"> </span><span class="m">201</span><span class="w"> </span>Created
+X-Subject-Token:<span class="w"> </span>MIIFxw...
+Vary:<span class="w"> </span>X-Auth-Token
+Content-Type:<span class="w"> </span>application/json
+Content-Length:<span class="w"> </span><span class="m">347</span>
+Date:<span class="w"> </span>Fri,<span class="w"> </span><span class="m">11</span><span class="w"> </span>May<span class="w"> </span><span class="m">2018</span><span class="w"> </span><span class="m">03</span>:41:29<span class="w"> </span>GMT
+
+<span class="o">{</span>
+<span class="w">  </span><span class="s2">&quot;token&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">      </span><span class="s2">&quot;issued_at&quot;</span>:<span class="w"> </span><span class="s2">&quot;2018-05-11T03:41:29.000000Z&quot;</span>,
+<span class="w">      </span><span class="s2">&quot;audit_ids&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">          </span><span class="s2">&quot;zS_C_KROTFeZm-VlG1LjbA&quot;</span>,
+<span class="w">          </span><span class="s2">&quot;RAjE82q8Rz-Cd50ogCpx3Q&quot;</span>
+<span class="w">      </span><span class="o">]</span>,
+<span class="w">      </span><span class="s2">&quot;methods&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">          </span><span class="s2">&quot;token&quot;</span>,
+<span class="w">          </span><span class="s2">&quot;password&quot;</span>
+<span class="w">      </span><span class="o">]</span>,
+<span class="w">      </span><span class="s2">&quot;expires_at&quot;</span>:<span class="w"> </span><span class="s2">&quot;2018-05-11T04:40:00.000000Z&quot;</span>,
+<span class="w">      </span><span class="s2">&quot;user&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span><span class="s2">&quot;password_expires_at&quot;</span>:<span class="w"> </span>null,
+<span class="w">          </span><span class="s2">&quot;domain&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">              </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;default&quot;</span>,
+<span class="w">              </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;Default&quot;</span>
+<span class="w">          </span><span class="o">}</span>,
+<span class="w">          </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;9a7e43333cc44ef4b988f05fc3d3a49d&quot;</span>,
+<span class="w">          </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;admin&quot;</span>
+<span class="w">      </span><span class="o">}</span>
+<span class="w">  </span><span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If a scope was included in the request body then this would get a token
+with the new scope.</p>
+</div>
+</section>
+<section id="delete-v3-auth-tokens">
+<h4>DELETE /v3/auth/tokens<a class="headerlink" href="#delete-v3-auth-tokens" title="Link to this heading">¶</a></h4>
+<p>Revoke a token:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-i<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;X-Auth-Token: </span><span class="nv">$OS_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;X-Subject-Token: </span><span class="nv">$OS_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;http://localhost:5000/v3/auth/tokens&quot;</span>
+</pre></div>
+</div>
+<p>If there’s no error then the response is empty.</p>
+</section>
+</section>
+<section id="domains">
+<h3>Domains<a class="headerlink" href="#domains" title="Link to this heading">¶</a></h3>
+<section id="get-v3-domains">
+<h4>GET /v3/domains<a class="headerlink" href="#get-v3-domains" title="Link to this heading">¶</a></h4>
+<p>List domains:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;X-Auth-Token: </span><span class="nv">$OS_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;http://localhost:5000/v3/domains&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-mjson.tool
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;domains&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Owns users and tenants (i.e. projects) available on Identity API v2.&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;enabled&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;self&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://identity-server:5000/v3/domains/default&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Default&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;next&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;previous&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;self&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://identity-server:5000/v3/domains&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="post-v3-domains">
+<h4>POST /v3/domains<a class="headerlink" href="#post-v3-domains" title="Link to this heading">¶</a></h4>
+<p>Create a domain:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;X-Auth-Token: </span><span class="nv">$OS_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{ &quot;domain&quot;: { &quot;name&quot;: &quot;newdomain&quot;}}&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;http://localhost:5000/v3/domains&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-mjson.tool
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;domain&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;enabled&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;3a5140aecd974bf08041328b53a62458&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="s2">&quot;self&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://identity-server:5000/v3/domains/3a5140aecd974bf08041328b53a62458&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;newdomain&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="projects">
+<h3>Projects<a class="headerlink" href="#projects" title="Link to this heading">¶</a></h3>
+<section id="get-v3-projects">
+<h4>GET /v3/projects<a class="headerlink" href="#get-v3-projects" title="Link to this heading">¶</a></h4>
+<p>List projects:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;X-Auth-Token: </span><span class="nv">$OS_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/projects&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-mjson.tool
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;next&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;previous&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;self&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/projects&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="s2">&quot;projects&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;domain_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;enabled&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;3d4c2c82bd5948f0bcab0cf3a7c9b48c&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;self&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/projects/3d4c2c82bd5948f0bcab0cf3a7c9b48c&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;demo&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="patch-v3-projects-id">
+<h4>PATCH /v3/projects/{id}<a class="headerlink" href="#patch-v3-projects-id" title="Link to this heading">¶</a></h4>
+<p>Disable a project:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>PATCH<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;X-Auth-Token: </span><span class="nv">$OS_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;</span>
+<span class="s1">{</span>
+<span class="s1">  &quot;project&quot;: {</span>
+<span class="s1">      &quot;enabled&quot;: false</span>
+<span class="s1">    }</span>
+<span class="s1">}&#39;</span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;http://localhost:5000/v3/projects/</span><span class="nv">$PROJECT_ID</span><span class="s2">&quot;</span><span class="w">  </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-mjson.tool
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;project&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;domain_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;enabled&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;extra&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">        </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;3d4c2c82bd5948f0bcab0cf3a7c9b48c&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="s2">&quot;self&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/projects/3d4c2c82bd5948f0bcab0cf3a7c9b48c&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;demo&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="get-v3-services">
+<h3>GET /v3/services<a class="headerlink" href="#get-v3-services" title="Link to this heading">¶</a></h3>
+<p>List the services:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;X-Auth-Token: </span><span class="nv">$OS_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;http://localhost:5000/v3/services&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-mjson.tool
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;next&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;previous&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;self&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/services&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="s2">&quot;services&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Keystone Identity Service&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;enabled&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;bd7397d2c0e14fb69bae8ff76e112a90&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;self&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/services/bd7397d2c0e14fb69bae8ff76e112a90&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;keystone&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;identity&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="get-v3-endpoints">
+<h3>GET /v3/endpoints<a class="headerlink" href="#get-v3-endpoints" title="Link to this heading">¶</a></h3>
+<p>List the endpoints:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;X-Auth-Token: </span><span class="nv">$OS_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/endpoints&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-mjson.tool
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;endpoints&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="s2">&quot;enabled&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;29beb2f1567642eb810b042b6719ea88&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;interface&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;self&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/endpoints/29beb2f1567642eb810b042b6719ea88&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="s2">&quot;region&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;RegionOne&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;service_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;bd7397d2c0e14fb69bae8ff76e112a90&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;url&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;next&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;previous&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;self&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/endpoints&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="users">
+<h3>Users<a class="headerlink" href="#users" title="Link to this heading">¶</a></h3>
+<section id="get-v3-users">
+<h4>GET /v3/users<a class="headerlink" href="#get-v3-users" title="Link to this heading">¶</a></h4>
+<p>List users:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;X-Auth-Token: </span><span class="nv">$OS_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/users&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-mjson.tool
+</pre></div>
+</div>
+</section>
+<section id="post-v3-users">
+<h4>POST /v3/users<a class="headerlink" href="#post-v3-users" title="Link to this heading">¶</a></h4>
+<p>Create a user:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;X-Auth-Token: </span><span class="nv">$OS_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;user&quot;: {&quot;name&quot;: &quot;newuser&quot;, &quot;password&quot;: &quot;changeme&quot;}}&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/users&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-mjson.tool
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;user&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;domain_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;enabled&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;ec8fc20605354edd91873f2d66bf4fc4&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="s2">&quot;self&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://identity-server:5000/v3/users/ec8fc20605354edd91873f2d66bf4fc4&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;newuser&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="get-v3-users-user-id">
+<h4>GET /v3/users/{user_id}<a class="headerlink" href="#get-v3-users-user-id" title="Link to this heading">¶</a></h4>
+<p>Show details for a user:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">USER_ID</span><span class="o">=</span>ec8fc20605354edd91873f2d66bf4fc4
+
+curl<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;X-Auth-Token: </span><span class="nv">$OS_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/users/</span><span class="nv">$USER_ID</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-mjson.tool
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;user&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;domain_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;enabled&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;ec8fc20605354edd91873f2d66bf4fc4&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="s2">&quot;self&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/users/ec8fc20605354edd91873f2d66bf4fc4&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;newuser&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="post-v3-users-user-id-password">
+<h4>POST /v3/users/{user_id}/password<a class="headerlink" href="#post-v3-users-user-id-password" title="Link to this heading">¶</a></h4>
+<p>Change password (using the default policy, this can be done as the user):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">USER_ID</span><span class="o">=</span>b7793000f8d84c79af4e215e9da78654
+<span class="nv">ORIG_PASS</span><span class="o">=</span>userpwd
+<span class="nv">NEW_PASS</span><span class="o">=</span>newuserpwd
+
+curl<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;X-Auth-Token: </span><span class="nv">$OS_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;{ &quot;user&quot;: {&quot;password&quot;: &quot;&#39;</span><span class="nv">$NEW_PASS</span><span class="s1">&#39;&quot;, &quot;original_password&quot;: &quot;&#39;</span><span class="nv">$ORIG_PASS</span><span class="s1">&#39;&quot;} }&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/users/</span><span class="nv">$USER_ID</span><span class="s2">/password&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This command doesn’t print anything if the request was successful.</p>
+</div>
+</section>
+<section id="patch-v3-users-user-id">
+<h4>PATCH /v3/users/{user_id}<a class="headerlink" href="#patch-v3-users-user-id" title="Link to this heading">¶</a></h4>
+<p>Reset password (using the default policy, this requires admin):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">USER_ID</span><span class="o">=</span>b7793000f8d84c79af4e215e9da78654
+<span class="nv">NEW_PASS</span><span class="o">=</span>newuserpwd
+
+curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>PATCH<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;X-Auth-Token: </span><span class="nv">$OS_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;{ &quot;user&quot;: {&quot;password&quot;: &quot;&#39;</span><span class="nv">$NEW_PASS</span><span class="s1">&#39;&quot;} }&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/users/</span><span class="nv">$USER_ID</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-mjson.tool
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;user&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;default_project_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;3d4c2c82bd5948f0bcab0cf3a7c9b48c&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;domain_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;email&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;demo@example.com&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;enabled&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;extra&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="s2">&quot;email&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;demo@example.com&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;269348fdd9374b8885da1418e0730af1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="s2">&quot;self&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/users/269348fdd9374b8885da1418e0730af1&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;demo&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="put-v3-projects-project-id-groups-group-id-roles-role-id">
+<h3>PUT /v3/projects/{project_id}/groups/{group_id}/roles/{role_id}<a class="headerlink" href="#put-v3-projects-project-id-groups-group-id-roles-role-id" title="Link to this heading">¶</a></h3>
+<p>Create group role assignment on project:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>PUT<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;X-Auth-Token: </span><span class="nv">$OS_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/projects/</span><span class="nv">$PROJECT_ID</span><span class="s2">/groups/</span><span class="nv">$GROUP_ID</span><span class="s2">/roles/</span><span class="nv">$ROLE_ID</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span>
+<span class="w">   </span>python<span class="w"> </span>-mjson.tool
+</pre></div>
+</div>
+<p>There’s no data in the response if the operation is successful.</p>
+</section>
+<section id="post-v3-os-trust-trusts">
+<h3>POST /v3/OS-TRUST/trusts<a class="headerlink" href="#post-v3-os-trust-trusts" title="Link to this heading">¶</a></h3>
+<p>Create a trust:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;X-Auth-Token: </span><span class="nv">$OS_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;</span>
+<span class="s1">{ &quot;trust&quot;: {</span>
+<span class="s1">    &quot;expires_at&quot;: &quot;2014-12-30T23:59:59.999999Z&quot;,</span>
+<span class="s1">    &quot;impersonation&quot;: false,</span>
+<span class="s1">    &quot;project_id&quot;: &quot;&#39;</span><span class="nv">$PROJECT_ID</span><span class="s1">&#39;&quot;,</span>
+<span class="s1">    &quot;roles&quot;: [</span>
+<span class="s1">        { &quot;name&quot;: &quot;admin&quot; }</span>
+<span class="s1">      ],</span>
+<span class="s1">    &quot;trustee_user_id&quot;: &quot;&#39;</span><span class="nv">$DEMO_USER_ID</span><span class="s1">&#39;&quot;,</span>
+<span class="s1">    &quot;trustor_user_id&quot;: &quot;&#39;</span><span class="nv">$ADMIN_USER_ID</span><span class="s1">&#39;&quot;</span>
+<span class="s1">}}&#39;</span><span class="se">\</span>
+<span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/OS-TRUST/trusts&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-mjson.tool
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;trust&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;expires_at&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;2014-12-30T23:59:59.999999Z&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;394998fa61f14736b1f0c1f322882949&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;impersonation&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="s2">&quot;self&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/OS-TRUST/trusts/394998fa61f14736b1f0c1f322882949&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;project_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;3d4c2c82bd5948f0bcab0cf3a7c9b48c&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;remaining_uses&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;roles&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;c703057be878458588961ce9a0ce686b&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="s2">&quot;self&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/roles/c703057be878458588961ce9a0ce686b&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="s2">&quot;roles_links&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="s2">&quot;next&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;previous&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;self&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:5000/v3/OS-TRUST/trusts/394998fa61f14736b1f0c1f322882949/roles&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="s2">&quot;trustee_user_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;269348fdd9374b8885da1418e0730af1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;trustor_user_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;3ec3164f750146be97f21559ee4d9c51&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="user/json_home.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: API Discovery with JSON Home"></i></a>
+          
+          
+            <a href="user/multi-factor-authentication.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Multi-Factor Authentication"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2018-10-27 15:56:26</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="user/index.html">User Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="user/supported_clients.html">Supported clients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/application_credentials.html">Application Credentials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/trusts.html">Trusts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/json_home.html">API Discovery with JSON Home</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">API Examples using Curl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/multi-factor-authentication.html">Multi-Factor Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/domain-manager-usage.html">Domain Manager Usage</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">API Examples using Curl</a><ul>
+<li><a class="reference internal" href="#v3-api-examples-using-curl">v3 API Examples Using Curl</a><ul>
+<li><a class="reference internal" href="#get">GET /</a></li>
+<li><a class="reference internal" href="#tokens">Tokens</a><ul>
+<li><a class="reference internal" href="#unscoped">Unscoped</a></li>
+<li><a class="reference internal" href="#project-scoped">Project-scoped</a></li>
+<li><a class="reference internal" href="#domain-scoped">Domain-Scoped</a></li>
+<li><a class="reference internal" href="#getting-a-token-from-a-token">Getting a token from a token</a></li>
+<li><a class="reference internal" href="#delete-v3-auth-tokens">DELETE /v3/auth/tokens</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#domains">Domains</a><ul>
+<li><a class="reference internal" href="#get-v3-domains">GET /v3/domains</a></li>
+<li><a class="reference internal" href="#post-v3-domains">POST /v3/domains</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#projects">Projects</a><ul>
+<li><a class="reference internal" href="#get-v3-projects">GET /v3/projects</a></li>
+<li><a class="reference internal" href="#patch-v3-projects-id">PATCH /v3/projects/{id}</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-v3-services">GET /v3/services</a></li>
+<li><a class="reference internal" href="#get-v3-endpoints">GET /v3/endpoints</a></li>
+<li><a class="reference internal" href="#users">Users</a><ul>
+<li><a class="reference internal" href="#get-v3-users">GET /v3/users</a></li>
+<li><a class="reference internal" href="#post-v3-users">POST /v3/users</a></li>
+<li><a class="reference internal" href="#get-v3-users-user-id">GET /v3/users/{user_id}</a></li>
+<li><a class="reference internal" href="#post-v3-users-user-id-password">POST /v3/users/{user_id}/password</a></li>
+<li><a class="reference internal" href="#patch-v3-users-user-id">PATCH /v3/users/{user_id}</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#put-v3-projects-project-id-groups-group-id-roles-role-id">PUT /v3/projects/{project_id}/groups/{group_id}/roles/{role_id}</a></li>
+<li><a class="reference internal" href="#post-v3-os-trust-trusts">POST /v3/OS-TRUST/trusts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "api_curl_examples" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "API Examples using Curl in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2018-10-27 15:56:26";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "api_curl_examples";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

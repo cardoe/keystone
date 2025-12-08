@@ -1,0 +1,7 @@
+keystone.catalog.core module
+============================
+
+.. automodule:: keystone.catalog.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

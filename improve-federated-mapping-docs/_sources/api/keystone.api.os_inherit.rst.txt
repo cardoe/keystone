@@ -1,0 +1,7 @@
+keystone.api.os\_inherit module
+===============================
+
+.. automodule:: keystone.api.os_inherit
+   :members:
+   :undoc-members:
+   :show-inheritance:

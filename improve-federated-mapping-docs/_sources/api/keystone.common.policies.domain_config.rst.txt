@@ -1,0 +1,7 @@
+keystone.common.policies.domain\_config module
+==============================================
+
+.. automodule:: keystone.common.policies.domain_config
+   :members:
+   :undoc-members:
+   :show-inheritance:

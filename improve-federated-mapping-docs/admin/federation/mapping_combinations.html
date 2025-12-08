@@ -1,0 +1,2053 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Mapping Combinations &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/support-matrix.css" />
+    <script src="../../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Using external authentication with Keystone" href="../external-authentication.html" />
+    <link rel="prev" title="Configuring Keystone for Federation" href="configure_federation.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/admin/federation/mapping_combinations.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Mapping Combinations</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="configure_federation.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Configuring Keystone for Federation"></i></a>
+    
+    
+    <a href="../external-authentication.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Using external authentication with Keystone"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="mapping-combinations">
+<h1>Mapping Combinations<a class="headerlink" href="#mapping-combinations" title="Link to this heading">¶</a></h1>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
+<p>During the authentication process an identity provider (IdP) will present
+keystone with a set of user attributes about the user that is authenticating.
+For example, in the SAML2 flow this comes to keystone in the form of a SAML
+document.</p>
+<p>The attributes are typically processed by third-party software and are presented
+to keystone as environment variables. The original document from the IdP is
+generally not available to keystone. This is how the <cite>Shibboleth</cite> and <cite>Mellon</cite>
+implementations work.</p>
+<p>The mapping format described in this document maps these environment variables
+to a local keystone user. The mapping may also define group membership for
+that user and projects the user can access.</p>
+<p>An IdP has exactly one mapping specified per protocol. Mappings themselves can
+be used multiple times by different combinations of IdP and protocol.</p>
+</section>
+<section id="important-prerequisites">
+<h2>Important Prerequisites<a class="headerlink" href="#important-prerequisites" title="Link to this heading">¶</a></h2>
+<p>Before creating federated mappings, it’s critical to understand how keystone
+handles different resource types during federated authentication. The behavior
+varies significantly depending on whether you’re mapping to users, groups, or
+projects:</p>
+<dl class="simple">
+<dt><strong>Users (with type=local)</strong></dt><dd><p>Local users <strong>must exist</strong> in keystone’s identity backend before federated
+authentication. If you map a federated user to a local user that doesn’t
+exist, authentication will fail with an HTTP 401 Unauthorized error. Keystone
+will attempt to fetch the user details (id, name, roles, groups) from the
+identity backend, and if the user is not found, the authentication fails.</p>
+</dd>
+<dt><strong>Users (with type=ephemeral or no type specified)</strong></dt><dd><p>Ephemeral users are created dynamically during authentication and become
+members of the identity provider’s domain. They do not need to exist
+beforehand and all attributes must come from the IdP and mapping rules.</p>
+</dd>
+<dt><strong>Groups</strong></dt><dd><p>Groups referenced in mappings <strong>must already exist</strong> in keystone. If a
+mapping references a group (by name or ID) that doesn’t exist in the backend,
+keystone will <strong>silently skip</strong> that group assignment. The authentication
+will succeed, but the user won’t receive the roles associated with the
+missing group. Check your logs for warnings about missing groups.</p>
+</dd>
+<dt><strong>Projects</strong></dt><dd><p>Projects referenced in the <code class="docutils literal notranslate"><span class="pre">projects</span></code> section of a mapping <strong>will be
+automatically created</strong> if they don’t exist. This is called auto-provisioning.
+Projects are created within the domain associated with the Identity Provider
+(or the domain specified in the mapping). This only applies to the <code class="docutils literal notranslate"><span class="pre">projects</span></code>
+attribute in mappings - projects referenced through group memberships are not
+auto-created.</p>
+</dd>
+<dt><strong>Roles</strong></dt><dd><p>Roles <strong>must always exist</strong> in the deployment. They are never auto-created.
+If a mapping references a role that doesn’t exist, authentication will fail.</p>
+</dd>
+<dt><strong>Domains</strong></dt><dd><p>Domains <strong>must exist</strong> in keystone. They are never auto-created. If a mapping
+references a non-existent domain, authentication will fail.</p>
+</dd>
+</dl>
+</section>
+<section id="definitions">
+<h2>Definitions<a class="headerlink" href="#definitions" title="Link to this heading">¶</a></h2>
+<p>A mapping looks as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;rules&quot;: [
+        {
+            &quot;local&quot;: [
+                {
+                    &lt;user&gt;
+                    [&lt;group&gt;]
+                    [&lt;project&gt;]
+                }
+            ],
+            &quot;remote&quot;: [
+                {
+                    &lt;match&gt;
+                    [&lt;condition&gt;]
+                }
+            ]
+        }
+    ]
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><cite>mapping</cite>: a JSON object containing a list of rules.</p></li>
+<li><p><cite>rules</cite>: a property in the mapping that contains the list of rules.</p></li>
+<li><p><cite>rule</cite>: a JSON object containing <cite>local</cite> and <cite>remote</cite> properties to define
+the rule. There is no explicit <cite>rule</cite> property.</p></li>
+<li><p><cite>local</cite>: a JSON object containing information on what local attributes will
+be mapped. The mapping engine processes this using the <cite>context</cite> (defined
+below) and the result is a representation of the user from keystone’s
+perspective.</p>
+<ul>
+<li><p><cite>&lt;user&gt;</cite>: the local user that will be mapped to the federated user.</p></li>
+<li><p><cite>&lt;group&gt;</cite>: (optional) the local groups the federated user will be placed in.</p></li>
+<li><p><cite>&lt;projects&gt;</cite>: (optional) the local projects mapped to the federated user.</p></li>
+<li><p><cite>&lt;domain&gt;</cite>: (optional) the local domain mapped to the federated user,
+projects, and groups. Projects and groups can also override this default
+domain by defining a domain of their own. Moreover, if no domain is
+defined in this configuration, the attribute mapping schema will use the
+identity provider OpenStack domain.</p></li>
+</ul>
+</li>
+<li><p><cite>remote</cite>: a JSON object containing information on what remote attributes will be mapped.</p>
+<ul>
+<li><p><cite>&lt;match&gt;</cite>: a JSON object that tells the mapping engine what federated attribute
+to make available for substitution in the local object. There can be one or more
+of these objects in the <cite>remote</cite> list.</p></li>
+<li><p><cite>&lt;condition&gt;</cite>: a JSON object containing conditions that allow a rule. There can be
+zero or more of these objects in the <cite>remote</cite> list.</p></li>
+</ul>
+</li>
+<li><p><cite>direct mapping</cite>: the mapping engine keeps track of each match and makes them
+available to the local rule for substitution.</p></li>
+<li><p><cite>assertion</cite>: data provided to keystone by the IdP to assert facts
+(name, groups, etc) about the authenticating user. This is an XML document when
+using the SAML2 protocol.</p></li>
+<li><p><cite>mapping context</cite>: the data, represented as key-value pairs, that is used by the
+mapping engine to turn the <cite>local</cite> object into a representation of the user
+from keystone’s perspective. The mapping context contains the environment of the
+keystone process and any <cite>direct mapping</cite> values calculated when processing the
+<cite>remote</cite> list.</p></li>
+</ul>
+</section>
+<section id="how-mappings-are-processed">
+<h2>How Mappings Are Processed<a class="headerlink" href="#how-mappings-are-processed" title="Link to this heading">¶</a></h2>
+<p>A mapping is selected by IdP and protocol. Then keystone takes the mapping and
+processes each rule sequentially stopping after the first matched rule. A rule
+is matched when all of its conditions are met.</p>
+<p>First keystone evaluates each condition from the rule’s remote property to see
+if the rule is a match. If it is a match, keystone saves the data captured by
+each of the matches from the rule’s remote property in an ordered list. We call
+these matches <cite>direct mappings</cite> since they can be used in the next step.</p>
+<p>After the rule is found using the rule’s conditions and a list of direct mappings is
+stored, keystone begins processing the rule’s <cite>local</cite> property. Each object in
+the <cite>local</cite> property is collapsed into a single JSON object. For example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;local&quot;: [
+        {
+            &quot;user&quot;: {...}
+        },
+        {
+            &quot;projects&quot;: [...]
+        },
+    ]
+}
+</pre></div>
+</div>
+<p>becomes:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;local&quot;: {
+        &quot;user&quot;: {...}
+        &quot;projects&quot;: [...]
+    },
+}
+</pre></div>
+</div>
+<p>when the same property exists in the local multiple times the first occurrence wins:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;local&quot;: [
+        {
+            &quot;user&quot;: {#first#}
+        },
+        {
+            &quot;projects&quot;: [...]
+        },
+        {
+            &quot;user&quot;: {#second#}
+        },
+    ]
+}
+</pre></div>
+</div>
+<p>becomes:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;local&quot;: {
+        &quot;user&quot;: {#first#}
+        &quot;projects&quot;: [...]
+    },
+}
+</pre></div>
+</div>
+<p>We take this JSON object and then recursively process it in order to apply
+the direct mappings. This is simply looking for the pattern <cite>{#}</cite> and
+substituting it with values from the direct mappings list. The index of the
+direct mapping starts at zero.</p>
+</section>
+<section id="mapping-rules">
+<h2>Mapping Rules<a class="headerlink" href="#mapping-rules" title="Link to this heading">¶</a></h2>
+<section id="mapping-engine">
+<h3>Mapping Engine<a class="headerlink" href="#mapping-engine" title="Link to this heading">¶</a></h3>
+<p>The mapping engine can be tested before creating a federated setup. It can be
+tested with the <code class="docutils literal notranslate"><span class="pre">keystone-manage</span> <span class="pre">mapping_engine</span></code> command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>keystone-manage<span class="w"> </span>mapping_engine<span class="w"> </span>--rules<span class="w"> </span>&lt;file&gt;<span class="w"> </span>--input<span class="w"> </span>&lt;file&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the rules file is formatted as JSON, the input file of assertion
+data is formatted as individual lines of key: value pairs, see
+<cite>keystone-manage mapping_engine –help</cite> for details.</p>
+</div>
+</section>
+<section id="mapping-conditions">
+<h3>Mapping Conditions<a class="headerlink" href="#mapping-conditions" title="Link to this heading">¶</a></h3>
+<p>Mappings support 5 different types of conditions:</p>
+<p><code class="docutils literal notranslate"><span class="pre">empty</span></code>: The rule is matched to all claims containing the remote attribute type.
+This condition does not need to be specified.</p>
+<p><code class="docutils literal notranslate"><span class="pre">any_one_of</span></code>: The rule is matched only if any of the specified strings appear
+in the remote attribute type. Condition result is boolean, not the argument that
+is passed as input.</p>
+<p><code class="docutils literal notranslate"><span class="pre">not_any_of</span></code>: The rule is not matched if any of the specified strings appear
+in the remote attribute type. Condition result is boolean, not the argument that
+is passed as input.</p>
+<p><code class="docutils literal notranslate"><span class="pre">blacklist</span></code>: This rule removes all groups matched from the assertion. It is
+not intended to be used as a way to prevent users, or groups of users, from
+accessing the service provider. The output from filtering through a blacklist
+will be all groups from the assertion that were not listed in the blacklist.</p>
+<p><code class="docutils literal notranslate"><span class="pre">whitelist</span></code>: This rule explicitly states which groups should be carried over
+from the assertion. The result is the groups present in the assertion and in
+the whitelist.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">empty</span></code>, <code class="docutils literal notranslate"><span class="pre">blacklist</span></code> and <code class="docutils literal notranslate"><span class="pre">whitelist</span></code> are the only conditions that can
+be used in direct mapping ({0}, {1}, etc.)</p>
+</div>
+<p>Multiple conditions can be combined to create a single rule.</p>
+</section>
+<section id="mappings-examples">
+<h3>Mappings Examples<a class="headerlink" href="#mappings-examples" title="Link to this heading">¶</a></h3>
+<p>The following are all examples of mapping rule types. Each example includes
+an explanation of what it does and when to use it.</p>
+<section id="empty-condition">
+<h4>empty condition<a class="headerlink" href="#empty-condition" title="Link to this heading">¶</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">empty</span></code> condition matches any assertion that contains the specified
+attribute type, regardless of its value. This is useful when you want to
+extract values from the assertion for variable substitution.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{0} {1}&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{2}&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{3}&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0cd5e9&quot;</span>
+<span class="w">                        </span><span class="p">}</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;remote&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FirstName&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LastName&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Email&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;OIDC_GROUPS&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>What this mapping does:</strong></p>
+<ul class="simple">
+<li><p>Creates a user with name “{FirstName} {LastName}” (e.g., “Jane Doe”)</p></li>
+<li><p>Sets the user’s email from the Email attribute</p></li>
+<li><p>Places the user in groups matching the values from OIDC_GROUPS</p></li>
+</ul>
+<p><strong>Variable substitution:</strong></p>
+<p>The numbers in braces <code class="docutils literal notranslate"><span class="pre">{0}</span></code>, <code class="docutils literal notranslate"><span class="pre">{1}</span></code>, <code class="docutils literal notranslate"><span class="pre">{2}</span></code>, etc. are indices that map to
+the remote attributes in order:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{0}</span></code> → value from <code class="docutils literal notranslate"><span class="pre">FirstName</span></code> attribute</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{1}</span></code> → value from <code class="docutils literal notranslate"><span class="pre">LastName</span></code> attribute</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{2}</span></code> → value from <code class="docutils literal notranslate"><span class="pre">Email</span></code> attribute</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{3}</span></code> → value(s) from <code class="docutils literal notranslate"><span class="pre">OIDC_GROUPS</span></code> attribute</p></li>
+</ul>
+<p><strong>Requirements for this mapping:</strong></p>
+<ul class="simple">
+<li><p>The group “0cd5e9” must exist (referenced by ID)</p></li>
+<li><p>Groups from OIDC_GROUPS must exist (referenced by name from assertion)</p></li>
+<li><p>If any group doesn’t exist, it will be silently skipped</p></li>
+</ul>
+<p><strong>Multi-valued attributes:</strong></p>
+<p>Groups can have multiple values separated by semicolons:</p>
+<ul class="simple">
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">OIDC_GROUPS=developers;testers</span></code></p></li>
+<li><p>This creates mappings to both “developers” and “testers” groups</p></li>
+</ul>
+<p><strong>Example mapping output:</strong></p>
+<p>Given the above mapping with the following assertion data:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>FirstName: Jane
+LastName: Doe
+Email: jane.doe@example.com
+OIDC_GROUPS: developers;testers
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">keystone-manage</span> <span class="pre">mapping_engine</span></code> would produce:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Jane Doe&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;jane.doe@example.com&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ephemeral&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Federated&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;group_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;0cd5e9&quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;group_names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;developers&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0cd5e9&quot;</span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;testers&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0cd5e9&quot;</span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Important:</strong> The groups “developers” and “testers” must exist in domain
+“0cd5e9” for the user to receive their associated roles.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the user id and name are not specified in the mapping, the server tries to
+directly map <code class="docutils literal notranslate"><span class="pre">REMOTE_USER</span></code> environment variable. If this variable is also
+unavailable the server returns an HTTP 401 Unauthorized error.</p>
+</div>
+</section>
+<section id="other-conditions">
+<h4>other conditions<a class="headerlink" href="#other-conditions" title="Link to this heading">¶</a></h4>
+<p>In <code class="docutils literal notranslate"><span class="pre">&lt;other_condition&gt;</span></code> shown below, please supply one of the following:
+<code class="docutils literal notranslate"><span class="pre">any_one_of</span></code>, or <code class="docutils literal notranslate"><span class="pre">not_any_of</span></code>.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{0}&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0cd5e9&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;remote&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;UserName&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HTTP_OIDC_GROUPIDS&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;&lt;other_condition&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">&quot;HTTP_OIDC_EMAIL&quot;</span>
+<span class="w">                    </span><span class="p">]</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In <code class="docutils literal notranslate"><span class="pre">&lt;other_condition&gt;</span></code> shown below, please supply one of the following:
+<code class="docutils literal notranslate"><span class="pre">blacklist</span></code>, or <code class="docutils literal notranslate"><span class="pre">whitelist</span></code>.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{0}&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;groups&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{1}&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0cd5e9&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;remote&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;UserName&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HTTP_OIDC_GROUPIDS&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;&lt;other_condition&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">&quot;me@example.com&quot;</span>
+<span class="w">                    </span><span class="p">]</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In the above example, a whitelist can be used to only map the user into a few of
+the groups in their <code class="docutils literal notranslate"><span class="pre">HTTP_OIDC_GROUPIDS</span></code> remote attribute:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HTTP_OIDC_GROUPIDS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;whitelist&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;Developers&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;OpsTeam&quot;</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A blacklist can map the user into all groups except those matched:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HTTP_OIDC_GROUPIDS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;blacklist&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;Finance&quot;</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example whitelist output:</strong></p>
+<p>Given a mapping with the whitelist example above and this assertion data:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>UserName: jsmith
+HTTP_OIDC_GROUPIDS: Developers;OpsTeam;Finance;Marketing
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">keystone-manage</span> <span class="pre">mapping_engine</span></code> would produce:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;jsmith&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ephemeral&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Federated&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;group_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;group_names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Developers&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc1234&quot;</span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;OpsTeam&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc1234&quot;</span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> Only “Developers” and “OpsTeam” are included because they match the
+whitelist. “Finance” and “Marketing” are filtered out. Both groups must exist
+in domain “abc1234” for the user to receive their roles.</p>
+<p><strong>Example blacklist output:</strong></p>
+<p>With the blacklist example above and the same assertion data, the output would be:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;jsmith&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ephemeral&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Federated&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;group_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;group_names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Developers&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0cd5e9&quot;</span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;OpsTeam&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0cd5e9&quot;</span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Marketing&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0cd5e9&quot;</span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> All groups except “Finance” are included. The blacklist removes
+“Finance” from the assertion’s group list.</p>
+<p>Regular expressions can be used in any condition for more flexible matches:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HTTP_OIDC_GROUPIDS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;whitelist&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;.*Team$&quot;</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>When mapping into groups, either ids or names can be provided in the local section:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;0cd5e9&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;developer_group&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc1234&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;developer_group&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;private_cloud&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="mapping-to-local-vs-ephemeral-users">
+<h4>Mapping to Local vs Ephemeral Users<a class="headerlink" href="#mapping-to-local-vs-ephemeral-users" title="Link to this heading">¶</a></h4>
+<p>Federated users can be mapped to either <strong>local</strong> or <strong>ephemeral</strong> users,
+which behave very differently:</p>
+<p><strong>Local Users (type=local)</strong></p>
+<p>Use this approach when you want to link federated authentication to existing
+keystone users. The user <strong>must already exist</strong> in keystone’s identity backend.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;local_user&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;local&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;local_domain&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Important:</strong> When using <code class="docutils literal notranslate"><span class="pre">type:</span> <span class="pre">local</span></code>:</p>
+<ul class="simple">
+<li><p>The user and domain <strong>must exist</strong> in keystone’s identity backend before
+authentication</p></li>
+<li><p>Keystone will fetch user details (id, name, roles, groups) from the backend</p></li>
+<li><p>If the user doesn’t exist, authentication fails with <code class="docutils literal notranslate"><span class="pre">401</span> <span class="pre">Unauthorized</span></code></p></li>
+<li><p>The federated user mapping assigns the federated identity to this local user</p></li>
+<li><p>Keystone will discard further group assignments from the mapping and use only
+the roles/groups already configured for the local user</p></li>
+</ul>
+<p><strong>When to use local users:</strong></p>
+<ul class="simple">
+<li><p>You have existing users in LDAP or SQL that should authenticate via federation</p></li>
+<li><p>You want to maintain user identity across different authentication methods</p></li>
+<li><p>You need consistent user IDs regardless of authentication method</p></li>
+</ul>
+<p><strong>Example mapping output for local users:</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">keystone-manage</span> <span class="pre">mapping_engine</span></code> output for the above mapping would be:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;local_user&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;local&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;local_domain&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;group_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;group_names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Important:</strong> During actual authentication, keystone will:</p>
+<ol class="arabic simple">
+<li><p>Look up “local_user” in domain “local_domain” in the identity backend</p></li>
+<li><p>If found, fetch the user’s existing ID, roles, and group memberships</p></li>
+<li><p>Use those existing attributes (ignoring any group mappings in the mapping)</p></li>
+<li><p>If not found, return <code class="docutils literal notranslate"><span class="pre">401</span> <span class="pre">Unauthorized</span></code> error</p></li>
+</ol>
+<p><strong>Ephemeral Users (type=ephemeral or omitted)</strong></p>
+<p>Use this approach for purely federated users that don’t need local accounts.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{0}&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{1}&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Important:</strong> When using ephemeral users (or omitting <code class="docutils literal notranslate"><span class="pre">type</span></code>):</p>
+<ul class="simple">
+<li><p>The user does <strong>not</strong> need to exist beforehand</p></li>
+<li><p>The user becomes a member of the identity provider’s domain (or a domain
+specified in the mapping)</p></li>
+<li><p>All user attributes must come from the IdP assertion and mapping rules</p></li>
+<li><p>The user’s groups and roles are determined entirely by the mapping</p></li>
+<li><p>Each authentication may result in a different user ID (based on the assertion)</p></li>
+</ul>
+<p><strong>When to use ephemeral users:</strong></p>
+<ul class="simple">
+<li><p>Pure federated authentication with no local user accounts</p></li>
+<li><p>Users should only authenticate through the IdP</p></li>
+<li><p>You want to manage authorization through group mappings rather than direct
+user assignments</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Domain <code class="docutils literal notranslate"><span class="pre">Federated</span></code> is a service domain - it cannot be listed, displayed,
+added or deleted.  There is no need to perform any operation on it prior to
+federation configuration.</p>
+</div>
+</section>
+</section>
+<section id="output">
+<h3>Output<a class="headerlink" href="#output" title="Link to this heading">¶</a></h3>
+<p>If a mapping is valid you will receive the following output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;group_ids&quot;: &quot;[&lt;group-ids&gt;]&quot;,
+    &quot;user&quot;:
+        {
+            &quot;domain&quot;:
+                {
+                    &quot;id&quot;: &quot;Federated&quot; or &quot;&lt;local-domain-id&gt;&quot;
+                },
+            &quot;type&quot;: &quot;ephemeral&quot; or &quot;local&quot;,
+            &quot;name&quot;: &quot;&lt;local-user-name&gt;&quot;,
+            &quot;id&quot;: &quot;&lt;local-user-id&gt;&quot;
+        },
+    &quot;group_names&quot;:
+        [
+            {
+                &quot;domain&quot;:
+                    {
+                        &quot;name&quot;: &quot;&lt;domain-name&gt;&quot;
+                    },
+                &quot;name&quot;:
+                    {
+                        &quot;name&quot;: &quot;[&lt;groups-names&gt;]&quot;
+                    }
+            },
+            {
+                &quot;domain&quot;:
+                    {
+                        &quot;name&quot;: &quot;&lt;domain-name&gt;&quot;
+                    },
+                &quot;name&quot;:
+                    {
+                        &quot;name&quot;: &quot;[&lt;groups-names&gt;]&quot;
+                    }
+            }
+        ]
+}
+</pre></div>
+</div>
+<p>If the mapped user is local, mapping engine will discard further group
+assigning and return set of roles configured for the user.</p>
+</section>
+<section id="regular-expressions">
+<h3>Regular Expressions<a class="headerlink" href="#regular-expressions" title="Link to this heading">¶</a></h3>
+<p>Regular expressions can be used in a mapping by specifying the <code class="docutils literal notranslate"><span class="pre">regex</span></code> key, and
+setting it to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{0}&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{1}&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc1234&quot;</span>
+<span class="w">                        </span><span class="p">}</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;remote&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;UserName&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HTTP_OIDC_GROUPIDS&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;any_one_of&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">&quot;.*@yeah.com$&quot;</span>
+<span class="w">                    </span><span class="p">]</span>
+<span class="w">                    </span><span class="nt">&quot;regex&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HTTP_OIDC_GROUPIDS&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;whitelist&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">&quot;Project.*$&quot;</span>
+<span class="w">                    </span><span class="p">],</span>
+<span class="w">                    </span><span class="nt">&quot;regex&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">                 </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This allows any user with a claim containing a key with any value in
+<code class="docutils literal notranslate"><span class="pre">HTTP_OIDC_GROUPIDS</span></code> to be mapped to group with id <code class="docutils literal notranslate"><span class="pre">0cd5e9</span></code>. Additionally,
+for every value in the <code class="docutils literal notranslate"><span class="pre">HTTP_OIDC_GROUPIDS</span></code> claim matching the string
+<code class="docutils literal notranslate"><span class="pre">Project.*</span></code>, the user will be assigned to the project with that name.</p>
+<p><strong>Example regex output:</strong></p>
+<p>Given the above mapping with this assertion data:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>UserName: jane.doe
+HTTP_OIDC_GROUPIDS: admin@yeah.com;users@yeah.com;ProjectAlpha;ProjectBeta;Finance
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">keystone-manage</span> <span class="pre">mapping_engine</span></code> would produce:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;jane.doe&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ephemeral&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Federated&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;group_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;group_names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ProjectAlpha&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc1234&quot;</span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ProjectBeta&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc1234&quot;</span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>How the regex conditions work:</strong></p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">any_one_of</span></code> with <code class="docutils literal notranslate"><span class="pre">&quot;.*&#64;yeah.com$&quot;</span></code>: Matches if ANY value in
+HTTP_OIDC_GROUPIDS ends with “&#64;yeah.com”. Since “<a class="reference external" href="mailto:admin&#37;&#52;&#48;yeah&#46;com">admin<span>&#64;</span>yeah<span>&#46;</span>com</a>” matches,
+the rule applies.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">whitelist</span></code> with <code class="docutils literal notranslate"><span class="pre">&quot;Project.*$&quot;</span></code>: Filters HTTP_OIDC_GROUPIDS to only
+include values starting with “Project”. This matches “ProjectAlpha” and
+“ProjectBeta” but not “Finance”.</p></li>
+<li><p>The filtered group names are placed in the groups, and must exist in domain
+“abc1234”.</p></li>
+</ol>
+</section>
+<section id="condition-combinations">
+<h3>Condition Combinations<a class="headerlink" href="#condition-combinations" title="Link to this heading">¶</a></h3>
+<p>Combinations of mappings conditions can also be done.</p>
+<p><code class="docutils literal notranslate"><span class="pre">empty</span></code>, <code class="docutils literal notranslate"><span class="pre">any_one_of</span></code>, and <code class="docutils literal notranslate"><span class="pre">not_any_of</span></code> can all be used in the same rule,
+but cannot be repeated within the same condition. <code class="docutils literal notranslate"><span class="pre">any_one_of</span></code> and
+<code class="docutils literal notranslate"><span class="pre">not_any_of</span></code> are mutually exclusive within a condition’s scope. So are
+<code class="docutils literal notranslate"><span class="pre">whitelist</span></code> and <code class="docutils literal notranslate"><span class="pre">blacklist</span></code>.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{0}&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0cd5e9&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;remote&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;UserName&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cn=IBM_Canada_Lab&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;not_any_of&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">&quot;.*@naww.com$&quot;</span>
+<span class="w">                    </span><span class="p">],</span>
+<span class="w">                    </span><span class="nt">&quot;regex&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cn=IBM_USA_Lab&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;any_one_of&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">&quot;.*@yeah.com$&quot;</span>
+<span class="w">                    </span><span class="p">]</span>
+<span class="w">                    </span><span class="nt">&quot;regex&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>As before group names and users can also be provided in the local section.</p>
+<p>This allows any user with the following claim information to be mapped to
+group with id 0cd5e9.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;UserName&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;any_name&gt;@yeah.com&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nt">&quot;cn=IBM_USA_Lab&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;any_name&gt;@yeah.com&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nt">&quot;cn=IBM_Canada_Lab&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;any_name&gt;@yeah.com&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The following claims will be mapped:</p>
+<ul class="simple">
+<li><p>any claim containing the key UserName.</p></li>
+<li><p>any claim containing key cn=IBM_Canada_Lab that doesn’t have the value &lt;any_name&gt;&#64;naww.com.</p></li>
+<li><p>any claim containing key cn=IBM_USA_Lab that has value &lt;any_name&gt;&#64;yeah.com.</p></li>
+</ul>
+</section>
+<section id="multiple-rules">
+<h3>Multiple Rules<a class="headerlink" href="#multiple-rules" title="Link to this heading">¶</a></h3>
+<p>Multiple rules can also be utilized in a mapping.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{0}&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;non-contractors&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc1234&quot;</span>
+<span class="w">                        </span><span class="p">}</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;remote&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;UserName&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;orgPersonType&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;not_any_of&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">&quot;Contractor&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">&quot;SubContractor&quot;</span>
+<span class="w">                    </span><span class="p">]</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{0}&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;contractors&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc1234&quot;</span>
+<span class="w">                        </span><span class="p">}</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;remote&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;UserName&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;orgPersonType&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;any_one_of&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">&quot;Contractor&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">&quot;SubContractor&quot;</span>
+<span class="w">                    </span><span class="p">]</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The above assigns groups membership basing on <code class="docutils literal notranslate"><span class="pre">orgPersonType</span></code> values:</p>
+<ul class="simple">
+<li><p>neither <code class="docutils literal notranslate"><span class="pre">Contractor</span></code> nor <code class="docutils literal notranslate"><span class="pre">SubContractor</span></code> will belong to the <code class="docutils literal notranslate"><span class="pre">non-contractors</span></code> group.</p></li>
+<li><p>either <code class="docutils literal notranslate"><span class="pre">Contractor</span> <span class="pre">or</span> <span class="pre">``SubContractor</span></code> will belong to the <code class="docutils literal notranslate"><span class="pre">contractors</span></code> group.</p></li>
+</ul>
+<p><strong>Example multiple rules output:</strong></p>
+<p>Given the above mapping with this assertion data:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>UserName: jsmith
+orgPersonType: Employee
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">keystone-manage</span> <span class="pre">mapping_engine</span></code> would produce:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;jsmith&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ephemeral&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Federated&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;group_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;group_names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;non-contractors&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc1234&quot;</span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>How multiple rules work:</strong></p>
+<ol class="arabic simple">
+<li><p>Rules are evaluated <strong>sequentially</strong> from top to bottom</p></li>
+<li><p>The <strong>first rule</strong> checks: is orgPersonType NOT “Contractor” or “SubContractor”?
+Since it’s “Employee”, this matches → user gets “non-contractors” group</p></li>
+<li><p>Rules are <strong>additive</strong> - even though rule 1 matched, rule 2 is still evaluated</p></li>
+<li><p>The <strong>second rule</strong> checks: is orgPersonType “Contractor” or “SubContractor”?
+Since it’s “Employee”, this does NOT match → nothing added</p></li>
+</ol>
+<p>If <code class="docutils literal notranslate"><span class="pre">orgPersonType</span></code> were “Contractor”, only the second rule would match and the
+user would be in the “contractors” group instead.</p>
+<p>Rules are additive, so permissions will only be granted for the rules that
+succeed. All the remote conditions of a rule must be valid.</p>
+<p>When using multiple rules you can specify more than one effective user
+identification, but only the first match will be considered and the others
+ignored ordered from top to bottom.</p>
+<p>Since rules are additive one can specify one user identification and this will
+also work. The best practice for multiple rules is to create a rule for just
+user and another rule for just groups. Below is rules example repeated but with
+global username mapping.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">        </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">            </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{0}&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}],</span>
+<span class="w">        </span><span class="nt">&quot;remote&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;UserType&quot;</span>
+<span class="w">        </span><span class="p">}]</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">            </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;non-contractors&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc1234&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}],</span>
+<span class="w">        </span><span class="nt">&quot;remote&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;orgPersonType&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;not_any_of&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;Contractor&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;SubContractor&quot;</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}]</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">            </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;contractors&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc1234&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}],</span>
+<span class="w">        </span><span class="nt">&quot;remote&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;orgPersonType&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;any_one_of&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;Contractor&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;SubContractor&quot;</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}]</span>
+<span class="w">    </span><span class="p">}]</span>
+<span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="auto-provisioning">
+<h3>Auto-Provisioning<a class="headerlink" href="#auto-provisioning" title="Link to this heading">¶</a></h3>
+<p>The mapping engine can automatically provision <strong>projects</strong> when a federated
+user authenticates. This allows you to create a mapping that grants users
+access to specific projects, and those projects will be created automatically
+if they don’t already exist.</p>
+<p><strong>What Gets Auto-Provisioned:</strong></p>
+<ul class="simple">
+<li><p><strong>Projects only</strong> - Defined in the <code class="docutils literal notranslate"><span class="pre">projects</span></code> section of the local mapping</p></li>
+<li><p>Projects are created in the IdP’s domain (or a domain specified in the mapping)</p></li>
+<li><p>Role assignments are automatically created for the user on these projects</p></li>
+</ul>
+<p><strong>What Does NOT Get Auto-Provisioned:</strong></p>
+<ul class="simple">
+<li><p><strong>Groups</strong> - Must exist beforehand; missing groups are silently skipped</p></li>
+<li><p><strong>Users with type=local</strong> - Must exist; authentication fails if they don’t</p></li>
+<li><p><strong>Roles</strong> - Must exist in the deployment; mapping fails if they don’t</p></li>
+<li><p><strong>Domains</strong> - Must exist; mapping fails if they don’t</p></li>
+</ul>
+<p><strong>Important Notes:</strong></p>
+<ul class="simple">
+<li><p>Auto-provisioning is <strong>idempotent</strong> - if the assertion hasn’t changed,
+no new projects are created on subsequent authentications</p></li>
+<li><p>Projects created through auto-provisioning have only the basic attributes
+(name, domain) - no description or other metadata</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">projects</span></code> section must include a <code class="docutils literal notranslate"><span class="pre">roles</span></code> section or the mapping
+will be invalid</p></li>
+<li><p>Direct role assignments are created for the user (not through group membership)</p></li>
+</ul>
+<section id="auto-provisioning-example">
+<h4>Auto-Provisioning Example<a class="headerlink" href="#auto-provisioning-example" title="Link to this heading">¶</a></h4>
+<p>Consider the following mapping that auto-provisions projects:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{0}&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;projects&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Production&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                </span><span class="p">{</span>
+<span class="w">                                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;reader&quot;</span>
+<span class="w">                                </span><span class="p">}</span>
+<span class="w">                            </span><span class="p">]</span>
+<span class="w">                        </span><span class="p">},</span>
+<span class="w">                        </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Staging&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                </span><span class="p">{</span>
+<span class="w">                                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;member&quot;</span>
+<span class="w">                                </span><span class="p">}</span>
+<span class="w">                            </span><span class="p">]</span>
+<span class="w">                        </span><span class="p">},</span>
+<span class="w">                        </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Project for {0}&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                </span><span class="p">{</span>
+<span class="w">                                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span>
+<span class="w">                                </span><span class="p">}</span>
+<span class="w">                            </span><span class="p">]</span>
+<span class="w">                        </span><span class="p">}</span>
+<span class="w">                    </span><span class="p">]</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;remote&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;UserName&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>How This Mapping Works:</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">projects</span></code> section within the <code class="docutils literal notranslate"><span class="pre">local</span></code> rules defines which projects
+the federated user will be granted access to. When a user authenticates:</p>
+<ol class="arabic simple">
+<li><p>The mapping engine processes the assertion and applies the remote rules</p></li>
+<li><p>Variable substitution occurs (e.g., <code class="docutils literal notranslate"><span class="pre">{0}</span></code> is replaced with the UserName)</p></li>
+<li><p>For each project in the <code class="docutils literal notranslate"><span class="pre">projects</span></code> list:</p>
+<ol class="loweralpha simple">
+<li><p>Keystone checks if the project exists in the IdP’s domain</p></li>
+<li><p>If it doesn’t exist, keystone creates it</p></li>
+<li><p>Role assignments are created for the user on that project</p></li>
+</ol>
+</li>
+<li><p>The user receives a token with access to all specified projects</p></li>
+</ol>
+<p><strong>In the example above:</strong></p>
+<p>An authenticated federated user with UserName “jsmith” will be granted:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">reader</span></code> role on the <code class="docutils literal notranslate"><span class="pre">Production</span></code> project</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">member</span></code> role on the <code class="docutils literal notranslate"><span class="pre">Staging</span></code> project</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">admin</span></code> role on the <code class="docutils literal notranslate"><span class="pre">Project</span> <span class="pre">for</span> <span class="pre">jsmith</span></code> project</p></li>
+</ul>
+<p>If <code class="docutils literal notranslate"><span class="pre">Production</span></code> or <code class="docutils literal notranslate"><span class="pre">Staging</span></code> don’t exist, they will be created. The
+<code class="docutils literal notranslate"><span class="pre">Project</span> <span class="pre">for</span> <span class="pre">jsmith</span></code> project will be created with the user’s name substituted
+into the project name (making it unique per user).</p>
+<p><strong>Example mapping output:</strong></p>
+<p>Given the above mapping with the following assertion data:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>UserName: jsmith
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">keystone-manage</span> <span class="pre">mapping_engine</span></code> would produce:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;jsmith&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ephemeral&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Federated&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;group_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;group_names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;projects&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Production&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;reader&quot;</span><span class="p">}]</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Staging&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;member&quot;</span><span class="p">}]</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Project for jsmith&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span><span class="p">}]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>What happens during authentication:</strong></p>
+<ol class="arabic simple">
+<li><p>Keystone checks if “Production” project exists - creates it if missing</p></li>
+<li><p>Grants “jsmith” the “reader” role on Production (creates role assignment)</p></li>
+<li><p>Keystone checks if “Staging” project exists - creates it if missing</p></li>
+<li><p>Grants “jsmith” the “member” role on Staging (creates role assignment)</p></li>
+<li><p>Keystone checks if “Project for jsmith” exists - creates it if missing</p></li>
+<li><p>Grants “jsmith” the “admin” role on “Project for jsmith” (creates role assignment)</p></li>
+<li><p>Returns a token that can be scoped to any of these three projects</p></li>
+</ol>
+</section>
+<section id="auto-provisioning-constraints-and-requirements">
+<h4>Auto-Provisioning Constraints and Requirements<a class="headerlink" href="#auto-provisioning-constraints-and-requirements" title="Link to this heading">¶</a></h4>
+<p><strong>Critical Requirements:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Roles must pre-exist</strong></p>
+<ul class="simple">
+<li><p>All roles referenced in the <code class="docutils literal notranslate"><span class="pre">projects</span></code> section must already exist</p></li>
+<li><p>Roles are typically defined at the deployment or domain level</p></li>
+<li><p>If a role doesn’t exist, the mapping will fail during authentication</p></li>
+<li><p>Since roles often require policy changes across services, create them
+before setting up federation</p></li>
+</ul>
+</li>
+<li><p><strong>Projects section requires roles</strong></p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">projects</span></code> attribute must include a <code class="docutils literal notranslate"><span class="pre">roles</span></code> section</p></li>
+<li><p>You cannot auto-provision a project without specifying roles</p></li>
+<li><p>This ensures users always have defined permissions on auto-created projects</p></li>
+</ul>
+</li>
+<li><p><strong>Domain handling</strong></p>
+<ul class="simple">
+<li><p>Projects are created in the IdP’s domain by default</p></li>
+<li><p>With schema version 2.0+, you can specify a domain per project</p></li>
+<li><p>The domain must already exist (domains are never auto-created)</p></li>
+</ul>
+</li>
+<li><p><strong>Assignment behavior</strong></p>
+<ul class="simple">
+<li><p>Direct role assignments are created for the user on the projects</p></li>
+<li><p>This differs from group-based authorization where assignments are ephemeral</p></li>
+<li><p>The assignments persist in keystone’s database</p></li>
+<li><p>If you later revoke the federated mapping, existing assignments remain</p></li>
+</ul>
+</li>
+<li><p><strong>Idempotency</strong></p>
+<ul class="simple">
+<li><p>Federated authentication is idempotent if assertion attributes don’t change</p></li>
+<li><p>If UserName is still “jsmith”, no new “Project for jsmith” will be created</p></li>
+<li><p>Keystone checks for existing projects by name and domain before creating</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="combining-auto-provisioned-projects-with-groups">
+<h4>Combining Auto-Provisioned Projects with Groups<a class="headerlink" href="#combining-auto-provisioned-projects-with-groups" title="Link to this heading">¶</a></h4>
+<p>You can mix <code class="docutils literal notranslate"><span class="pre">groups</span></code> and <code class="docutils literal notranslate"><span class="pre">projects</span></code> in the same mapping to give users both:</p>
+<ul class="simple">
+<li><p><strong>Direct role assignments</strong> on auto-provisioned projects</p></li>
+<li><p><strong>Group memberships</strong> that provide additional roles through group grants</p></li>
+</ul>
+<p><strong>Important distinction:</strong></p>
+<ul class="simple">
+<li><p>Projects in the <code class="docutils literal notranslate"><span class="pre">projects</span></code> section: Direct assignments, auto-created</p></li>
+<li><p>Groups in the mapping: Memberships only, <strong>must pre-exist</strong>, not auto-created</p></li>
+</ul>
+<p>The following example shows how to combine both approaches:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{0}&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;projects&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Marketing&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                </span><span class="p">{</span>
+<span class="w">                                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;member&quot;</span>
+<span class="w">                                </span><span class="p">}</span>
+<span class="w">                            </span><span class="p">]</span>
+<span class="w">                        </span><span class="p">},</span>
+<span class="w">                        </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Development project for {0}&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                </span><span class="p">{</span>
+<span class="w">                                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span>
+<span class="w">                                </span><span class="p">}</span>
+<span class="w">                            </span><span class="p">]</span>
+<span class="w">                        </span><span class="p">}</span>
+<span class="w">                    </span><span class="p">]</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Finance&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;6fe767&quot;</span>
+<span class="w">                        </span><span class="p">}</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;remote&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;UserName&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>In this example:</strong></p>
+<p>A federated user with UserName “jsmith” will receive:</p>
+<p><strong>Direct role assignments (from projects section):</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">member</span></code> role on the <code class="docutils literal notranslate"><span class="pre">Marketing</span></code> project (auto-created if missing)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">admin</span></code> role on <code class="docutils literal notranslate"><span class="pre">Development</span> <span class="pre">project</span> <span class="pre">for</span> <span class="pre">jsmith</span></code> (auto-created if missing)</p></li>
+</ul>
+<p><strong>Group memberships (from group section):</strong></p>
+<ul class="simple">
+<li><p>Membership in the <code class="docutils literal notranslate"><span class="pre">Finance</span></code> group (must already exist in domain 6fe767)</p></li>
+<li><p>All roles that the Finance group has been granted on any projects/domains</p></li>
+</ul>
+<p><strong>Key differences:</strong></p>
+<ul class="simple">
+<li><p><strong>Project assignments are persistent</strong> - stored in keystone’s database as
+direct user-to-project-role assignments</p></li>
+<li><p><strong>Group memberships are ephemeral</strong> - exist only for the duration of the
+token; evaluated fresh on each authentication</p></li>
+<li><p>If the <code class="docutils literal notranslate"><span class="pre">Finance</span></code> group doesn’t exist, the user will still authenticate
+successfully but won’t receive the group membership (warning logged only)</p></li>
+</ul>
+<p><strong>Example mapping output:</strong></p>
+<p>Given the above mapping with the following assertion data:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>UserName: jsmith
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">keystone-manage</span> <span class="pre">mapping_engine</span></code> would produce:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;jsmith&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ephemeral&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Federated&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;group_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;group_names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Finance&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;6fe767&quot;</span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;projects&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Marketing&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;member&quot;</span><span class="p">}]</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Development project for jsmith&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span><span class="p">}]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>What happens during authentication:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Projects are auto-provisioned</strong> (if they don’t exist):</p>
+<ul class="simple">
+<li><p>Creates “Marketing” project → grants “jsmith” member role (persistent assignment)</p></li>
+<li><p>Creates “Development project for jsmith” → grants “jsmith” admin role (persistent assignment)</p></li>
+</ul>
+</li>
+<li><p><strong>Group membership is assigned</strong> (if group exists):</p>
+<ul class="simple">
+<li><p>Checks if “Finance” group exists in domain “6fe767”</p></li>
+<li><p>If it exists: adds “jsmith” to Finance group for this token only (ephemeral)</p></li>
+<li><p>If it doesn’t exist: logs warning, user still authenticates, but no Finance group roles</p></li>
+</ul>
+</li>
+<li><p><strong>Final user access:</strong></p>
+<ul class="simple">
+<li><p>Direct access to Marketing and Development projects (via persistent assignments)</p></li>
+<li><p>Access to any projects/domains where Finance group has roles (via ephemeral group membership)</p></li>
+<li><p>All Finance group roles are evaluated fresh on each authentication</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<section id="troubleshooting-federation-mappings">
+<h3>Troubleshooting Federation Mappings<a class="headerlink" href="#troubleshooting-federation-mappings" title="Link to this heading">¶</a></h3>
+<section id="common-issues-and-solutions">
+<h4>Common Issues and Solutions<a class="headerlink" href="#common-issues-and-solutions" title="Link to this heading">¶</a></h4>
+<p><strong>Problem: Authentication fails with 401 Unauthorized</strong></p>
+<p><em>Possible causes:</em></p>
+<ol class="arabic simple">
+<li><p><strong>Local user doesn’t exist</strong></p>
+<ul class="simple">
+<li><p>If using <code class="docutils literal notranslate"><span class="pre">type:</span> <span class="pre">local</span></code>, the user must exist in keystone’s identity backend</p></li>
+<li><p>Solution: Create the user first, or switch to ephemeral users</p></li>
+</ul>
+</li>
+<li><p><strong>REMOTE_USER not mapped</strong></p>
+<ul class="simple">
+<li><p>If no user name/id is in the mapping, keystone looks for REMOTE_USER env var</p></li>
+<li><p>Solution: Add explicit user mapping or configure REMOTE_USER in your IdP</p></li>
+</ul>
+</li>
+<li><p><strong>Referenced role doesn’t exist</strong></p>
+<ul class="simple">
+<li><p>Roles in auto-provisioned projects must pre-exist</p></li>
+<li><p>Solution: Create roles before setting up federation</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Problem: User authenticates but has no permissions</strong></p>
+<p><em>Possible causes:</em></p>
+<ol class="arabic simple">
+<li><p><strong>Groups don’t exist</strong></p>
+<ul class="simple">
+<li><p>Groups are silently skipped if they don’t exist</p></li>
+<li><p>Solution: Check logs for “Group X has no entry in the backend” warnings</p></li>
+<li><p>Create missing groups before authentication</p></li>
+</ul>
+</li>
+<li><p><strong>Group has no role assignments</strong></p>
+<ul class="simple">
+<li><p>Group exists but has no grants on any projects/domains</p></li>
+<li><p>Solution: Grant roles to the group on appropriate resources</p></li>
+</ul>
+</li>
+<li><p><strong>Wrong domain specified</strong></p>
+<ul class="simple">
+<li><p>Group or project in wrong domain</p></li>
+<li><p>Solution: Verify domain IDs/names in mapping match keystone resources</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Problem: Projects aren’t being auto-created</strong></p>
+<p><em>Possible causes:</em></p>
+<ol class="arabic simple">
+<li><p><strong>Using groups instead of projects section</strong></p>
+<ul class="simple">
+<li><p>Only <code class="docutils literal notranslate"><span class="pre">projects</span></code> in local mapping are auto-created</p></li>
+<li><p>Projects accessed via group membership are NOT auto-created</p></li>
+<li><p>Solution: Use the <code class="docutils literal notranslate"><span class="pre">projects</span></code> section for auto-provisioning</p></li>
+</ul>
+</li>
+<li><p><strong>Missing roles section</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">projects</span></code> must include <code class="docutils literal notranslate"><span class="pre">roles</span></code></p></li>
+<li><p>Solution: Add roles array to each project definition</p></li>
+</ul>
+</li>
+<li><p><strong>Domain doesn’t exist</strong></p>
+<ul class="simple">
+<li><p>Target domain must exist</p></li>
+<li><p>Solution: Create domain before federation or use existing domain</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Problem: Mapping rules don’t match assertion</strong></p>
+<p><em>Possible causes:</em></p>
+<ol class="arabic simple">
+<li><p><strong>Incorrect attribute names</strong></p>
+<ul class="simple">
+<li><p>Assertion attribute names are case-sensitive</p></li>
+<li><p>Solution: Check IdP configuration and actual assertion data</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">keystone-manage</span> <span class="pre">mapping_engine</span></code> to test</p></li>
+</ul>
+</li>
+<li><p><strong>Condition logic issues</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">any_one_of</span></code> vs <code class="docutils literal notranslate"><span class="pre">not_any_of</span></code> confusion</p></li>
+<li><p>Multiple conditions in same rule must ALL match</p></li>
+<li><p>Solution: Review condition documentation and test thoroughly</p></li>
+</ul>
+</li>
+<li><p><strong>Regex not enabled</strong></p>
+<ul class="simple">
+<li><p>Forgot to set <code class="docutils literal notranslate"><span class="pre">&quot;regex&quot;:</span> <span class="pre">true</span></code></p></li>
+<li><p>Solution: Add <code class="docutils literal notranslate"><span class="pre">&quot;regex&quot;:</span> <span class="pre">true</span></code> when using regex patterns</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="debugging-tips">
+<h4>Debugging Tips<a class="headerlink" href="#debugging-tips" title="Link to this heading">¶</a></h4>
+<p><strong>Test mappings before deploying:</strong></p>
+<p>Use the mapping engine test command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>keystone-manage<span class="w"> </span>mapping_engine<span class="w"> </span>--rules<span class="w"> </span>mapping.json<span class="w"> </span>--input<span class="w"> </span>assertion.txt
+</pre></div>
+</div>
+<p><strong>Enable debug logging:</strong></p>
+<p>Set keystone logging to DEBUG to see:</p>
+<ul class="simple">
+<li><p>Which rules are being evaluated</p></li>
+<li><p>Which groups are being skipped</p></li>
+<li><p>Variable substitution results</p></li>
+<li><p>Assertion data received from IdP</p></li>
+</ul>
+<p><strong>Check assertion data:</strong></p>
+<p>The assertion data is logged at DEBUG level. Look for:</p>
+<ul class="simple">
+<li><p>Actual attribute names (case-sensitive)</p></li>
+<li><p>Actual values being sent by IdP</p></li>
+<li><p>Multiple values separated by semicolons</p></li>
+</ul>
+<p><strong>Verify resources exist:</strong></p>
+<p>Before creating mappings, verify in keystone:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Check<span class="w"> </span><span class="k">if</span><span class="w"> </span>group<span class="w"> </span>exists
+<span class="gp">$ </span>openstack<span class="w"> </span>group<span class="w"> </span>list<span class="w"> </span>--domain<span class="w"> </span>&lt;domain&gt;
+
+<span class="gp"># </span>Check<span class="w"> </span><span class="k">if</span><span class="w"> </span>role<span class="w"> </span>exists
+<span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>list
+
+<span class="gp"># </span>Check<span class="w"> </span><span class="k">if</span><span class="w"> </span>domain<span class="w"> </span>exists
+<span class="gp">$ </span>openstack<span class="w"> </span>domain<span class="w"> </span>list
+
+<span class="gp"># </span>Check<span class="w"> </span><span class="k">if</span><span class="w"> </span>user<span class="w"> </span>exists<span class="w"> </span><span class="o">(</span><span class="k">for</span><span class="w"> </span><span class="nb">local</span><span class="w"> </span>user<span class="w"> </span>mappings<span class="o">)</span>
+<span class="gp">$ </span>openstack<span class="w"> </span>user<span class="w"> </span>list<span class="w"> </span>--domain<span class="w"> </span>&lt;domain&gt;
+</pre></div>
+</div>
+<p><strong>Common mistake checklist:</strong></p>
+<ul class="simple">
+<li><p>[ ] All groups referenced in mapping exist</p></li>
+<li><p>[ ] All roles referenced in mapping exist</p></li>
+<li><p>[ ] All domains referenced in mapping exist</p></li>
+<li><p>[ ] For local users: user exists in identity backend</p></li>
+<li><p>[ ] Group/project/domain names match exactly (case-sensitive)</p></li>
+<li><p>[ ] Multi-valued attributes use semicolon separator</p></li>
+<li><p>[ ] Regex patterns have <code class="docutils literal notranslate"><span class="pre">&quot;regex&quot;:</span> <span class="pre">true</span></code> flag</p></li>
+<li><p>[ ] Projects section includes roles</p></li>
+<li><p>[ ] Direct mapping indices ({0}, {1}) match remote order</p></li>
+</ul>
+</section>
+</section>
+<section id="keystone-to-keystone">
+<h3>keystone-to-keystone<a class="headerlink" href="#keystone-to-keystone" title="Link to this heading">¶</a></h3>
+<p>keystone-to-keystone federation also utilizes mappings, but has some
+differences.</p>
+<p>An attribute file (e.g. <code class="docutils literal notranslate"><span class="pre">/etc/shibboleth/attribute-map.xml</span></code> in a Shibboleth
+implementation) is used to add attributes to the mapping <cite>context</cite>. Attributes
+look as follows:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cm">&lt;!-- example 1 from a K2k Shibboleth implementation --&gt;</span>
+<span class="nt">&lt;Attribute</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;openstack_user&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;openstack_user&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;Attribute</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;openstack_user_domain&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;openstack_user_domain&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>The service provider must contain a mapping as shown below.
+<code class="docutils literal notranslate"><span class="pre">openstack_user</span></code>, and <code class="docutils literal notranslate"><span class="pre">openstack_user_domain</span></code> match to the attribute
+names we have in the Identity Provider. It will map any user with the name
+<code class="docutils literal notranslate"><span class="pre">user1</span></code> or <code class="docutils literal notranslate"><span class="pre">admin</span></code> in the <code class="docutils literal notranslate"><span class="pre">openstack_user</span></code> attribute and
+<code class="docutils literal notranslate"><span class="pre">openstack_domain</span></code> attribute <code class="docutils literal notranslate"><span class="pre">default</span></code> to a group with id <code class="docutils literal notranslate"><span class="pre">abc1234</span></code>.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;local&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc1234&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;remote&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;openstack_user&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;any_one_of&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">&quot;user1&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">&quot;admin&quot;</span>
+<span class="w">                    </span><span class="p">]</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;openstack_user_domain&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;any_one_of&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">&quot;Default&quot;</span>
+<span class="w">                    </span><span class="p">]</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A keystone user’s groups can also be mapped to groups in the service provider.
+For example, with the following attributes declared in Shibboleth’s attributes file:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cm">&lt;!-- example 2 from a K2k Shibboleth implementation --&gt;</span>
+<span class="nt">&lt;Attribute</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;openstack_user&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;openstack_user&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;Attribute</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;openstack_groups&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;openstack_groups&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>Then the following mapping can be used to map the user’s group membership from the keystone
+IdP to groups in the keystone SP:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;local&quot;</span><span class="p">:</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;user&quot;</span><span class="p">:</span>
+<span class="w">                        </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{0}&quot;</span>
+<span class="w">                        </span><span class="p">}</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;groups&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{1}&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;remote&quot;</span><span class="p">:</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;openstack_user&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;openstack_groups&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">openstack_user</span></code>, and <code class="docutils literal notranslate"><span class="pre">openstack_groups</span></code> will be matched by service
+provider to the attribute names we have in the Identity Provider. It will
+take the <code class="docutils literal notranslate"><span class="pre">openstack_user</span></code> attribute and finds in the assertion then inserts
+it directly in the mapping.  The identity provider will set the value of
+<code class="docutils literal notranslate"><span class="pre">openstack_groups</span></code> by group name and domain name to which the user belongs
+in the Idp. Suppose the user belongs to ‘group1’ in domain ‘Default’ in the IdP
+then it will map to a group with the same name and same domain’s name in the SP.</p>
+<p>The possible attributes that can be used in a mapping are <cite>openstack_user</cite>,
+<cite>openstack_user_domain</cite>, <cite>openstack_roles</cite>, <cite>openstack_project</cite>,
+<cite>openstack_project_domain</cite> and <cite>openstack_groups</cite>.</p>
+</section>
+</section>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="configure_federation.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Configuring Keystone for Federation"></i></a>
+          
+          
+            <a href="../external-authentication.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Using external authentication with Keystone"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2025-12-06 00:17:43</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Administrator Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration.html">Keystone Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../operations.html">Keystone Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tokens.html">All about keystone tokens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../service-api-protection.html">Default Roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keystone-features.html">Advanced Keystone Features</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../authentication-mechanisms.html">Authentication Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../oauth2-usage-guide.html">OAuth2.0 Client Credentials Grant Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configure-https.html">Configure HTTPS in Identity Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../oauth2-mtls-usage-guide.html">OAuth 2.0 Mutual-TLS Client Authentication Flow</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Mapping Combinations</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#important-prerequisites">Important Prerequisites</a></li>
+<li><a class="reference internal" href="#definitions">Definitions</a></li>
+<li><a class="reference internal" href="#how-mappings-are-processed">How Mappings Are Processed</a></li>
+<li><a class="reference internal" href="#mapping-rules">Mapping Rules</a><ul>
+<li><a class="reference internal" href="#mapping-engine">Mapping Engine</a></li>
+<li><a class="reference internal" href="#mapping-conditions">Mapping Conditions</a></li>
+<li><a class="reference internal" href="#mappings-examples">Mappings Examples</a><ul>
+<li><a class="reference internal" href="#empty-condition">empty condition</a></li>
+<li><a class="reference internal" href="#other-conditions">other conditions</a></li>
+<li><a class="reference internal" href="#mapping-to-local-vs-ephemeral-users">Mapping to Local vs Ephemeral Users</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#output">Output</a></li>
+<li><a class="reference internal" href="#regular-expressions">Regular Expressions</a></li>
+<li><a class="reference internal" href="#condition-combinations">Condition Combinations</a></li>
+<li><a class="reference internal" href="#multiple-rules">Multiple Rules</a></li>
+<li><a class="reference internal" href="#auto-provisioning">Auto-Provisioning</a><ul>
+<li><a class="reference internal" href="#auto-provisioning-example">Auto-Provisioning Example</a></li>
+<li><a class="reference internal" href="#auto-provisioning-constraints-and-requirements">Auto-Provisioning Constraints and Requirements</a></li>
+<li><a class="reference internal" href="#combining-auto-provisioned-projects-with-groups">Combining Auto-Provisioned Projects with Groups</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#troubleshooting-federation-mappings">Troubleshooting Federation Mappings</a><ul>
+<li><a class="reference internal" href="#common-issues-and-solutions">Common Issues and Solutions</a></li>
+<li><a class="reference internal" href="#debugging-tips">Debugging Tips</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone-to-keystone">keystone-to-keystone</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "admin/federation/mapping_combinations" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "Mapping Combinations in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2025-12-06 00:17:43";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "admin/federation/mapping_combinations";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

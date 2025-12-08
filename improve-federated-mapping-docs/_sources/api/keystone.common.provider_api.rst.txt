@@ -1,0 +1,7 @@
+keystone.common.provider\_api module
+====================================
+
+.. automodule:: keystone.common.provider_api
+   :members:
+   :undoc-members:
+   :show-inheritance:

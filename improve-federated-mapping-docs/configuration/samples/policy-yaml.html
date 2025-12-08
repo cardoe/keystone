@@ -1,0 +1,2730 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>policy.yaml &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/support-matrix.css" />
+    <script src="../../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="logging.conf" href="logging-conf.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/configuration/samples/policy-yaml.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>policy.yaml</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="logging-conf.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: logging.conf"></i></a>
+    
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="policy-yaml">
+<h1>policy.yaml<a class="headerlink" href="#policy-yaml" title="Link to this heading">¶</a></h1>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">policy.yaml</span></code> file to define additional access controls that apply to
+the Identity service:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#&quot;admin_required&quot;: &quot;role:admin or is_admin:1&quot;</span>
+
+<span class="c1">#&quot;service_role&quot;: &quot;role:service&quot;</span>
+
+<span class="c1">#&quot;service_or_admin&quot;: &quot;rule:admin_required or rule:service_role&quot;</span>
+
+<span class="c1">#&quot;owner&quot;: &quot;user_id:%(user_id)s&quot;</span>
+
+<span class="c1">#&quot;admin_or_owner&quot;: &quot;rule:admin_required or rule:owner&quot;</span>
+
+<span class="c1">#&quot;token_subject&quot;: &quot;user_id:%(target.token.user_id)s&quot;</span>
+
+<span class="c1">#&quot;admin_or_token_subject&quot;: &quot;rule:admin_required or rule:token_subject&quot;</span>
+
+<span class="c1">#&quot;service_admin_or_token_subject&quot;: &quot;rule:service_or_admin or rule:token_subject&quot;</span>
+
+<span class="c1">#&quot;domain_managed_target_role&quot;: &quot;&#39;manager&#39;:%(target.role.name)s or &#39;member&#39;:%(target.role.name)s or &#39;reader&#39;:%(target.role.name)s&quot;</span>
+
+<span class="c1"># Show access rule details.</span>
+<span class="c1"># GET  /v3/users/{user_id}/access_rules/{access_rule_id}</span>
+<span class="c1"># HEAD  /v3/users/{user_id}/access_rules/{access_rule_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_access_rule&quot;: &quot;(role:reader and system_scope:all) or user_id:%(target.user.id)s&quot;</span>
+
+<span class="c1"># List access rules for a user.</span>
+<span class="c1"># GET  /v3/users/{user_id}/access_rules</span>
+<span class="c1"># HEAD  /v3/users/{user_id}/access_rules</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_access_rules&quot;: &quot;(role:reader and system_scope:all) or user_id:%(target.user.id)s&quot;</span>
+
+<span class="c1"># Delete an access_rule.</span>
+<span class="c1"># DELETE  /v3/users/{user_id}/access_rules/{access_rule_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_access_rule&quot;: &quot;(role:admin and system_scope:all) or user_id:%(target.user.id)s&quot;</span>
+
+<span class="c1"># Authorize OAUTH1 request token.</span>
+<span class="c1"># PUT  /v3/OS-OAUTH1/authorize/{request_token_id}</span>
+<span class="c1"># Intended scope(s): project</span>
+<span class="c1">#&quot;identity:authorize_request_token&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># Get OAUTH1 access token for user by access token ID.</span>
+<span class="c1"># GET  /v3/users/{user_id}/OS-OAUTH1/access_tokens/{access_token_id}</span>
+<span class="c1"># Intended scope(s): project</span>
+<span class="c1">#&quot;identity:get_access_token&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># Get role for user OAUTH1 access token.</span>
+<span class="c1"># GET  /v3/users/{user_id}/OS-OAUTH1/access_tokens/{access_token_id}/roles/{role_id}</span>
+<span class="c1"># Intended scope(s): project</span>
+<span class="c1">#&quot;identity:get_access_token_role&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># List OAUTH1 access tokens for user.</span>
+<span class="c1"># GET  /v3/users/{user_id}/OS-OAUTH1/access_tokens</span>
+<span class="c1"># Intended scope(s): project</span>
+<span class="c1">#&quot;identity:list_access_tokens&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># List OAUTH1 access token roles.</span>
+<span class="c1"># GET  /v3/users/{user_id}/OS-OAUTH1/access_tokens/{access_token_id}/roles</span>
+<span class="c1"># Intended scope(s): project</span>
+<span class="c1">#&quot;identity:list_access_token_roles&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># Delete OAUTH1 access token.</span>
+<span class="c1"># DELETE  /v3/users/{user_id}/OS-OAUTH1/access_tokens/{access_token_id}</span>
+<span class="c1"># Intended scope(s): project</span>
+<span class="c1">#&quot;identity:delete_access_token&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># Show application credential details.</span>
+<span class="c1"># GET  /v3/users/{user_id}/application_credentials/{application_credential_id}</span>
+<span class="c1"># HEAD  /v3/users/{user_id}/application_credentials/{application_credential_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_application_credential&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or rule:owner&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_application_credential&quot;:&quot;rule:admin_or_owner&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:get_application_credential&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all) or rule:owner&quot;.</span>
+<span class="c1"># The application credential API is now aware of system scope and</span>
+<span class="c1"># default roles.</span>
+
+<span class="c1"># List application credentials for a user.</span>
+<span class="c1"># GET  /v3/users/{user_id}/application_credentials</span>
+<span class="c1"># HEAD  /v3/users/{user_id}/application_credentials</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_application_credentials&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or rule:owner&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_application_credentials&quot;:&quot;rule:admin_or_owner&quot; has</span>
+<span class="c1"># been deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:list_application_credentials&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all) or rule:owner&quot;.</span>
+<span class="c1"># The application credential API is now aware of system scope and</span>
+<span class="c1"># default roles.</span>
+
+<span class="c1"># Create an application credential.</span>
+<span class="c1"># POST  /v3/users/{user_id}/application_credentials</span>
+<span class="c1"># Intended scope(s): project</span>
+<span class="c1">#&quot;identity:create_application_credential&quot;: &quot;user_id:%(user_id)s&quot;</span>
+
+<span class="c1"># Delete an application credential.</span>
+<span class="c1"># DELETE  /v3/users/{user_id}/application_credentials/{application_credential_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_application_credential&quot;: &quot;rule:admin_or_owner&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_application_credential&quot;:&quot;rule:admin_or_owner&quot; has</span>
+<span class="c1"># been deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:delete_application_credential&quot;:&quot;rule:admin_or_owner&quot;.</span>
+<span class="c1"># The application credential API is now aware of system scope and</span>
+<span class="c1"># default roles.</span>
+
+<span class="c1"># Get service catalog.</span>
+<span class="c1"># GET  /v3/auth/catalog</span>
+<span class="c1"># HEAD  /v3/auth/catalog</span>
+<span class="c1">#&quot;identity:get_auth_catalog&quot;: &quot;&quot;</span>
+
+<span class="c1"># List all projects a user has access to via role assignments.</span>
+<span class="c1"># GET  /v3/auth/projects</span>
+<span class="c1"># HEAD  /v3/auth/projects</span>
+<span class="c1">#&quot;identity:get_auth_projects&quot;: &quot;&quot;</span>
+
+<span class="c1"># List all domains a user has access to via role assignments.</span>
+<span class="c1"># GET  /v3/auth/domains</span>
+<span class="c1"># HEAD  /v3/auth/domains</span>
+<span class="c1">#&quot;identity:get_auth_domains&quot;: &quot;&quot;</span>
+
+<span class="c1"># List systems a user has access to via role assignments.</span>
+<span class="c1"># GET  /v3/auth/system</span>
+<span class="c1"># HEAD  /v3/auth/system</span>
+<span class="c1">#&quot;identity:get_auth_system&quot;: &quot;&quot;</span>
+
+<span class="c1"># Show OAUTH1 consumer details.</span>
+<span class="c1"># GET  /v3/OS-OAUTH1/consumers/{consumer_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_consumer&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_consumer&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since T in favor of &quot;identity:get_consumer&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The OAUTH1 consumer API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># List OAUTH1 consumers.</span>
+<span class="c1"># GET  /v3/OS-OAUTH1/consumers</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_consumers&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_consumers&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since T in favor of &quot;identity:list_consumers&quot;:&quot;rule:admin_required</span>
+<span class="c1"># or (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The OAUTH1 consumer API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Create OAUTH1 consumer.</span>
+<span class="c1"># POST  /v3/OS-OAUTH1/consumers</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_consumer&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_consumer&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since T in favor of</span>
+<span class="c1"># &quot;identity:create_consumer&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The OAUTH1 consumer API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Update OAUTH1 consumer.</span>
+<span class="c1"># PATCH  /v3/OS-OAUTH1/consumers/{consumer_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:update_consumer&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_consumer&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since T in favor of</span>
+<span class="c1"># &quot;identity:update_consumer&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The OAUTH1 consumer API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Delete OAUTH1 consumer.</span>
+<span class="c1"># DELETE  /v3/OS-OAUTH1/consumers/{consumer_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_consumer&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_consumer&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since T in favor of</span>
+<span class="c1"># &quot;identity:delete_consumer&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The OAUTH1 consumer API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Show credentials details.</span>
+<span class="c1"># GET  /v3/credentials/{credential_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:get_credential&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or user_id:%(target.credential.user_id)s&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_credential&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:get_credential&quot;:&quot;(rule:admin_required)</span>
+<span class="c1"># or (role:reader and system_scope:all) or</span>
+<span class="c1"># user_id:%(target.credential.user_id)s&quot;.</span>
+<span class="c1"># The credential API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List credentials.</span>
+<span class="c1"># GET  /v3/credentials</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:list_credentials&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or user_id:%(target.credential.user_id)s&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_credentials&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:list_credentials&quot;:&quot;(rule:admin_required) or (role:reader</span>
+<span class="c1"># and system_scope:all) or user_id:%(target.credential.user_id)s&quot;.</span>
+<span class="c1"># The credential API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Create credential.</span>
+<span class="c1"># POST  /v3/credentials</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:create_credential&quot;: &quot;(rule:admin_required) or user_id:%(target.credential.user_id)s&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_credential&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:create_credential&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># user_id:%(target.credential.user_id)s&quot;.</span>
+<span class="c1"># The credential API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Update credential.</span>
+<span class="c1"># PATCH  /v3/credentials/{credential_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:update_credential&quot;: &quot;(rule:admin_required) or user_id:%(target.credential.user_id)s&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_credential&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:update_credential&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># user_id:%(target.credential.user_id)s&quot;.</span>
+<span class="c1"># The credential API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Delete credential.</span>
+<span class="c1"># DELETE  /v3/credentials/{credential_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:delete_credential&quot;: &quot;(rule:admin_required) or user_id:%(target.credential.user_id)s&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_credential&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:delete_credential&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># user_id:%(target.credential.user_id)s&quot;.</span>
+<span class="c1"># The credential API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Show domain details.</span>
+<span class="c1"># GET  /v3/domains/{domain_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:get_domain&quot;: &quot;rule:admin_required or (role:reader and system_scope:all) or token.domain.id:%(target.domain.id)s or token.project.domain.id:%(target.domain.id)s&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_domain&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># token.project.domain.id:%(target.domain.id)s&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:get_domain&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all) or</span>
+<span class="c1"># token.domain.id:%(target.domain.id)s or</span>
+<span class="c1"># token.project.domain.id:%(target.domain.id)s&quot;.</span>
+<span class="c1"># The domain API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List domains.</span>
+<span class="c1"># GET  /v3/domains</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:list_domains&quot;: &quot;rule:admin_required or (role:reader and system_scope:all) or (role:reader and domain_id:%(target.domain.id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_domains&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:list_domains&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.domain.id)s)&quot;.</span>
+<span class="c1"># The domain API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Create domain.</span>
+<span class="c1"># POST  /v3/domains</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_domain&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_domain&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:create_domain&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The domain API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Update domain.</span>
+<span class="c1"># PATCH  /v3/domains/{domain_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:update_domain&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_domain&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:update_domain&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The domain API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Delete domain.</span>
+<span class="c1"># DELETE  /v3/domains/{domain_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_domain&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_domain&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:delete_domain&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The domain API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Create domain configuration.</span>
+<span class="c1"># PUT  /v3/domains/{domain_id}/config</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_domain_config&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_domain_config&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:create_domain_config&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The domain config API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Get the entire domain configuration for a domain, an option group</span>
+<span class="c1"># within a domain, or a specific configuration option within a group</span>
+<span class="c1"># for a domain.</span>
+<span class="c1"># GET  /v3/domains/{domain_id}/config</span>
+<span class="c1"># HEAD  /v3/domains/{domain_id}/config</span>
+<span class="c1"># GET  /v3/domains/{domain_id}/config/{group}</span>
+<span class="c1"># HEAD  /v3/domains/{domain_id}/config/{group}</span>
+<span class="c1"># GET  /v3/domains/{domain_id}/config/{group}/{option}</span>
+<span class="c1"># HEAD  /v3/domains/{domain_id}/config/{group}/{option}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_domain_config&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_domain_config&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:get_domain_config&quot;:&quot;rule:admin_required or (role:reader</span>
+<span class="c1"># and system_scope:all)&quot;.</span>
+<span class="c1"># The domain config API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Get security compliance domain configuration for either a domain or</span>
+<span class="c1"># a specific option in a domain.</span>
+<span class="c1"># GET  /v3/domains/{domain_id}/config/security_compliance</span>
+<span class="c1"># HEAD  /v3/domains/{domain_id}/config/security_compliance</span>
+<span class="c1"># GET  /v3/domains/{domain_id}/config/security_compliance/{option}</span>
+<span class="c1"># HEAD  /v3/domains/{domain_id}/config/security_compliance/{option}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:get_security_compliance_domain_config&quot;: &quot;&quot;</span>
+
+<span class="c1"># Update domain configuration for either a domain, specific group or a</span>
+<span class="c1"># specific option in a group.</span>
+<span class="c1"># PATCH  /v3/domains/{domain_id}/config</span>
+<span class="c1"># PATCH  /v3/domains/{domain_id}/config/{group}</span>
+<span class="c1"># PATCH  /v3/domains/{domain_id}/config/{group}/{option}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:update_domain_config&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_domain_config&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:update_domain_config&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The domain config API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Delete domain configuration for either a domain, specific group or a</span>
+<span class="c1"># specific option in a group.</span>
+<span class="c1"># DELETE  /v3/domains/{domain_id}/config</span>
+<span class="c1"># DELETE  /v3/domains/{domain_id}/config/{group}</span>
+<span class="c1"># DELETE  /v3/domains/{domain_id}/config/{group}/{option}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_domain_config&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_domain_config&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:delete_domain_config&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The domain config API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Get domain configuration default for either a domain, specific group</span>
+<span class="c1"># or a specific option in a group.</span>
+<span class="c1"># GET  /v3/domains/config/default</span>
+<span class="c1"># HEAD  /v3/domains/config/default</span>
+<span class="c1"># GET  /v3/domains/config/{group}/default</span>
+<span class="c1"># HEAD  /v3/domains/config/{group}/default</span>
+<span class="c1"># GET  /v3/domains/config/{group}/{option}/default</span>
+<span class="c1"># HEAD  /v3/domains/config/{group}/{option}/default</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_domain_config_default&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_domain_config_default&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:get_domain_config_default&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The domain config API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Show ec2 credential details.</span>
+<span class="c1"># GET  /v3/users/{user_id}/credentials/OS-EC2/{credential_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:ec2_get_credential&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or user_id:%(target.credential.user_id)s&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:ec2_get_credential&quot;:&quot;rule:admin_required or (rule:owner</span>
+<span class="c1"># and user_id:%(target.credential.user_id)s)&quot; has been deprecated</span>
+<span class="c1"># since T in favor of</span>
+<span class="c1"># &quot;identity:ec2_get_credential&quot;:&quot;(rule:admin_required) or (role:reader</span>
+<span class="c1"># and system_scope:all) or user_id:%(target.credential.user_id)s&quot;.</span>
+<span class="c1"># The EC2 credential API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># List ec2 credentials.</span>
+<span class="c1"># GET  /v3/users/{user_id}/credentials/OS-EC2</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:ec2_list_credentials&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or rule:owner&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:ec2_list_credentials&quot;:&quot;rule:admin_or_owner&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:ec2_list_credentials&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all) or rule:owner&quot;.</span>
+<span class="c1"># The EC2 credential API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Create ec2 credential.</span>
+<span class="c1"># POST  /v3/users/{user_id}/credentials/OS-EC2</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:ec2_create_credential&quot;: &quot;rule:admin_or_owner&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:ec2_create_credential&quot;:&quot;rule:admin_or_owner&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:ec2_create_credential&quot;:&quot;rule:admin_or_owner&quot;.</span>
+<span class="c1"># The EC2 credential API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Delete ec2 credential.</span>
+<span class="c1"># DELETE  /v3/users/{user_id}/credentials/OS-EC2/{credential_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:ec2_delete_credential&quot;: &quot;(rule:admin_required) or user_id:%(target.credential.user_id)s&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:ec2_delete_credential&quot;:&quot;rule:admin_required or (rule:owner</span>
+<span class="c1"># and user_id:%(target.credential.user_id)s)&quot; has been deprecated</span>
+<span class="c1"># since T in favor of</span>
+<span class="c1"># &quot;identity:ec2_delete_credential&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># user_id:%(target.credential.user_id)s&quot;.</span>
+<span class="c1"># The EC2 credential API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Show endpoint details.</span>
+<span class="c1"># GET  /v3/endpoints/{endpoint_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_endpoint&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_endpoint&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:get_endpoint&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The endpoint API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List endpoints.</span>
+<span class="c1"># GET  /v3/endpoints</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_endpoints&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_endpoints&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:list_endpoints&quot;:&quot;rule:admin_required</span>
+<span class="c1"># or (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The endpoint API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Create endpoint.</span>
+<span class="c1"># POST  /v3/endpoints</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_endpoint&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_endpoint&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of</span>
+<span class="c1"># &quot;identity:create_endpoint&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The endpoint API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Update endpoint.</span>
+<span class="c1"># PATCH  /v3/endpoints/{endpoint_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:update_endpoint&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_endpoint&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of</span>
+<span class="c1"># &quot;identity:update_endpoint&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The endpoint API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Delete endpoint.</span>
+<span class="c1"># DELETE  /v3/endpoints/{endpoint_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_endpoint&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_endpoint&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of</span>
+<span class="c1"># &quot;identity:delete_endpoint&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The endpoint API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Create endpoint group.</span>
+<span class="c1"># POST  /v3/OS-EP-FILTER/endpoint_groups</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_endpoint_group&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_endpoint_group&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:create_endpoint_group&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The endpoint groups API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># List endpoint groups.</span>
+<span class="c1"># GET  /v3/OS-EP-FILTER/endpoint_groups</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_endpoint_groups&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_endpoint_groups&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:list_endpoint_groups&quot;:&quot;rule:admin_required or (role:reader</span>
+<span class="c1"># and system_scope:all)&quot;.</span>
+<span class="c1"># The endpoint groups API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Get endpoint group.</span>
+<span class="c1"># GET  /v3/OS-EP-FILTER/endpoint_groups/{endpoint_group_id}</span>
+<span class="c1"># HEAD  /v3/OS-EP-FILTER/endpoint_groups/{endpoint_group_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_endpoint_group&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_endpoint_group&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:get_endpoint_group&quot;:&quot;rule:admin_required or (role:reader</span>
+<span class="c1"># and system_scope:all)&quot;.</span>
+<span class="c1"># The endpoint groups API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Update endpoint group.</span>
+<span class="c1"># PATCH  /v3/OS-EP-FILTER/endpoint_groups/{endpoint_group_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:update_endpoint_group&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_endpoint_group&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:update_endpoint_group&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The endpoint groups API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Delete endpoint group.</span>
+<span class="c1"># DELETE  /v3/OS-EP-FILTER/endpoint_groups/{endpoint_group_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_endpoint_group&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_endpoint_group&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:delete_endpoint_group&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The endpoint groups API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># List all projects associated with a specific endpoint group.</span>
+<span class="c1"># GET  /v3/OS-EP-FILTER/endpoint_groups/{endpoint_group_id}/projects</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_projects_associated_with_endpoint_group&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_projects_associated_with_endpoint_group&quot;:&quot;rule:admin_</span>
+<span class="c1"># required&quot; has been deprecated since T in favor of &quot;identity:list_pro</span>
+<span class="c1"># jects_associated_with_endpoint_group&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The endpoint groups API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># List all endpoints associated with an endpoint group.</span>
+<span class="c1"># GET  /v3/OS-EP-FILTER/endpoint_groups/{endpoint_group_id}/endpoints</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_endpoints_associated_with_endpoint_group&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_endpoints_associated_with_endpoint_group&quot;:&quot;rule:admin</span>
+<span class="c1"># _required&quot; has been deprecated since T in favor of &quot;identity:list_en</span>
+<span class="c1"># dpoints_associated_with_endpoint_group&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The endpoint groups API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Check if an endpoint group is associated with a project.</span>
+<span class="c1"># GET  /v3/OS-EP-FILTER/endpoint_groups/{endpoint_group_id}/projects/{project_id}</span>
+<span class="c1"># HEAD  /v3/OS-EP-FILTER/endpoint_groups/{endpoint_group_id}/projects/{project_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_endpoint_group_in_project&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_endpoint_group_in_project&quot;:&quot;rule:admin_required&quot; has</span>
+<span class="c1"># been deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:get_endpoint_group_in_project&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The endpoint groups API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># List endpoint groups associated with a specific project.</span>
+<span class="c1"># GET  /v3/OS-EP-FILTER/projects/{project_id}/endpoint_groups</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_endpoint_groups_for_project&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_endpoint_groups_for_project&quot;:&quot;rule:admin_required&quot;</span>
+<span class="c1"># has been deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:list_endpoint_groups_for_project&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The endpoint groups API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Allow a project to access an endpoint group.</span>
+<span class="c1"># PUT  /v3/OS-EP-FILTER/endpoint_groups/{endpoint_group_id}/projects/{project_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:add_endpoint_group_to_project&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:add_endpoint_group_to_project&quot;:&quot;rule:admin_required&quot; has</span>
+<span class="c1"># been deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:add_endpoint_group_to_project&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The endpoint groups API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Remove endpoint group from project.</span>
+<span class="c1"># DELETE  /v3/OS-EP-FILTER/endpoint_groups/{endpoint_group_id}/projects/{project_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:remove_endpoint_group_from_project&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:remove_endpoint_group_from_project&quot;:&quot;rule:admin_required&quot;</span>
+<span class="c1"># has been deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:remove_endpoint_group_from_project&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The endpoint groups API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Check a role grant between a target and an actor. A target can be</span>
+<span class="c1"># either a domain or a project. An actor can be either a user or a</span>
+<span class="c1"># group. These terms also apply to the OS-INHERIT APIs, where grants</span>
+<span class="c1"># on the target are inherited to all projects in the subtree, if</span>
+<span class="c1"># applicable.</span>
+<span class="c1"># HEAD  /v3/projects/{project_id}/users/{user_id}/roles/{role_id}</span>
+<span class="c1"># GET  /v3/projects/{project_id}/users/{user_id}/roles/{role_id}</span>
+<span class="c1"># HEAD  /v3/projects/{project_id}/groups/{group_id}/roles/{role_id}</span>
+<span class="c1"># GET  /v3/projects/{project_id}/groups/{group_id}/roles/{role_id}</span>
+<span class="c1"># HEAD  /v3/domains/{domain_id}/users/{user_id}/roles/{role_id}</span>
+<span class="c1"># GET  /v3/domains/{domain_id}/users/{user_id}/roles/{role_id}</span>
+<span class="c1"># HEAD  /v3/domains/{domain_id}/groups/{group_id}/roles/{role_id}</span>
+<span class="c1"># GET  /v3/domains/{domain_id}/groups/{group_id}/roles/{role_id}</span>
+<span class="c1"># HEAD  /v3/OS-INHERIT/projects/{project_id}/users/{user_id}/roles/{role_id}/inherited_to_projects</span>
+<span class="c1"># GET  /v3/OS-INHERIT/projects/{project_id}/users/{user_id}/roles/{role_id}/inherited_to_projects</span>
+<span class="c1"># HEAD  /v3/OS-INHERIT/projects/{project_id}/groups/{group_id}/roles/{role_id}/inherited_to_projects</span>
+<span class="c1"># GET  /v3/OS-INHERIT/projects/{project_id}/groups/{group_id}/roles/{role_id}/inherited_to_projects</span>
+<span class="c1"># HEAD  /v3/OS-INHERIT/domains/{domain_id}/users/{user_id}/roles/{role_id}/inherited_to_projects</span>
+<span class="c1"># GET  /v3/OS-INHERIT/domains/{domain_id}/users/{user_id}/roles/{role_id}/inherited_to_projects</span>
+<span class="c1"># HEAD  /v3/OS-INHERIT/domains/{domain_id}/groups/{group_id}/roles/{role_id}/inherited_to_projects</span>
+<span class="c1"># GET  /v3/OS-INHERIT/domains/{domain_id}/groups/{group_id}/roles/{role_id}/inherited_to_projects</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:check_grant&quot;: &quot;(rule:admin_required) or ((role:reader and system_scope:all) or ((role:reader and domain_id:%(target.user.domain_id)s and domain_id:%(target.project.domain_id)s) or (role:reader and domain_id:%(target.user.domain_id)s and domain_id:%(target.domain.id)s) or (role:reader and domain_id:%(target.group.domain_id)s and domain_id:%(target.project.domain_id)s) or (role:reader and domain_id:%(target.group.domain_id)s and domain_id:%(target.domain.id)s)) and (domain_id:%(target.role.domain_id)s or None:%(target.role.domain_id)s))&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:check_grant&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:check_grant&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># ((role:reader and system_scope:all) or ((role:reader and</span>
+<span class="c1"># domain_id:%(target.user.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.project.domain_id)s) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.user.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.domain.id)s) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.group.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.project.domain_id)s) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.group.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.domain.id)s)) and</span>
+<span class="c1"># (domain_id:%(target.role.domain_id)s or</span>
+<span class="c1"># None:%(target.role.domain_id)s))&quot;.</span>
+<span class="c1"># The assignment API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List roles granted to an actor on a target. A target can be either a</span>
+<span class="c1"># domain or a project. An actor can be either a user or a group. For</span>
+<span class="c1"># the OS-INHERIT APIs, it is possible to list inherited role grants</span>
+<span class="c1"># for actors on domains, where grants are inherited to all projects in</span>
+<span class="c1"># the specified domain.</span>
+<span class="c1"># GET  /v3/projects/{project_id}/users/{user_id}/roles</span>
+<span class="c1"># HEAD  /v3/projects/{project_id}/users/{user_id}/roles</span>
+<span class="c1"># GET  /v3/projects/{project_id}/groups/{group_id}/roles</span>
+<span class="c1"># HEAD  /v3/projects/{project_id}/groups/{group_id}/roles</span>
+<span class="c1"># GET  /v3/domains/{domain_id}/users/{user_id}/roles</span>
+<span class="c1"># HEAD  /v3/domains/{domain_id}/users/{user_id}/roles</span>
+<span class="c1"># GET  /v3/domains/{domain_id}/groups/{group_id}/roles</span>
+<span class="c1"># HEAD  /v3/domains/{domain_id}/groups/{group_id}/roles</span>
+<span class="c1"># GET  /v3/OS-INHERIT/domains/{domain_id}/groups/{group_id}/roles/inherited_to_projects</span>
+<span class="c1"># GET  /v3/OS-INHERIT/domains/{domain_id}/users/{user_id}/roles/inherited_to_projects</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:list_grants&quot;: &quot;(rule:admin_required) or ((role:reader and system_scope:all) or (role:reader and domain_id:%(target.user.domain_id)s and domain_id:%(target.project.domain_id)s) or (role:reader and domain_id:%(target.user.domain_id)s and domain_id:%(target.domain.id)s) or (role:reader and domain_id:%(target.group.domain_id)s and domain_id:%(target.project.domain_id)s) or (role:reader and domain_id:%(target.group.domain_id)s and domain_id:%(target.domain.id)s))&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_grants&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:list_grants&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># ((role:reader and system_scope:all) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.user.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.project.domain_id)s) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.user.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.domain.id)s) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.group.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.project.domain_id)s) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.group.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.domain.id)s))&quot;.</span>
+<span class="c1"># The assignment API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Create a role grant between a target and an actor. A target can be</span>
+<span class="c1"># either a domain or a project. An actor can be either a user or a</span>
+<span class="c1"># group. These terms also apply to the OS-INHERIT APIs, where grants</span>
+<span class="c1"># on the target are inherited to all projects in the subtree, if</span>
+<span class="c1"># applicable.</span>
+<span class="c1"># PUT  /v3/projects/{project_id}/users/{user_id}/roles/{role_id}</span>
+<span class="c1"># PUT  /v3/projects/{project_id}/groups/{group_id}/roles/{role_id}</span>
+<span class="c1"># PUT  /v3/domains/{domain_id}/users/{user_id}/roles/{role_id}</span>
+<span class="c1"># PUT  /v3/domains/{domain_id}/groups/{group_id}/roles/{role_id}</span>
+<span class="c1"># PUT  /v3/OS-INHERIT/projects/{project_id}/users/{user_id}/roles/{role_id}/inherited_to_projects</span>
+<span class="c1"># PUT  /v3/OS-INHERIT/projects/{project_id}/groups/{group_id}/roles/{role_id}/inherited_to_projects</span>
+<span class="c1"># PUT  /v3/OS-INHERIT/domains/{domain_id}/users/{user_id}/roles/{role_id}/inherited_to_projects</span>
+<span class="c1"># PUT  /v3/OS-INHERIT/domains/{domain_id}/groups/{group_id}/roles/{role_id}/inherited_to_projects</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:create_grant&quot;: &quot;(rule:admin_required) or ((role:admin and domain_id:%(target.user.domain_id)s and domain_id:%(target.project.domain_id)s) or (role:admin and domain_id:%(target.user.domain_id)s and domain_id:%(target.domain.id)s) or (role:admin and domain_id:%(target.group.domain_id)s and domain_id:%(target.project.domain_id)s) or (role:admin and domain_id:%(target.group.domain_id)s and domain_id:%(target.domain.id)s)) and (domain_id:%(target.role.domain_id)s or None:%(target.role.domain_id)s) or ((role:manager and domain_id:%(target.user.domain_id)s and domain_id:%(target.project.domain_id)s) or (role:manager and domain_id:%(target.user.domain_id)s and domain_id:%(target.domain.id)s) or (role:manager and domain_id:%(target.group.domain_id)s and domain_id:%(target.project.domain_id)s) or (role:manager and domain_id:%(target.group.domain_id)s and domain_id:%(target.domain.id)s)) and rule:domain_managed_target_role&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_grant&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:create_grant&quot;:&quot;(rule:admin_required)</span>
+<span class="c1"># or ((role:admin and domain_id:%(target.user.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.project.domain_id)s) or (role:admin and</span>
+<span class="c1"># domain_id:%(target.user.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.domain.id)s) or (role:admin and</span>
+<span class="c1"># domain_id:%(target.group.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.project.domain_id)s) or (role:admin and</span>
+<span class="c1"># domain_id:%(target.group.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.domain.id)s)) and</span>
+<span class="c1"># (domain_id:%(target.role.domain_id)s or</span>
+<span class="c1"># None:%(target.role.domain_id)s) or ((role:manager and</span>
+<span class="c1"># domain_id:%(target.user.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.project.domain_id)s) or (role:manager and</span>
+<span class="c1"># domain_id:%(target.user.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.domain.id)s) or (role:manager and</span>
+<span class="c1"># domain_id:%(target.group.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.project.domain_id)s) or (role:manager and</span>
+<span class="c1"># domain_id:%(target.group.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.domain.id)s)) and</span>
+<span class="c1"># rule:domain_managed_target_role&quot;.</span>
+<span class="c1"># The assignment API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Revoke a role grant between a target and an actor. A target can be</span>
+<span class="c1"># either a domain or a project. An actor can be either a user or a</span>
+<span class="c1"># group. These terms also apply to the OS-INHERIT APIs, where grants</span>
+<span class="c1"># on the target are inherited to all projects in the subtree, if</span>
+<span class="c1"># applicable. In that case, revoking the role grant in the target</span>
+<span class="c1"># would remove the logical effect of inheriting it to the target&#39;s</span>
+<span class="c1"># projects subtree.</span>
+<span class="c1"># DELETE  /v3/projects/{project_id}/users/{user_id}/roles/{role_id}</span>
+<span class="c1"># DELETE  /v3/projects/{project_id}/groups/{group_id}/roles/{role_id}</span>
+<span class="c1"># DELETE  /v3/domains/{domain_id}/users/{user_id}/roles/{role_id}</span>
+<span class="c1"># DELETE  /v3/domains/{domain_id}/groups/{group_id}/roles/{role_id}</span>
+<span class="c1"># DELETE  /v3/OS-INHERIT/projects/{project_id}/users/{user_id}/roles/{role_id}/inherited_to_projects</span>
+<span class="c1"># DELETE  /v3/OS-INHERIT/projects/{project_id}/groups/{group_id}/roles/{role_id}/inherited_to_projects</span>
+<span class="c1"># DELETE  /v3/OS-INHERIT/domains/{domain_id}/users/{user_id}/roles/{role_id}/inherited_to_projects</span>
+<span class="c1"># DELETE  /v3/OS-INHERIT/domains/{domain_id}/groups/{group_id}/roles/{role_id}/inherited_to_projects</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:revoke_grant&quot;: &quot;(rule:admin_required) or ((role:admin and domain_id:%(target.user.domain_id)s and domain_id:%(target.project.domain_id)s) or (role:admin and domain_id:%(target.user.domain_id)s and domain_id:%(target.domain.id)s) or (role:admin and domain_id:%(target.group.domain_id)s and domain_id:%(target.project.domain_id)s) or (role:admin and domain_id:%(target.group.domain_id)s and domain_id:%(target.domain.id)s)) and (domain_id:%(target.role.domain_id)s or None:%(target.role.domain_id)s) or ((role:manager and domain_id:%(target.user.domain_id)s and domain_id:%(target.project.domain_id)s) or (role:manager and domain_id:%(target.user.domain_id)s and domain_id:%(target.domain.id)s) or (role:manager and domain_id:%(target.group.domain_id)s and domain_id:%(target.project.domain_id)s) or (role:manager and domain_id:%(target.group.domain_id)s and domain_id:%(target.domain.id)s)) and rule:domain_managed_target_role&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:revoke_grant&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:revoke_grant&quot;:&quot;(rule:admin_required)</span>
+<span class="c1"># or ((role:admin and domain_id:%(target.user.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.project.domain_id)s) or (role:admin and</span>
+<span class="c1"># domain_id:%(target.user.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.domain.id)s) or (role:admin and</span>
+<span class="c1"># domain_id:%(target.group.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.project.domain_id)s) or (role:admin and</span>
+<span class="c1"># domain_id:%(target.group.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.domain.id)s)) and</span>
+<span class="c1"># (domain_id:%(target.role.domain_id)s or</span>
+<span class="c1"># None:%(target.role.domain_id)s) or ((role:manager and</span>
+<span class="c1"># domain_id:%(target.user.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.project.domain_id)s) or (role:manager and</span>
+<span class="c1"># domain_id:%(target.user.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.domain.id)s) or (role:manager and</span>
+<span class="c1"># domain_id:%(target.group.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.project.domain_id)s) or (role:manager and</span>
+<span class="c1"># domain_id:%(target.group.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.domain.id)s)) and</span>
+<span class="c1"># rule:domain_managed_target_role&quot;.</span>
+<span class="c1"># The assignment API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List all grants a specific user has on the system.</span>
+<span class="c1"># [&#39;HEAD&#39;, &#39;GET&#39;]  /v3/system/users/{user_id}/roles</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_system_grants_for_user&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_system_grants_for_user&quot;:&quot;rule:admin_required&quot; has</span>
+<span class="c1"># been deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:list_system_grants_for_user&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The assignment API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Check if a user has a role on the system.</span>
+<span class="c1"># [&#39;HEAD&#39;, &#39;GET&#39;]  /v3/system/users/{user_id}/roles/{role_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:check_system_grant_for_user&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:check_system_grant_for_user&quot;:&quot;rule:admin_required&quot; has</span>
+<span class="c1"># been deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:check_system_grant_for_user&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The assignment API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Grant a user a role on the system.</span>
+<span class="c1"># [&#39;PUT&#39;]  /v3/system/users/{user_id}/roles/{role_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_system_grant_for_user&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_system_grant_for_user&quot;:&quot;rule:admin_required&quot; has</span>
+<span class="c1"># been deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:create_system_grant_for_user&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The assignment API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Remove a role from a user on the system.</span>
+<span class="c1"># [&#39;DELETE&#39;]  /v3/system/users/{user_id}/roles/{role_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:revoke_system_grant_for_user&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:revoke_system_grant_for_user&quot;:&quot;rule:admin_required&quot; has</span>
+<span class="c1"># been deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:revoke_system_grant_for_user&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The assignment API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List all grants a specific group has on the system.</span>
+<span class="c1"># [&#39;HEAD&#39;, &#39;GET&#39;]  /v3/system/groups/{group_id}/roles</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_system_grants_for_group&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_system_grants_for_group&quot;:&quot;rule:admin_required&quot; has</span>
+<span class="c1"># been deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:list_system_grants_for_group&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The assignment API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Check if a group has a role on the system.</span>
+<span class="c1"># [&#39;HEAD&#39;, &#39;GET&#39;]  /v3/system/groups/{group_id}/roles/{role_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:check_system_grant_for_group&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:check_system_grant_for_group&quot;:&quot;rule:admin_required&quot; has</span>
+<span class="c1"># been deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:check_system_grant_for_group&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The assignment API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Grant a group a role on the system.</span>
+<span class="c1"># [&#39;PUT&#39;]  /v3/system/groups/{group_id}/roles/{role_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_system_grant_for_group&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_system_grant_for_group&quot;:&quot;rule:admin_required&quot; has</span>
+<span class="c1"># been deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:create_system_grant_for_group&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The assignment API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Remove a role from a group on the system.</span>
+<span class="c1"># [&#39;DELETE&#39;]  /v3/system/groups/{group_id}/roles/{role_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:revoke_system_grant_for_group&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:revoke_system_grant_for_group&quot;:&quot;rule:admin_required&quot; has</span>
+<span class="c1"># been deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:revoke_system_grant_for_group&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The assignment API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Show group details.</span>
+<span class="c1"># GET  /v3/groups/{group_id}</span>
+<span class="c1"># HEAD  /v3/groups/{group_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:get_group&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or (role:reader and domain_id:%(target.group.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_group&quot;:&quot;rule:admin_required&quot; has been deprecated since</span>
+<span class="c1"># S in favor of &quot;identity:get_group&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.group.domain_id)s)&quot;.</span>
+<span class="c1"># The group API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List groups.</span>
+<span class="c1"># GET  /v3/groups</span>
+<span class="c1"># HEAD  /v3/groups</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:list_groups&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or (role:reader and domain_id:%(target.group.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_groups&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:list_groups&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.group.domain_id)s)&quot;.</span>
+<span class="c1"># The group API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List groups to which a user belongs.</span>
+<span class="c1"># GET  /v3/users/{user_id}/groups</span>
+<span class="c1"># HEAD  /v3/users/{user_id}/groups</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:list_groups_for_user&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or (role:reader and domain_id:%(target.user.domain_id)s) or user_id:%(user_id)s&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_groups_for_user&quot;:&quot;rule:admin_or_owner&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:list_groups_for_user&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.user.domain_id)s) or user_id:%(user_id)s&quot;.</span>
+<span class="c1"># The group API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Create group.</span>
+<span class="c1"># POST  /v3/groups</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:create_group&quot;: &quot;(rule:admin_required) or (role:manager and domain_id:%(target.group.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_group&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:create_group&quot;:&quot;(rule:admin_required)</span>
+<span class="c1"># or (role:manager and domain_id:%(target.group.domain_id)s)&quot;.</span>
+<span class="c1"># The group API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Update group.</span>
+<span class="c1"># PATCH  /v3/groups/{group_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:update_group&quot;: &quot;(rule:admin_required) or (role:manager and domain_id:%(target.group.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_group&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:update_group&quot;:&quot;(rule:admin_required)</span>
+<span class="c1"># or (role:manager and domain_id:%(target.group.domain_id)s)&quot;.</span>
+<span class="c1"># The group API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Delete group.</span>
+<span class="c1"># DELETE  /v3/groups/{group_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:delete_group&quot;: &quot;(rule:admin_required) or (role:manager and domain_id:%(target.group.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_group&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:delete_group&quot;:&quot;(rule:admin_required)</span>
+<span class="c1"># or (role:manager and domain_id:%(target.group.domain_id)s)&quot;.</span>
+<span class="c1"># The group API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List members of a specific group.</span>
+<span class="c1"># GET  /v3/groups/{group_id}/users</span>
+<span class="c1"># HEAD  /v3/groups/{group_id}/users</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:list_users_in_group&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or (role:reader and domain_id:%(target.group.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_users_in_group&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:list_users_in_group&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.group.domain_id)s)&quot;.</span>
+<span class="c1"># The group API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Remove user from group.</span>
+<span class="c1"># DELETE  /v3/groups/{group_id}/users/{user_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:remove_user_from_group&quot;: &quot;(rule:admin_required) or (role:manager and domain_id:%(target.group.domain_id)s and domain_id:%(target.user.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:remove_user_from_group&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:remove_user_from_group&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:manager and domain_id:%(target.group.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.user.domain_id)s)&quot;.</span>
+<span class="c1"># The group API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Check whether a user is a member of a group.</span>
+<span class="c1"># HEAD  /v3/groups/{group_id}/users/{user_id}</span>
+<span class="c1"># GET  /v3/groups/{group_id}/users/{user_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:check_user_in_group&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or (role:reader and domain_id:%(target.group.domain_id)s and domain_id:%(target.user.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:check_user_in_group&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:check_user_in_group&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.group.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.user.domain_id)s)&quot;.</span>
+<span class="c1"># The group API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Add user to group.</span>
+<span class="c1"># PUT  /v3/groups/{group_id}/users/{user_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:add_user_to_group&quot;: &quot;(rule:admin_required) or (role:manager and domain_id:%(target.group.domain_id)s and domain_id:%(target.user.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:add_user_to_group&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:add_user_to_group&quot;:&quot;(rule:admin_required) or (role:manager</span>
+<span class="c1"># and domain_id:%(target.group.domain_id)s and</span>
+<span class="c1"># domain_id:%(target.user.domain_id)s)&quot;.</span>
+<span class="c1"># The group API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Create identity provider.</span>
+<span class="c1"># PUT  /v3/OS-FEDERATION/identity_providers/{idp_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_identity_provider&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_identity_provider&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:create_identity_provider&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The identity provider API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># List identity providers.</span>
+<span class="c1"># GET  /v3/OS-FEDERATION/identity_providers</span>
+<span class="c1"># HEAD  /v3/OS-FEDERATION/identity_providers</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_identity_providers&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_identity_providers&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:list_identity_providers&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The identity provider API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Get identity provider.</span>
+<span class="c1"># GET  /v3/OS-FEDERATION/identity_providers/{idp_id}</span>
+<span class="c1"># HEAD  /v3/OS-FEDERATION/identity_providers/{idp_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_identity_provider&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_identity_provider&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:get_identity_provider&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The identity provider API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Update identity provider.</span>
+<span class="c1"># PATCH  /v3/OS-FEDERATION/identity_providers/{idp_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:update_identity_provider&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_identity_provider&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:update_identity_provider&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The identity provider API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Delete identity provider.</span>
+<span class="c1"># DELETE  /v3/OS-FEDERATION/identity_providers/{idp_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_identity_provider&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_identity_provider&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:delete_identity_provider&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The identity provider API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Get information about an association between two roles. When a</span>
+<span class="c1"># relationship exists between a prior role and an implied role and the</span>
+<span class="c1"># prior role is assigned to a user, the user also assumes the implied</span>
+<span class="c1"># role.</span>
+<span class="c1"># GET  /v3/roles/{prior_role_id}/implies/{implied_role_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_implied_role&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_implied_role&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:get_implied_role&quot;:&quot;rule:admin_required or (role:reader and</span>
+<span class="c1"># system_scope:all)&quot;.</span>
+<span class="c1"># The implied role API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List associations between two roles. When a relationship exists</span>
+<span class="c1"># between a prior role and an implied role and the prior role is</span>
+<span class="c1"># assigned to a user, the user also assumes the implied role. This</span>
+<span class="c1"># will return all the implied roles that would be assumed by the user</span>
+<span class="c1"># who gets the specified prior role.</span>
+<span class="c1"># GET  /v3/roles/{prior_role_id}/implies</span>
+<span class="c1"># HEAD  /v3/roles/{prior_role_id}/implies</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_implied_roles&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_implied_roles&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:list_implied_roles&quot;:&quot;rule:admin_required or (role:reader</span>
+<span class="c1"># and system_scope:all)&quot;.</span>
+<span class="c1"># The implied role API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Create an association between two roles. When a relationship exists</span>
+<span class="c1"># between a prior role and an implied role and the prior role is</span>
+<span class="c1"># assigned to a user, the user also assumes the implied role.</span>
+<span class="c1"># PUT  /v3/roles/{prior_role_id}/implies/{implied_role_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_implied_role&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_implied_role&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:create_implied_role&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The implied role API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Delete the association between two roles. When a relationship exists</span>
+<span class="c1"># between a prior role and an implied role and the prior role is</span>
+<span class="c1"># assigned to a user, the user also assumes the implied role. Removing</span>
+<span class="c1"># the association will cause that effect to be eliminated.</span>
+<span class="c1"># DELETE  /v3/roles/{prior_role_id}/implies/{implied_role_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_implied_role&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_implied_role&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:delete_implied_role&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The implied role API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List all associations between two roles in the system. When a</span>
+<span class="c1"># relationship exists between a prior role and an implied role and the</span>
+<span class="c1"># prior role is assigned to a user, the user also assumes the implied</span>
+<span class="c1"># role.</span>
+<span class="c1"># GET  /v3/role_inferences</span>
+<span class="c1"># HEAD  /v3/role_inferences</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_role_inference_rules&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_role_inference_rules&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:list_role_inference_rules&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The implied role API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Check an association between two roles. When a relationship exists</span>
+<span class="c1"># between a prior role and an implied role and the prior role is</span>
+<span class="c1"># assigned to a user, the user also assumes the implied role.</span>
+<span class="c1"># HEAD  /v3/roles/{prior_role_id}/implies/{implied_role_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:check_implied_role&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:check_implied_role&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:check_implied_role&quot;:&quot;rule:admin_required or (role:reader</span>
+<span class="c1"># and system_scope:all)&quot;.</span>
+<span class="c1"># The implied role API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Get limit enforcement model.</span>
+<span class="c1"># GET  /v3/limits/model</span>
+<span class="c1"># HEAD  /v3/limits/model</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:get_limit_model&quot;: &quot;&quot;</span>
+
+<span class="c1"># Show limit details.</span>
+<span class="c1"># GET  /v3/limits/{limit_id}</span>
+<span class="c1"># HEAD  /v3/limits/{limit_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:get_limit&quot;: &quot;rule:admin_required or (role:reader and system_scope:all) or (domain_id:%(target.limit.domain.id)s or domain_id:%(target.limit.project.domain_id)s) or (project_id:%(target.limit.project_id)s and not None:%(target.limit.project_id)s)&quot;</span>
+
+<span class="c1"># List limits.</span>
+<span class="c1"># GET  /v3/limits</span>
+<span class="c1"># HEAD  /v3/limits</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:list_limits&quot;: &quot;&quot;</span>
+
+<span class="c1"># Create limits.</span>
+<span class="c1"># POST  /v3/limits</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_limits&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># Update limit.</span>
+<span class="c1"># PATCH  /v3/limits/{limit_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:update_limit&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># Delete limit.</span>
+<span class="c1"># DELETE  /v3/limits/{limit_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_limit&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># Create a new federated mapping containing one or more sets of rules.</span>
+<span class="c1"># PUT  /v3/OS-FEDERATION/mappings/{mapping_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_mapping&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_mapping&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:create_mapping&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The federated mapping API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Get a federated mapping.</span>
+<span class="c1"># GET  /v3/OS-FEDERATION/mappings/{mapping_id}</span>
+<span class="c1"># HEAD  /v3/OS-FEDERATION/mappings/{mapping_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_mapping&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_mapping&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:get_mapping&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The federated mapping API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># List federated mappings.</span>
+<span class="c1"># GET  /v3/OS-FEDERATION/mappings</span>
+<span class="c1"># HEAD  /v3/OS-FEDERATION/mappings</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_mappings&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_mappings&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:list_mappings&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The federated mapping API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Delete a federated mapping.</span>
+<span class="c1"># DELETE  /v3/OS-FEDERATION/mappings/{mapping_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_mapping&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_mapping&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:delete_mapping&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The federated mapping API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Update a federated mapping.</span>
+<span class="c1"># PATCH  /v3/OS-FEDERATION/mappings/{mapping_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:update_mapping&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_mapping&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:update_mapping&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The federated mapping API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Show policy details.</span>
+<span class="c1"># GET  /v3/policies/{policy_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_policy&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_policy&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since T in favor of &quot;identity:get_policy&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The policy API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List policies.</span>
+<span class="c1"># GET  /v3/policies</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_policies&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_policies&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since T in favor of &quot;identity:list_policies&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The policy API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Create policy.</span>
+<span class="c1"># POST  /v3/policies</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_policy&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_policy&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since T in favor of &quot;identity:create_policy&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The policy API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Update policy.</span>
+<span class="c1"># PATCH  /v3/policies/{policy_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:update_policy&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_policy&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since T in favor of &quot;identity:update_policy&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The policy API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Delete policy.</span>
+<span class="c1"># DELETE  /v3/policies/{policy_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_policy&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_policy&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since T in favor of &quot;identity:delete_policy&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The policy API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Associate a policy to a specific endpoint.</span>
+<span class="c1"># PUT  /v3/policies/{policy_id}/OS-ENDPOINT-POLICY/endpoints/{endpoint_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_policy_association_for_endpoint&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_policy_association_for_endpoint&quot;:&quot;rule:admin_requir</span>
+<span class="c1"># ed&quot; has been deprecated since T in favor of &quot;identity:create_policy_</span>
+<span class="c1"># association_for_endpoint&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The policy association API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Check policy association for endpoint.</span>
+<span class="c1"># GET  /v3/policies/{policy_id}/OS-ENDPOINT-POLICY/endpoints/{endpoint_id}</span>
+<span class="c1"># HEAD  /v3/policies/{policy_id}/OS-ENDPOINT-POLICY/endpoints/{endpoint_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:check_policy_association_for_endpoint&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:check_policy_association_for_endpoint&quot;:&quot;rule:admin_require</span>
+<span class="c1"># d&quot; has been deprecated since T in favor of &quot;identity:check_policy_as</span>
+<span class="c1"># sociation_for_endpoint&quot;:&quot;rule:admin_required or (role:reader and</span>
+<span class="c1"># system_scope:all)&quot;.</span>
+<span class="c1"># The policy association API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Delete policy association for endpoint.</span>
+<span class="c1"># DELETE  /v3/policies/{policy_id}/OS-ENDPOINT-POLICY/endpoints/{endpoint_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_policy_association_for_endpoint&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_policy_association_for_endpoint&quot;:&quot;rule:admin_requir</span>
+<span class="c1"># ed&quot; has been deprecated since T in favor of &quot;identity:delete_policy_</span>
+<span class="c1"># association_for_endpoint&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The policy association API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Associate a policy to a specific service.</span>
+<span class="c1"># PUT  /v3/policies/{policy_id}/OS-ENDPOINT-POLICY/services/{service_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_policy_association_for_service&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_policy_association_for_service&quot;:&quot;rule:admin_require</span>
+<span class="c1"># d&quot; has been deprecated since T in favor of &quot;identity:create_policy_a</span>
+<span class="c1"># ssociation_for_service&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The policy association API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Check policy association for service.</span>
+<span class="c1"># GET  /v3/policies/{policy_id}/OS-ENDPOINT-POLICY/services/{service_id}</span>
+<span class="c1"># HEAD  /v3/policies/{policy_id}/OS-ENDPOINT-POLICY/services/{service_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:check_policy_association_for_service&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:check_policy_association_for_service&quot;:&quot;rule:admin_required</span>
+<span class="c1"># &quot; has been deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:check_policy_association_for_service&quot;:&quot;rule:admin_required</span>
+<span class="c1"># or (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The policy association API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Delete policy association for service.</span>
+<span class="c1"># DELETE  /v3/policies/{policy_id}/OS-ENDPOINT-POLICY/services/{service_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_policy_association_for_service&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_policy_association_for_service&quot;:&quot;rule:admin_require</span>
+<span class="c1"># d&quot; has been deprecated since T in favor of &quot;identity:delete_policy_a</span>
+<span class="c1"># ssociation_for_service&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The policy association API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Associate a policy to a specific region and service combination.</span>
+<span class="c1"># PUT  /v3/policies/{policy_id}/OS-ENDPOINT-POLICY/services/{service_id}/regions/{region_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_policy_association_for_region_and_service&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_policy_association_for_region_and_service&quot;:&quot;rule:ad</span>
+<span class="c1"># min_required&quot; has been deprecated since T in favor of &quot;identity:crea</span>
+<span class="c1"># te_policy_association_for_region_and_service&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The policy association API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Check policy association for region and service.</span>
+<span class="c1"># GET  /v3/policies/{policy_id}/OS-ENDPOINT-POLICY/services/{service_id}/regions/{region_id}</span>
+<span class="c1"># HEAD  /v3/policies/{policy_id}/OS-ENDPOINT-POLICY/services/{service_id}/regions/{region_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:check_policy_association_for_region_and_service&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:check_policy_association_for_region_and_service&quot;:&quot;rule:adm</span>
+<span class="c1"># in_required&quot; has been deprecated since T in favor of &quot;identity:check</span>
+<span class="c1"># _policy_association_for_region_and_service&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The policy association API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Delete policy association for region and service.</span>
+<span class="c1"># DELETE  /v3/policies/{policy_id}/OS-ENDPOINT-POLICY/services/{service_id}/regions/{region_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_policy_association_for_region_and_service&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_policy_association_for_region_and_service&quot;:&quot;rule:ad</span>
+<span class="c1"># min_required&quot; has been deprecated since T in favor of &quot;identity:dele</span>
+<span class="c1"># te_policy_association_for_region_and_service&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The policy association API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Get policy for endpoint.</span>
+<span class="c1"># GET  /v3/endpoints/{endpoint_id}/OS-ENDPOINT-POLICY/policy</span>
+<span class="c1"># HEAD  /v3/endpoints/{endpoint_id}/OS-ENDPOINT-POLICY/policy</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_policy_for_endpoint&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_policy_for_endpoint&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:get_policy_for_endpoint&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The policy association API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># List endpoints for policy.</span>
+<span class="c1"># GET  /v3/policies/{policy_id}/OS-ENDPOINT-POLICY/endpoints</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_endpoints_for_policy&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_endpoints_for_policy&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:list_endpoints_for_policy&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The policy association API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Show project details.</span>
+<span class="c1"># GET  /v3/projects/{project_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:get_project&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or (role:reader and domain_id:%(target.project.domain_id)s) or project_id:%(target.project.id)s&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_project&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># project_id:%(target.project.id)s&quot; has been deprecated since S in</span>
+<span class="c1"># favor of &quot;identity:get_project&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.project.domain_id)s) or</span>
+<span class="c1"># project_id:%(target.project.id)s&quot;.</span>
+<span class="c1"># The project API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List projects.</span>
+<span class="c1"># GET  /v3/projects</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:list_projects&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or (role:reader and domain_id:%(target.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_projects&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:list_projects&quot;:&quot;(rule:admin_required)</span>
+<span class="c1"># or (role:reader and system_scope:all) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.domain_id)s)&quot;.</span>
+<span class="c1"># The project API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List projects for user.</span>
+<span class="c1"># GET  /v3/users/{user_id}/projects</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:list_user_projects&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or (role:reader and domain_id:%(target.user.domain_id)s) or user_id:%(target.user.id)s&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_user_projects&quot;:&quot;rule:admin_or_owner&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:list_user_projects&quot;:&quot;(rule:admin_required) or (role:reader</span>
+<span class="c1"># and system_scope:all) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.user.domain_id)s) or user_id:%(target.user.id)s&quot;.</span>
+<span class="c1"># The project API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Create project.</span>
+<span class="c1"># POST  /v3/projects</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:create_project&quot;: &quot;(rule:admin_required) or (role:manager and domain_id:%(target.project.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_project&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:create_project&quot;:&quot;(rule:admin_required)</span>
+<span class="c1"># or (role:manager and domain_id:%(target.project.domain_id)s)&quot;.</span>
+<span class="c1"># The project API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Update project.</span>
+<span class="c1"># PATCH  /v3/projects/{project_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:update_project&quot;: &quot;(rule:admin_required) or (role:manager and domain_id:%(target.project.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_project&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:update_project&quot;:&quot;(rule:admin_required)</span>
+<span class="c1"># or (role:manager and domain_id:%(target.project.domain_id)s)&quot;.</span>
+<span class="c1"># The project API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Delete project.</span>
+<span class="c1"># DELETE  /v3/projects/{project_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:delete_project&quot;: &quot;(rule:admin_required) or (role:manager and domain_id:%(target.project.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_project&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:delete_project&quot;:&quot;(rule:admin_required)</span>
+<span class="c1"># or (role:manager and domain_id:%(target.project.domain_id)s)&quot;.</span>
+<span class="c1"># The project API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List tags for a project.</span>
+<span class="c1"># GET  /v3/projects/{project_id}/tags</span>
+<span class="c1"># HEAD  /v3/projects/{project_id}/tags</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:list_project_tags&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or (role:reader and domain_id:%(target.project.domain_id)s) or project_id:%(target.project.id)s&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_project_tags&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># project_id:%(target.project.id)s&quot; has been deprecated since T in</span>
+<span class="c1"># favor of &quot;identity:list_project_tags&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.project.domain_id)s) or</span>
+<span class="c1"># project_id:%(target.project.id)s&quot;.</span>
+<span class="c1"># The project API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Check if project contains a tag.</span>
+<span class="c1"># GET  /v3/projects/{project_id}/tags/{value}</span>
+<span class="c1"># HEAD  /v3/projects/{project_id}/tags/{value}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:get_project_tag&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or (role:reader and domain_id:%(target.project.domain_id)s) or project_id:%(target.project.id)s&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_project_tag&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># project_id:%(target.project.id)s&quot; has been deprecated since T in</span>
+<span class="c1"># favor of &quot;identity:get_project_tag&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.project.domain_id)s) or</span>
+<span class="c1"># project_id:%(target.project.id)s&quot;.</span>
+<span class="c1"># The project API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Replace all tags on a project with the new set of tags.</span>
+<span class="c1"># PUT  /v3/projects/{project_id}/tags</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:update_project_tags&quot;: &quot;(rule:admin_required) or (role:manager and domain_id:%(target.project.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_project_tags&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:update_project_tags&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:manager and domain_id:%(target.project.domain_id)s)&quot;.</span>
+<span class="c1"># The project API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Add a single tag to a project.</span>
+<span class="c1"># PUT  /v3/projects/{project_id}/tags/{value}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:create_project_tag&quot;: &quot;(rule:admin_required) or (role:manager and domain_id:%(target.project.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_project_tag&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:create_project_tag&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:manager and domain_id:%(target.project.domain_id)s)&quot;.</span>
+<span class="c1"># The project API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Remove all tags from a project.</span>
+<span class="c1"># DELETE  /v3/projects/{project_id}/tags</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:delete_project_tags&quot;: &quot;(rule:admin_required) or (role:manager and domain_id:%(target.project.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_project_tags&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:delete_project_tags&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:manager and domain_id:%(target.project.domain_id)s)&quot;.</span>
+<span class="c1"># The project API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Delete a specified tag from project.</span>
+<span class="c1"># DELETE  /v3/projects/{project_id}/tags/{value}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:delete_project_tag&quot;: &quot;(rule:admin_required) or (role:manager and domain_id:%(target.project.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_project_tag&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:delete_project_tag&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:manager and domain_id:%(target.project.domain_id)s)&quot;.</span>
+<span class="c1"># The project API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List projects allowed to access an endpoint.</span>
+<span class="c1"># GET  /v3/OS-EP-FILTER/endpoints/{endpoint_id}/projects</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_projects_for_endpoint&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_projects_for_endpoint&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:list_projects_for_endpoint&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># As of the Train release, the project endpoint API now understands</span>
+<span class="c1"># default roles and system-scoped tokens, making the API more granular</span>
+<span class="c1"># by default without compromising security. The new policy defaults</span>
+<span class="c1"># account for these changes automatically. Be sure to take these new</span>
+<span class="c1"># defaults into consideration if you are relying on overrides in your</span>
+<span class="c1"># deployment for the project endpoint API.</span>
+
+<span class="c1"># Allow project to access an endpoint.</span>
+<span class="c1"># PUT  /v3/OS-EP-FILTER/projects/{project_id}/endpoints/{endpoint_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:add_endpoint_to_project&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:add_endpoint_to_project&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:add_endpoint_to_project&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># As of the Train release, the project endpoint API now understands</span>
+<span class="c1"># default roles and system-scoped tokens, making the API more granular</span>
+<span class="c1"># by default without compromising security. The new policy defaults</span>
+<span class="c1"># account for these changes automatically. Be sure to take these new</span>
+<span class="c1"># defaults into consideration if you are relying on overrides in your</span>
+<span class="c1"># deployment for the project endpoint API.</span>
+
+<span class="c1"># Check if a project is allowed to access an endpoint.</span>
+<span class="c1"># GET  /v3/OS-EP-FILTER/projects/{project_id}/endpoints/{endpoint_id}</span>
+<span class="c1"># HEAD  /v3/OS-EP-FILTER/projects/{project_id}/endpoints/{endpoint_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:check_endpoint_in_project&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:check_endpoint_in_project&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:check_endpoint_in_project&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># As of the Train release, the project endpoint API now understands</span>
+<span class="c1"># default roles and system-scoped tokens, making the API more granular</span>
+<span class="c1"># by default without compromising security. The new policy defaults</span>
+<span class="c1"># account for these changes automatically. Be sure to take these new</span>
+<span class="c1"># defaults into consideration if you are relying on overrides in your</span>
+<span class="c1"># deployment for the project endpoint API.</span>
+
+<span class="c1"># List the endpoints a project is allowed to access.</span>
+<span class="c1"># GET  /v3/OS-EP-FILTER/projects/{project_id}/endpoints</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_endpoints_for_project&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_endpoints_for_project&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:list_endpoints_for_project&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># As of the Train release, the project endpoint API now understands</span>
+<span class="c1"># default roles and system-scoped tokens, making the API more granular</span>
+<span class="c1"># by default without compromising security. The new policy defaults</span>
+<span class="c1"># account for these changes automatically. Be sure to take these new</span>
+<span class="c1"># defaults into consideration if you are relying on overrides in your</span>
+<span class="c1"># deployment for the project endpoint API.</span>
+
+<span class="c1"># Remove access to an endpoint from a project that has previously been</span>
+<span class="c1"># given explicit access.</span>
+<span class="c1"># DELETE  /v3/OS-EP-FILTER/projects/{project_id}/endpoints/{endpoint_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:remove_endpoint_from_project&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:remove_endpoint_from_project&quot;:&quot;rule:admin_required&quot; has</span>
+<span class="c1"># been deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:remove_endpoint_from_project&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># As of the Train release, the project endpoint API now understands</span>
+<span class="c1"># default roles and system-scoped tokens, making the API more granular</span>
+<span class="c1"># by default without compromising security. The new policy defaults</span>
+<span class="c1"># account for these changes automatically. Be sure to take these new</span>
+<span class="c1"># defaults into consideration if you are relying on overrides in your</span>
+<span class="c1"># deployment for the project endpoint API.</span>
+
+<span class="c1"># Create federated protocol.</span>
+<span class="c1"># PUT  /v3/OS-FEDERATION/identity_providers/{idp_id}/protocols/{protocol_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_protocol&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_protocol&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of</span>
+<span class="c1"># &quot;identity:create_protocol&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The federated protocol API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Update federated protocol.</span>
+<span class="c1"># PATCH  /v3/OS-FEDERATION/identity_providers/{idp_id}/protocols/{protocol_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:update_protocol&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_protocol&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of</span>
+<span class="c1"># &quot;identity:update_protocol&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The federated protocol API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Get federated protocol.</span>
+<span class="c1"># GET  /v3/OS-FEDERATION/identity_providers/{idp_id}/protocols/{protocol_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_protocol&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_protocol&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:get_protocol&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The federated protocol API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># List federated protocols.</span>
+<span class="c1"># GET  /v3/OS-FEDERATION/identity_providers/{idp_id}/protocols</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_protocols&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_protocols&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:list_protocols&quot;:&quot;rule:admin_required</span>
+<span class="c1"># or (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The federated protocol API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Delete federated protocol.</span>
+<span class="c1"># DELETE  /v3/OS-FEDERATION/identity_providers/{idp_id}/protocols/{protocol_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_protocol&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_protocol&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of</span>
+<span class="c1"># &quot;identity:delete_protocol&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The federated protocol API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Show region details.</span>
+<span class="c1"># GET  /v3/regions/{region_id}</span>
+<span class="c1"># HEAD  /v3/regions/{region_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:get_region&quot;: &quot;&quot;</span>
+
+<span class="c1"># List regions.</span>
+<span class="c1"># GET  /v3/regions</span>
+<span class="c1"># HEAD  /v3/regions</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:list_regions&quot;: &quot;&quot;</span>
+
+<span class="c1"># Create region.</span>
+<span class="c1"># POST  /v3/regions</span>
+<span class="c1"># PUT  /v3/regions/{region_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_region&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_region&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:create_region&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The region API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Update region.</span>
+<span class="c1"># PATCH  /v3/regions/{region_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:update_region&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_region&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:update_region&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The region API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Delete region.</span>
+<span class="c1"># DELETE  /v3/regions/{region_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_region&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_region&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:delete_region&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The region API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Show registered limit details.</span>
+<span class="c1"># GET  /v3/registered_limits/{registered_limit_id}</span>
+<span class="c1"># HEAD  /v3/registered_limits/{registered_limit_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:get_registered_limit&quot;: &quot;&quot;</span>
+
+<span class="c1"># List registered limits.</span>
+<span class="c1"># GET  /v3/registered_limits</span>
+<span class="c1"># HEAD  /v3/registered_limits</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:list_registered_limits&quot;: &quot;&quot;</span>
+
+<span class="c1"># Create registered limits.</span>
+<span class="c1"># POST  /v3/registered_limits</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_registered_limits&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># Update registered limit.</span>
+<span class="c1"># PATCH  /v3/registered_limits/{registered_limit_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:update_registered_limit&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># Delete registered limit.</span>
+<span class="c1"># DELETE  /v3/registered_limits/{registered_limit_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_registered_limit&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># List revocation events.</span>
+<span class="c1"># GET  /v3/OS-REVOKE/events</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_revoke_events&quot;: &quot;rule:service_or_admin&quot;</span>
+
+<span class="c1"># Show role details.</span>
+<span class="c1"># GET  /v3/roles/{role_id}</span>
+<span class="c1"># HEAD  /v3/roles/{role_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:get_role&quot;: &quot;(rule:admin_required or (role:reader and system_scope:all)) or (role:manager and rule:domain_managed_target_role)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_role&quot;:&quot;rule:admin_required&quot; has been deprecated since</span>
+<span class="c1"># S in favor of &quot;identity:get_role&quot;:&quot;(rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)) or (role:manager and</span>
+<span class="c1"># rule:domain_managed_target_role)&quot;.</span>
+<span class="c1"># The role API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List roles.</span>
+<span class="c1"># GET  /v3/roles</span>
+<span class="c1"># HEAD  /v3/roles</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:list_roles&quot;: &quot;(rule:admin_required or (role:reader and system_scope:all)) or (role:manager and not domain_id:None)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_roles&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:list_roles&quot;:&quot;(rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)) or (role:manager and not</span>
+<span class="c1"># domain_id:None)&quot;.</span>
+<span class="c1"># The role API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Create role.</span>
+<span class="c1"># POST  /v3/roles</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_role&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_role&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:create_role&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The role API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Update role.</span>
+<span class="c1"># PATCH  /v3/roles/{role_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:update_role&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_role&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:update_role&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The role API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Delete role.</span>
+<span class="c1"># DELETE  /v3/roles/{role_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_role&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_role&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:delete_role&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The role API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Show domain role.</span>
+<span class="c1"># GET  /v3/roles/{role_id}</span>
+<span class="c1"># HEAD  /v3/roles/{role_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_domain_role&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_domain_role&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since T in favor of &quot;identity:get_domain_role&quot;:&quot;rule:admin_required</span>
+<span class="c1"># or (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The role API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List domain roles.</span>
+<span class="c1"># GET  /v3/roles?domain_id={domain_id}</span>
+<span class="c1"># HEAD  /v3/roles?domain_id={domain_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_domain_roles&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_domain_roles&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:list_domain_roles&quot;:&quot;rule:admin_required or (role:reader</span>
+<span class="c1"># and system_scope:all)&quot;.</span>
+<span class="c1"># The role API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Create domain role.</span>
+<span class="c1"># POST  /v3/roles</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_domain_role&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_domain_role&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:create_domain_role&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The role API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Update domain role.</span>
+<span class="c1"># PATCH  /v3/roles/{role_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:update_domain_role&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_domain_role&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:update_domain_role&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The role API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Delete domain role.</span>
+<span class="c1"># DELETE  /v3/roles/{role_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_domain_role&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_domain_role&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:delete_domain_role&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The role API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List role assignments.</span>
+<span class="c1"># GET  /v3/role_assignments</span>
+<span class="c1"># HEAD  /v3/role_assignments</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:list_role_assignments&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or (role:reader and domain_id:%(target.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_role_assignments&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:list_role_assignments&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.domain_id)s)&quot;.</span>
+<span class="c1"># The assignment API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List all role assignments for a given tree of hierarchical projects.</span>
+<span class="c1"># GET  /v3/role_assignments?include_subtree</span>
+<span class="c1"># HEAD  /v3/role_assignments?include_subtree</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:list_role_assignments_for_tree&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or (role:reader and domain_id:%(target.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_role_assignments_for_tree&quot;:&quot;rule:admin_required&quot; has</span>
+<span class="c1"># been deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:list_role_assignments_for_tree&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.domain_id)s)&quot;.</span>
+<span class="c1"># The assignment API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Validate S3 credentials and create a Keystone token. Restricted to</span>
+<span class="c1"># service users or administrators to prevent exploitation via</span>
+<span class="c1"># presigned URLs.</span>
+<span class="c1"># POST  /v3/s3tokens</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:s3tokens_validate&quot;: &quot;rule:service_or_admin&quot;</span>
+
+<span class="c1"># Validate EC2 credentials and create a Keystone token. Restricted to</span>
+<span class="c1"># service users or administrators.</span>
+<span class="c1"># POST  /v3/ec2tokens</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:ec2tokens_validate&quot;: &quot;rule:service_or_admin&quot;</span>
+
+<span class="c1"># Show service details.</span>
+<span class="c1"># GET  /v3/services/{service_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_service&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_service&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:get_service&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The service API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List services.</span>
+<span class="c1"># GET  /v3/services</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_services&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_services&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:list_services&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The service API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Create service.</span>
+<span class="c1"># POST  /v3/services</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_service&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_service&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:create_service&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The service API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Update service.</span>
+<span class="c1"># PATCH  /v3/services/{service_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:update_service&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_service&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:update_service&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The service API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Delete service.</span>
+<span class="c1"># DELETE  /v3/services/{service_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_service&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_service&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:delete_service&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The service API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Create federated service provider.</span>
+<span class="c1"># PUT  /v3/OS-FEDERATION/service_providers/{service_provider_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:create_service_provider&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_service_provider&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:create_service_provider&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The service provider API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># List federated service providers.</span>
+<span class="c1"># GET  /v3/OS-FEDERATION/service_providers</span>
+<span class="c1"># HEAD  /v3/OS-FEDERATION/service_providers</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_service_providers&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_service_providers&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:list_service_providers&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The service provider API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Get federated service provider.</span>
+<span class="c1"># GET  /v3/OS-FEDERATION/service_providers/{service_provider_id}</span>
+<span class="c1"># HEAD  /v3/OS-FEDERATION/service_providers/{service_provider_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_service_provider&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_service_provider&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:get_service_provider&quot;:&quot;rule:admin_required or (role:reader</span>
+<span class="c1"># and system_scope:all)&quot;.</span>
+<span class="c1"># The service provider API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Update federated service provider.</span>
+<span class="c1"># PATCH  /v3/OS-FEDERATION/service_providers/{service_provider_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:update_service_provider&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_service_provider&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:update_service_provider&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The service provider API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># Delete federated service provider.</span>
+<span class="c1"># DELETE  /v3/OS-FEDERATION/service_providers/{service_provider_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_service_provider&quot;: &quot;rule:admin_required&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_service_provider&quot;:&quot;rule:admin_required&quot; has been</span>
+<span class="c1"># deprecated since S in favor of</span>
+<span class="c1"># &quot;identity:delete_service_provider&quot;:&quot;rule:admin_required&quot;.</span>
+<span class="c1"># The service provider API is now aware of system scope and default</span>
+<span class="c1"># roles.</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:revocation_list&quot; has been deprecated since T.</span>
+<span class="c1"># The identity:revocation_list policy isn&#39;t used to protect any APIs</span>
+<span class="c1"># in keystone now that the revocation list API has been deprecated and</span>
+<span class="c1"># only returns a 410 or 403 depending on how keystone is configured.</span>
+<span class="c1"># This policy can be safely removed from policy files.</span>
+<span class="c1"># List revoked PKI tokens.</span>
+<span class="c1"># GET  /v3/auth/tokens/OS-PKI/revoked</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:revocation_list&quot;: &quot;rule:service_or_admin&quot;</span>
+
+<span class="c1"># Check a token.</span>
+<span class="c1"># HEAD  /v3/auth/tokens</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:check_token&quot;: &quot;rule:admin_required or (role:reader and system_scope:all) or rule:token_subject&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:check_token&quot;:&quot;rule:admin_or_token_subject&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:check_token&quot;:&quot;rule:admin_required or (role:reader and</span>
+<span class="c1"># system_scope:all) or rule:token_subject&quot;.</span>
+<span class="c1"># The token API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Validate a token.</span>
+<span class="c1"># GET  /v3/auth/tokens</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:validate_token&quot;: &quot;rule:admin_required or (role:reader and system_scope:all) or rule:service_role or rule:token_subject&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:validate_token&quot;:&quot;rule:service_admin_or_token_subject&quot; has</span>
+<span class="c1"># been deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:validate_token&quot;:&quot;rule:admin_required or (role:reader and</span>
+<span class="c1"># system_scope:all) or rule:service_role or rule:token_subject&quot;.</span>
+<span class="c1"># The token API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Revoke a token.</span>
+<span class="c1"># DELETE  /v3/auth/tokens</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:revoke_token&quot;: &quot;rule:admin_required or rule:token_subject&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:revoke_token&quot;:&quot;rule:admin_or_token_subject&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:revoke_token&quot;:&quot;rule:admin_required or rule:token_subject&quot;.</span>
+<span class="c1"># The token API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Create trust.</span>
+<span class="c1"># POST  /v3/OS-TRUST/trusts</span>
+<span class="c1"># Intended scope(s): project</span>
+<span class="c1">#&quot;identity:create_trust&quot;: &quot;user_id:%(trust.trustor_user_id)s&quot;</span>
+
+<span class="c1"># List trusts.</span>
+<span class="c1"># GET  /v3/OS-TRUST/trusts</span>
+<span class="c1"># HEAD  /v3/OS-TRUST/trusts</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_trusts&quot;: &quot;rule:admin_required or (role:reader and system_scope:all)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_trusts&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since T in favor of &quot;identity:list_trusts&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># (role:reader and system_scope:all)&quot;.</span>
+<span class="c1"># The trust API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List trusts for trustor.</span>
+<span class="c1"># GET  /v3/OS-TRUST/trusts?trustor_user_id={trustor_user_id}</span>
+<span class="c1"># HEAD  /v3/OS-TRUST/trusts?trustor_user_id={trustor_user_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_trusts_for_trustor&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all or user_id:%(target.trust.trustor_user_id)s)&quot;</span>
+
+<span class="c1"># List trusts for trustee.</span>
+<span class="c1"># GET  /v3/OS-TRUST/trusts?trustee_user_id={trustee_user_id}</span>
+<span class="c1"># HEAD  /v3/OS-TRUST/trusts?trustee_user_id={trustee_user_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_trusts_for_trustee&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all or user_id:%(target.trust.trustee_user_id)s)&quot;</span>
+
+<span class="c1"># List roles delegated by a trust.</span>
+<span class="c1"># GET  /v3/OS-TRUST/trusts/{trust_id}/roles</span>
+<span class="c1"># HEAD  /v3/OS-TRUST/trusts/{trust_id}/roles</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:list_roles_for_trust&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all or user_id:%(target.trust.trustor_user_id)s or user_id:%(target.trust.trustee_user_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_roles_for_trust&quot;:&quot;user_id:%(target.trust.trustor_user</span>
+<span class="c1"># _id)s or user_id:%(target.trust.trustee_user_id)s&quot; has been</span>
+<span class="c1"># deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:list_roles_for_trust&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all or</span>
+<span class="c1"># user_id:%(target.trust.trustor_user_id)s or</span>
+<span class="c1"># user_id:%(target.trust.trustee_user_id)s)&quot;.</span>
+<span class="c1"># The trust API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Check if trust delegates a particular role.</span>
+<span class="c1"># GET  /v3/OS-TRUST/trusts/{trust_id}/roles/{role_id}</span>
+<span class="c1"># HEAD  /v3/OS-TRUST/trusts/{trust_id}/roles/{role_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_role_for_trust&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all or user_id:%(target.trust.trustor_user_id)s or user_id:%(target.trust.trustee_user_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_role_for_trust&quot;:&quot;user_id:%(target.trust.trustor_user_i</span>
+<span class="c1"># d)s or user_id:%(target.trust.trustee_user_id)s&quot; has been deprecated</span>
+<span class="c1"># since T in favor of</span>
+<span class="c1"># &quot;identity:get_role_for_trust&quot;:&quot;(rule:admin_required) or (role:reader</span>
+<span class="c1"># and system_scope:all or user_id:%(target.trust.trustor_user_id)s or</span>
+<span class="c1"># user_id:%(target.trust.trustee_user_id)s)&quot;.</span>
+<span class="c1"># The trust API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Revoke trust.</span>
+<span class="c1"># DELETE  /v3/OS-TRUST/trusts/{trust_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:delete_trust&quot;: &quot;rule:admin_required or user_id:%(target.trust.trustor_user_id)s&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_trust&quot;:&quot;user_id:%(target.trust.trustor_user_id)s&quot;</span>
+<span class="c1"># has been deprecated since T in favor of</span>
+<span class="c1"># &quot;identity:delete_trust&quot;:&quot;rule:admin_required or</span>
+<span class="c1"># user_id:%(target.trust.trustor_user_id)s&quot;.</span>
+<span class="c1"># The trust API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Get trust.</span>
+<span class="c1"># GET  /v3/OS-TRUST/trusts/{trust_id}</span>
+<span class="c1"># HEAD  /v3/OS-TRUST/trusts/{trust_id}</span>
+<span class="c1"># Intended scope(s): system, project</span>
+<span class="c1">#&quot;identity:get_trust&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all or user_id:%(target.trust.trustor_user_id)s or user_id:%(target.trust.trustee_user_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_trust&quot;:&quot;user_id:%(target.trust.trustor_user_id)s or</span>
+<span class="c1"># user_id:%(target.trust.trustee_user_id)s&quot; has been deprecated since</span>
+<span class="c1"># T in favor of &quot;identity:get_trust&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all or</span>
+<span class="c1"># user_id:%(target.trust.trustor_user_id)s or</span>
+<span class="c1"># user_id:%(target.trust.trustee_user_id)s)&quot;.</span>
+<span class="c1"># The trust API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Show user details.</span>
+<span class="c1"># GET  /v3/users/{user_id}</span>
+<span class="c1"># HEAD  /v3/users/{user_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:get_user&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or (role:reader and token.domain.id:%(target.user.domain_id)s) or user_id:%(target.user.id)s&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:get_user&quot;:&quot;rule:admin_or_owner&quot; has been deprecated since</span>
+<span class="c1"># S in favor of &quot;identity:get_user&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all) or (role:reader and</span>
+<span class="c1"># token.domain.id:%(target.user.domain_id)s) or</span>
+<span class="c1"># user_id:%(target.user.id)s&quot;.</span>
+<span class="c1"># The user API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List users.</span>
+<span class="c1"># GET  /v3/users</span>
+<span class="c1"># HEAD  /v3/users</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:list_users&quot;: &quot;(rule:admin_required) or (role:reader and system_scope:all) or (role:reader and domain_id:%(target.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:list_users&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:list_users&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:reader and system_scope:all) or (role:reader and</span>
+<span class="c1"># domain_id:%(target.domain_id)s)&quot;.</span>
+<span class="c1"># The user API is now aware of system scope and default roles.</span>
+
+<span class="c1"># List all projects a user has access to via role assignments.</span>
+<span class="c1"># GET   /v3/auth/projects</span>
+<span class="c1">#&quot;identity:list_projects_for_user&quot;: &quot;&quot;</span>
+
+<span class="c1"># List all domains a user has access to via role assignments.</span>
+<span class="c1"># GET  /v3/auth/domains</span>
+<span class="c1">#&quot;identity:list_domains_for_user&quot;: &quot;&quot;</span>
+
+<span class="c1"># Create a user.</span>
+<span class="c1"># POST  /v3/users</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:create_user&quot;: &quot;(rule:admin_required) or (role:manager and token.domain.id:%(target.user.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:create_user&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:create_user&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:manager and token.domain.id:%(target.user.domain_id)s)&quot;.</span>
+<span class="c1"># The user API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Update a user, including administrative password resets.</span>
+<span class="c1"># PATCH  /v3/users/{user_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:update_user&quot;: &quot;(rule:admin_required) or (role:manager and token.domain.id:%(target.user.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:update_user&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:update_user&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:manager and token.domain.id:%(target.user.domain_id)s)&quot;.</span>
+<span class="c1"># The user API is now aware of system scope and default roles.</span>
+
+<span class="c1"># Delete a user.</span>
+<span class="c1"># DELETE  /v3/users/{user_id}</span>
+<span class="c1"># Intended scope(s): system, domain, project</span>
+<span class="c1">#&quot;identity:delete_user&quot;: &quot;(rule:admin_required) or (role:manager and token.domain.id:%(target.user.domain_id)s)&quot;</span>
+
+<span class="c1"># DEPRECATED</span>
+<span class="c1"># &quot;identity:delete_user&quot;:&quot;rule:admin_required&quot; has been deprecated</span>
+<span class="c1"># since S in favor of &quot;identity:delete_user&quot;:&quot;(rule:admin_required) or</span>
+<span class="c1"># (role:manager and token.domain.id:%(target.user.domain_id)s)&quot;.</span>
+<span class="c1"># The user API is now aware of system scope and default roles.</span>
+
+</pre></div>
+</div>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="logging-conf.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: logging.conf"></i></a>
+          
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2017-07-10 18:45:25</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "configuration/samples/policy-yaml" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "policy.yaml in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2017-07-10 18:45:25";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "configuration/samples/policy-yaml";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

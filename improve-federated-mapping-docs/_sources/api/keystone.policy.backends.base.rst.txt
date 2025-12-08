@@ -1,0 +1,7 @@
+keystone.policy.backends.base module
+====================================
+
+.. automodule:: keystone.policy.backends.base
+   :members:
+   :undoc-members:
+   :show-inheritance:

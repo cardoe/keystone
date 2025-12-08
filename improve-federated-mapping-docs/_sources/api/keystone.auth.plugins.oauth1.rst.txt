@@ -1,0 +1,7 @@
+keystone.auth.plugins.oauth1 module
+===================================
+
+.. automodule:: keystone.auth.plugins.oauth1
+   :members:
+   :undoc-members:
+   :show-inheritance:

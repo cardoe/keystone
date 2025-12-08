@@ -1,0 +1,7 @@
+keystone.conf.assignment module
+===============================
+
+.. automodule:: keystone.conf.assignment
+   :members:
+   :undoc-members:
+   :show-inheritance:

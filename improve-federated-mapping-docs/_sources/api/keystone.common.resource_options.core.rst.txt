@@ -1,0 +1,7 @@
+keystone.common.resource\_options.core module
+=============================================
+
+.. automodule:: keystone.common.resource_options.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

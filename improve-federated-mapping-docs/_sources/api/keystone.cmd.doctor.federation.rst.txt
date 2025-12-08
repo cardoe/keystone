@@ -1,0 +1,7 @@
+keystone.cmd.doctor.federation module
+=====================================
+
+.. automodule:: keystone.cmd.doctor.federation
+   :members:
+   :undoc-members:
+   :show-inheritance:

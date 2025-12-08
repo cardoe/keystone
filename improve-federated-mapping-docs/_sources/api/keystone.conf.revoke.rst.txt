@@ -1,0 +1,7 @@
+keystone.conf.revoke module
+===========================
+
+.. automodule:: keystone.conf.revoke
+   :members:
+   :undoc-members:
+   :show-inheritance:

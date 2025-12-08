@@ -1,0 +1,7 @@
+keystone.common.policies.implied\_role module
+=============================================
+
+.. automodule:: keystone.common.policies.implied_role
+   :members:
+   :undoc-members:
+   :show-inheritance:

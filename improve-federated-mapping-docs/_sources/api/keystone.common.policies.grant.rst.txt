@@ -1,0 +1,7 @@
+keystone.common.policies.grant module
+=====================================
+
+.. automodule:: keystone.common.policies.grant
+   :members:
+   :undoc-members:
+   :show-inheritance:

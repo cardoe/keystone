@@ -1,0 +1,7 @@
+keystone.federation.backends.base module
+========================================
+
+.. automodule:: keystone.federation.backends.base
+   :members:
+   :undoc-members:
+   :show-inheritance:

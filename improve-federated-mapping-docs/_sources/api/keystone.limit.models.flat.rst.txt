@@ -1,0 +1,7 @@
+keystone.limit.models.flat module
+=================================
+
+.. automodule:: keystone.limit.models.flat
+   :members:
+   :undoc-members:
+   :show-inheritance:

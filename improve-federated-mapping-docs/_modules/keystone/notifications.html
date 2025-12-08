@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keystone.notifications &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/support-matrix.css" />
+    <script src="../../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- TEMPLATE_NAME: _modules/keystone/notifications -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>keystone.notifications</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <h1>Source code for keystone.notifications</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2013 IBM Corp.</span>
+<span class="c1">#</span>
+<span class="c1">#   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may</span>
+<span class="c1">#   not use this file except in compliance with the License. You may obtain</span>
+<span class="c1">#   a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1">#   Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1">#   distributed under the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT</span>
+<span class="c1">#   WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the</span>
+<span class="c1">#   License for the specific language governing permissions and limitations</span>
+<span class="c1">#   under the License.</span>
+
+<span class="sd">&quot;&quot;&quot;Notifications module for OpenStack Identity Service resources.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">flask</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_log</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">oslo_messaging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">reflection</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pycadf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycadf</span><span class="w"> </span><span class="kn">import</span> <span class="n">attachment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycadf</span><span class="w"> </span><span class="kn">import</span> <span class="n">cadftaxonomy</span> <span class="k">as</span> <span class="n">taxonomy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycadf</span><span class="w"> </span><span class="kn">import</span> <span class="n">cadftype</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycadf</span><span class="w"> </span><span class="kn">import</span> <span class="n">credential</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycadf</span><span class="w"> </span><span class="kn">import</span> <span class="n">eventfactory</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycadf</span><span class="w"> </span><span class="kn">import</span> <span class="n">host</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycadf</span><span class="w"> </span><span class="kn">import</span> <span class="n">reason</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycadf</span><span class="w"> </span><span class="kn">import</span> <span class="n">resource</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">context</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">password_hashing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">provider_api</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">keystone.conf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone</span><span class="w"> </span><span class="kn">import</span> <span class="n">exception</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.i18n</span><span class="w"> </span><span class="kn">import</span> <span class="n">_</span>
+
+<span class="n">_CATALOG_HELPER_OBJ</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="n">LOG</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="c1"># NOTE(gyee): actions that can be notified. One must update this list whenever</span>
+<span class="c1"># a new action is supported.</span>
+<span class="n">_ACTIONS</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span>
+    <span class="s1">&#39;_ACTIONS&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="s1">&#39;updated&#39;</span><span class="p">,</span> <span class="s1">&#39;internal&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">ACTIONS</span> <span class="o">=</span> <span class="n">_ACTIONS</span><span class="p">(</span>
+    <span class="n">created</span><span class="o">=</span><span class="s1">&#39;created&#39;</span><span class="p">,</span>
+    <span class="n">deleted</span><span class="o">=</span><span class="s1">&#39;deleted&#39;</span><span class="p">,</span>
+    <span class="n">disabled</span><span class="o">=</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span>
+    <span class="n">updated</span><span class="o">=</span><span class="s1">&#39;updated&#39;</span><span class="p">,</span>
+    <span class="n">internal</span><span class="o">=</span><span class="s1">&#39;internal&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;The actions on resources.&quot;&quot;&quot;</span>
+
+<span class="n">CADF_TYPE_MAP</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">SECURITY_GROUP</span><span class="p">,</span>
+    <span class="s1">&#39;project&#39;</span><span class="p">:</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">SECURITY_PROJECT</span><span class="p">,</span>
+    <span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">SECURITY_ROLE</span><span class="p">,</span>
+    <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">SECURITY_ACCOUNT_USER</span><span class="p">,</span>
+    <span class="s1">&#39;domain&#39;</span><span class="p">:</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">SECURITY_DOMAIN</span><span class="p">,</span>
+    <span class="s1">&#39;region&#39;</span><span class="p">:</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">SECURITY_REGION</span><span class="p">,</span>
+    <span class="s1">&#39;endpoint&#39;</span><span class="p">:</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">SECURITY_ENDPOINT</span><span class="p">,</span>
+    <span class="s1">&#39;service&#39;</span><span class="p">:</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">SECURITY_SERVICE</span><span class="p">,</span>
+    <span class="s1">&#39;policy&#39;</span><span class="p">:</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">SECURITY_POLICY</span><span class="p">,</span>
+    <span class="s1">&#39;OS-TRUST:trust&#39;</span><span class="p">:</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">SECURITY_TRUST</span><span class="p">,</span>
+    <span class="s1">&#39;OS-OAUTH1:access_token&#39;</span><span class="p">:</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">SECURITY_CREDENTIAL</span><span class="p">,</span>
+    <span class="s1">&#39;OS-OAUTH1:request_token&#39;</span><span class="p">:</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">SECURITY_CREDENTIAL</span><span class="p">,</span>
+    <span class="s1">&#39;OS-OAUTH1:consumer&#39;</span><span class="p">:</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">SECURITY_ACCOUNT</span><span class="p">,</span>
+    <span class="s1">&#39;application_credential&#39;</span><span class="p">:</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">SECURITY_CREDENTIAL</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">SAML_AUDIT_TYPE</span> <span class="o">=</span> <span class="s1">&#39;http://docs.oasis-open.org/security/saml/v2.0&#39;</span>
+<span class="c1"># resource types that can be notified</span>
+<span class="n">_SUBSCRIBERS</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">_notifier</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">SERVICE</span> <span class="o">=</span> <span class="s1">&#39;identity&#39;</span>
+<span class="n">PROVIDERS</span> <span class="o">=</span> <span class="n">provider_api</span><span class="o">.</span><span class="n">ProviderAPIs</span>
+
+<span class="n">ROOT_DOMAIN</span> <span class="o">=</span> <span class="s1">&#39;&lt;&lt;keystone.domain.root&gt;&gt;&#39;</span>
+
+<span class="n">CONF</span> <span class="o">=</span> <span class="n">keystone</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">CONF</span>
+
+<span class="c1"># NOTE(morganfainberg): Special case notifications that are only used</span>
+<span class="c1"># internally for handling token persistence token deletions</span>
+<span class="n">INVALIDATE_TOKEN_CACHE</span> <span class="o">=</span> <span class="s1">&#39;invalidate_token_cache&#39;</span>  <span class="c1"># nosec</span>
+<span class="n">PERSIST_REVOCATION_EVENT_FOR_USER</span> <span class="o">=</span> <span class="s1">&#39;persist_revocation_event_for_user&#39;</span>
+<span class="n">REMOVE_APP_CREDS_FOR_USER</span> <span class="o">=</span> <span class="s1">&#39;remove_application_credentials_for_user&#39;</span>
+<span class="n">DOMAIN_DELETED</span> <span class="o">=</span> <span class="s1">&#39;domain_deleted&#39;</span>
+
+
+<div class="viewcode-block" id="build_audit_initiator">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.build_audit_initiator">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_audit_initiator</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A pyCADF initiator describing the current authenticated context.&quot;&quot;&quot;</span>
+    <span class="n">pycadf_host</span> <span class="o">=</span> <span class="n">host</span><span class="o">.</span><span class="n">Host</span><span class="p">(</span>
+        <span class="n">address</span><span class="o">=</span><span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">remote_addr</span><span class="p">,</span> <span class="n">agent</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user_agent</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">initiator</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span>
+        <span class="n">typeURI</span><span class="o">=</span><span class="n">taxonomy</span><span class="o">.</span><span class="n">ACCOUNT_USER</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">pycadf_host</span>
+    <span class="p">)</span>
+    <span class="n">oslo_context</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">REQUEST_CONTEXT_ENV</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">oslo_context</span><span class="o">.</span><span class="n">user_id</span><span class="p">:</span>
+        <span class="n">initiator</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">resource_uuid</span><span class="p">(</span><span class="n">oslo_context</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="n">initiator</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">oslo_context</span><span class="o">.</span><span class="n">user_id</span>
+
+    <span class="k">if</span> <span class="n">oslo_context</span><span class="o">.</span><span class="n">project_id</span><span class="p">:</span>
+        <span class="n">initiator</span><span class="o">.</span><span class="n">project_id</span> <span class="o">=</span> <span class="n">oslo_context</span><span class="o">.</span><span class="n">project_id</span>
+
+    <span class="k">if</span> <span class="n">oslo_context</span><span class="o">.</span><span class="n">domain_id</span><span class="p">:</span>
+        <span class="n">initiator</span><span class="o">.</span><span class="n">domain_id</span> <span class="o">=</span> <span class="n">oslo_context</span><span class="o">.</span><span class="n">domain_id</span>
+
+    <span class="n">initiator</span><span class="o">.</span><span class="n">request_id</span> <span class="o">=</span> <span class="n">oslo_context</span><span class="o">.</span><span class="n">request_id</span>
+
+    <span class="k">if</span> <span class="n">oslo_context</span><span class="o">.</span><span class="n">global_request_id</span><span class="p">:</span>
+        <span class="n">initiator</span><span class="o">.</span><span class="n">global_request_id</span> <span class="o">=</span> <span class="n">oslo_context</span><span class="o">.</span><span class="n">global_request_id</span>
+
+    <span class="k">return</span> <span class="n">initiator</span></div>
+
+
+
+<div class="viewcode-block" id="Audit">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.Audit">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Audit</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Namespace for audit notification functions.</span>
+
+<span class="sd">    This is a namespace object to contain all of the direct notification</span>
+<span class="sd">    functions utilized for ``Manager`` methods.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_emit</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">operation</span><span class="p">,</span>
+        <span class="n">resource_type</span><span class="p">,</span>
+        <span class="n">resource_id</span><span class="p">,</span>
+        <span class="n">initiator</span><span class="p">,</span>
+        <span class="n">public</span><span class="p">,</span>
+        <span class="n">actor_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">reason</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Directly send an event notification.</span>
+
+<span class="sd">        :param operation: one of the values from ACTIONS</span>
+<span class="sd">        :param resource_type: type of resource being affected</span>
+<span class="sd">        :param resource_id: ID of the resource affected</span>
+<span class="sd">        :param initiator: CADF representation of the user that created the</span>
+<span class="sd">                          request</span>
+<span class="sd">        :param public: If True (default), the event will be sent to the</span>
+<span class="sd">                       notifier API.  If False, the event will only be sent via</span>
+<span class="sd">                       notify_event_callbacks to in process listeners</span>
+<span class="sd">        :param actor_dict: dictionary of actor information in the event of</span>
+<span class="sd">                           assignment notification</span>
+<span class="sd">        :param reason: pycadf object containing the response code and</span>
+<span class="sd">                       message description</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># NOTE(stevemar): the _send_notification function is</span>
+        <span class="c1"># overloaded, it&#39;s used to register callbacks and to actually</span>
+        <span class="c1"># send the notification externally. Thus, we should check</span>
+        <span class="c1"># the desired notification format in the function instead</span>
+        <span class="c1"># of before it.</span>
+        <span class="n">_send_notification</span><span class="p">(</span>
+            <span class="n">operation</span><span class="p">,</span>
+            <span class="n">resource_type</span><span class="p">,</span>
+            <span class="n">resource_id</span><span class="p">,</span>
+            <span class="n">initiator</span><span class="o">=</span><span class="n">initiator</span><span class="p">,</span>
+            <span class="n">actor_dict</span><span class="o">=</span><span class="n">actor_dict</span><span class="p">,</span>
+            <span class="n">public</span><span class="o">=</span><span class="n">public</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">CONF</span><span class="o">.</span><span class="n">notification_format</span> <span class="o">==</span> <span class="s1">&#39;cadf&#39;</span> <span class="ow">and</span> <span class="n">public</span><span class="p">:</span>
+            <span class="n">outcome</span> <span class="o">=</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">OUTCOME_SUCCESS</span>
+            <span class="n">_create_cadf_payload</span><span class="p">(</span>
+                <span class="n">operation</span><span class="p">,</span>
+                <span class="n">resource_type</span><span class="p">,</span>
+                <span class="n">resource_id</span><span class="p">,</span>
+                <span class="n">outcome</span><span class="p">,</span>
+                <span class="n">initiator</span><span class="p">,</span>
+                <span class="n">reason</span><span class="p">,</span>
+            <span class="p">)</span>
+
+<div class="viewcode-block" id="Audit.created">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.Audit.created">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">created</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">resource_type</span><span class="p">,</span>
+        <span class="n">resource_id</span><span class="p">,</span>
+        <span class="n">initiator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">public</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">reason</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_emit</span><span class="p">(</span>
+            <span class="n">ACTIONS</span><span class="o">.</span><span class="n">created</span><span class="p">,</span>
+            <span class="n">resource_type</span><span class="p">,</span>
+            <span class="n">resource_id</span><span class="p">,</span>
+            <span class="n">initiator</span><span class="p">,</span>
+            <span class="n">public</span><span class="p">,</span>
+            <span class="n">reason</span><span class="o">=</span><span class="n">reason</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Audit.updated">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.Audit.updated">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">updated</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">resource_type</span><span class="p">,</span>
+        <span class="n">resource_id</span><span class="p">,</span>
+        <span class="n">initiator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">public</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">reason</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_emit</span><span class="p">(</span>
+            <span class="n">ACTIONS</span><span class="o">.</span><span class="n">updated</span><span class="p">,</span>
+            <span class="n">resource_type</span><span class="p">,</span>
+            <span class="n">resource_id</span><span class="p">,</span>
+            <span class="n">initiator</span><span class="p">,</span>
+            <span class="n">public</span><span class="p">,</span>
+            <span class="n">reason</span><span class="o">=</span><span class="n">reason</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Audit.disabled">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.Audit.disabled">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">disabled</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">resource_type</span><span class="p">,</span>
+        <span class="n">resource_id</span><span class="p">,</span>
+        <span class="n">initiator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">public</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">reason</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_emit</span><span class="p">(</span>
+            <span class="n">ACTIONS</span><span class="o">.</span><span class="n">disabled</span><span class="p">,</span>
+            <span class="n">resource_type</span><span class="p">,</span>
+            <span class="n">resource_id</span><span class="p">,</span>
+            <span class="n">initiator</span><span class="p">,</span>
+            <span class="n">public</span><span class="p">,</span>
+            <span class="n">reason</span><span class="o">=</span><span class="n">reason</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Audit.deleted">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.Audit.deleted">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deleted</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">resource_type</span><span class="p">,</span>
+        <span class="n">resource_id</span><span class="p">,</span>
+        <span class="n">initiator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">public</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">reason</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_emit</span><span class="p">(</span>
+            <span class="n">ACTIONS</span><span class="o">.</span><span class="n">deleted</span><span class="p">,</span>
+            <span class="n">resource_type</span><span class="p">,</span>
+            <span class="n">resource_id</span><span class="p">,</span>
+            <span class="n">initiator</span><span class="p">,</span>
+            <span class="n">public</span><span class="p">,</span>
+            <span class="n">reason</span><span class="o">=</span><span class="n">reason</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Audit.added_to">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.Audit.added_to">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">added_to</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">target_type</span><span class="p">,</span>
+        <span class="n">target_id</span><span class="p">,</span>
+        <span class="n">actor_type</span><span class="p">,</span>
+        <span class="n">actor_id</span><span class="p">,</span>
+        <span class="n">initiator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">public</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">reason</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">actor_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">actor_id</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">actor_type</span><span class="p">,</span>
+            <span class="s1">&#39;actor_operation&#39;</span><span class="p">:</span> <span class="s1">&#39;added&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_emit</span><span class="p">(</span>
+            <span class="n">ACTIONS</span><span class="o">.</span><span class="n">updated</span><span class="p">,</span>
+            <span class="n">target_type</span><span class="p">,</span>
+            <span class="n">target_id</span><span class="p">,</span>
+            <span class="n">initiator</span><span class="p">,</span>
+            <span class="n">public</span><span class="p">,</span>
+            <span class="n">actor_dict</span><span class="o">=</span><span class="n">actor_dict</span><span class="p">,</span>
+            <span class="n">reason</span><span class="o">=</span><span class="n">reason</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Audit.removed_from">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.Audit.removed_from">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">removed_from</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">target_type</span><span class="p">,</span>
+        <span class="n">target_id</span><span class="p">,</span>
+        <span class="n">actor_type</span><span class="p">,</span>
+        <span class="n">actor_id</span><span class="p">,</span>
+        <span class="n">initiator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">public</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">reason</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">actor_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">actor_id</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">actor_type</span><span class="p">,</span>
+            <span class="s1">&#39;actor_operation&#39;</span><span class="p">:</span> <span class="s1">&#39;removed&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_emit</span><span class="p">(</span>
+            <span class="n">ACTIONS</span><span class="o">.</span><span class="n">updated</span><span class="p">,</span>
+            <span class="n">target_type</span><span class="p">,</span>
+            <span class="n">target_id</span><span class="p">,</span>
+            <span class="n">initiator</span><span class="p">,</span>
+            <span class="n">public</span><span class="p">,</span>
+            <span class="n">actor_dict</span><span class="o">=</span><span class="n">actor_dict</span><span class="p">,</span>
+            <span class="n">reason</span><span class="o">=</span><span class="n">reason</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Audit.internal">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.Audit.internal">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">internal</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">resource_type</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># NOTE(lbragstad): Internal notifications are never public and have</span>
+        <span class="c1"># never used the initiator variable, but the _emit() method expects</span>
+        <span class="c1"># them. Let&#39;s set them here but not expose them through the method</span>
+        <span class="c1"># signature - that way someone can not do something like send an</span>
+        <span class="c1"># internal notification publicly.</span>
+        <span class="n">initiator</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">public</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_emit</span><span class="p">(</span>
+            <span class="n">ACTIONS</span><span class="o">.</span><span class="n">internal</span><span class="p">,</span>
+            <span class="n">resource_type</span><span class="p">,</span>
+            <span class="n">resource_id</span><span class="p">,</span>
+            <span class="n">initiator</span><span class="p">,</span>
+            <span class="n">public</span><span class="p">,</span>
+            <span class="n">reason</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="invalidate_token_cache_notification">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.invalidate_token_cache_notification">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">invalidate_token_cache_notification</span><span class="p">(</span><span class="n">reason</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A specific notification for invalidating the token cache.</span>
+
+<span class="sd">    :param reason: The specific reason why the token cache is being</span>
+<span class="sd">                   invalidated.</span>
+<span class="sd">    :type reason: string</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Since keystone does a lot of work in the authentication and validation</span>
+    <span class="c1"># process to make sure the authorization context for the user is</span>
+    <span class="c1"># update-to-date, invalidating the token cache is a somewhat common</span>
+    <span class="c1"># operation. It&#39;s done across various subsystems when role assignments</span>
+    <span class="c1"># change, users are disabled, identity providers deleted or disabled, etc..</span>
+    <span class="c1"># This notification is meant to make the process of invalidating the token</span>
+    <span class="c1"># cache DRY, instead of have each subsystem implement their own token cache</span>
+    <span class="c1"># invalidation strategy or callbacks.</span>
+    <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">reason</span><span class="p">)</span>
+    <span class="n">resource_id</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">initiator</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">public</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">Audit</span><span class="o">.</span><span class="n">_emit</span><span class="p">(</span>
+        <span class="n">ACTIONS</span><span class="o">.</span><span class="n">internal</span><span class="p">,</span>
+        <span class="n">INVALIDATE_TOKEN_CACHE</span><span class="p">,</span>
+        <span class="n">resource_id</span><span class="p">,</span>
+        <span class="n">initiator</span><span class="p">,</span>
+        <span class="n">public</span><span class="p">,</span>
+        <span class="n">reason</span><span class="o">=</span><span class="n">reason</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_callback_info</span><span class="p">(</span><span class="n">callback</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return list containing callback&#39;s module and name.</span>
+
+<span class="sd">    If the callback is a bound instance method also return the class name.</span>
+
+<span class="sd">    :param callback: Function to call</span>
+<span class="sd">    :type callback: function</span>
+<span class="sd">    :returns: List containing parent module, (optional class,) function name</span>
+<span class="sd">    :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">module_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="s1">&#39;__module__&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">func_name</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">ismethod</span><span class="p">(</span><span class="n">callback</span><span class="p">):</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="n">reflection</span><span class="o">.</span><span class="n">get_class_name</span><span class="p">(</span>
+            <span class="n">callback</span><span class="o">.</span><span class="vm">__self__</span><span class="p">,</span> <span class="n">fully_qualified</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">module_name</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">func_name</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">module_name</span><span class="p">,</span> <span class="n">func_name</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="register_event_callback">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.register_event_callback">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_event_callback</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">resource_type</span><span class="p">,</span> <span class="n">callbacks</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Register each callback with the event.</span>
+
+<span class="sd">    :param event: Action being registered</span>
+<span class="sd">    :type event: keystone.notifications.ACTIONS</span>
+<span class="sd">    :param resource_type: Type of resource being operated on</span>
+<span class="sd">    :type resource_type: str</span>
+<span class="sd">    :param callbacks: Callback items to be registered with event</span>
+<span class="sd">    :type callbacks: list</span>
+<span class="sd">    :raises ValueError: If event is not a valid ACTION</span>
+<span class="sd">    :raises TypeError: If callback is not callable</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">event</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ACTIONS</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="n">_</span><span class="p">(</span>
+                <span class="s1">&#39;</span><span class="si">%(event)s</span><span class="s1"> is not a valid notification event, must &#39;</span>
+                <span class="s1">&#39;be one of: </span><span class="si">%(actions)s</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+            <span class="o">%</span> <span class="p">{</span><span class="s1">&#39;event&#39;</span><span class="p">:</span> <span class="n">event</span><span class="p">,</span> <span class="s1">&#39;actions&#39;</span><span class="p">:</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ACTIONS</span><span class="p">)}</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">callbacks</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">):</span>
+        <span class="n">callbacks</span> <span class="o">=</span> <span class="p">[</span><span class="n">callbacks</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="n">callbacks</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">callback</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Method not callable: </span><span class="si">{</span><span class="n">callback</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">tr_msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Method not callable: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">%</span> <span class="n">callback</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">tr_msg</span><span class="p">)</span>
+        <span class="n">_SUBSCRIBERS</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">resource_type</span><span class="p">,</span> <span class="nb">set</span><span class="p">())</span>
+        <span class="n">_SUBSCRIBERS</span><span class="p">[</span><span class="n">event</span><span class="p">][</span><span class="n">resource_type</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">LOG</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">getEffectiveLevel</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">log</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span>
+            <span class="c1"># Do this only if its going to appear in the logs.</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Callback: `</span><span class="si">%(callback)s</span><span class="s1">` subscribed to event `</span><span class="si">%(event)s</span><span class="s1">`.&#39;</span>
+            <span class="n">callback_info</span> <span class="o">=</span> <span class="n">_get_callback_info</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+            <span class="n">callback_str</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">callback_info</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">event_str</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;identity&#39;</span><span class="p">,</span> <span class="n">resource_type</span><span class="p">,</span> <span class="n">event</span><span class="p">])</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;callback&#39;</span><span class="p">:</span> <span class="n">callback_str</span><span class="p">,</span> <span class="s1">&#39;event&#39;</span><span class="p">:</span> <span class="n">event_str</span><span class="p">})</span></div>
+
+
+
+<div class="viewcode-block" id="listener">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.listener">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">listener</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A class decorator to declare a class to be a notification listener.</span>
+
+<span class="sd">    A notification listener must specify the event(s) it is interested in by</span>
+<span class="sd">    defining a ``event_callbacks`` attribute or property. ``event_callbacks``</span>
+<span class="sd">    is a dictionary where the key is the type of event and the value is a</span>
+<span class="sd">    dictionary containing a mapping of resource types to callback(s).</span>
+
+<span class="sd">    :data:`.ACTIONS` contains constants for the currently</span>
+<span class="sd">    supported events. There is currently no single place to find constants for</span>
+<span class="sd">    the resource types.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        @listener</span>
+<span class="sd">        class Something(object):</span>
+<span class="sd">            def __init__(self):</span>
+<span class="sd">                self.event_callbacks = {</span>
+<span class="sd">                    notifications.ACTIONS.created: {</span>
+<span class="sd">                        &#39;user&#39;: self._user_created_callback</span>
+<span class="sd">                    },</span>
+<span class="sd">                    notifications.ACTIONS.deleted: {</span>
+<span class="sd">                        &#39;project&#39;: [</span>
+<span class="sd">                            self._project_deleted_callback,</span>
+<span class="sd">                            self._do_cleanup,</span>
+<span class="sd">                        ]</span>
+<span class="sd">                    },</span>
+<span class="sd">                }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">init_wrapper</span><span class="p">(</span><span class="n">init</span><span class="p">):</span>
+        <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">__new_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">_register_event_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">__new_init__</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_register_event_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">event</span><span class="p">,</span> <span class="n">resource_types</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_callbacks</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">resource_type</span><span class="p">,</span> <span class="n">callbacks</span> <span class="ow">in</span> <span class="n">resource_types</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">register_event_callback</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">resource_type</span><span class="p">,</span> <span class="n">callbacks</span><span class="p">)</span>
+
+    <span class="bp">cls</span><span class="o">.</span><span class="fm">__init__</span> <span class="o">=</span> <span class="n">init_wrapper</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="fm">__init__</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">cls</span></div>
+
+
+
+<div class="viewcode-block" id="notify_event_callbacks">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.notify_event_callbacks">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">notify_event_callbacks</span><span class="p">(</span><span class="n">service</span><span class="p">,</span> <span class="n">resource_type</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Send a notification to registered extensions.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">operation</span> <span class="ow">in</span> <span class="n">_SUBSCRIBERS</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">resource_type</span> <span class="ow">in</span> <span class="n">_SUBSCRIBERS</span><span class="p">[</span><span class="n">operation</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">cb</span> <span class="ow">in</span> <span class="n">_SUBSCRIBERS</span><span class="p">[</span><span class="n">operation</span><span class="p">][</span><span class="n">resource_type</span><span class="p">]:</span>
+                <span class="n">subst_dict</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;cb_name&#39;</span><span class="p">:</span> <span class="n">cb</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                    <span class="s1">&#39;service&#39;</span><span class="p">:</span> <span class="n">service</span><span class="p">,</span>
+                    <span class="s1">&#39;resource_type&#39;</span><span class="p">:</span> <span class="n">resource_type</span><span class="p">,</span>
+                    <span class="s1">&#39;operation&#39;</span><span class="p">:</span> <span class="n">operation</span><span class="p">,</span>
+                    <span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="n">payload</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s1">&#39;Invoking callback </span><span class="si">%(cb_name)s</span><span class="s1"> for event &#39;</span>
+                    <span class="s1">&#39;</span><span class="si">%(service)s</span><span class="s1"> </span><span class="si">%(resource_type)s</span><span class="s1"> </span><span class="si">%(operation)s</span><span class="s1"> for &#39;</span>
+                    <span class="s1">&#39;</span><span class="si">%(payload)s</span><span class="s1">&#39;</span><span class="p">,</span>
+                    <span class="n">subst_dict</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">cb</span><span class="p">(</span><span class="n">service</span><span class="p">,</span> <span class="n">resource_type</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_notifier</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a notifier object.</span>
+
+<span class="sd">    If _notifier is None it means that a notifier object has not been set.</span>
+<span class="sd">    If _notifier is False it means that a notifier has previously failed to</span>
+<span class="sd">    construct.</span>
+<span class="sd">    Otherwise it is a constructed Notifier object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">_notifier</span>
+
+    <span class="k">if</span> <span class="n">_notifier</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">host</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">default_publisher_id</span> <span class="ow">or</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">transport</span> <span class="o">=</span> <span class="n">oslo_messaging</span><span class="o">.</span><span class="n">get_notification_transport</span><span class="p">(</span><span class="n">CONF</span><span class="p">)</span>
+            <span class="n">_notifier</span> <span class="o">=</span> <span class="n">oslo_messaging</span><span class="o">.</span><span class="n">Notifier</span><span class="p">(</span><span class="n">transport</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;identity.</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Failed to construct notifier&quot;</span><span class="p">)</span>
+            <span class="n">_notifier</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="n">_notifier</span>
+
+
+<div class="viewcode-block" id="clear_subscribers">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.clear_subscribers">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">clear_subscribers</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Empty subscribers dictionary.</span>
+
+<span class="sd">    This effectively stops notifications since there will be no subscribers</span>
+<span class="sd">    to publish to.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_SUBSCRIBERS</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="reset_notifier">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.reset_notifier">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">reset_notifier</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reset the notifications internal state.</span>
+
+<span class="sd">    This is used only for testing purposes.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">_notifier</span>
+    <span class="n">_notifier</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_create_cadf_payload</span><span class="p">(</span>
+    <span class="n">operation</span><span class="p">,</span> <span class="n">resource_type</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">,</span> <span class="n">outcome</span><span class="p">,</span> <span class="n">initiator</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prepare data for CADF audit notifier.</span>
+
+<span class="sd">    Transform the arguments into content to be consumed by the function that</span>
+<span class="sd">    emits CADF events (_send_audit_notification). Specifically the</span>
+<span class="sd">    ``resource_type`` (role, user, etc) must be transformed into a CADF</span>
+<span class="sd">    keyword, such as: ``data/security/role``. The ``resource_id`` is added as a</span>
+<span class="sd">    top level value for the ``resource_info`` key. Lastly, the ``operation`` is</span>
+<span class="sd">    used to create the CADF ``action``, and the ``event_type`` name.</span>
+
+<span class="sd">    As per the CADF specification, the ``action`` must start with create,</span>
+<span class="sd">    update, delete, etc... i.e.: created.user or deleted.role</span>
+
+<span class="sd">    However the ``event_type`` is an OpenStack-ism that is typically of the</span>
+<span class="sd">    form project.resource.operation. i.e.: identity.project.updated</span>
+
+<span class="sd">    :param operation: operation being performed (created, updated, or deleted)</span>
+<span class="sd">    :param resource_type: type of resource being operated on (role, user, etc)</span>
+<span class="sd">    :param resource_id: ID of resource being operated on</span>
+<span class="sd">    :param outcome: outcomes of the operation (SUCCESS, FAILURE, etc)</span>
+<span class="sd">    :param initiator: CADF representation of the user that created the request</span>
+<span class="sd">    :param reason: pycadf object containing the response code and</span>
+<span class="sd">                   message description</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">resource_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">CADF_TYPE_MAP</span><span class="p">:</span>
+        <span class="n">target_uri</span> <span class="o">=</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">UNKNOWN</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">target_uri</span> <span class="o">=</span> <span class="n">CADF_TYPE_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resource_type</span><span class="p">)</span>
+
+    <span class="c1"># TODO(gagehugo): The root domain ID is typically hidden, there isn&#39;t a</span>
+    <span class="c1"># reason to emit a notification for it. Once we expose the root domain</span>
+    <span class="c1"># (and handle the CADF UUID), remove this.</span>
+    <span class="k">if</span> <span class="n">resource_id</span> <span class="o">==</span> <span class="n">ROOT_DOMAIN</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="n">target</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="n">typeURI</span><span class="o">=</span><span class="n">target_uri</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">resource_id</span><span class="p">)</span>
+
+    <span class="n">audit_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;resource_info&#39;</span><span class="p">:</span> <span class="n">resource_id</span><span class="p">}</span>
+    <span class="n">cadf_action</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">operation</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">resource_type</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">event_type</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">SERVICE</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">resource_type</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">operation</span><span class="si">}</span><span class="s1">&#39;</span>
+
+    <span class="n">_send_audit_notification</span><span class="p">(</span>
+        <span class="n">cadf_action</span><span class="p">,</span>
+        <span class="n">initiator</span><span class="p">,</span>
+        <span class="n">outcome</span><span class="p">,</span>
+        <span class="n">target</span><span class="p">,</span>
+        <span class="n">event_type</span><span class="p">,</span>
+        <span class="n">reason</span><span class="o">=</span><span class="n">reason</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">audit_kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_send_notification</span><span class="p">(</span>
+    <span class="n">operation</span><span class="p">,</span>
+    <span class="n">resource_type</span><span class="p">,</span>
+    <span class="n">resource_id</span><span class="p">,</span>
+    <span class="n">initiator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">actor_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">public</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Send notification to inform observers about the affected resource.</span>
+
+<span class="sd">    This method doesn&#39;t raise an exception when sending the notification fails.</span>
+
+<span class="sd">    :param operation: operation being performed (created, updated, or deleted)</span>
+<span class="sd">    :param resource_type: type of resource being operated on</span>
+<span class="sd">    :param resource_id: ID of resource being operated on</span>
+<span class="sd">    :param initiator: representation of the user that created the request</span>
+<span class="sd">    :param actor_dict: a dictionary containing the actor&#39;s ID and type</span>
+<span class="sd">    :param public:  if True (default), the event will be sent</span>
+<span class="sd">                    to the notifier API.</span>
+<span class="sd">                    if False, the event will only be sent via</span>
+<span class="sd">                    notify_event_callbacks to in process listeners.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;resource_info&#39;</span><span class="p">:</span> <span class="n">resource_id</span><span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">actor_dict</span><span class="p">:</span>
+        <span class="n">payload</span><span class="p">[</span><span class="s1">&#39;actor_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">actor_dict</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+        <span class="n">payload</span><span class="p">[</span><span class="s1">&#39;actor_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">actor_dict</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+        <span class="n">payload</span><span class="p">[</span><span class="s1">&#39;actor_operation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">actor_dict</span><span class="p">[</span><span class="s1">&#39;actor_operation&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">initiator</span><span class="p">:</span>
+        <span class="n">payload</span><span class="p">[</span><span class="s1">&#39;request_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">initiator</span><span class="o">.</span><span class="n">request_id</span>
+        <span class="n">global_request_id</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">initiator</span><span class="p">,</span> <span class="s1">&#39;global_request_id&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">global_request_id</span><span class="p">:</span>
+            <span class="n">payload</span><span class="p">[</span><span class="s1">&#39;global_request_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">global_request_id</span>
+
+    <span class="n">notify_event_callbacks</span><span class="p">(</span><span class="n">SERVICE</span><span class="p">,</span> <span class="n">resource_type</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+    <span class="c1"># Only send this notification if the &#39;basic&#39; format is used, otherwise</span>
+    <span class="c1"># let the CADF functions handle sending the notification. But we check</span>
+    <span class="c1"># here so as to not disrupt the notify_event_callbacks function.</span>
+    <span class="k">if</span> <span class="n">public</span> <span class="ow">and</span> <span class="n">CONF</span><span class="o">.</span><span class="n">notification_format</span> <span class="o">==</span> <span class="s1">&#39;basic&#39;</span><span class="p">:</span>
+        <span class="n">notifier</span> <span class="o">=</span> <span class="n">_get_notifier</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">notifier</span><span class="p">:</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">event_type</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">SERVICE</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">resource_type</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">operation</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="k">if</span> <span class="n">_check_notification_opt_out</span><span class="p">(</span><span class="n">event_type</span><span class="p">,</span> <span class="n">outcome</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                <span class="k">return</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">notifier</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">event_type</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">LOG</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                    <span class="s1">&#39;Failed to send </span><span class="si">%(res_id)s</span><span class="s1"> </span><span class="si">%(event_type)s</span><span class="s1"> notification&#39;</span><span class="p">,</span>
+                    <span class="p">{</span><span class="s1">&#39;res_id&#39;</span><span class="p">:</span> <span class="n">resource_id</span><span class="p">,</span> <span class="s1">&#39;event_type&#39;</span><span class="p">:</span> <span class="n">event_type</span><span class="p">},</span>
+                <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_request_audit_info</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Collect audit information about the request used for CADF.</span>
+
+<span class="sd">    :param context: Request context</span>
+<span class="sd">    :param user_id: Optional user ID, alternatively collected from context</span>
+<span class="sd">    :returns: Auditing data about the request</span>
+<span class="sd">    :rtype: :class:`pycadf.Resource`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">remote_addr</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">http_user_agent</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">project_id</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">domain_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">context</span> <span class="ow">and</span> <span class="s1">&#39;environment&#39;</span> <span class="ow">in</span> <span class="n">context</span> <span class="ow">and</span> <span class="n">context</span><span class="p">[</span><span class="s1">&#39;environment&#39;</span><span class="p">]:</span>
+        <span class="n">environment</span> <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s1">&#39;environment&#39;</span><span class="p">]</span>
+        <span class="n">remote_addr</span> <span class="o">=</span> <span class="n">environment</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;REMOTE_ADDR&#39;</span><span class="p">)</span>
+        <span class="n">http_user_agent</span> <span class="o">=</span> <span class="n">environment</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HTTP_USER_AGENT&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">user_id</span><span class="p">:</span>
+            <span class="n">user_id</span> <span class="o">=</span> <span class="n">environment</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;KEYSTONE_AUTH_CONTEXT&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s1">&#39;user_id&#39;</span>
+            <span class="p">)</span>
+        <span class="n">project_id</span> <span class="o">=</span> <span class="n">environment</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;KEYSTONE_AUTH_CONTEXT&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s1">&#39;project_id&#39;</span>
+        <span class="p">)</span>
+        <span class="n">domain_id</span> <span class="o">=</span> <span class="n">environment</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;KEYSTONE_AUTH_CONTEXT&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s1">&#39;domain_id&#39;</span>
+        <span class="p">)</span>
+
+    <span class="n">host</span> <span class="o">=</span> <span class="n">pycadf</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">Host</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">remote_addr</span><span class="p">,</span> <span class="n">agent</span><span class="o">=</span><span class="n">http_user_agent</span><span class="p">)</span>
+    <span class="n">initiator</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="n">typeURI</span><span class="o">=</span><span class="n">taxonomy</span><span class="o">.</span><span class="n">ACCOUNT_USER</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">user_id</span><span class="p">:</span>
+        <span class="n">initiator</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span>
+        <span class="n">initiator</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">resource_uuid</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="n">initiator</span> <span class="o">=</span> <span class="n">_add_username_to_initiator</span><span class="p">(</span><span class="n">initiator</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">project_id</span><span class="p">:</span>
+        <span class="n">initiator</span><span class="o">.</span><span class="n">project_id</span> <span class="o">=</span> <span class="n">project_id</span>
+    <span class="k">if</span> <span class="n">domain_id</span><span class="p">:</span>
+        <span class="n">initiator</span><span class="o">.</span><span class="n">domain_id</span> <span class="o">=</span> <span class="n">domain_id</span>
+
+    <span class="k">return</span> <span class="n">initiator</span>
+
+
+<div class="viewcode-block" id="CadfNotificationWrapper">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.CadfNotificationWrapper">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CadfNotificationWrapper</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Send CADF event notifications for various methods.</span>
+
+<span class="sd">    This function is only used for Authentication events. Its ``action`` and</span>
+<span class="sd">    ``event_type`` are dictated below.</span>
+
+<span class="sd">    - action: ``authenticate``</span>
+<span class="sd">    - event_type: ``identity.authenticate``</span>
+
+<span class="sd">    Sends CADF notifications for events such as whether an authentication was</span>
+<span class="sd">    successful or not.</span>
+
+<span class="sd">    :param operation: The authentication related action being performed</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="n">operation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_type</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">SERVICE</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">operation</span><span class="si">}</span><span class="s1">&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="n">wrapped_self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Will always send a notification.&quot;&quot;&quot;</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="n">typeURI</span><span class="o">=</span><span class="n">taxonomy</span><span class="o">.</span><span class="n">ACCOUNT_USER</span><span class="p">)</span>
+            <span class="n">initiator</span> <span class="o">=</span> <span class="n">build_audit_initiator</span><span class="p">()</span>
+            <span class="n">initiator</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span>
+            <span class="n">initiator</span> <span class="o">=</span> <span class="n">_add_username_to_initiator</span><span class="p">(</span><span class="n">initiator</span><span class="p">)</span>
+            <span class="n">initiator</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">resource_uuid</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">wrapped_self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="n">exception</span><span class="o">.</span><span class="n">AccountLocked</span><span class="p">,</span> <span class="n">exception</span><span class="o">.</span><span class="n">PasswordExpired</span><span class="p">)</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                <span class="c1"># Send a CADF event with a reason for PCI-DSS related</span>
+                <span class="c1"># authentication failures</span>
+                <span class="n">audit_reason</span> <span class="o">=</span> <span class="n">reason</span><span class="o">.</span><span class="n">Reason</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="o">.</span><span class="n">code</span><span class="p">))</span>
+                <span class="n">_send_audit_notification</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="p">,</span>
+                    <span class="n">initiator</span><span class="p">,</span>
+                    <span class="n">taxonomy</span><span class="o">.</span><span class="n">OUTCOME_FAILURE</span><span class="p">,</span>
+                    <span class="n">target</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">event_type</span><span class="p">,</span>
+                    <span class="n">reason</span><span class="o">=</span><span class="n">audit_reason</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ex</span><span class="p">,</span> <span class="n">exception</span><span class="o">.</span><span class="n">AccountLocked</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">Unauthorized</span>
+                <span class="k">raise</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                <span class="n">audit_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="nb">isinstance</span><span class="p">(</span><span class="n">ex</span><span class="p">,</span> <span class="ne">AssertionError</span><span class="p">)</span>
+                    <span class="ow">and</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                    <span class="ow">and</span> <span class="s2">&quot;event&quot;</span>
+                    <span class="ow">in</span> <span class="n">CONF</span><span class="o">.</span><span class="n">security_compliance</span><span class="o">.</span><span class="n">report_invalid_password_hash</span>
+                <span class="p">):</span>
+                    <span class="c1"># Authentication failed because of invalid password, so we</span>
+                    <span class="c1"># include partial pasword hash to aid bruteforce attacks</span>
+                    <span class="c1"># recognition</span>
+                    <span class="n">partial_password_hash</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">password_hashing</span><span class="o">.</span><span class="n">generate_partial_password_hash</span><span class="p">(</span>
+                            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">],</span>
+                            <span class="c1"># use fully qualified class name of the driver as</span>
+                            <span class="c1"># personalization salt causing to produce different</span>
+                            <span class="c1"># hashes for different backends even when the same</span>
+                            <span class="c1"># invalid password is submitted</span>
+                            <span class="n">salt</span><span class="o">=</span><span class="n">reflection</span><span class="o">.</span><span class="n">get_class_name</span><span class="p">(</span>
+                                <span class="n">wrapped_self</span><span class="o">.</span><span class="n">driver</span>
+                            <span class="p">),</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="n">attachments</span> <span class="o">=</span> <span class="n">audit_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attachments&quot;</span><span class="p">,</span> <span class="p">[])</span>
+                    <span class="n">attachments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="n">attachment</span><span class="o">.</span><span class="n">Attachment</span><span class="p">(</span>
+                            <span class="n">typeURI</span><span class="o">=</span><span class="s2">&quot;mime:text/plain&quot;</span><span class="p">,</span>
+                            <span class="n">content</span><span class="o">=</span><span class="n">partial_password_hash</span><span class="p">,</span>
+                            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;partial_password_hash&quot;</span><span class="p">,</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="n">audit_kwargs</span><span class="p">[</span><span class="s2">&quot;attachments&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attachments</span>
+
+                <span class="c1"># For authentication failure send a CADF event as well</span>
+                <span class="n">_send_audit_notification</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="p">,</span>
+                    <span class="n">initiator</span><span class="p">,</span>
+                    <span class="n">taxonomy</span><span class="o">.</span><span class="n">OUTCOME_FAILURE</span><span class="p">,</span>
+                    <span class="n">target</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">event_type</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">audit_kwargs</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">raise</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_send_audit_notification</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="p">,</span>
+                    <span class="n">initiator</span><span class="p">,</span>
+                    <span class="n">taxonomy</span><span class="o">.</span><span class="n">OUTCOME_SUCCESS</span><span class="p">,</span>
+                    <span class="n">target</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">event_type</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="n">result</span>
+
+        <span class="k">return</span> <span class="n">wrapper</span></div>
+
+
+
+<div class="viewcode-block" id="CadfRoleAssignmentNotificationWrapper">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.CadfRoleAssignmentNotificationWrapper">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CadfRoleAssignmentNotificationWrapper</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Send CADF notifications for ``role_assignment`` methods.</span>
+
+<span class="sd">    This function is only used for role assignment events. Its ``action`` and</span>
+<span class="sd">    ``event_type`` are dictated below.</span>
+
+<span class="sd">    - action: ``created.role_assignment`` or ``deleted.role_assignment``</span>
+<span class="sd">    - event_type: ``identity.role_assignment.created`` or</span>
+<span class="sd">        ``identity.role_assignment.deleted``</span>
+
+<span class="sd">    Sends a CADF notification if the wrapped method does not raise an</span>
+<span class="sd">    :class:`Exception` (such as :class:`keystone.exception.NotFound`).</span>
+
+<span class="sd">    :param operation: one of the values from ACTIONS (created or deleted)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">ROLE_ASSIGNMENT</span> <span class="o">=</span> <span class="s1">&#39;role_assignment&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">operation</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ROLE_ASSIGNMENT</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_type</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">SERVICE</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ROLE_ASSIGNMENT</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">operation</span><span class="si">}</span><span class="s1">&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="n">wrapped_self</span><span class="p">,</span> <span class="n">role_id</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Send a notification if the wrapped callable is successful.</span>
+
+<span class="sd">            NOTE(stevemar): The reason we go through checking kwargs</span>
+<span class="sd">            and args for possible target and actor values is because the</span>
+<span class="sd">            create_grant() (and delete_grant()) method are called</span>
+<span class="sd">            differently in various tests.</span>
+<span class="sd">            Using named arguments, i.e.::</span>
+
+<span class="sd">                create_grant(</span>
+<span class="sd">                    user_id=user[&#39;id&#39;],</span>
+<span class="sd">                    domain_id=domain[&#39;id&#39;],</span>
+<span class="sd">                    role_id=role[&#39;id&#39;],</span>
+<span class="sd">                )</span>
+
+<span class="sd">            Or, using positional arguments, i.e.::</span>
+
+<span class="sd">                create_grant(role_id[&#39;id&#39;], user[&#39;id&#39;], None,</span>
+<span class="sd">                             domain_id=domain[&#39;id&#39;], None)</span>
+
+<span class="sd">            Or, both, i.e.::</span>
+
+<span class="sd">                create_grant(</span>
+<span class="sd">                    role_id[&#39;id&#39;], user_id=user[&#39;id&#39;], domain_id=domain[&#39;id&#39;]</span>
+<span class="sd">                )</span>
+
+<span class="sd">            Checking the values for kwargs is easy enough, since it comes</span>
+<span class="sd">            in as a dictionary</span>
+
+<span class="sd">            The actual method signature is</span>
+
+<span class="sd">            ::</span>
+
+<span class="sd">                create_grant(</span>
+<span class="sd">                    role_id,</span>
+<span class="sd">                    user_id=None,</span>
+<span class="sd">                    group_id=None,</span>
+<span class="sd">                    domain_id=None,</span>
+<span class="sd">                    project_id=None,</span>
+<span class="sd">                    inherited_to_projects=False,</span>
+<span class="sd">                )</span>
+
+<span class="sd">            So, if the values of actor or target are still None after</span>
+<span class="sd">            checking kwargs, we can check the positional arguments,</span>
+<span class="sd">            based on the method signature.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">call_args</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getcallargs</span><span class="p">(</span>
+                <span class="n">f</span><span class="p">,</span> <span class="n">wrapped_self</span><span class="p">,</span> <span class="n">role_id</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">)</span>
+            <span class="n">inherited</span> <span class="o">=</span> <span class="n">call_args</span><span class="p">[</span><span class="s1">&#39;inherited_to_projects&#39;</span><span class="p">]</span>
+            <span class="n">initiator</span> <span class="o">=</span> <span class="n">call_args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;initiator&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="n">typeURI</span><span class="o">=</span><span class="n">taxonomy</span><span class="o">.</span><span class="n">ACCOUNT_USER</span><span class="p">)</span>
+
+            <span class="n">audit_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">if</span> <span class="n">call_args</span><span class="p">[</span><span class="s1">&#39;project_id&#39;</span><span class="p">]:</span>
+                <span class="n">audit_kwargs</span><span class="p">[</span><span class="s1">&#39;project&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">call_args</span><span class="p">[</span><span class="s1">&#39;project_id&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">call_args</span><span class="p">[</span><span class="s1">&#39;domain_id&#39;</span><span class="p">]:</span>
+                <span class="n">audit_kwargs</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">call_args</span><span class="p">[</span><span class="s1">&#39;domain_id&#39;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">call_args</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">]:</span>
+                <span class="n">audit_kwargs</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">call_args</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">call_args</span><span class="p">[</span><span class="s1">&#39;group_id&#39;</span><span class="p">]:</span>
+                <span class="n">audit_kwargs</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">call_args</span><span class="p">[</span><span class="s1">&#39;group_id&#39;</span><span class="p">]</span>
+
+            <span class="n">audit_kwargs</span><span class="p">[</span><span class="s1">&#39;inherited_to_projects&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inherited</span>
+            <span class="n">audit_kwargs</span><span class="p">[</span><span class="s1">&#39;role&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">role_id</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">wrapped_self</span><span class="p">,</span> <span class="n">role_id</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">_send_audit_notification</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="p">,</span>
+                    <span class="n">initiator</span><span class="p">,</span>
+                    <span class="n">taxonomy</span><span class="o">.</span><span class="n">OUTCOME_FAILURE</span><span class="p">,</span>
+                    <span class="n">target</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">event_type</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">audit_kwargs</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">raise</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_send_audit_notification</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="p">,</span>
+                    <span class="n">initiator</span><span class="p">,</span>
+                    <span class="n">taxonomy</span><span class="o">.</span><span class="n">OUTCOME_SUCCESS</span><span class="p">,</span>
+                    <span class="n">target</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">event_type</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">audit_kwargs</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="n">result</span>
+
+        <span class="k">return</span> <span class="n">wrapper</span></div>
+
+
+
+<div class="viewcode-block" id="send_saml_audit_notification">
+<a class="viewcode-back" href="../../api/keystone.notifications.html#keystone.notifications.send_saml_audit_notification">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">send_saml_audit_notification</span><span class="p">(</span>
+    <span class="n">action</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">group_ids</span><span class="p">,</span> <span class="n">identity_provider</span><span class="p">,</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">token_id</span><span class="p">,</span> <span class="n">outcome</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Send notification to inform observers about SAML events.</span>
+
+<span class="sd">    :param action: Action being audited</span>
+<span class="sd">    :type action: str</span>
+<span class="sd">    :param user_id: User ID from Keystone token</span>
+<span class="sd">    :type user_id: str</span>
+<span class="sd">    :param group_ids: List of Group IDs from Keystone token</span>
+<span class="sd">    :type group_ids: list</span>
+<span class="sd">    :param identity_provider: ID of the IdP from the Keystone token</span>
+<span class="sd">    :type identity_provider: str or None</span>
+<span class="sd">    :param protocol: Protocol ID for IdP from the Keystone token</span>
+<span class="sd">    :type protocol: str</span>
+<span class="sd">    :param token_id: audit_id from Keystone token</span>
+<span class="sd">    :type token_id: str or None</span>
+<span class="sd">    :param outcome: One of :class:`pycadf.cadftaxonomy`</span>
+<span class="sd">    :type outcome: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">initiator</span> <span class="o">=</span> <span class="n">build_audit_initiator</span><span class="p">()</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="n">typeURI</span><span class="o">=</span><span class="n">taxonomy</span><span class="o">.</span><span class="n">ACCOUNT_USER</span><span class="p">)</span>
+    <span class="n">audit_type</span> <span class="o">=</span> <span class="n">SAML_AUDIT_TYPE</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span> <span class="ow">or</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">UNKNOWN</span>
+    <span class="n">token_id</span> <span class="o">=</span> <span class="n">token_id</span> <span class="ow">or</span> <span class="n">taxonomy</span><span class="o">.</span><span class="n">UNKNOWN</span>
+    <span class="n">group_ids</span> <span class="o">=</span> <span class="n">group_ids</span> <span class="ow">or</span> <span class="p">[]</span>
+    <span class="n">cred</span> <span class="o">=</span> <span class="n">credential</span><span class="o">.</span><span class="n">FederatedCredential</span><span class="p">(</span>
+        <span class="n">token</span><span class="o">=</span><span class="n">token_id</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">audit_type</span><span class="p">,</span>
+        <span class="n">identity_provider</span><span class="o">=</span><span class="n">identity_provider</span><span class="p">,</span>
+        <span class="n">user</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span>
+        <span class="n">groups</span><span class="o">=</span><span class="n">group_ids</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">initiator</span><span class="o">.</span><span class="n">credential</span> <span class="o">=</span> <span class="n">cred</span>
+    <span class="n">event_type</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">SERVICE</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">action</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">_send_audit_notification</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">initiator</span><span class="p">,</span> <span class="n">outcome</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">event_type</span><span class="p">)</span></div>
+
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_CatalogHelperObj</span><span class="p">(</span><span class="n">provider_api</span><span class="o">.</span><span class="n">ProviderAPIMixin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A helper object to allow lookups of identity service id.&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_send_audit_notification</span><span class="p">(</span>
+    <span class="n">action</span><span class="p">,</span>
+    <span class="n">initiator</span><span class="p">,</span>
+    <span class="n">outcome</span><span class="p">,</span>
+    <span class="n">target</span><span class="p">,</span>
+    <span class="n">event_type</span><span class="p">,</span>
+    <span class="n">reason</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">attachments</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Send CADF notification to inform observers about the affected resource.</span>
+
+<span class="sd">    This method logs an exception when sending the notification fails.</span>
+
+<span class="sd">    :param action: CADF action being audited (e.g., &#39;authenticate&#39;)</span>
+<span class="sd">    :param initiator: CADF resource representing the initiator</span>
+<span class="sd">    :param outcome: The CADF outcome (taxonomy.OUTCOME_PENDING,</span>
+<span class="sd">        taxonomy.OUTCOME_SUCCESS, taxonomy.OUTCOME_FAILURE)</span>
+<span class="sd">    :param target: CADF resource representing the target</span>
+<span class="sd">    :param event_type: An OpenStack-ism, typically this is the meter name that</span>
+<span class="sd">        Ceilometer uses to poll events.</span>
+<span class="sd">    :param kwargs: Any additional arguments passed in will be added as</span>
+<span class="sd">        key-value pairs to the CADF event.</span>
+<span class="sd">    :param reason: Reason for the notification which contains the response</span>
+<span class="sd">        code and message description</span>
+<span class="sd">    :param attachments: Array of Attachment objects</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">_check_notification_opt_out</span><span class="p">(</span><span class="n">event_type</span><span class="p">,</span> <span class="n">outcome</span><span class="p">):</span>
+        <span class="k">return</span>
+
+    <span class="k">global</span> <span class="n">_CATALOG_HELPER_OBJ</span>
+    <span class="k">if</span> <span class="n">_CATALOG_HELPER_OBJ</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_CATALOG_HELPER_OBJ</span> <span class="o">=</span> <span class="n">_CatalogHelperObj</span><span class="p">()</span>
+    <span class="n">service_list</span> <span class="o">=</span> <span class="n">_CATALOG_HELPER_OBJ</span><span class="o">.</span><span class="n">catalog_api</span><span class="o">.</span><span class="n">list_services</span><span class="p">()</span>
+    <span class="n">service_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">service_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">SERVICE</span><span class="p">:</span>
+            <span class="n">service_id</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+            <span class="k">break</span>
+
+    <span class="n">initiator</span> <span class="o">=</span> <span class="n">_add_username_to_initiator</span><span class="p">(</span><span class="n">initiator</span><span class="p">)</span>
+
+    <span class="n">event</span> <span class="o">=</span> <span class="n">eventfactory</span><span class="o">.</span><span class="n">EventFactory</span><span class="p">()</span><span class="o">.</span><span class="n">new_event</span><span class="p">(</span>
+        <span class="n">eventType</span><span class="o">=</span><span class="n">cadftype</span><span class="o">.</span><span class="n">EVENTTYPE_ACTIVITY</span><span class="p">,</span>
+        <span class="n">outcome</span><span class="o">=</span><span class="n">outcome</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">,</span>
+        <span class="n">initiator</span><span class="o">=</span><span class="n">initiator</span><span class="p">,</span>
+        <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span>
+        <span class="n">reason</span><span class="o">=</span><span class="n">reason</span><span class="p">,</span>
+        <span class="n">observer</span><span class="o">=</span><span class="n">resource</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="n">typeURI</span><span class="o">=</span><span class="n">taxonomy</span><span class="o">.</span><span class="n">SERVICE_SECURITY</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">service_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">observer</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">service_id</span>
+
+    <span class="n">attachments</span> <span class="o">=</span> <span class="n">attachments</span> <span class="k">if</span> <span class="n">attachments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">attachment_val</span> <span class="ow">in</span> <span class="n">attachments</span><span class="p">:</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">add_attachment</span><span class="p">(</span><span class="n">attachment_val</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span>
+    <span class="n">notifier</span> <span class="o">=</span> <span class="n">_get_notifier</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">notifier</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">notifier</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">event_type</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="c1"># diaper defense: any exception that occurs while emitting the</span>
+            <span class="c1"># notification should not interfere with the API request</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                <span class="s1">&#39;Failed to send </span><span class="si">%(action)s</span><span class="s1"> </span><span class="si">%(event_type)s</span><span class="s1"> notification&#39;</span><span class="p">,</span>
+                <span class="p">{</span><span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="n">action</span><span class="p">,</span> <span class="s1">&#39;event_type&#39;</span><span class="p">:</span> <span class="n">event_type</span><span class="p">},</span>
+            <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_notification_opt_out</span><span class="p">(</span><span class="n">event_type</span><span class="p">,</span> <span class="n">outcome</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if a particular event_type has been opted-out of.</span>
+
+<span class="sd">    This method checks to see if an event should be sent to the messaging</span>
+<span class="sd">    service. Any event specified in the opt-out list will not be transmitted.</span>
+
+<span class="sd">    :param event_type: This is the meter name that Ceilometer uses to poll</span>
+<span class="sd">        events. For example: identity.user.created, or</span>
+<span class="sd">        identity.authenticate.success, or identity.role_assignment.created</span>
+<span class="sd">    :param outcome: The CADF outcome (taxonomy.OUTCOME_PENDING,</span>
+<span class="sd">        taxonomy.OUTCOME_SUCCESS, taxonomy.OUTCOME_FAILURE)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># NOTE(stevemar): Special handling for authenticate, we look at the outcome</span>
+    <span class="c1"># as well when evaluating. For authN events, event_type is just</span>
+    <span class="c1"># identity.authenticate, which isn&#39;t fine enough to provide any opt-out</span>
+    <span class="c1"># value, so we attach the outcome to re-create the meter name used in</span>
+    <span class="c1"># ceilometer.</span>
+    <span class="k">if</span> <span class="s1">&#39;authenticate&#39;</span> <span class="ow">in</span> <span class="n">event_type</span><span class="p">:</span>
+        <span class="n">event_type</span> <span class="o">=</span> <span class="n">event_type</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">outcome</span>
+
+    <span class="k">if</span> <span class="n">event_type</span> <span class="ow">in</span> <span class="n">CONF</span><span class="o">.</span><span class="n">notification_opt_out</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_add_username_to_initiator</span><span class="p">(</span><span class="n">initiator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add the username to the initiator if missing.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">initiator</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">initiator</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">user_ref</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">identity_api</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="n">initiator</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="c1"># NOTE(jake): name should be used, username kept for compatibility</span>
+        <span class="n">initiator</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">user_ref</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+        <span class="n">initiator</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">user_ref</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">exception</span><span class="o">.</span><span class="n">UserNotFound</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
+        <span class="c1"># Either user not found or no user_id, move along</span>
+        <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="n">initiator</span>
+
+
+<span class="n">emit_event</span> <span class="o">=</span> <span class="n">CadfNotificationWrapper</span>
+
+
+<span class="n">role_assignment</span> <span class="o">=</span> <span class="n">CadfRoleAssignmentNotificationWrapper</span>
+</pre></div>
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2025-12-08 16:08:08</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "_modules/keystone/notifications" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "keystone.notifications in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2025-12-08 16:08:08";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "_modules/keystone/notifications";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

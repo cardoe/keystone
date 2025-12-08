@@ -1,0 +1,7 @@
+keystone.auth.core module
+=========================
+
+.. automodule:: keystone.auth.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+keystone.api.os\_revoke module
+==============================
+
+.. automodule:: keystone.api.os_revoke
+   :members:
+   :undoc-members:
+   :show-inheritance:

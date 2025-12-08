@@ -1,0 +1,7 @@
+keystone.resource.config\_backends.base module
+==============================================
+
+.. automodule:: keystone.resource.config_backends.base
+   :members:
+   :undoc-members:
+   :show-inheritance:

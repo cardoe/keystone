@@ -1,0 +1,7 @@
+keystone.api.os\_federation module
+==================================
+
+.. automodule:: keystone.api.os_federation
+   :members:
+   :undoc-members:
+   :show-inheritance:

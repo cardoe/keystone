@@ -1,0 +1,19 @@
+keystone.federation.backends package
+====================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.federation.backends.base
+   keystone.federation.backends.sql
+
+Module contents
+---------------
+
+.. automodule:: keystone.federation.backends
+   :members:
+   :undoc-members:
+   :show-inheritance:

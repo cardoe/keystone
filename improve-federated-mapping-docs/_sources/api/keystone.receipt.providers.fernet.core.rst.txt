@@ -1,0 +1,7 @@
+keystone.receipt.providers.fernet.core module
+=============================================
+
+.. automodule:: keystone.receipt.providers.fernet.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

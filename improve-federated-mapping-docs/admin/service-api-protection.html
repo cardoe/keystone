@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Default Roles &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/support-matrix.css" />
+    <script src="../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Advanced Keystone Features" href="keystone-features.html" />
+    <link rel="prev" title="Token provider" href="token-provider.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/admin/service-api-protection.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Default Roles</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="token-provider.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Token provider"></i></a>
+    
+    
+    <a href="keystone-features.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Advanced Keystone Features"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="default-roles">
+<h1>Default Roles<a class="headerlink" href="#default-roles" title="Link to this heading">¶</a></h1>
+<section id="primer">
+<h2>Primer<a class="headerlink" href="#primer" title="Link to this heading">¶</a></h2>
+<p>Like most OpenStack services, keystone protects its API using role-based access
+control (RBAC).</p>
+<p>Users can access different APIs depending on the roles they have on a project,
+domain, or system, which we refer to as scope.</p>
+<p>As of the Rocky release, keystone provides three roles called <code class="docutils literal notranslate"><span class="pre">admin</span></code>,
+<code class="docutils literal notranslate"><span class="pre">member</span></code>, and <code class="docutils literal notranslate"><span class="pre">reader</span></code> by default. Operators can grant these roles to any
+actor (e.g., group or user) on any scope (e.g., system, domain, or project).
+If you need a refresher on authorization scopes and token types, please refer
+to the <a class="reference external" href="https://docs.openstack.org/keystone/latest/admin/tokens-overview.html#authorization-scopes">token guide</a>. The following sections describe how each default role
+behaves with keystone’s API across different scopes. Additionally, other
+service developers can use this document as a guide for implementing similar
+patterns in their services.</p>
+<p>Default roles and behaviors across scopes allow operators to delegate more
+functionality to their team, auditors, customers, and users without maintaining
+custom policies.</p>
+<p>In addition to <code class="docutils literal notranslate"><span class="pre">admin</span></code>, <code class="docutils literal notranslate"><span class="pre">member</span></code>, and <code class="docutils literal notranslate"><span class="pre">reader</span></code> role, from 2023.2 (Bobcat)
+release keystone will provide the <code class="docutils literal notranslate"><span class="pre">service</span></code> and <code class="docutils literal notranslate"><span class="pre">manager</span></code> roles by default
+as well. Operators can use the <code class="docutils literal notranslate"><span class="pre">service</span></code> role for service to service API
+calls instead of using <code class="docutils literal notranslate"><span class="pre">admin</span></code> role for the same. The service role will be
+separate from <code class="docutils literal notranslate"><span class="pre">admin</span></code>, <code class="docutils literal notranslate"><span class="pre">member</span></code>, <code class="docutils literal notranslate"><span class="pre">reader</span></code> and will not implicate any of
+these roles.
+Operators can give the <code class="docutils literal notranslate"><span class="pre">manager</span></code> role to users to within a domain to enable
+self-service management of users, groups, projects and role assignments within
+their domain.</p>
+</section>
+<section id="roles-definitions">
+<h2>Roles Definitions<a class="headerlink" href="#roles-definitions" title="Link to this heading">¶</a></h2>
+<p>The default roles provided by keystone via <code class="docutils literal notranslate"><span class="pre">keystone-manage</span> <span class="pre">bootstrap</span></code>
+(except for the <code class="docutils literal notranslate"><span class="pre">service</span></code> role) are related through role implications. The
+<code class="docutils literal notranslate"><span class="pre">admin</span></code> role implies the <code class="docutils literal notranslate"><span class="pre">manager</span></code> role, the  <code class="docutils literal notranslate"><span class="pre">manager</span></code> implies the
+<code class="docutils literal notranslate"><span class="pre">member</span></code> role, and the <code class="docutils literal notranslate"><span class="pre">member</span></code> role implies the <code class="docutils literal notranslate"><span class="pre">reader</span></code> role. These
+implications mean users with the <code class="docutils literal notranslate"><span class="pre">admin</span></code> role automatically have the
+<code class="docutils literal notranslate"><span class="pre">manager</span></code>, <code class="docutils literal notranslate"><span class="pre">member</span></code> and <code class="docutils literal notranslate"><span class="pre">reader</span></code> roles. Additionally, users with the
+<code class="docutils literal notranslate"><span class="pre">manager</span></code> role automatically have the <code class="docutils literal notranslate"><span class="pre">member</span></code> and <code class="docutils literal notranslate"><span class="pre">reader</span></code> roles. Users
+with the <code class="docutils literal notranslate"><span class="pre">member</span></code> role automatically have the <code class="docutils literal notranslate"><span class="pre">reader</span></code> role. Implying roles
+reduces role assignments and forms a natural hierarchy between the default
+roles. It also reduces the complexity of default policies by making check
+strings short. For example, a policy that requires <code class="docutils literal notranslate"><span class="pre">reader</span></code> can be expressed
+as:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;identity:list_foo&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;role:reader&quot;</span>
+</pre></div>
+</div>
+<p>Instead of:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;identity:list_foo&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;role:admin</span><span class="nv"> </span><span class="s">or</span><span class="nv"> </span><span class="s">role:manager</span><span class="nv"> </span><span class="s">or</span><span class="nv"> </span><span class="s">role:member</span><span class="nv"> </span><span class="s">or</span><span class="nv"> </span><span class="s">role:reader&quot;</span>
+</pre></div>
+</div>
+<section id="reader">
+<h3>Reader<a class="headerlink" href="#reader" title="Link to this heading">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>While it’s possible to use the <code class="docutils literal notranslate"><span class="pre">reader</span></code> role to perform audits, we highly
+recommend assessing the viability of using <code class="docutils literal notranslate"><span class="pre">reader</span></code> for auditing from the
+perspective of the compliance target you’re pursuing.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">reader</span></code> role is the least-privileged role within the role hierarchy
+described here. As such, OpenStack development teams, by default, do not
+advocate exposing sensitive information to users with the <code class="docutils literal notranslate"><span class="pre">reader</span></code> role,
+regardless of the scope. We have noted the need for a formal, read-only,
+role that is useful for inspecting all applicable resources within a
+particular scope, but it shouldn’t be implemented as the lowest level of
+authorization. This work will come in a subsequent release where we support
+an elevated read-only role, that implies <code class="docutils literal notranslate"><span class="pre">reader</span></code>, but also exposes
+sensitive information, where applicable.</p>
+<p>This will allow operators to grant third-party auditors a permissive role
+for viewing sensitive information, specifically for compliance targets that
+require it.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">reader</span></code> role provides read-only access to resources within the system, a
+domain, or a project. Depending on the assignment scope, two users with the
+<code class="docutils literal notranslate"><span class="pre">reader</span></code> role can expect different API behaviors. For example, a user with
+the <code class="docutils literal notranslate"><span class="pre">reader</span></code> role on the system can list all projects within the deployment.
+A user with the <code class="docutils literal notranslate"><span class="pre">reader</span></code> role on a domain can only list projects within their
+domain.</p>
+<p>By analyzing the scope of a role assignment, we increase the re-usability of
+the <code class="docutils literal notranslate"><span class="pre">reader</span></code> role and provide greater functionality without introducing more
+roles. For example, to accomplish this without analyzing assignment scope, you
+would need <code class="docutils literal notranslate"><span class="pre">system-reader</span></code>, <code class="docutils literal notranslate"><span class="pre">domain-reader</span></code>, and <code class="docutils literal notranslate"><span class="pre">project-reader</span></code> roles
+in addition to custom policies for each service.</p>
+<p>It’s imperative to note that <code class="docutils literal notranslate"><span class="pre">reader</span></code> is the least authoritative role in the
+hierarchy because assignments using <code class="docutils literal notranslate"><span class="pre">admin</span></code> or <code class="docutils literal notranslate"><span class="pre">member</span></code> ultimately include
+the <code class="docutils literal notranslate"><span class="pre">reader</span></code> role. We document this explicitly so that <code class="docutils literal notranslate"><span class="pre">reader</span></code> roles are not
+overloaded with read-only access to sensitive information. For example, a deployment
+pursuing a specific compliance target may want to leverage the <code class="docutils literal notranslate"><span class="pre">reader</span></code> role
+to perform the audit. If the audit requires the auditor to evaluate sensitive
+information, like license keys or administrative metadata, within a given
+scope, auditors shouldn’t expect to perform these operations with the
+<code class="docutils literal notranslate"><span class="pre">reader</span></code> role. We justify this design decision because sensitive information
+should be explicitly protected, and not implicitly exposed.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">reader</span></code> role should be implemented and used from the perspective of
+least-privilege, which may or may not fulfill your auditing use case.</p>
+</section>
+<section id="member">
+<h3>Member<a class="headerlink" href="#member" title="Link to this heading">¶</a></h3>
+<p>Within keystone, there isn’t a distinct advantage to having the <code class="docutils literal notranslate"><span class="pre">member</span></code> role
+instead of the <code class="docutils literal notranslate"><span class="pre">reader</span></code> role. The <code class="docutils literal notranslate"><span class="pre">member</span></code> role is more applicable to other
+services.  The <code class="docutils literal notranslate"><span class="pre">member</span></code> role works nicely for introducing granularity between
+<code class="docutils literal notranslate"><span class="pre">admin</span></code> and <code class="docutils literal notranslate"><span class="pre">reader</span></code> roles. Other services might write default policies
+that require the <code class="docutils literal notranslate"><span class="pre">member</span></code> role to create resources, but the <code class="docutils literal notranslate"><span class="pre">admin</span></code> role to
+delete them. For example, users with <code class="docutils literal notranslate"><span class="pre">reader</span></code> on a project could list
+instance, users with <code class="docutils literal notranslate"><span class="pre">member</span></code> on a project can list and create instances, and
+users with <code class="docutils literal notranslate"><span class="pre">admin</span></code> on a project can list, create, and delete instances.
+Service developers can use the <code class="docutils literal notranslate"><span class="pre">member</span></code> role to provide more flexibility
+between <code class="docutils literal notranslate"><span class="pre">admin</span></code> and <code class="docutils literal notranslate"><span class="pre">reader</span></code> on different scopes.</p>
+</section>
+<section id="manager">
+<h3>Manager<a class="headerlink" href="#manager" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">manager</span></code> role takes a special place in keystone. It sits between the
+<code class="docutils literal notranslate"><span class="pre">admin</span></code> and <code class="docutils literal notranslate"><span class="pre">member</span></code> role, allowing limited identity management while being
+clearly differentiated from the <code class="docutils literal notranslate"><span class="pre">admin</span></code> role both in terms of purpose and
+privileges. The <code class="docutils literal notranslate"><span class="pre">manager</span></code> role is meant to be assigned in a domain scope and
+enables users to manage identity assets in a whole domain including users,
+projects, groups and role assignments. This enables identity self-service
+management capabilities for users within a domain without the need to assign
+the most privileged <code class="docutils literal notranslate"><span class="pre">admin</span></code> role to them.</p>
+<p>The keystone default policies include a special rule that specifies the list of
+roles a user with the <code class="docutils literal notranslate"><span class="pre">manager</span></code> role is be able to assign and revoke within
+the domain scope. This prevents such user from escalating their own privileges
+or those of others beyond <code class="docutils literal notranslate"><span class="pre">manager</span></code> and for this purpose the list excludes
+the <code class="docutils literal notranslate"><span class="pre">admin</span></code> role. The list can be adjusted by cloud administrators via policy
+definitions in case the role model differs. For example, if a new role is
+introduced for a specific cloud environment, the list can be adjusted to allow
+users with the <code class="docutils literal notranslate"><span class="pre">manager</span></code> role to also assign it.</p>
+<p>Other services might write default policies to enable the <code class="docutils literal notranslate"><span class="pre">manager</span></code> role to
+have more privileged managing rights or cross-project privileges in a domain.</p>
+</section>
+<section id="admin">
+<h3>Admin<a class="headerlink" href="#admin" title="Link to this heading">¶</a></h3>
+<p>We reserve the <code class="docutils literal notranslate"><span class="pre">admin</span></code> role for the most privileged operations within a given
+scope. It is important to note that having <code class="docutils literal notranslate"><span class="pre">admin</span></code> on a project, domain, or
+the system carries separate authorization and are not transitive. For example,
+users with <code class="docutils literal notranslate"><span class="pre">admin</span></code> on the system should be able to manage every aspect of the
+deployment because they’re operators. Users with <code class="docutils literal notranslate"><span class="pre">admin</span></code> on a project
+shouldn’t be able to manage things outside the project because it would violate
+the tenancy of their role assignment (this doesn’t apply consistently since
+services are addressing this individually at their own pace).</p>
+</section>
+<section id="service">
+<h3>Service<a class="headerlink" href="#service" title="Link to this heading">¶</a></h3>
+<p>We reserve the <code class="docutils literal notranslate"><span class="pre">service</span></code> role for Service-to-service communication. The aim
+of a <code class="docutils literal notranslate"><span class="pre">service</span></code> role is to allow a service to communicate with another service
+and possibly be granted elevated privileges by the service receiving the
+request. Before the introduction of the <code class="docutils literal notranslate"><span class="pre">service</span></code> role, a service had to be
+granted the <code class="docutils literal notranslate"><span class="pre">admin</span></code> role in order to have elevated privileges, which gave a
+service powers way beyond what was necessary.  With the <code class="docutils literal notranslate"><span class="pre">service</span></code> role in
+place, we can now allow all service-to-service APIs to default to the
+<code class="docutils literal notranslate"><span class="pre">service</span></code> role only. For example, a policy that requires
+<code class="docutils literal notranslate"><span class="pre">service</span></code> can be expressed as:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;identity:create_foo&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;role:service&quot;</span>
+</pre></div>
+</div>
+<p>There might be exception service-to-service APIs which project think are
+useful to be used by admin or non-admin user then they can take the
+exceptional decision to default them to user role and <code class="docutils literal notranslate"><span class="pre">service</span></code> role.  For
+example, a policy that requires <code class="docutils literal notranslate"><span class="pre">service</span></code> and <code class="docutils literal notranslate"><span class="pre">admin</span></code> can be expressed as:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;identity:create_foo&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;role:service</span><span class="nv"> </span><span class="s">or</span><span class="nv"> </span><span class="s">role:admin&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unlike the other default roles, the <code class="docutils literal notranslate"><span class="pre">service</span></code> role is <em>not</em> a member
+of a role hierarchy.  It is a standalone role.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As of the Train release, keystone applies the following personas
+consistently across its API.</p>
+</div>
+</section>
+</section>
+<section id="system-personas">
+<h2>System Personas<a class="headerlink" href="#system-personas" title="Link to this heading">¶</a></h2>
+<p>This section describes authorization personas typically used for operators and
+deployers. You can find all users with system role assignments using the
+following query:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--names<span class="w"> </span>--system<span class="w"> </span>all
+<span class="go">+--------+------------------------+------------------------+---------+--------+--------+-----------+</span>
+<span class="go">| Role   | User                   | Group                  | Project | Domain | System | Inherited |</span>
+<span class="go">+--------+------------------------+------------------------+---------+--------+--------+-----------+</span>
+<span class="go">| admin  |                        | system-admins@Default  |         |        | all    | False     |</span>
+<span class="go">| admin  | admin@Default          |                        |         |        | all    | False     |</span>
+<span class="go">| admin  | operator@Default       |                        |         |        | all    | False     |</span>
+<span class="go">| reader |                        | system-support@Default |         |        | all    | False     |</span>
+<span class="go">| member | system-support@Default |                        |         |        | all    | False     |</span>
+<span class="go">+--------+------------------------+------------------------+---------+--------+--------+-----------+</span>
+</pre></div>
+</div>
+<section id="system-administrators">
+<h3>System Administrators<a class="headerlink" href="#system-administrators" title="Link to this heading">¶</a></h3>
+<p><em>System administrators</em> are allowed to manage every resource in keystone.
+System administrators are typically operators and cloud administrators. They
+can control resources that ultimately affect the behavior of the deployment.
+For example, they can add or remove services and endpoints in the catalog,
+create new domains, add federated mappings, and clean up stale resources, like
+a user’s application credentials or trusts.</p>
+<p>You can find <em>system administrators</em> in your deployment with the following
+assignments:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--names<span class="w"> </span>--system<span class="w"> </span>all<span class="w"> </span>--role<span class="w"> </span>admin
+<span class="go">+-------+------------------+-----------------------+---------+--------+--------+-----------+</span>
+<span class="go">| Role  | User             | Group                 | Project | Domain | System | Inherited |</span>
+<span class="go">+-------+------------------+-----------------------+---------+--------+--------+-----------+</span>
+<span class="go">| admin |                  | system-admins@Default |         |        | all    | False     |</span>
+<span class="go">| admin | admin@Default    |                       |         |        | all    | False     |</span>
+<span class="go">| admin | operator@Default |                       |         |        | all    | False     |</span>
+<span class="go">+-------+------------------+-----------------------+---------+--------+--------+-----------+</span>
+</pre></div>
+</div>
+</section>
+<section id="system-members-system-readers">
+<h3>System Members &amp; System Readers<a class="headerlink" href="#system-members-system-readers" title="Link to this heading">¶</a></h3>
+<p>In keystone, <em>system members</em> and <em>system readers</em> are very similar and have
+the same authorization. Users with these roles on the system can view all
+resources within keystone. They can list role assignments, users, projects, and
+group memberships, among other resources.</p>
+<p>The <em>system reader</em> persona is useful for members of a support team or auditors
+if the audit doesn’t require access to sensitive information. You can find
+<em>system members</em> and <em>system readers</em> in your deployment with the following
+assignments:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--names<span class="w"> </span>--system<span class="w"> </span>all<span class="w"> </span>--role<span class="w"> </span>member<span class="w"> </span>--role<span class="w"> </span>reader
+<span class="go">+--------+------------------------+------------------------+---------+--------+--------+-----------+</span>
+<span class="go">| Role   | User                   | Group                  | Project | Domain | System | Inherited |</span>
+<span class="go">+--------+------------------------+------------------------+---------+--------+--------+-----------+</span>
+<span class="go">| reader |                        | system-support@Default |         |        | all    | False     |</span>
+<span class="go">| admin  | operator@Default       |                        |         |        | all    | False     |</span>
+<span class="go">| member | system-support@Default |                        |         |        | all    | False     |</span>
+<span class="go">+--------+------------------------+------------------------+---------+--------+--------+-----------+</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Filtering system role assignments is currently broken and is being tracked
+as a <a class="reference external" href="https://bugs.launchpad.net/keystone/+bug/1846817">bug</a>.</p>
+</div>
+</section>
+</section>
+<section id="domain-personas">
+<h2>Domain Personas<a class="headerlink" href="#domain-personas" title="Link to this heading">¶</a></h2>
+<p>This section describes authorization personas for people who manage their own
+domains, which contain projects, users, and groups. You can find all users with
+role assignments on a specific domain using the following query:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--names<span class="w"> </span>--domain<span class="w"> </span>foobar
+<span class="go">+---------+-----------------+----------------------+---------+--------+--------+-----------+</span>
+<span class="go">| Role    | User            | Group                | Project | Domain | System | Inherited |</span>
+<span class="go">+---------+-----------------+----------------------+---------+--------+--------+-----------+</span>
+<span class="go">| reader  | support@Default |                      |         | foobar |        | False     |</span>
+<span class="go">| admin   | jsmith@Default  |                      |         | foobar |        | False     |</span>
+<span class="go">| admin   |                 | foobar-admins@foobar |         | foobar |        | False     |</span>
+<span class="go">| manager | alice@foobar    |                      |         | foobar |        | False     |</span>
+<span class="go">| member  | jdoe@foobar     |                      |         | foobar |        | False     |</span>
+<span class="go">+---------+-----------------+----------------------+---------+--------+--------+-----------+</span>
+</pre></div>
+</div>
+<section id="domain-administrators">
+<h3>Domain Administrators<a class="headerlink" href="#domain-administrators" title="Link to this heading">¶</a></h3>
+<p><em>Domain administrators</em> can manage most aspects of the domain or its contents.
+These users can create new projects and users within their domain. They can
+inspect the role assignments users have on projects within their domain.</p>
+<p><em>Domain administrators</em> aren’t allowed to access system-specific resources or
+resources outside their domain. Users that need control over project, group,
+and user creation are a great fit for <em>domain administrators</em>.</p>
+<p>You can find <em>domain administrators</em> in your deployment with the following role
+assignment:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--names<span class="w"> </span>--domain<span class="w"> </span>foobar<span class="w"> </span>--role<span class="w"> </span>admin
+<span class="go">+-------+----------------+----------------------+---------+--------+--------+-----------+</span>
+<span class="go">| Role  | User           | Group                | Project | Domain | System | Inherited |</span>
+<span class="go">+-------+----------------+----------------------+---------+--------+--------+-----------+</span>
+<span class="go">| admin | jsmith@Default |                      |         | foobar |        | False     |</span>
+<span class="go">| admin |                | foobar-admins@foobar |         | foobar |        | False     |</span>
+<span class="go">+-------+----------------+----------------------+---------+--------+--------+-----------+</span>
+</pre></div>
+</div>
+</section>
+<section id="domain-managers">
+<h3>Domain Managers<a class="headerlink" href="#domain-managers" title="Link to this heading">¶</a></h3>
+<p><em>Domain managers</em> can only manage specific resources related to identity
+management within their domain. This includes creating new users, projects and
+groups as well as updating and deleting them. They can also assign and revoke
+roles between those or in relation to the domain. Furthermore, they can inspect
+role assignments within the domain.</p>
+<p><em>Domain managers</em> cannot change any aspects of the domain itself. The role
+assignments they can apply within their domain is limited to a specific list of
+applicable roles and in the default configuration, this excludes the <code class="docutils literal notranslate"><span class="pre">admin</span></code>
+role to prevent privilege escalation.</p>
+<p>You can find <em>domain managers</em> in your deployment with the following role
+assignment:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--names<span class="w"> </span>--domain<span class="w"> </span>foobar<span class="w"> </span>--role<span class="w"> </span>manager
+<span class="go">+---------+-----------------+----------------------+---------+--------+--------+-----------+</span>
+<span class="go">| Role    | User            | Group                | Project | Domain | System | Inherited |</span>
+<span class="go">+---------+-----------------+----------------------+---------+--------+--------+-----------+</span>
+<span class="go">| manager | alice@foobar    |                      |         | foobar |        | False     |</span>
+<span class="go">+---------+-----------------+----------------------+---------+--------+--------+-----------+</span>
+</pre></div>
+</div>
+</section>
+<section id="domain-members-domain-readers">
+<h3>Domain Members &amp; Domain Readers<a class="headerlink" href="#domain-members-domain-readers" title="Link to this heading">¶</a></h3>
+<p>Domain members and domain readers have the same relationship as system members
+and system readers. They’re allowed to view resources and information about
+their domain. They aren’t allowed to access system-specific information or
+information about projects, groups, and users outside their domain.</p>
+<p>The domain member and domain reader use-cases are great for support teams,
+monitoring the details of an account, or auditing resources within a domain
+assuming the audit doesn’t validate sensitive information. You can find domain
+members and domain readers with the following role assignments:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--names<span class="w"> </span>--role<span class="w"> </span>member<span class="w"> </span>--domain<span class="w"> </span>foobar
+<span class="go">+--------+-------------+-------+---------+--------+--------+-----------+</span>
+<span class="go">| Role   | User        | Group | Project | Domain | System | Inherited |</span>
+<span class="go">+--------+-------------+-------+---------+--------+--------+-----------+</span>
+<span class="go">| member | jdoe@foobar |       |         | foobar |        | False     |</span>
+<span class="go">+--------+-------------+-------+---------+--------+--------+-----------+</span>
+<span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--names<span class="w"> </span>--role<span class="w"> </span>reader<span class="w"> </span>--domain<span class="w"> </span>foobar
+<span class="go">+--------+-----------------+-------+---------+--------+--------+-----------+</span>
+<span class="go">| Role   | User            | Group | Project | Domain | System | Inherited |</span>
+<span class="go">+--------+-----------------+-------+---------+--------+--------+-----------+</span>
+<span class="go">| reader | support@Default |       |         | foobar |        | False     |</span>
+<span class="go">+--------+-----------------+-------+---------+--------+--------+-----------+</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="project-personas">
+<h2>Project Personas<a class="headerlink" href="#project-personas" title="Link to this heading">¶</a></h2>
+<p>This section describes authorization personas for users operating within a
+project. These personas are commonly used by end users. You can find all users
+with role assignments on a specific project using the following query:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--names<span class="w"> </span>--project<span class="w"> </span>production
+<span class="go">+--------+----------------+----------------------------+-------------------+--------+--------+-----------+</span>
+<span class="go">| Role   | User           | Group                      | Project           | Domain | System | Inherited |</span>
+<span class="go">+--------+----------------+----------------------------+-------------------+--------+--------+-----------+</span>
+<span class="go">| admin  | jsmith@Default |                            | production@foobar |        |        | False     |</span>
+<span class="go">| admin  |                | production-admins@foobar   | production@foobar |        |        | False     |</span>
+<span class="go">| member |                | foobar-operators@Default   | production@foobar |        |        | False     |</span>
+<span class="go">| reader | alice@Default  |                            | production@foobar |        |        | False     |</span>
+<span class="go">| reader |                | production-support@Default | production@foobar |        |        | False     |</span>
+<span class="go">+--------+----------------+----------------------------+-------------------+--------+--------+-----------+</span>
+</pre></div>
+</div>
+<section id="project-administrators">
+<h3>Project Administrators<a class="headerlink" href="#project-administrators" title="Link to this heading">¶</a></h3>
+<p><em>Project administrators</em> can only view and modify data within the project they
+have authorization on. They’re able to view information about their projects
+and set tags on their projects. They’re not allowed to view system or domain
+resources, as that would violate the tenancy of their role assignment. Since
+the majority of the resources in keystone’s API are system and domain-specific,
+<em>project administrators</em> don’t have much authorization.</p>
+<p>You can find <em>project administrators</em> in your deployment with the following
+role assignment:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--names<span class="w"> </span>--project<span class="w"> </span>production<span class="w"> </span>--role<span class="w"> </span>admin
+<span class="go">+-------+----------------+--------------------------+-------------------+--------+--------+-----------+</span>
+<span class="go">| Role  | User           | Group                    | Project           | Domain | System | Inherited |</span>
+<span class="go">+-------+----------------+--------------------------+-------------------+--------+--------+-----------+</span>
+<span class="go">| admin | jsmith@Default |                          | production@foobar |        |        | False     |</span>
+<span class="go">| admin |                | production-admins@foobar | production@foobar |        |        | False     |</span>
+<span class="go">+-------+----------------+--------------------------+-------------------+--------+--------+-----------+</span>
+</pre></div>
+</div>
+</section>
+<section id="project-members-project-readers">
+<h3>Project Members &amp; Project Readers<a class="headerlink" href="#project-members-project-readers" title="Link to this heading">¶</a></h3>
+<p><em>Project members</em> and <em>project readers</em> can discover information about their
+projects. They can access important information like resource limits for their
+project, but they’re not allowed to view information outside their project or
+view system-specific information.</p>
+<p>You can find <em>project members</em> and <em>project readers</em> in your deployment with
+the following role assignments:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--names<span class="w"> </span>--project<span class="w"> </span>production<span class="w"> </span>--role<span class="w"> </span>member
+<span class="go">+--------+------+--------------------------+-------------------+--------+--------+-----------+</span>
+<span class="go">| Role   | User | Group                    | Project           | Domain | System | Inherited |</span>
+<span class="go">+--------+------+--------------------------+-------------------+--------+--------+-----------+</span>
+<span class="go">| member |      | foobar-operators@Default | production@foobar |        |        | False     |</span>
+<span class="go">+--------+------+--------------------------+-------------------+--------+--------+-----------+</span>
+<span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>list<span class="w"> </span>--names<span class="w"> </span>--project<span class="w"> </span>production<span class="w"> </span>--role<span class="w"> </span>reader
+<span class="go">+--------+---------------+----------------------------+-------------------+--------+--------+-----------+</span>
+<span class="go">| Role   | User          | Group                      | Project           | Domain | System | Inherited |</span>
+<span class="go">+--------+---------------+----------------------------+-------------------+--------+--------+-----------+</span>
+<span class="go">| reader | alice@Default |                            | production@foobar |        |        | False     |</span>
+<span class="go">| reader |               | production-support@Default | production@foobar |        |        | False     |</span>
+<span class="go">+--------+---------------+----------------------------+-------------------+--------+--------+-----------+</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="writing-policies">
+<h2>Writing Policies<a class="headerlink" href="#writing-policies" title="Link to this heading">¶</a></h2>
+<p>If the granularity provided above doesn’t meet your specific use-case, you can
+still override policies and maintain them manually. You can read more about how
+to do that in oslo.policy usage <a class="reference external" href="https://docs.openstack.org/oslo.policy/latest/admin/index.html">documentation</a>.</p>
+</section>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="token-provider.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Token provider"></i></a>
+          
+          
+            <a href="keystone-features.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Advanced Keystone Features"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2021-07-21 11:19:50</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Administrator Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Keystone Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html">Keystone Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tokens.html">All about keystone tokens</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Default Roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="keystone-features.html">Advanced Keystone Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authentication-mechanisms.html">Authentication Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2-usage-guide.html">OAuth2.0 Client Credentials Grant Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure-https.html">Configure HTTPS in Identity Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2-mtls-usage-guide.html">OAuth 2.0 Mutual-TLS Client Authentication Flow</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Default Roles</a><ul>
+<li><a class="reference internal" href="#primer">Primer</a></li>
+<li><a class="reference internal" href="#roles-definitions">Roles Definitions</a><ul>
+<li><a class="reference internal" href="#reader">Reader</a></li>
+<li><a class="reference internal" href="#member">Member</a></li>
+<li><a class="reference internal" href="#manager">Manager</a></li>
+<li><a class="reference internal" href="#admin">Admin</a></li>
+<li><a class="reference internal" href="#service">Service</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#system-personas">System Personas</a><ul>
+<li><a class="reference internal" href="#system-administrators">System Administrators</a></li>
+<li><a class="reference internal" href="#system-members-system-readers">System Members &amp; System Readers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#domain-personas">Domain Personas</a><ul>
+<li><a class="reference internal" href="#domain-administrators">Domain Administrators</a></li>
+<li><a class="reference internal" href="#domain-managers">Domain Managers</a></li>
+<li><a class="reference internal" href="#domain-members-domain-readers">Domain Members &amp; Domain Readers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#project-personas">Project Personas</a><ul>
+<li><a class="reference internal" href="#project-administrators">Project Administrators</a></li>
+<li><a class="reference internal" href="#project-members-project-readers">Project Members &amp; Project Readers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#writing-policies">Writing Policies</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "admin/service-api-protection" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "Default Roles in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2021-07-21 11:19:50";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "admin/service-api-protection";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

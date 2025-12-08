@@ -1,0 +1,7 @@
+keystone.cmd.cli module
+=======================
+
+.. automodule:: keystone.cmd.cli
+   :members:
+   :undoc-members:
+   :show-inheritance:

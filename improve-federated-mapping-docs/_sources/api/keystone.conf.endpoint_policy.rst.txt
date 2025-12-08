@@ -1,0 +1,7 @@
+keystone.conf.endpoint\_policy module
+=====================================
+
+.. automodule:: keystone.conf.endpoint_policy
+   :members:
+   :undoc-members:
+   :show-inheritance:

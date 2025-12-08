@@ -1,0 +1,19 @@
+keystone.resource.config\_backends package
+==========================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.resource.config_backends.base
+   keystone.resource.config_backends.sql
+
+Module contents
+---------------
+
+.. automodule:: keystone.resource.config_backends
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+keystone.identity.core module
+=============================
+
+.. automodule:: keystone.identity.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

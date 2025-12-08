@@ -1,0 +1,7 @@
+keystone.models.receipt\_model module
+=====================================
+
+.. automodule:: keystone.models.receipt_model
+   :members:
+   :undoc-members:
+   :show-inheritance:

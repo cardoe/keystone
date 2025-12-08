@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>keystone.identity.backends.ldap.common module &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/support-matrix.css" />
+    <script src="../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="keystone.identity.backends.ldap.core module" href="keystone.identity.backends.ldap.core.html" />
+    <link rel="prev" title="keystone.identity.backends.ldap package" href="keystone.identity.backends.ldap.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/api/keystone.identity.backends.ldap.common.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>keystone.identity.backends.ldap.common module</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="keystone.identity.backends.ldap.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: keystone.identity.backends.ldap package"></i></a>
+    
+    
+    <a href="keystone.identity.backends.ldap.core.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: keystone.identity.backends.ldap.core module"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="module-keystone.identity.backends.ldap.common">
+<span id="keystone-identity-backends-ldap-common-module"></span><h1>keystone.identity.backends.ldap.common module<a class="headerlink" href="#module-keystone.identity.backends.ldap.common" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.AsynchronousMessage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">AsynchronousMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context_manager</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#AsynchronousMessage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.AsynchronousMessage" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A container for handling asynchronous LDAP responses.</p>
+<p>Some LDAP APIs, like <cite>search_ext</cite>, are asynchronous and return a message ID
+when the server successfully initiates the operation. Clients can use this
+message ID and the original connection to make the request to fetch the
+results using <cite>result3</cite>.</p>
+<p>This object holds the message ID, the original connection, and a callable
+weak reference Finalizer that cleans up context managers specific to the
+connection associated to the message ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message_id</strong> – The message identifier (str).</p></li>
+<li><p><strong>connection</strong> – The connection associated with the message identifier
+(ldappool.StateConnector).</p></li>
+</ul>
+</dd>
+</dl>
+<p>The <cite>clean</cite> attribute is a callable that cleans up the context manager used
+to create or return the connection object (weakref.finalize).</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">BaseLdap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#BaseLdap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_EXTRA_ATTR_MAPPING">
+<span class="sig-name descname"><span class="pre">DEFAULT_EXTRA_ATTR_MAPPING</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_EXTRA_ATTR_MAPPING" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_FILTER">
+<span class="sig-name descname"><span class="pre">DEFAULT_FILTER</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_FILTER" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_ID_ATTR">
+<span class="sig-name descname"><span class="pre">DEFAULT_ID_ATTR</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cn'</span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_ID_ATTR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_OBJECTCLASS">
+<span class="sig-name descname"><span class="pre">DEFAULT_OBJECTCLASS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_OBJECTCLASS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_OU">
+<span class="sig-name descname"><span class="pre">DEFAULT_OU</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_OU" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_STRUCTURAL_CLASSES">
+<span class="sig-name descname"><span class="pre">DEFAULT_STRUCTURAL_CLASSES</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_STRUCTURAL_CLASSES" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.NotFound">
+<span class="sig-name descname"><span class="pre">NotFound</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="keystone.exception.html#keystone.exception.Error" title="keystone.exception.Error"><span class="pre">Error</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.NotFound" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.add_member">
+<span class="sig-name descname"><span class="pre">add_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member_dn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">member_list_dn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#BaseLdap.add_member"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.add_member" title="Link to this definition">¶</a></dt>
+<dd><p>Add member to the member list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>member_dn</strong> – DN of member to be added.</p></li>
+<li><p><strong>member_list_dn</strong> – DN of group to which the
+member will be added.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="keystone.exception.html#keystone.exception.Conflict" title="keystone.exception.Conflict"><strong>keystone.exception.Conflict</strong></a> – If the user was already a member.</p></li>
+<li><p><strong>self.NotFound</strong> – If the group entry didn’t exist.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.affirm_unique">
+<span class="sig-name descname"><span class="pre">affirm_unique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#BaseLdap.affirm_unique"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.affirm_unique" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.attribute_ignore">
+<span class="sig-name descname"><span class="pre">attribute_ignore</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.attribute_ignore" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.attribute_options_names">
+<span class="sig-name descname"><span class="pre">attribute_options_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.attribute_options_names" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#BaseLdap.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.create" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.filter_query">
+<span class="sig-name descname"><span class="pre">filter_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hints</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#BaseLdap.filter_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.filter_query" title="Link to this definition">¶</a></dt>
+<dd><p>Apply filtering to a query.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hints</strong> – contains the list of filters, which may be None,
+indicating that there are no filters to be applied.
+If it’s not None, then any filters satisfied here will be
+removed so that the caller will know if any filters
+remain to be applied.</p></li>
+<li><p><strong>query</strong> – LDAP query into which to include filters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns query<span class="colon">:</span></dt>
+<dd class="field-even"><p>LDAP query, updated with any filters satisfied</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ldap_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#BaseLdap.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.get" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ldap_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#BaseLdap.get_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.get_all" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.get_by_name">
+<span class="sig-name descname"><span class="pre">get_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ldap_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#BaseLdap.get_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.get_by_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.get_connection">
+<span class="sig-name descname"><span class="pre">get_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_user_auth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#BaseLdap.get_connection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.get_connection" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.immutable_attrs">
+<span class="sig-name descname"><span class="pre">immutable_attrs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.immutable_attrs" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.model">
+<span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="keystone.identity.backends.ldap.models.html#keystone.identity.backends.ldap.models.Model" title="keystone.identity.backends.ldap.models.Model"><span class="pre">Model</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.model" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.notfound_arg">
+<span class="sig-name descname"><span class="pre">notfound_arg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.notfound_arg" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.options_name">
+<span class="sig-name descname"><span class="pre">options_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.options_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.tree_dn">
+<span class="sig-name descname"><span class="pre">tree_dn</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.tree_dn" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.BaseLdap.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#BaseLdap.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.BaseLdap.update" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.EnabledEmuMixIn">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">EnabledEmuMixIn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#EnabledEmuMixIn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.EnabledEmuMixIn" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap" title="keystone.identity.backends.ldap.common.BaseLdap"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseLdap</span></code></a></p>
+<p>Emulates boolean ‘enabled’ attribute if turned on.</p>
+<p>Creates a group holding all enabled objects of this class, all missing
+objects are considered disabled.</p>
+<p>Options:</p>
+<ul class="simple">
+<li><p>$name_enabled_emulation - boolean, on/off</p></li>
+<li><p>$name_enabled_emulation_dn - DN of that group, default is
+cn=enabled_${name}s,${tree_dn}</p></li>
+<li><p>$name_enabled_emulation_use_group_config - boolean, on/off</p></li>
+</ul>
+<p>Where ${name}s is the plural of self.options_name (‘users’ or ‘tenants’),
+${tree_dn} is self.tree_dn.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.EnabledEmuMixIn.DEFAULT_GROUP_MEMBERS_ARE_IDS">
+<span class="sig-name descname"><span class="pre">DEFAULT_GROUP_MEMBERS_ARE_IDS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.EnabledEmuMixIn.DEFAULT_GROUP_MEMBERS_ARE_IDS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.EnabledEmuMixIn.DEFAULT_GROUP_OBJECTCLASS">
+<span class="sig-name descname"><span class="pre">DEFAULT_GROUP_OBJECTCLASS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'groupOfNames'</span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.EnabledEmuMixIn.DEFAULT_GROUP_OBJECTCLASS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.EnabledEmuMixIn.DEFAULT_MEMBER_ATTRIBUTE">
+<span class="sig-name descname"><span class="pre">DEFAULT_MEMBER_ATTRIBUTE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'member'</span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.EnabledEmuMixIn.DEFAULT_MEMBER_ATTRIBUTE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.EnabledEmuMixIn.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#EnabledEmuMixIn.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.EnabledEmuMixIn.create" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.EnabledEmuMixIn.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ldap_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#EnabledEmuMixIn.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.EnabledEmuMixIn.get" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.EnabledEmuMixIn.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ldap_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#EnabledEmuMixIn.get_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.EnabledEmuMixIn.get_all" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.EnabledEmuMixIn.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#EnabledEmuMixIn.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.EnabledEmuMixIn.update" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.KeystoneLDAPHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">KeystoneLDAPHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#KeystoneLDAPHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.identity.backends.ldap.common.LDAPHandler" title="keystone.identity.backends.ldap.common.LDAPHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">LDAPHandler</span></code></a></p>
+<p>Convert data types and perform logging.</p>
+<p>This LDAP interface wraps the python-ldap based interfaces. The
+python-ldap interfaces require string values encoded in UTF-8 with
+the exception of [1]. The OpenStack logging framework at the time
+of this writing is not capable of accepting strings encoded in
+UTF-8, the log functions will throw decoding errors if a non-ascii
+character appears in a string.</p>
+<p>[1] In python-ldap, some fields (DNs, RDNs, attribute names,
+queries) are represented as text (str on Python 3, unicode on
+Python 2 when bytes_mode=False). For more details see:
+<a class="reference external" href="http://www.python-ldap.org/en/latest/bytes_mode.html#bytes-mode">http://www.python-ldap.org/en/latest/bytes_mode.html#bytes-mode</a></p>
+<p>Prior to the call Python data types are converted to a string
+representation as required by the LDAP APIs.</p>
+<p>Then logging is performed so we can track what is being
+sent/received from LDAP. Also the logging filters security
+sensitive items (i.e. passwords).</p>
+<p>Then the string values are encoded into UTF-8.</p>
+<p>Then the LDAP API entry point is invoked.</p>
+<p>Data returned from the LDAP call is converted back from UTF-8
+encoded strings into the Python data type used internally in
+OpenStack.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.KeystoneLDAPHandler.add_s">
+<span class="sig-name descname"><span class="pre">add_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modlist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#KeystoneLDAPHandler.add_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.add_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.KeystoneLDAPHandler.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alias_dereferencing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_tls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls_cacertfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls_cacertdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls_req_cert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chase_referrals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conn_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_pool</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_retry_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_retry_delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_conn_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_conn_lifetime</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#KeystoneLDAPHandler.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.connect" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.KeystoneLDAPHandler.get_option">
+<span class="sig-name descname"><span class="pre">get_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#KeystoneLDAPHandler.get_option"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.get_option" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.KeystoneLDAPHandler.modify_s">
+<span class="sig-name descname"><span class="pre">modify_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modlist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#KeystoneLDAPHandler.modify_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.modify_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.KeystoneLDAPHandler.result3">
+<span class="sig-name descname"><span class="pre">result3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msgid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resp_ctrl_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#KeystoneLDAPHandler.result3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.result3" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.KeystoneLDAPHandler.search_ext">
+<span class="sig-name descname"><span class="pre">search_ext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterstr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'(objectClass=*)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrlist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrsonly</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serverctrls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clientctrls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sizelimit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#KeystoneLDAPHandler.search_ext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.search_ext" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.KeystoneLDAPHandler.search_s">
+<span class="sig-name descname"><span class="pre">search_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterstr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'(objectClass=*)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrlist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrsonly</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#KeystoneLDAPHandler.search_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.search_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.KeystoneLDAPHandler.set_option">
+<span class="sig-name descname"><span class="pre">set_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invalue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#KeystoneLDAPHandler.set_option"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.set_option" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.KeystoneLDAPHandler.simple_bind_s">
+<span class="sig-name descname"><span class="pre">simple_bind_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">who</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cred</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serverctrls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clientctrls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#KeystoneLDAPHandler.simple_bind_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.simple_bind_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.KeystoneLDAPHandler.unbind_s">
+<span class="sig-name descname"><span class="pre">unbind_s</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#KeystoneLDAPHandler.unbind_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.unbind_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.LDAPHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">LDAPHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#LDAPHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.LDAPHandler" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Abstract class which defines methods for a LDAP API provider.</p>
+<p>Native Keystone values cannot be passed directly into and from the
+python-ldap API. Type conversion must occur at the LDAP API
+boundary, examples of type conversions are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>booleans map to the strings ‘TRUE’ and ‘FALSE’</p></li>
+<li><p>integer values map to their string representation.</p></li>
+<li><p>unicode strings are encoded in UTF-8</p></li>
+</ul>
+</div></blockquote>
+<p>Note, in python-ldap some fields (DNs, RDNs, attribute names, queries)
+are represented as text (str on Python 3, unicode on Python 2 when
+bytes_mode=False). For more details see:
+<a class="reference external" href="http://www.python-ldap.org/en/latest/bytes_mode.html#bytes-mode">http://www.python-ldap.org/en/latest/bytes_mode.html#bytes-mode</a></p>
+<p>In addition to handling type conversions at the API boundary we
+have the requirement to support more than one LDAP API
+provider. Currently we have:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>python-ldap, this is the standard LDAP API for Python, it
+requires access to a live LDAP server.</p></li>
+<li><p>Fake LDAP which emulates python-ldap. This is used for
+testing without requiring a live LDAP server.</p></li>
+</ul>
+</div></blockquote>
+<p>To support these requirements we need a layer that performs type
+conversions and then calls another LDAP API which is configurable
+(e.g. either python-ldap or the fake emulation).</p>
+<p>We have an additional constraint at the time of this writing due to
+limitations in the logging module. The logging module is not
+capable of accepting UTF-8 encoded strings, it will throw an
+encoding exception. Therefore all logging MUST be performed prior
+to UTF-8 conversion. This means no logging can be performed in the
+ldap APIs that implement the python-ldap API because those APIs
+are defined to accept only UTF-8 strings. Thus the layer which
+performs type conversions must also do the logging. We do the type
+conversions in two steps, once to convert all Python types to
+unicode strings, then log, then convert the unicode strings to
+UTF-8.</p>
+<p>There are a variety of ways one could accomplish this, we elect to
+use a chaining technique whereby instances of this class simply
+call the next member in the chain via the “conn” attribute. The
+chain is constructed by passing in an existing instance of this
+class as the conn attribute when the class is instantiated.</p>
+<p>Here is a brief explanation of why other possible approaches were
+not used:</p>
+<blockquote>
+<div><p>subclassing</p>
+<blockquote>
+<div><p>To perform the wrapping operations in the correct order
+the type conversion class would have to subclass each of
+the API providers. This is awkward, doubles the number of
+classes, and does not scale well. It requires the type
+conversion class to be aware of all possible API
+providers.</p>
+</div></blockquote>
+<p>decorators</p>
+<blockquote>
+<div><p>Decorators provide an elegant solution to wrap methods and
+would be an ideal way to perform type conversions before
+calling the wrapped function and then converting the
+values returned from the wrapped function. However
+decorators need to be aware of the method signature, it
+has to know what input parameters need conversion and how
+to convert the result. For an API like python-ldap which
+has a large number of different method signatures it would
+require a large number of specialized
+decorators. Experience has shown it’s very easy to apply
+the wrong decorator due to the inherent complexity and
+tendency to cut-n-paste code. Another option is to
+parameterize the decorator to make it “smart”. Experience
+has shown such decorators become insanely complicated and
+difficult to understand and debug. Also decorators tend to
+hide what’s really going on when a method is called, the
+operations being performed are not visible when looking at
+the implemation of a decorated method, this too experience
+has shown leads to mistakes.</p>
+</div></blockquote>
+</div></blockquote>
+<p>Chaining simplifies both wrapping to perform type conversion as
+well as the substitution of alternative API providers. One simply
+creates a new instance of the API interface and insert it at the
+front of the chain. Type conversions are explicit and obvious.</p>
+<p>If a new method needs to be added to the API interface one adds it
+to the abstract class definition. Should one miss adding the new
+method to any derivations of the abstract class the code will fail
+to load and run making it impossible to forget updating all the
+derived classes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.LDAPHandler.add_s">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modlist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#LDAPHandler.add_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.LDAPHandler.add_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.LDAPHandler.connect">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alias_dereferencing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_tls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls_cacertfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls_cacertdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls_req_cert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chase_referrals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conn_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_pool</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_retry_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_retry_delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_conn_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_conn_lifetime</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#LDAPHandler.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.LDAPHandler.connect" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.LDAPHandler.get_option">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#LDAPHandler.get_option"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.LDAPHandler.get_option" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.LDAPHandler.modify_s">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">modify_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modlist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#LDAPHandler.modify_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.LDAPHandler.modify_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.LDAPHandler.result3">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">result3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msgid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resp_ctrl_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#LDAPHandler.result3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.LDAPHandler.result3" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.LDAPHandler.search_ext">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">search_ext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterstr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'(objectClass=*)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrlist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrsonly</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serverctrls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clientctrls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sizelimit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#LDAPHandler.search_ext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.LDAPHandler.search_ext" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.LDAPHandler.search_s">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">search_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterstr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'(objectClass=*)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrlist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrsonly</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#LDAPHandler.search_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.LDAPHandler.search_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.LDAPHandler.set_option">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invalue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#LDAPHandler.set_option"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.LDAPHandler.set_option" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.LDAPHandler.simple_bind_s">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">simple_bind_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">who</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cred</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serverctrls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clientctrls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#LDAPHandler.simple_bind_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.LDAPHandler.simple_bind_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.LDAPHandler.unbind_s">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unbind_s</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#LDAPHandler.unbind_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.LDAPHandler.unbind_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PooledLDAPHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">PooledLDAPHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_auth_pool</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PooledLDAPHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.identity.backends.ldap.common.LDAPHandler" title="keystone.identity.backends.ldap.common.LDAPHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">LDAPHandler</span></code></a></p>
+<p>LDAPHandler implementation which uses pooled connection manager.</p>
+<p>Pool specific configuration is defined in [ldap] section.
+All other LDAP configuration is still used from [ldap] section</p>
+<p>Keystone LDAP authentication logic authenticates an end user using its DN
+and password via LDAP bind to establish supplied password is correct.
+This can fill up the pool quickly (as pool re-uses existing connection
+based on its bind data) and would not leave space in pool for connection
+re-use for other LDAP operations.
+Now a separate pool can be established for those requests when related flag
+‘use_auth_pool’ is enabled. That pool can have its own size and
+connection lifetime. Other pool attributes are shared between those pools.
+If ‘use_pool’ is disabled, then ‘use_auth_pool’ does not matter.
+If ‘use_auth_pool’ is not enabled, then connection pooling is not used for
+those LDAP operations.</p>
+<p>Note, the python-ldap API requires all string attribute values to be UTF-8
+encoded. The KeystoneLDAPHandler enforces this prior to invoking the
+methods in this class.</p>
+<p>Note, in python-ldap some fields (DNs, RDNs, attribute names, queries)
+are represented as text (str on Python 3, unicode on Python 2 when
+bytes_mode=False). For more details see:
+<a class="reference external" href="http://www.python-ldap.org/en/latest/bytes_mode.html#bytes-mode">http://www.python-ldap.org/en/latest/bytes_mode.html#bytes-mode</a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PooledLDAPHandler.Connector">
+<span class="sig-name descname"><span class="pre">Connector</span></span><a class="headerlink" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.Connector" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">StateConnector</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PooledLDAPHandler.add_s">
+<span class="sig-name descname"><span class="pre">add_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PooledLDAPHandler.add_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.add_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PooledLDAPHandler.auth_pool_prefix">
+<span class="sig-name descname"><span class="pre">auth_pool_prefix</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'auth_pool_'</span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.auth_pool_prefix" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PooledLDAPHandler.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alias_dereferencing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_tls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls_cacertfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls_cacertdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls_req_cert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chase_referrals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conn_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_pool</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_retry_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_retry_delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_conn_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_conn_lifetime</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PooledLDAPHandler.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.connect" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PooledLDAPHandler.connection_pools">
+<span class="sig-name descname"><span class="pre">connection_pools</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.connection_pools" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PooledLDAPHandler.get_option">
+<span class="sig-name descname"><span class="pre">get_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PooledLDAPHandler.get_option"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.get_option" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PooledLDAPHandler.modify_s">
+<span class="sig-name descname"><span class="pre">modify_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PooledLDAPHandler.modify_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.modify_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PooledLDAPHandler.result3">
+<span class="sig-name descname"><span class="pre">result3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resp_ctrl_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PooledLDAPHandler.result3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.result3" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for and return the result to an asynchronous message.</p>
+<p>This method returns the result of an operation previously initiated by
+one of the LDAP asynchronous operation routines (e.g., <cite>search_ext()</cite>).
+The <cite>search_ext()</cite> method in python-ldap returns an invocation
+identifier, or a message ID, upon successful initiation of the
+operation by the LDAP server.</p>
+<p>The <cite>message</cite> is expected to be instance of class
+<cite>AsynchronousMessage</cite>, which contains the message ID and the connection
+used to make the original request.</p>
+<p>The connection and context manager associated with <cite>search_ext()</cite> are
+cleaned up when message.clean() is called.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PooledLDAPHandler.search_ext">
+<span class="sig-name descname"><span class="pre">search_ext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterstr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'(objectClass=*)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrlist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrsonly</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serverctrls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clientctrls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sizelimit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PooledLDAPHandler.search_ext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.search_ext" title="Link to this definition">¶</a></dt>
+<dd><p>Return an AsynchronousMessage instance, it asynchronous API.</p>
+<p>The AsynchronousMessage instance can be safely used in a call to
+<cite>result3()</cite>.</p>
+<p>To work with <cite>result3()</cite> API in predictable manner, the same LDAP
+connection is needed which originally provided the <cite>msgid</cite>. So, this
+method wraps the existing connection and <cite>msgid</cite> in a new
+<cite>AsynchronousMessage</cite> instance. The connection associated with
+<cite>search_ext()</cite> is released after <cite>result3()</cite> fetches the data
+associated with <cite>msgid</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PooledLDAPHandler.search_s">
+<span class="sig-name descname"><span class="pre">search_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PooledLDAPHandler.search_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.search_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PooledLDAPHandler.set_option">
+<span class="sig-name descname"><span class="pre">set_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invalue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PooledLDAPHandler.set_option"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.set_option" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PooledLDAPHandler.simple_bind_s">
+<span class="sig-name descname"><span class="pre">simple_bind_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">who</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cred</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serverctrls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clientctrls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PooledLDAPHandler.simple_bind_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.simple_bind_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PooledLDAPHandler.unbind_s">
+<span class="sig-name descname"><span class="pre">unbind_s</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PooledLDAPHandler.unbind_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.unbind_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PythonLDAPHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">PythonLDAPHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PythonLDAPHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#keystone.identity.backends.ldap.common.LDAPHandler" title="keystone.identity.backends.ldap.common.LDAPHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">LDAPHandler</span></code></a></p>
+<p>LDAPHandler implementation which calls the python-ldap API.</p>
+<p>Note, the python-ldap API requires all string attribute values to be UTF-8
+encoded.</p>
+<p>Note, in python-ldap some fields (DNs, RDNs, attribute names, queries)
+are represented as text (str on Python 3, unicode on Python 2 when
+bytes_mode=False). For more details see:
+<a class="reference external" href="http://www.python-ldap.org/en/latest/bytes_mode.html#bytes-mode">http://www.python-ldap.org/en/latest/bytes_mode.html#bytes-mode</a></p>
+<p>The KeystoneLDAPHandler enforces this prior to invoking the methods in this
+class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PythonLDAPHandler.add_s">
+<span class="sig-name descname"><span class="pre">add_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modlist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PythonLDAPHandler.add_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.add_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PythonLDAPHandler.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alias_dereferencing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_tls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls_cacertfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls_cacertdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls_req_cert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chase_referrals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conn_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_pool</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_retry_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_retry_delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_conn_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_conn_lifetime</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PythonLDAPHandler.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.connect" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PythonLDAPHandler.get_option">
+<span class="sig-name descname"><span class="pre">get_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PythonLDAPHandler.get_option"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.get_option" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PythonLDAPHandler.modify_s">
+<span class="sig-name descname"><span class="pre">modify_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modlist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PythonLDAPHandler.modify_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.modify_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PythonLDAPHandler.result3">
+<span class="sig-name descname"><span class="pre">result3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msgid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resp_ctrl_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PythonLDAPHandler.result3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.result3" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PythonLDAPHandler.search_ext">
+<span class="sig-name descname"><span class="pre">search_ext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterstr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'(objectClass=*)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrlist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrsonly</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serverctrls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clientctrls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sizelimit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PythonLDAPHandler.search_ext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.search_ext" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PythonLDAPHandler.search_s">
+<span class="sig-name descname"><span class="pre">search_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterstr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'(objectClass=*)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrlist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrsonly</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PythonLDAPHandler.search_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.search_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PythonLDAPHandler.set_option">
+<span class="sig-name descname"><span class="pre">set_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invalue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PythonLDAPHandler.set_option"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.set_option" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PythonLDAPHandler.simple_bind_s">
+<span class="sig-name descname"><span class="pre">simple_bind_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">who</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cred</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serverctrls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clientctrls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PythonLDAPHandler.simple_bind_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.simple_bind_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.PythonLDAPHandler.unbind_s">
+<span class="sig-name descname"><span class="pre">unbind_s</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#PythonLDAPHandler.unbind_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.unbind_s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.convert_ldap_result">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">convert_ldap_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ldap_result</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#convert_ldap_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.convert_ldap_result" title="Link to this definition">¶</a></dt>
+<dd><p>Convert LDAP search result to Python types used by OpenStack.</p>
+<p>Each result tuple is of the form (dn, attrs), where dn is a string
+containing the DN (distinguished name) of the entry, and attrs is
+a dictionary containing the attributes associated with the
+entry. The keys of attrs are strings, and the associated values
+are lists of strings.</p>
+<p>OpenStack wants to use Python types of its choosing. Strings will
+be unicode, truth values boolean, whole numbers int’s, etc. DN’s are
+represented as text in python-ldap by default for Python 3 and when
+bytes_mode=False for Python 2, and therefore do not require decoding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ldap_result</strong> – LDAP search result</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of 2-tuples containing (dn, attrs) where dn is unicode
+and attrs is a dict whose values are type converted to
+OpenStack preferred types.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.dn_startswith">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">dn_startswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">descendant_dn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#dn_startswith"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.dn_startswith" title="Link to this definition">¶</a></dt>
+<dd><p>Return True if and only if the descendant_dn is under the dn.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>descendant_dn</strong> – Either a string DN or a DN parsed by ldap.dn.str2dn.</p></li>
+<li><p><strong>dn</strong> – Either a string DN or a DN parsed by ldap.dn.str2dn.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.enabled2py">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">enabled2py</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#enabled2py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.enabled2py" title="Link to this definition">¶</a></dt>
+<dd><p>Similar to ldap2py, only useful for the enabled attribute.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.filter_entity">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">filter_entity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entity_ref</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#filter_entity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.filter_entity" title="Link to this definition">¶</a></dt>
+<dd><p>Filter out private items in an entity dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>entity_ref</strong> – the entity dictionary. The ‘dn’ field will be removed.
+‘dn’ is used in LDAP, but should not be returned to the user.  This
+value may be modified.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>entity_ref</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.is_ava_value_equal">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">is_ava_value_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attribute_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#is_ava_value_equal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.is_ava_value_equal" title="Link to this definition">¶</a></dt>
+<dd><p>Return True if and only if the AVAs are equal.</p>
+<p>When comparing AVAs, the equality matching rule for the attribute type
+should be taken into consideration. For simplicity, this implementation
+does a case-insensitive comparison.</p>
+<p>Note that this function uses prep_case_insenstive so the limitations of
+that function apply here.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.is_dn_equal">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">is_dn_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dn1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dn2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#is_dn_equal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.is_dn_equal" title="Link to this definition">¶</a></dt>
+<dd><p>Return True if and only if the DNs are equal.</p>
+<p>Two DNs are equal if they’ve got the same number of RDNs and if the RDNs
+are the same at each position. See RFC4517.</p>
+<p>Note that this function uses is_rdn_equal to compare RDNs so the
+limitations of that function apply here.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dn1</strong> – Either a string DN or a DN parsed by ldap.dn.str2dn.</p></li>
+<li><p><strong>dn2</strong> – Either a string DN or a DN parsed by ldap.dn.str2dn.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.is_rdn_equal">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">is_rdn_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rdn1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rdn2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#is_rdn_equal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.is_rdn_equal" title="Link to this definition">¶</a></dt>
+<dd><p>Return True if and only if the RDNs are equal.</p>
+<ul class="simple">
+<li><p>RDNs must have the same number of AVAs.</p></li>
+<li><p>Each AVA of the RDNs must be the equal for the same attribute type. The
+order isn’t significant. Note that an attribute type will only be in one
+AVA in an RDN, otherwise the DN wouldn’t be valid.</p></li>
+<li><p>Attribute types aren’t case sensitive. Note that attribute type
+comparison is more complicated than implemented. This function only
+compares case-insentive. The code should handle multiple names for an
+attribute type (e.g., cn, commonName, and 2.5.4.3 are the same).</p></li>
+</ul>
+<p>Note that this function uses is_ava_value_equal to compare AVAs so the
+limitations of that function apply here.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.ldap2py">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">ldap2py</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#ldap2py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.ldap2py" title="Link to this definition">¶</a></dt>
+<dd><p>Convert an LDAP formatted value to Python type used by OpenStack.</p>
+<p>Virtually all LDAP values are stored as UTF-8 encoded strings.
+OpenStack prefers values which are unicode friendly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>val</strong> – LDAP formatted value</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>val converted to preferred Python type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.ldap_scope">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">ldap_scope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scope</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#ldap_scope"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.ldap_scope" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.parse_deref">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">parse_deref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">opt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#parse_deref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.parse_deref" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.parse_tls_cert">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">parse_tls_cert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">opt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#parse_tls_cert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.parse_tls_cert" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.prep_case_insensitive">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">prep_case_insensitive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#prep_case_insensitive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.prep_case_insensitive" title="Link to this definition">¶</a></dt>
+<dd><p>Prepare a string for case-insensitive comparison.</p>
+<p>This is defined in RFC4518. For simplicity, all this function does is
+lowercase all the characters, strip leading and trailing whitespace,
+and compress sequences of spaces to a single space.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.py2ldap">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">py2ldap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#py2ldap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.py2ldap" title="Link to this definition">¶</a></dt>
+<dd><p>Type convert a Python value to a type accepted by LDAP (unicode).</p>
+<p>The LDAP API only accepts strings for values therefore convert
+the value’s type to a unicode string. A subsequent type conversion
+will encode the unicode as UTF-8 as required by the python-ldap API,
+but for now we just want a string representation of the value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>val</strong> – The value to convert to a LDAP string representation</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>unicode string representation of value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.register_handler">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">register_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">handler</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#register_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.register_handler" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.safe_iter">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">safe_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#safe_iter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.safe_iter" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.use_conn_pool">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">use_conn_pool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#use_conn_pool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.use_conn_pool" title="Link to this definition">¶</a></dt>
+<dd><p>Use this only for connection pool specific ldap API.</p>
+<p>This adds connection object to decorated API as next argument after self.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.utf8_decode">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">utf8_decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#utf8_decode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.utf8_decode" title="Link to this definition">¶</a></dt>
+<dd><p>Decode a from UTF-8 into unicode.</p>
+<p>If the value is a binary string assume it’s UTF-8 encoded and decode
+it into a unicode string. Otherwise convert the value from its
+type into a unicode string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> – value to be returned as unicode</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>value as unicode</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>UnicodeDecodeError</strong> – for invalid UTF-8 encoding</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.identity.backends.ldap.common.utf8_encode">
+<span class="sig-prename descclassname"><span class="pre">keystone.identity.backends.ldap.common.</span></span><span class="sig-name descname"><span class="pre">utf8_encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/identity/backends/ldap/common.html#utf8_encode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.identity.backends.ldap.common.utf8_encode" title="Link to this definition">¶</a></dt>
+<dd><p>Encode a basestring to UTF-8.</p>
+<p>If the string is unicode encode it to UTF-8, if the string is
+str then assume it’s already encoded. Otherwise raise a TypeError.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> – A basestring</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>UTF-8 encoded version of value</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>TypeError</strong> – If value is not basestring</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="keystone.identity.backends.ldap.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: keystone.identity.backends.ldap package"></i></a>
+          
+          
+            <a href="keystone.identity.backends.ldap.core.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: keystone.identity.backends.ldap.core module"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2025-12-08 16:08:08</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html">keystone</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">keystone.identity.backends.ldap.common module</a><ul>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.AsynchronousMessage"><code class="docutils literal notranslate"><span class="pre">AsynchronousMessage</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap"><code class="docutils literal notranslate"><span class="pre">BaseLdap</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_EXTRA_ATTR_MAPPING"><code class="docutils literal notranslate"><span class="pre">BaseLdap.DEFAULT_EXTRA_ATTR_MAPPING</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_FILTER"><code class="docutils literal notranslate"><span class="pre">BaseLdap.DEFAULT_FILTER</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_ID_ATTR"><code class="docutils literal notranslate"><span class="pre">BaseLdap.DEFAULT_ID_ATTR</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_OBJECTCLASS"><code class="docutils literal notranslate"><span class="pre">BaseLdap.DEFAULT_OBJECTCLASS</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_OU"><code class="docutils literal notranslate"><span class="pre">BaseLdap.DEFAULT_OU</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.DEFAULT_STRUCTURAL_CLASSES"><code class="docutils literal notranslate"><span class="pre">BaseLdap.DEFAULT_STRUCTURAL_CLASSES</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.NotFound"><code class="docutils literal notranslate"><span class="pre">BaseLdap.NotFound</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.add_member"><code class="docutils literal notranslate"><span class="pre">BaseLdap.add_member()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.affirm_unique"><code class="docutils literal notranslate"><span class="pre">BaseLdap.affirm_unique()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.attribute_ignore"><code class="docutils literal notranslate"><span class="pre">BaseLdap.attribute_ignore</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.attribute_options_names"><code class="docutils literal notranslate"><span class="pre">BaseLdap.attribute_options_names</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.create"><code class="docutils literal notranslate"><span class="pre">BaseLdap.create()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.filter_query"><code class="docutils literal notranslate"><span class="pre">BaseLdap.filter_query()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.get"><code class="docutils literal notranslate"><span class="pre">BaseLdap.get()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.get_all"><code class="docutils literal notranslate"><span class="pre">BaseLdap.get_all()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.get_by_name"><code class="docutils literal notranslate"><span class="pre">BaseLdap.get_by_name()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.get_connection"><code class="docutils literal notranslate"><span class="pre">BaseLdap.get_connection()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.immutable_attrs"><code class="docutils literal notranslate"><span class="pre">BaseLdap.immutable_attrs</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.model"><code class="docutils literal notranslate"><span class="pre">BaseLdap.model</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.notfound_arg"><code class="docutils literal notranslate"><span class="pre">BaseLdap.notfound_arg</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.options_name"><code class="docutils literal notranslate"><span class="pre">BaseLdap.options_name</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.tree_dn"><code class="docutils literal notranslate"><span class="pre">BaseLdap.tree_dn</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.BaseLdap.update"><code class="docutils literal notranslate"><span class="pre">BaseLdap.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.EnabledEmuMixIn"><code class="docutils literal notranslate"><span class="pre">EnabledEmuMixIn</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.EnabledEmuMixIn.DEFAULT_GROUP_MEMBERS_ARE_IDS"><code class="docutils literal notranslate"><span class="pre">EnabledEmuMixIn.DEFAULT_GROUP_MEMBERS_ARE_IDS</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.EnabledEmuMixIn.DEFAULT_GROUP_OBJECTCLASS"><code class="docutils literal notranslate"><span class="pre">EnabledEmuMixIn.DEFAULT_GROUP_OBJECTCLASS</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.EnabledEmuMixIn.DEFAULT_MEMBER_ATTRIBUTE"><code class="docutils literal notranslate"><span class="pre">EnabledEmuMixIn.DEFAULT_MEMBER_ATTRIBUTE</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.EnabledEmuMixIn.create"><code class="docutils literal notranslate"><span class="pre">EnabledEmuMixIn.create()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.EnabledEmuMixIn.get"><code class="docutils literal notranslate"><span class="pre">EnabledEmuMixIn.get()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.EnabledEmuMixIn.get_all"><code class="docutils literal notranslate"><span class="pre">EnabledEmuMixIn.get_all()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.EnabledEmuMixIn.update"><code class="docutils literal notranslate"><span class="pre">EnabledEmuMixIn.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler"><code class="docutils literal notranslate"><span class="pre">KeystoneLDAPHandler</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.add_s"><code class="docutils literal notranslate"><span class="pre">KeystoneLDAPHandler.add_s()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.connect"><code class="docutils literal notranslate"><span class="pre">KeystoneLDAPHandler.connect()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.get_option"><code class="docutils literal notranslate"><span class="pre">KeystoneLDAPHandler.get_option()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.modify_s"><code class="docutils literal notranslate"><span class="pre">KeystoneLDAPHandler.modify_s()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.result3"><code class="docutils literal notranslate"><span class="pre">KeystoneLDAPHandler.result3()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.search_ext"><code class="docutils literal notranslate"><span class="pre">KeystoneLDAPHandler.search_ext()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.search_s"><code class="docutils literal notranslate"><span class="pre">KeystoneLDAPHandler.search_s()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.set_option"><code class="docutils literal notranslate"><span class="pre">KeystoneLDAPHandler.set_option()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.simple_bind_s"><code class="docutils literal notranslate"><span class="pre">KeystoneLDAPHandler.simple_bind_s()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.KeystoneLDAPHandler.unbind_s"><code class="docutils literal notranslate"><span class="pre">KeystoneLDAPHandler.unbind_s()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.LDAPHandler"><code class="docutils literal notranslate"><span class="pre">LDAPHandler</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.LDAPHandler.add_s"><code class="docutils literal notranslate"><span class="pre">LDAPHandler.add_s()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.LDAPHandler.connect"><code class="docutils literal notranslate"><span class="pre">LDAPHandler.connect()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.LDAPHandler.get_option"><code class="docutils literal notranslate"><span class="pre">LDAPHandler.get_option()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.LDAPHandler.modify_s"><code class="docutils literal notranslate"><span class="pre">LDAPHandler.modify_s()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.LDAPHandler.result3"><code class="docutils literal notranslate"><span class="pre">LDAPHandler.result3()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.LDAPHandler.search_ext"><code class="docutils literal notranslate"><span class="pre">LDAPHandler.search_ext()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.LDAPHandler.search_s"><code class="docutils literal notranslate"><span class="pre">LDAPHandler.search_s()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.LDAPHandler.set_option"><code class="docutils literal notranslate"><span class="pre">LDAPHandler.set_option()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.LDAPHandler.simple_bind_s"><code class="docutils literal notranslate"><span class="pre">LDAPHandler.simple_bind_s()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.LDAPHandler.unbind_s"><code class="docutils literal notranslate"><span class="pre">LDAPHandler.unbind_s()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler"><code class="docutils literal notranslate"><span class="pre">PooledLDAPHandler</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.Connector"><code class="docutils literal notranslate"><span class="pre">PooledLDAPHandler.Connector</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.add_s"><code class="docutils literal notranslate"><span class="pre">PooledLDAPHandler.add_s()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.auth_pool_prefix"><code class="docutils literal notranslate"><span class="pre">PooledLDAPHandler.auth_pool_prefix</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.connect"><code class="docutils literal notranslate"><span class="pre">PooledLDAPHandler.connect()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.connection_pools"><code class="docutils literal notranslate"><span class="pre">PooledLDAPHandler.connection_pools</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.get_option"><code class="docutils literal notranslate"><span class="pre">PooledLDAPHandler.get_option()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.modify_s"><code class="docutils literal notranslate"><span class="pre">PooledLDAPHandler.modify_s()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.result3"><code class="docutils literal notranslate"><span class="pre">PooledLDAPHandler.result3()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.search_ext"><code class="docutils literal notranslate"><span class="pre">PooledLDAPHandler.search_ext()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.search_s"><code class="docutils literal notranslate"><span class="pre">PooledLDAPHandler.search_s()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.set_option"><code class="docutils literal notranslate"><span class="pre">PooledLDAPHandler.set_option()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.simple_bind_s"><code class="docutils literal notranslate"><span class="pre">PooledLDAPHandler.simple_bind_s()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PooledLDAPHandler.unbind_s"><code class="docutils literal notranslate"><span class="pre">PooledLDAPHandler.unbind_s()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler"><code class="docutils literal notranslate"><span class="pre">PythonLDAPHandler</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.add_s"><code class="docutils literal notranslate"><span class="pre">PythonLDAPHandler.add_s()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.connect"><code class="docutils literal notranslate"><span class="pre">PythonLDAPHandler.connect()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.get_option"><code class="docutils literal notranslate"><span class="pre">PythonLDAPHandler.get_option()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.modify_s"><code class="docutils literal notranslate"><span class="pre">PythonLDAPHandler.modify_s()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.result3"><code class="docutils literal notranslate"><span class="pre">PythonLDAPHandler.result3()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.search_ext"><code class="docutils literal notranslate"><span class="pre">PythonLDAPHandler.search_ext()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.search_s"><code class="docutils literal notranslate"><span class="pre">PythonLDAPHandler.search_s()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.set_option"><code class="docutils literal notranslate"><span class="pre">PythonLDAPHandler.set_option()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.simple_bind_s"><code class="docutils literal notranslate"><span class="pre">PythonLDAPHandler.simple_bind_s()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.PythonLDAPHandler.unbind_s"><code class="docutils literal notranslate"><span class="pre">PythonLDAPHandler.unbind_s()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.convert_ldap_result"><code class="docutils literal notranslate"><span class="pre">convert_ldap_result()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.dn_startswith"><code class="docutils literal notranslate"><span class="pre">dn_startswith()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.enabled2py"><code class="docutils literal notranslate"><span class="pre">enabled2py()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.filter_entity"><code class="docutils literal notranslate"><span class="pre">filter_entity()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.is_ava_value_equal"><code class="docutils literal notranslate"><span class="pre">is_ava_value_equal()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.is_dn_equal"><code class="docutils literal notranslate"><span class="pre">is_dn_equal()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.is_rdn_equal"><code class="docutils literal notranslate"><span class="pre">is_rdn_equal()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.ldap2py"><code class="docutils literal notranslate"><span class="pre">ldap2py()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.ldap_scope"><code class="docutils literal notranslate"><span class="pre">ldap_scope()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.parse_deref"><code class="docutils literal notranslate"><span class="pre">parse_deref()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.parse_tls_cert"><code class="docutils literal notranslate"><span class="pre">parse_tls_cert()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.prep_case_insensitive"><code class="docutils literal notranslate"><span class="pre">prep_case_insensitive()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.py2ldap"><code class="docutils literal notranslate"><span class="pre">py2ldap()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.register_handler"><code class="docutils literal notranslate"><span class="pre">register_handler()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.safe_iter"><code class="docutils literal notranslate"><span class="pre">safe_iter()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.use_conn_pool"><code class="docutils literal notranslate"><span class="pre">use_conn_pool()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.utf8_decode"><code class="docutils literal notranslate"><span class="pre">utf8_decode()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.identity.backends.ldap.common.utf8_encode"><code class="docutils literal notranslate"><span class="pre">utf8_encode()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "api/keystone.identity.backends.ldap.common" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "keystone.identity.backends.ldap.common module in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2025-12-08 16:08:08";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "api/keystone.identity.backends.ldap.common";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

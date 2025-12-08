@@ -1,0 +1,7 @@
+keystone.policy.schema module
+=============================
+
+.. automodule:: keystone.policy.schema
+   :members:
+   :undoc-members:
+   :show-inheritance:

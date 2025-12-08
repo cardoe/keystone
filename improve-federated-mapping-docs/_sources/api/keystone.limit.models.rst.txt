@@ -1,0 +1,20 @@
+keystone.limit.models package
+=============================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.limit.models.base
+   keystone.limit.models.flat
+   keystone.limit.models.strict_two_level
+
+Module contents
+---------------
+
+.. automodule:: keystone.limit.models
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+keystone.cmd.doctor.database module
+===================================
+
+.. automodule:: keystone.cmd.doctor.database
+   :members:
+   :undoc-members:
+   :show-inheritance:

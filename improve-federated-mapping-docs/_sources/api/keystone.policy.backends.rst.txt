@@ -1,0 +1,20 @@
+keystone.policy.backends package
+================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.policy.backends.base
+   keystone.policy.backends.rules
+   keystone.policy.backends.sql
+
+Module contents
+---------------
+
+.. automodule:: keystone.policy.backends
+   :members:
+   :undoc-members:
+   :show-inheritance:

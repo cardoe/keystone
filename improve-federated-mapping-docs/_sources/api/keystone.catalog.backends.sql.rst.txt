@@ -1,0 +1,7 @@
+keystone.catalog.backends.sql module
+====================================
+
+.. automodule:: keystone.catalog.backends.sql
+   :members:
+   :undoc-members:
+   :show-inheritance:

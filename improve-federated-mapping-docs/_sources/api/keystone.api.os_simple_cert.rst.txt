@@ -1,0 +1,7 @@
+keystone.api.os\_simple\_cert module
+====================================
+
+.. automodule:: keystone.api.os_simple_cert
+   :members:
+   :undoc-members:
+   :show-inheritance:

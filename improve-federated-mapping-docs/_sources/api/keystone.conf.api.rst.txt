@@ -1,0 +1,7 @@
+keystone.conf.api module
+========================
+
+.. automodule:: keystone.conf.api
+   :members:
+   :undoc-members:
+   :show-inheritance:

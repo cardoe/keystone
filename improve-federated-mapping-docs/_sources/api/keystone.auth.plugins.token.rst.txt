@@ -1,0 +1,7 @@
+keystone.auth.plugins.token module
+==================================
+
+.. automodule:: keystone.auth.plugins.token
+   :members:
+   :undoc-members:
+   :show-inheritance:

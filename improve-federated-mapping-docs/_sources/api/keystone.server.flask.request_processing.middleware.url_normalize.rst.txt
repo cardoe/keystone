@@ -1,0 +1,7 @@
+keystone.server.flask.request\_processing.middleware.url\_normalize module
+==========================================================================
+
+.. automodule:: keystone.server.flask.request_processing.middleware.url_normalize
+   :members:
+   :undoc-members:
+   :show-inheritance:

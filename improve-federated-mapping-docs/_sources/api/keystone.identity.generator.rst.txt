@@ -1,0 +1,7 @@
+keystone.identity.generator module
+==================================
+
+.. automodule:: keystone.identity.generator
+   :members:
+   :undoc-members:
+   :show-inheritance:

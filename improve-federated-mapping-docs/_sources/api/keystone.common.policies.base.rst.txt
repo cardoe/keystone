@@ -1,0 +1,7 @@
+keystone.common.policies.base module
+====================================
+
+.. automodule:: keystone.common.policies.base
+   :members:
+   :undoc-members:
+   :show-inheritance:

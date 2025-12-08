@@ -1,0 +1,7 @@
+keystone.trust.schema module
+============================
+
+.. automodule:: keystone.trust.schema
+   :members:
+   :undoc-members:
+   :show-inheritance:

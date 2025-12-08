@@ -1,0 +1,19 @@
+keystone.limit.backends package
+===============================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.limit.backends.base
+   keystone.limit.backends.sql
+
+Module contents
+---------------
+
+.. automodule:: keystone.limit.backends
+   :members:
+   :undoc-members:
+   :show-inheritance:

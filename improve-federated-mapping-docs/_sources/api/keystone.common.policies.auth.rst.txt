@@ -1,0 +1,7 @@
+keystone.common.policies.auth module
+====================================
+
+.. automodule:: keystone.common.policies.auth
+   :members:
+   :undoc-members:
+   :show-inheritance:

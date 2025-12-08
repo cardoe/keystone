@@ -1,0 +1,7 @@
+keystone.identity.id\_generators.sha256 module
+==============================================
+
+.. automodule:: keystone.identity.id_generators.sha256
+   :members:
+   :undoc-members:
+   :show-inheritance:

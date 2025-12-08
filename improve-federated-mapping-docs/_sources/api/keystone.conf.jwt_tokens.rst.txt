@@ -1,0 +1,7 @@
+keystone.conf.jwt\_tokens module
+================================
+
+.. automodule:: keystone.conf.jwt_tokens
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+keystone.api.regions module
+===========================
+
+.. automodule:: keystone.api.regions
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+keystone.trust.backends.sql module
+==================================
+
+.. automodule:: keystone.trust.backends.sql
+   :members:
+   :undoc-members:
+   :show-inheritance:

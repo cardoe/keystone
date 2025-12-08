@@ -1,0 +1,26 @@
+keystone.auth.plugins package
+=============================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.auth.plugins.application_credential
+   keystone.auth.plugins.base
+   keystone.auth.plugins.core
+   keystone.auth.plugins.external
+   keystone.auth.plugins.mapped
+   keystone.auth.plugins.oauth1
+   keystone.auth.plugins.password
+   keystone.auth.plugins.token
+   keystone.auth.plugins.totp
+
+Module contents
+---------------
+
+.. automodule:: keystone.auth.plugins
+   :members:
+   :undoc-members:
+   :show-inheritance:

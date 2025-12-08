@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keystone.common.utils &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/support-matrix.css" />
+    <script src="../../../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../../../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- TEMPLATE_NAME: _modules/keystone/common/utils -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../../../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>keystone.common.utils</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <h1>Source code for keystone.common.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2012 OpenStack Foundation</span>
+<span class="c1"># Copyright 2010 United States Government as represented by the</span>
+<span class="c1"># Administrator of the National Aeronautics and Space Administration.</span>
+<span class="c1"># Copyright 2011 - 2012 Justin Santa Barbara</span>
+<span class="c1"># All Rights Reserved.</span>
+<span class="c1">#</span>
+<span class="c1">#    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may</span>
+<span class="c1">#    not use this file except in compliance with the License. You may obtain</span>
+<span class="c1">#    a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#         http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1">#    Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1">#    distributed under the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT</span>
+<span class="c1">#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the</span>
+<span class="c1">#    License for the specific language governing permissions and limitations</span>
+<span class="c1">#    under the License.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">collections.abc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">contextlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">grp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pwd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">urllib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">cryptography</span><span class="w"> </span><span class="kn">import</span> <span class="n">x509</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_log</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_serialization</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsonutils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">reflection</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">strutils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">timeutils</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">password_hashing</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">keystone.conf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone</span><span class="w"> </span><span class="kn">import</span> <span class="n">exception</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.i18n</span><span class="w"> </span><span class="kn">import</span> <span class="n">_</span>
+
+<span class="n">CONF</span> <span class="o">=</span> <span class="n">keystone</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">CONF</span>
+<span class="n">LOG</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">WHITELISTED_PROPERTIES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;tenant_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;project_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;user_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;compute_host&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;public_endpoint&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="c1"># NOTE(stevermar): This UUID must stay the same, forever, across</span>
+<span class="c1"># all of keystone to preserve its value as a URN namespace, which is</span>
+<span class="c1"># used for ID transformation.</span>
+<span class="n">RESOURCE_ID_NAMESPACE</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">UUID</span><span class="p">(</span><span class="s1">&#39;4332ecab-770b-4288-a680-b9aca3b1b153&#39;</span><span class="p">)</span>
+
+<span class="c1"># Compatibilty for password hashing functions.</span>
+<span class="n">verify_length_and_trunc_password</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">password_hashing</span><span class="o">.</span><span class="n">verify_length_and_trunc_password</span>
+<span class="p">)</span>  <span class="c1"># noqa</span>
+<span class="n">hash_password</span> <span class="o">=</span> <span class="n">password_hashing</span><span class="o">.</span><span class="n">hash_password</span>
+<span class="n">hash_user_password</span> <span class="o">=</span> <span class="n">password_hashing</span><span class="o">.</span><span class="n">hash_user_password</span>
+<span class="n">check_password</span> <span class="o">=</span> <span class="n">password_hashing</span><span class="o">.</span><span class="n">check_password</span>
+
+
+<span class="c1"># NOTE(hiromu): This dict defines alternative DN string for X.509. When</span>
+<span class="c1"># retriving DN from X.509, converting attributes types that are not listed</span>
+<span class="c1"># in the RFC4514 to a corresponding alternative DN string.</span>
+<span class="n">ATTR_NAME_OVERRIDES</span> <span class="o">=</span> <span class="p">{</span><span class="n">x509</span><span class="o">.</span><span class="n">NameOID</span><span class="o">.</span><span class="n">EMAIL_ADDRESS</span><span class="p">:</span> <span class="s2">&quot;emailAddress&quot;</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="resource_uuid">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.resource_uuid">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">resource_uuid</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert input to valid UUID hex digits.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">uuid</span><span class="o">.</span><span class="n">UUID</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">64</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid5</span><span class="p">(</span><span class="n">RESOURCE_ID_NAMESPACE</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="n">_</span><span class="p">(</span>
+                <span class="s1">&#39;Length of transformable resource id &gt; 64, &#39;</span>
+                <span class="s1">&#39;which is max allowed characters&#39;</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="flatten_dict">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.flatten_dict">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">flatten_dict</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">parent_key</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Flatten a nested dictionary.</span>
+
+<span class="sd">    Converts a dictionary with nested values to a single level flat</span>
+<span class="sd">    dictionary, with dotted notation for each key.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">new_key</span> <span class="o">=</span> <span class="n">parent_key</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">k</span> <span class="k">if</span> <span class="n">parent_key</span> <span class="k">else</span> <span class="n">k</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">MutableMapping</span><span class="p">):</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">flatten_dict</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">new_key</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_key</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">items</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SmarterEncoder">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.SmarterEncoder">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SmarterEncoder</span><span class="p">(</span><span class="n">jsonutils</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">JSONEncoder</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Help for JSON encoding dict-like objects.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SmarterEncoder.default">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.SmarterEncoder.default">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;items&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="hash_access_key">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.hash_access_key">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">hash_access_key</span><span class="p">(</span><span class="n">access</span><span class="p">):</span>
+    <span class="n">hash_</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">access</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+        <span class="n">access</span> <span class="o">=</span> <span class="n">access</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+    <span class="n">hash_</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">access</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">hash_</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="attr_as_boolean">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.attr_as_boolean">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">attr_as_boolean</span><span class="p">(</span><span class="n">val_attr</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the boolean value, decoded from a string.</span>
+
+<span class="sd">    We test explicitly for a value meaning False, which can be one of</span>
+<span class="sd">    several formats as specified in oslo strutils.FALSE_STRINGS.</span>
+<span class="sd">    All other string values (including an empty string) are treated as</span>
+<span class="sd">    meaning True.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">strutils</span><span class="o">.</span><span class="n">bool_from_string</span><span class="p">(</span><span class="n">val_attr</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="auth_str_equal">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.auth_str_equal">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">auth_str_equal</span><span class="p">(</span><span class="n">provided</span><span class="p">,</span> <span class="n">known</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Constant-time string comparison.</span>
+
+<span class="sd">    :params provided: the first string</span>
+<span class="sd">    :params known: the second string</span>
+
+<span class="sd">    :returns: True if the strings are equal.</span>
+
+<span class="sd">    This function takes two strings and compares them.  It is intended to be</span>
+<span class="sd">    used when doing a comparison for authentication purposes to help guard</span>
+<span class="sd">    against timing attacks.  When using the function for this purpose, always</span>
+<span class="sd">    provide the user-provided password as the first argument.  The time this</span>
+<span class="sd">    function will take is always a factor of the length of this string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">p_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">provided</span><span class="p">)</span>
+    <span class="n">k_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">known</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p_len</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">provided</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">p_len</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">known</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">k_len</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">result</span> <span class="o">|=</span> <span class="n">a</span> <span class="o">^</span> <span class="n">b</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">p_len</span> <span class="o">==</span> <span class="n">k_len</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="setup_remote_pydev_debug">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.setup_remote_pydev_debug">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">setup_remote_pydev_debug</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">CONF</span><span class="o">.</span><span class="n">pydev_debug_host</span> <span class="ow">and</span> <span class="n">CONF</span><span class="o">.</span><span class="n">pydev_debug_port</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">pydev</span><span class="w"> </span><span class="kn">import</span> <span class="n">pydevd</span>
+            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+                <span class="kn">import</span><span class="w"> </span><span class="nn">pydevd</span>
+
+            <span class="n">pydevd</span><span class="o">.</span><span class="n">settrace</span><span class="p">(</span>
+                <span class="n">CONF</span><span class="o">.</span><span class="n">pydev_debug_host</span><span class="p">,</span>
+                <span class="n">port</span><span class="o">=</span><span class="n">CONF</span><span class="o">.</span><span class="n">pydev_debug_port</span><span class="p">,</span>
+                <span class="n">stdoutToServer</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">stderrToServer</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                <span class="s1">&#39;Error setting up the debug environment. Verify that the &#39;</span>
+                <span class="s1">&#39;option --debug-url has the format &lt;host&gt;:&lt;port&gt; and that a &#39;</span>
+                <span class="s1">&#39;debugger processes is listening on that port.&#39;</span>
+            <span class="p">)</span>
+            <span class="k">raise</span></div>
+
+
+
+<div class="viewcode-block" id="get_unix_user">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.get_unix_user">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_unix_user</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the uid and user name.</span>
+
+<span class="sd">    This is a convenience utility which accepts a variety of input</span>
+<span class="sd">    which might represent a unix user. If successful it returns the uid</span>
+<span class="sd">    and name. Valid input is:</span>
+
+<span class="sd">    string</span>
+<span class="sd">        A string is first considered to be a user name and a lookup is</span>
+<span class="sd">        attempted under that name. If no name is found then an attempt</span>
+<span class="sd">        is made to convert the string to an integer and perform a</span>
+<span class="sd">        lookup as a uid.</span>
+
+<span class="sd">    int</span>
+<span class="sd">        An integer is interpreted as a uid.</span>
+
+<span class="sd">    None</span>
+<span class="sd">        None is interpreted to mean use the current process&#39;s</span>
+<span class="sd">        effective user.</span>
+
+<span class="sd">    If the input is a valid type but no user is found a KeyError is</span>
+<span class="sd">    raised. If the input is not a valid type a TypeError is raised.</span>
+
+<span class="sd">    :param object user: string, int or None specifying the user to</span>
+<span class="sd">                        lookup.</span>
+
+<span class="sd">    :returns: tuple of (uid, name)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">user_info</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwnam</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;user name &#39;</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">&#39; not found&quot;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">user_info</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwuid</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;user id </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> not found&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">user_info</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwuid</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;user id </span><span class="si">{user}</span><span class="s2"> not found&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">user</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">user_info</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwuid</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">geteuid</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user_cls_name</span> <span class="o">=</span> <span class="n">reflection</span><span class="o">.</span><span class="n">get_class_name</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">fully_qualified</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;user must be string, int or None; not </span><span class="si">{</span><span class="n">user_cls_name</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">user</span><span class="si">!r}</span><span class="s1">)&#39;</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">user_info</span><span class="o">.</span><span class="n">pw_uid</span><span class="p">,</span> <span class="n">user_info</span><span class="o">.</span><span class="n">pw_name</span></div>
+
+
+
+<div class="viewcode-block" id="get_unix_group">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.get_unix_group">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_unix_group</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the gid and group name.</span>
+
+<span class="sd">    This is a convenience utility which accepts a variety of input</span>
+<span class="sd">    which might represent a unix group. If successful it returns the gid</span>
+<span class="sd">    and name. Valid input is:</span>
+
+<span class="sd">    string</span>
+<span class="sd">        A string is first considered to be a group name and a lookup is</span>
+<span class="sd">        attempted under that name. If no name is found then an attempt</span>
+<span class="sd">        is made to convert the string to an integer and perform a</span>
+<span class="sd">        lookup as a gid.</span>
+
+<span class="sd">    int</span>
+<span class="sd">        An integer is interpreted as a gid.</span>
+
+<span class="sd">    None</span>
+<span class="sd">        None is interpreted to mean use the current process&#39;s</span>
+<span class="sd">        effective group.</span>
+
+<span class="sd">    If the input is a valid type but no group is found a KeyError is</span>
+<span class="sd">    raised. If the input is not a valid type a TypeError is raised.</span>
+
+
+<span class="sd">    :param object group: string, int or None specifying the group to</span>
+<span class="sd">                         lookup.</span>
+
+<span class="sd">    :returns: tuple of (gid, name)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">group_info</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">getgrnam</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="c1"># Was an int passed as a string?</span>
+            <span class="c1"># Try converting to int and lookup by id instead.</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;group name &#39;</span><span class="si">{</span><span class="n">group</span><span class="si">}</span><span class="s2">&#39; not found&quot;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">group_info</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">getgrgid</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;group id </span><span class="si">{i}</span><span class="s2"> not found&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">group_info</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">getgrgid</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;group id </span><span class="si">{group}</span><span class="s2"> not found&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">group</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">group_info</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">getgrgid</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getegid</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">group_cls_name</span> <span class="o">=</span> <span class="n">reflection</span><span class="o">.</span><span class="n">get_class_name</span><span class="p">(</span>
+            <span class="n">group</span><span class="p">,</span> <span class="n">fully_qualified</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;group must be string, int or None; not </span><span class="si">{</span><span class="n">group_cls_name</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">group</span><span class="si">!r}</span><span class="s1">)&#39;</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">group_info</span><span class="o">.</span><span class="n">gr_gid</span><span class="p">,</span> <span class="n">group_info</span><span class="o">.</span><span class="n">gr_name</span></div>
+
+
+
+<div class="viewcode-block" id="WhiteListedItemFilter">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.WhiteListedItemFilter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WhiteListedItemFilter</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">whitelist</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_whitelist</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">whitelist</span> <span class="ow">or</span> <span class="p">[])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluation on an item access.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_whitelist</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">name</span><span class="p">]</span></div>
+
+
+
+<span class="n">_ISO8601_TIME_FORMAT_SUBSECOND</span> <span class="o">=</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">T%H:%M:%S.</span><span class="si">%f</span><span class="s1">&#39;</span>
+<span class="n">_ISO8601_TIME_FORMAT</span> <span class="o">=</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">T%H:%M:%S&#39;</span>
+
+
+<div class="viewcode-block" id="isotime">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.isotime">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">isotime</span><span class="p">(</span><span class="n">at</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subsecond</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stringify time in ISO 8601 format.</span>
+
+<span class="sd">    Python provides a similar instance method for datetime.datetime objects</span>
+<span class="sd">    called `isoformat()`. The format of the strings generated by `isoformat()`</span>
+<span class="sd">    has a couple of problems:</span>
+
+<span class="sd">    1) The strings generated by `isotime()` are used in tokens and other public</span>
+<span class="sd">    APIs that we can&#39;t change without a deprecation period. The strings</span>
+<span class="sd">    generated by `isoformat()` are not the same format, so we can&#39;t just</span>
+<span class="sd">    change to it.</span>
+
+<span class="sd">    2) The strings generated by `isoformat()` do not include the microseconds</span>
+<span class="sd">    if the value happens to be 0. This will likely show up as random</span>
+<span class="sd">    failures as parsers may be written to always expect microseconds, and it</span>
+<span class="sd">    will parse correctly most of the time.</span>
+
+<span class="sd">    :param at: Optional datetime object to return at a string. If not provided,</span>
+<span class="sd">               the time when the function was called will be used.</span>
+<span class="sd">    :type at: datetime.datetime</span>
+<span class="sd">    :param subsecond: If true, the returned string will represent microsecond</span>
+<span class="sd">                      precision, but only precise to the second. For example, a</span>
+<span class="sd">                      `datetime.datetime(2016, 9, 14, 14, 1, 13, 970223)` will</span>
+<span class="sd">                      be returned as `2016-09-14T14:01:13.000000Z`.</span>
+<span class="sd">    :type subsecond: bool</span>
+<span class="sd">    :returns: A time string represented in ISO 8601 format.</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">at</span><span class="p">:</span>
+        <span class="n">at</span> <span class="o">=</span> <span class="n">timeutils</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+    <span class="c1"># NOTE(lbragstad): Datetime objects are immutable, so reassign the date we</span>
+    <span class="c1"># are working with to itself as we drop microsecond precision.</span>
+    <span class="n">at</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">st</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+        <span class="n">_ISO8601_TIME_FORMAT</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">subsecond</span>
+        <span class="k">else</span> <span class="n">_ISO8601_TIME_FORMAT_SUBSECOND</span>
+    <span class="p">)</span>
+    <span class="n">tz</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">tzinfo</span><span class="o">.</span><span class="n">tzname</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="k">if</span> <span class="n">at</span><span class="o">.</span><span class="n">tzinfo</span> <span class="k">else</span> <span class="s1">&#39;UTC&#39;</span>
+    <span class="c1"># Need to handle either iso8601 or python UTC format</span>
+    <span class="n">st</span> <span class="o">+=</span> <span class="s1">&#39;Z&#39;</span> <span class="k">if</span> <span class="n">tz</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;UTC&#39;</span><span class="p">,</span> <span class="s1">&#39;UTC+00:00&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="n">tz</span>
+    <span class="k">return</span> <span class="n">st</span></div>
+
+
+
+<div class="viewcode-block" id="parse_expiration_date">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.parse_expiration_date">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_expiration_date</span><span class="p">(</span><span class="n">expiration_date</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">expiration_date</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;Z&#39;</span><span class="p">):</span>
+        <span class="n">expiration_date</span> <span class="o">+=</span> <span class="s1">&#39;Z&#39;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">expiration_time</span> <span class="o">=</span> <span class="n">timeutils</span><span class="o">.</span><span class="n">parse_isotime</span><span class="p">(</span><span class="n">expiration_date</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">ValidationTimeStampError</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">timeutils</span><span class="o">.</span><span class="n">is_older_than</span><span class="p">(</span><span class="n">expiration_time</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">ValidationExpirationError</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">expiration_time</span></div>
+
+
+
+<span class="n">URL_RESERVED_CHARS</span> <span class="o">=</span> <span class="s2">&quot;:/?#[]@!$&amp;&#39;()*+,;=&quot;</span>
+
+
+<div class="viewcode-block" id="is_not_url_safe">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.is_not_url_safe">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_not_url_safe</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if a string contains any url reserved characters.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_url_unsafe_chars</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="list_url_unsafe_chars">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.list_url_unsafe_chars">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_url_unsafe_chars</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of the reserved characters.&quot;&quot;&quot;</span>
+    <span class="n">reserved_chars</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">URL_RESERVED_CHARS</span><span class="p">:</span>
+            <span class="n">reserved_chars</span> <span class="o">+=</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="n">reserved_chars</span></div>
+
+
+
+<div class="viewcode-block" id="lower_case_hostname">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.lower_case_hostname">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">lower_case_hostname</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Change the URL&#39;s hostname to lowercase.&quot;&quot;&quot;</span>
+    <span class="c1"># NOTE(gyee): according to</span>
+    <span class="c1"># https://www.w3.org/TR/WD-html40-970708/htmlweb.html, the netloc portion</span>
+    <span class="c1"># of the URL is case-insensitive</span>
+    <span class="n">parsed</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="c1"># Note: _replace method for named tuples is public and defined in docs</span>
+    <span class="n">replaced</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">_replace</span><span class="p">(</span><span class="n">netloc</span><span class="o">=</span><span class="n">parsed</span><span class="o">.</span><span class="n">netloc</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">(</span><span class="n">replaced</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="remove_standard_port">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.remove_standard_port">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">remove_standard_port</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="c1"># remove the default ports specified in RFC2616 and 2818</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;:&#39;</span>
+    <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">netloc</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">separator</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">scheme</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;http&#39;</span> <span class="ow">and</span> <span class="n">port</span> <span class="o">==</span> <span class="s1">&#39;80&#39;</span><span class="p">:</span>
+        <span class="c1"># NOTE(gyee): _replace() is not a private method. It has</span>
+        <span class="c1"># an underscore prefix to prevent conflict with field names.</span>
+        <span class="c1"># See https://docs.python.org/2/library/collections.html#</span>
+        <span class="c1"># collections.namedtuple</span>
+        <span class="n">o</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">_replace</span><span class="p">(</span><span class="n">netloc</span><span class="o">=</span><span class="n">host</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">scheme</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;https&#39;</span> <span class="ow">and</span> <span class="n">port</span> <span class="o">==</span> <span class="s1">&#39;443&#39;</span><span class="p">:</span>
+        <span class="n">o</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">_replace</span><span class="p">(</span><span class="n">netloc</span><span class="o">=</span><span class="n">host</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">(</span><span class="n">o</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="format_url">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.format_url">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_url</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">substitutions</span><span class="p">,</span> <span class="n">silent_keyerror_failures</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Format a user-defined URL with the given substitutions.</span>
+
+<span class="sd">    :param string url: the URL to be formatted</span>
+<span class="sd">    :param dict substitutions: the dictionary used for substitution</span>
+<span class="sd">    :param list silent_keyerror_failures: keys for which we should be silent</span>
+<span class="sd">        if there is a KeyError exception on substitution attempt</span>
+<span class="sd">    :returns: a formatted URL</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">substitutions</span> <span class="o">=</span> <span class="n">WhiteListedItemFilter</span><span class="p">(</span>
+        <span class="n">WHITELISTED_PROPERTIES</span><span class="p">,</span> <span class="n">substitutions</span>
+    <span class="p">)</span>
+    <span class="n">allow_keyerror</span> <span class="o">=</span> <span class="n">silent_keyerror_failures</span> <span class="ow">or</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;$(&#39;</span><span class="p">,</span> <span class="s1">&#39;%(&#39;</span><span class="p">)</span> <span class="o">%</span> <span class="n">substitutions</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Malformed endpoint - </span><span class="si">%(url)r</span><span class="s2"> is not a string&quot;</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">url</span><span class="p">})</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">MalformedEndpoint</span><span class="p">(</span><span class="n">endpoint</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span> <span class="ow">or</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allow_keyerror</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Malformed endpoint </span><span class="si">%(url)s</span><span class="s2"> - unknown key </span><span class="si">%(keyerror)s</span><span class="s2">&quot;</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="s2">&quot;keyerror&quot;</span><span class="p">:</span> <span class="n">e</span><span class="p">})</span>
+            <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">MalformedEndpoint</span><span class="p">(</span><span class="n">endpoint</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;Malformed endpoint &#39;</span><span class="si">%(url)s</span><span class="s2">&#39;. The following type error &quot;</span>
+            <span class="s2">&quot;occurred during string substitution: </span><span class="si">%(typeerror)s</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="s2">&quot;typeerror&quot;</span><span class="p">:</span> <span class="n">e</span><span class="p">})</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">MalformedEndpoint</span><span class="p">(</span><span class="n">endpoint</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;Malformed endpoint </span><span class="si">%s</span><span class="s2"> - incomplete format &quot;</span>
+            <span class="s2">&quot;(are you missing a type notifier ?)&quot;</span>
+        <span class="p">)</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">MalformedEndpoint</span><span class="p">(</span><span class="n">endpoint</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="check_endpoint_url">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.check_endpoint_url">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_endpoint_url</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check substitution of url.</span>
+
+<span class="sd">    The invalid urls are as follows:</span>
+<span class="sd">    urls with substitutions that is not in the whitelist</span>
+
+<span class="sd">    Check the substitutions in the URL to make sure they are valid</span>
+<span class="sd">    and on the whitelist.</span>
+
+<span class="sd">    :param str url: the URL to validate</span>
+<span class="sd">    :rtype: None</span>
+<span class="sd">    :raises keystone.exception.URLValidationError: if the URL is invalid</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># check whether the property in the path is exactly the same</span>
+    <span class="c1"># with that in the whitelist below</span>
+    <span class="n">substitutions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">WHITELISTED_PROPERTIES</span><span class="p">,</span> <span class="n">itertools</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">url</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;$(&#39;</span><span class="p">,</span> <span class="s1">&#39;%(&#39;</span><span class="p">)</span> <span class="o">%</span> <span class="n">substitutions</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">URLValidationError</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_certificate_subject_dn">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.get_certificate_subject_dn">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_certificate_subject_dn</span><span class="p">(</span><span class="n">cert_pem</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get subject DN from the PEM certificate content.</span>
+
+<span class="sd">    :param str cert_pem: the PEM certificate content</span>
+<span class="sd">    :rtype: JSON data for subject DN</span>
+<span class="sd">    :raises keystone.exception.ValidationError: if the PEM certificate content</span>
+<span class="sd">        is invalid</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dn_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cert</span> <span class="o">=</span> <span class="n">x509</span><span class="o">.</span><span class="n">load_pem_x509_certificate</span><span class="p">(</span><span class="n">cert_pem</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">cert</span><span class="o">.</span><span class="n">subject</span><span class="p">:</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">rfc4514_string</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">oid</span> <span class="ow">in</span> <span class="n">ATTR_NAME_OVERRIDES</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">ATTR_NAME_OVERRIDES</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">oid</span><span class="p">]</span>
+            <span class="n">dn_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;The certificate content is not PEM format.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dn_dict</span></div>
+
+
+
+<div class="viewcode-block" id="get_certificate_issuer_dn">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.get_certificate_issuer_dn">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_certificate_issuer_dn</span><span class="p">(</span><span class="n">cert_pem</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get issuer DN from the PEM certificate content.</span>
+
+<span class="sd">    :param str cert_pem: the PEM certificate content</span>
+<span class="sd">    :rtype: JSON data for issuer DN</span>
+<span class="sd">    :raises keystone.exception.ValidationError: if the PEM certificate content</span>
+<span class="sd">        is invalid</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dn_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cert</span> <span class="o">=</span> <span class="n">x509</span><span class="o">.</span><span class="n">load_pem_x509_certificate</span><span class="p">(</span><span class="n">cert_pem</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">cert</span><span class="o">.</span><span class="n">issuer</span><span class="p">:</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">rfc4514_string</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">oid</span> <span class="ow">in</span> <span class="n">ATTR_NAME_OVERRIDES</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">ATTR_NAME_OVERRIDES</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">oid</span><span class="p">]</span>
+            <span class="n">dn_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;The certificate content is not PEM format.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dn_dict</span></div>
+
+
+
+<div class="viewcode-block" id="get_certificate_thumbprint">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.get_certificate_thumbprint">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_certificate_thumbprint</span><span class="p">(</span><span class="n">cert_pem</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get certificate thumbprint from the PEM certificate content.</span>
+
+<span class="sd">    :param str cert_pem: the PEM certificate content</span>
+<span class="sd">    :rtype: certificate thumbprint</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">thumb_sha256</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">cert_pem</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+    <span class="n">thumbprint</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">thumb_sha256</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">thumbprint</span></div>
+
+
+
+<div class="viewcode-block" id="create_directory">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.create_directory">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_directory</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">keystone_user_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keystone_group_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Attempt to create a directory if it doesn&#39;t exist.</span>
+
+<span class="sd">    :param directory: string containing the path of the directory to create.</span>
+<span class="sd">    :param keystone_user_id: the system ID of the process running keystone.</span>
+<span class="sd">    :param keystone_group_id: the system ID of the group running keystone.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">F_OK</span><span class="p">):</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> does not appear to exist; attempting to create it&#39;</span><span class="p">,</span> <span class="n">directory</span>
+        <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="mo">0o700</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s1">&#39;Failed to create </span><span class="si">%s</span><span class="s1">: either it already &#39;</span>
+                <span class="s1">&#39;exists or you don</span><span class="se">\&#39;</span><span class="s1">t have sufficient permissions to &#39;</span>
+                <span class="s1">&#39;create it&#39;</span><span class="p">,</span>
+                <span class="n">directory</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">keystone_user_id</span> <span class="ow">and</span> <span class="n">keystone_group_id</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">chown</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">keystone_user_id</span><span class="p">,</span> <span class="n">keystone_group_id</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">keystone_user_id</span> <span class="ow">or</span> <span class="n">keystone_group_id</span><span class="p">:</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s1">&#39;Unable to change the ownership of key repository without &#39;</span>
+                <span class="s1">&#39;a keystone user ID and keystone group ID both being &#39;</span>
+                <span class="s1">&#39;provided: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                <span class="n">directory</span><span class="p">,</span>
+            <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="nested_contexts">
+<a class="viewcode-back" href="../../../api/keystone.common.utils.html#keystone.common.utils.nested_contexts">[docs]</a>
+<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">nested_contexts</span><span class="p">(</span><span class="o">*</span><span class="n">contexts</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">ExitStack</span><span class="p">()</span> <span class="k">as</span> <span class="n">stack</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="p">[</span><span class="n">stack</span><span class="o">.</span><span class="n">enter_context</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">contexts</span><span class="p">]</span></div>
+
+</pre></div>
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2025-12-08 16:08:08</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../../../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../../../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../../../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "_modules/keystone/common/utils" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "keystone.common.utils in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2025-12-08 16:08:08";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "_modules/keystone/common/utils";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

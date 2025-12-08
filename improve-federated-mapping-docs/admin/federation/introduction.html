@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Introduction to Keystone Federation &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/support-matrix.css" />
+    <script src="../../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Configuring Keystone for Federation" href="configure_federation.html" />
+    <link rel="prev" title="Federated Identity" href="federated_identity.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/admin/federation/introduction.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Introduction to Keystone Federation</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="federated_identity.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Federated Identity"></i></a>
+    
+    
+    <a href="configure_federation.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Configuring Keystone for Federation"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="introduction-to-keystone-federation">
+<span id="federation-introduction"></span><h1>Introduction to Keystone Federation<a class="headerlink" href="#introduction-to-keystone-federation" title="Link to this heading">¶</a></h1>
+<section id="what-is-keystone-federation">
+<h2>What is keystone federation?<a class="headerlink" href="#what-is-keystone-federation" title="Link to this heading">¶</a></h2>
+<p>Identity federation is the ability to share identity information across multiple
+identity management systems. In keystone, this is implemented as an
+authentication method that allows users to authenticate directly with another
+identity source and then provides keystone with a set of user attributes. This
+is useful if your organization already has a primary identity source since it
+means users don’t need a separate set of credentials for the cloud. It is also
+useful for connecting multiple clouds together, as we can use a keystone in
+another cloud as an identity source. Using <a class="reference internal" href="../configuration.html#integrate-with-ldap"><span class="std std-ref">LDAP as an identity
+backend</span></a> is
+another way for keystone to obtain identity information from an external source,
+but it requires keystone to handle passwords directly rather than offloading
+authentication to the external source.</p>
+<p>Keystone supports two configuration models for federated identity. The most
+common configuration is with <a class="reference internal" href="configure_federation.html#keystone-as-sp"><span class="std std-ref">keystone as a Service Provider (SP)</span></a>, using an
+external Identity Provider, such as a Keycloak or Google, as the identity source
+and authentication method. The second type of configuration is
+“<a class="reference internal" href="configure_federation.html#keystone-as-idp"><span class="std std-ref">Keystone to Keystone</span></a>”, where two keystones
+are linked with one acting as the identity source.</p>
+<p>This document discusses identity federation involving a secondary identity
+management that acts as the source of truth concerning the users it contains,
+specifically covering the SAML2.0 and OpenID Connect protocols, although
+keystone can work with other protocols. A similar concept is <a class="reference internal" href="../external-authentication.html"><span class="doc">external
+authentication</span></a> whereby keystone is
+still the source of truth about its users
+but authentication is handled externally. Yet another closely related topic is
+<a class="reference internal" href="../configure_tokenless_x509.html"><span class="doc">tokenless authentication</span></a>
+which uses some of the same constructs as described
+here but allows services to validate users without using keystone tokens.</p>
+</section>
+<section id="glossary">
+<h2>Glossary<a class="headerlink" href="#glossary" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt><strong>Service Provider (SP)</strong></dt><dd><p>A Service Provider is the service providing the resource an end-user is
+requesting. In our case, this is keystone, which provides keystone tokens that
+we use on other OpenStack services. We do NOT call the other OpenStack
+services “service providers”. The specific service we care about in this
+context is the token service, so that is our Service Provider.</p>
+</dd>
+<dt><strong>Identity Provider (IdP)</strong></dt><dd><p>An Identity Provider is the service that accepts credentials, validates
+them, and generates a yay/nay response. It returns this response along with
+some other attributes about the user, such as their username, their display
+name, and whatever other details it stores and you’ve configured your Service
+Provider to accept.</p>
+</dd>
+<dt><strong>Entity ID or Remote ID</strong></dt><dd><p>An Entity ID or a Remote ID are both names for a unique identifier string for
+either a Service Provider or an Identity Provider. It usually takes the form
+of a URN, but the URN does not need to be a resolvable URL. Remote IDs are
+globally unique. Two Identity Providers cannot be associated with the same
+remote ID. Keystone uses the remote ID retrieved from the HTTPD environment
+variables to match the incoming request with a trusted Identity Provider and
+render the appropriate authorization mapping.</p>
+</dd>
+<dt><strong>SAML2.0</strong></dt><dd><p><a class="reference external" href="http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html">SAML2.0</a> is an XML-based federation protocol. It is commonly used in
+internal-facing organizations, such as a university or business in which IT
+services are provided to members of the organization.</p>
+</dd>
+<dt><strong>OpenID Connect (OpenIDC)</strong></dt><dd><p><a class="reference external" href="https://openid.net/connect/">OpenID Connect</a> is a JSON-based federation protocol built on OAuth 2.0. It’s
+used more often by public-facing services like Google.</p>
+</dd>
+<dt><strong>Assertion</strong></dt><dd><p>An assertion is a formatted statement from the Identity Provider that asserts
+that a user is authenticated and provides some attributes about the user. The
+Identity Provider always signs the assertion and typically encrypts it as
+well.</p>
+</dd>
+<dt><strong>Single Sign-On (SSO)</strong></dt><dd><p><a class="reference external" href="https://en.wikipedia.org/wiki/Single_sign-on">Single Sign-On</a> is a mechanism related to identity federation whereby a user
+may log in to their identity management system and be granted a token or
+ticket that allows them access to multiple Service Providers.</p>
+</dd>
+</dl>
+</section>
+<section id="authentication-flows">
+<h2>Authentication Flows<a class="headerlink" href="#authentication-flows" title="Link to this heading">¶</a></h2>
+<p>Understanding the flow of information as a user moves through the authentication
+process is key to being able to debug later on.</p>
+<section id="normal-keystone">
+<h3>Normal keystone<a class="headerlink" href="#normal-keystone" title="Link to this heading">¶</a></h3>
+<div class="graphviz"><img src="../../_images/graphviz-76751c73cea5bda81be5d7cf9522011c701ad8ed.png" alt="Diagram of keystone's normal auth flow, in which a user agent
+authenticates and authorizes themself with keystone and obtains a
+scoped token to pass to an OpenStack service." class="graphviz" /></div>
+<p>In a normal keystone flow, the user requests a scoped token directly from
+keystone. Keystone accepts their credentials and checks them against its local
+storage or against its LDAP backend. Then it checks the scope that the user is
+requesting, ensuring they have the correct role assignments, and produces a
+scoped token. The user can use the scoped token to do something else in
+OpenStack, like request servers, but everything that happens after the token is
+produced is irrelevant to this discussion.</p>
+</section>
+<section id="id2">
+<h3>SAML2.0<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<section id="saml2-0-websso">
+<h4>SAML2.0 WebSSO<a class="headerlink" href="#saml2-0-websso" title="Link to this heading">¶</a></h4>
+<div class="graphviz"><img src="../../_images/graphviz-b6d6ae81e6b9106f43a1677d3d7731d72f59a380.png" alt="Diagram of a standard WebSSO authentication flow." class="graphviz" /></div>
+<p>This diagram shows a standard <a class="reference external" href="http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0-cd-02.html#5.1.Web%20Browser%20SSO%20Profile|outline">WebSSO</a> authentication flow, not one involving
+keystone. WebSSO is one of a few <a class="reference external" href="http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0-cd-02.html#5.Major%20Profiles%20and%20Federation%20Use%20Cases|outline">SAML2.0 profiles</a>. It is based on the idea that a
+web browser will be acting as an intermediary and so the flow involves concepts
+that a browser can understand and act on, like HTTP redirects and HTML forms.</p>
+<p>First, the user uses their web browser to request some secure resource from the
+Service Provider. The Service Provider detects that the user isn’t authenticated
+yet, so it generates a SAML Request which it base64 encodes, and then issues an
+HTTP redirect to the Identity Provider.</p>
+<p>The browser follows the redirect and presents the SAML Request to the Identity
+Provider. The user is prompted to authenticate, probably by filling out a
+username and password in a login page. The Identity Provider responds with an
+HTTP success and generates a SAML Response with an HTML form.</p>
+<p>The browser automatically POSTs the form back to the Service Provider, which
+validates the SAML Response. The Service Provider finally issues another
+redirect back to the original resource the user had requested.</p>
+</section>
+<section id="saml2-0-ecp">
+<h4>SAML2.0 ECP<a class="headerlink" href="#saml2-0-ecp" title="Link to this heading">¶</a></h4>
+<div class="graphviz"><img src="../../_images/graphviz-2ed54f1761bd8dce0b85abda4b2935068b392328.png" alt="Diagram of a standard ECP authentication flow." class="graphviz" /></div>
+<p><a class="reference external" href="http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0-cd-02.html#5.2.ECP%20Profile|outline">ECP</a> is another SAML profile. Generally the flow is similar to the WebSSO
+flow, but it is designed for a client that natively understands SAML, for
+example the <a class="reference external" href="https://docs.openstack.org/keystoneauth/latest/">keystoneauth</a> library (and therefore also the
+<a class="reference external" href="https://docs.openstack.org/python-openstackclient/latest/">python-openstackclient</a> CLI tool). ECP is
+slightly different from the browser-based flow and is not supported by all
+SAML2.0 IdPs, and so getting WebSSO working does not necessarily mean ECP is
+working correctly, or vice versa. ECP support must often be turned on explicitly
+in the Identity Provider.</p>
+</section>
+<section id="websso-with-keystone-and-horizon">
+<h4>WebSSO with keystone and horizon<a class="headerlink" href="#websso-with-keystone-and-horizon" title="Link to this heading">¶</a></h4>
+<div class="graphviz"><img src="../../_images/graphviz-4a641817b16e7c85ae6dab66865722b2667e9b0a.png" alt="Diagram of the SAML2.0 WebSSO auth flow specific to horizon, keystone, and the
+HTTPD module acting as service provider." class="graphviz" /></div>
+<p>Keystone is not a web front-end, which means horizon needs to handle some parts
+of being a Service Provider to implement WebSSO.</p>
+<p>In the diagram above, horizon is added, and keystone and HTTPD are split out
+from each other to distinguish which parts each are responsible for, though
+typically both together are referred to as the Service Provider.</p>
+<p>In this model, the user requests to log in to horizon by selecting a federated
+authentication method from a dropdown menu. Horizon automatically generates a
+keystone URL based on the Identity Provider and protocol selected and redirects
+the browser to keystone. That location is equivalent to the /secure resource in
+the <a class="reference internal" href="#saml2-0-websso">SAML2.0 WebSSO</a> diagram. The browser follows the redirect, and the HTTPD
+module detects that the user isn’t logged in yet and issues another redirect to
+the Identity Provider with a SAML Request. At this point, the flow is the same
+as in the normal WebSSO model. The user logs into the Identity Provider, a SAML
+Response is POSTed back to the Service Provider, where the HTTPD module
+validates the response and issues a redirect back to the location that horizon
+had originally requested, which is a special federation auth endpoint. At this
+point keystone is able to grant an unscoped token, which it hands off as another
+HTML form. The browser will POST that back to horizon, which triggers the normal
+login process, picking a project to scope to and getting a scoped token from
+keystone.</p>
+<p>Note that horizon is acting as a middleman, since it knows the endpoint of the
+secure resource it requests from keystone.</p>
+</section>
+<section id="keystone-to-keystone">
+<h4>Keystone to Keystone<a class="headerlink" href="#keystone-to-keystone" title="Link to this heading">¶</a></h4>
+<div class="graphviz"><img src="../../_images/graphviz-4e670f14df43f7794a772c32fe0dca8642c1a8ba.png" alt="Diagram of the IdP-initiated auth flow in a keystone-to-keystone model." class="graphviz" /></div>
+<p>When keystone is used as an Identity Provider in a Keystone to Keystone
+configuration, the auth flow is nonstandard. It is similar to an <a class="reference external" href="http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0-cd-02.html#5.1.4.IdP-Initiated%20SSO:%20%20POST%20Binding|outline">IdP-initiated
+auth flow</a>. In this case, the user goes directly to the Identity Provider first
+before requesting any resource from the Service Provider. The user will get a
+token from keystone, then use that to request a SAML Response via ECP. When it
+gets that response back, it POSTs that to the Service Provider, which will grant
+a token for it.</p>
+<p>Notice that the Service Provider has to accept data from the Identity Provider
+and therefore needs to have a way of trusting it. The Identity Provider, on the
+other hand, never has to accept data from the Service Provider. There is no back
+and forth, the user simply completes the auth process on one side and presents
+the result to the other side.</p>
+</section>
+</section>
+<section id="id4">
+<h3>OpenID Connect<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<section id="openid-connect-authentication-flow">
+<h4>OpenID Connect Authentication Flow<a class="headerlink" href="#openid-connect-authentication-flow" title="Link to this heading">¶</a></h4>
+<div align="left" class="align-left"><div class="graphviz"><img src="../../_images/graphviz-eb3b0da3522b3512cc7507b0e78ba34ac738cfc5.png" alt="Diagram of a standard OpenID Connect authentication flow" class="graphviz" /></div>
+</div>
+<p>OpenID Connect is different from any SAML2.0 flow because the negotiation is not
+handled entirely through the client. The Service Provider must make a request
+directly to the Identity Provider, which means this flow would not be
+appropriate if the Service Provider and Identity Provider are in segregated
+networks.</p>
+<p>When the user requests a secure resource from the Service Provider, they are
+redirected to the Identity Provider to log in. The Identity Provider then
+redirects the user back to the Service Provider using a known redirect URI and
+providing an authorization code. The Service Provider must then make a
+back-channel request directly to the Identity Provider using the provided code,
+and exchange it for an ID token.</p>
+</section>
+<section id="openid-connect-with-keystone-and-horizon">
+<h4>OpenID Connect with keystone and horizon<a class="headerlink" href="#openid-connect-with-keystone-and-horizon" title="Link to this heading">¶</a></h4>
+<div class="graphviz"><img src="../../_images/graphviz-ada48a5eb1df3a8a17fd7c5711eadacb2739feb2.png" alt="Diagram of the OpenID Connect WebSSO auth flow specific to horizon,
+keystone, and the HTTPD module acting as service provider." class="graphviz" /></div>
+<p>From horizon and keystone’s point of view, the authentication flow is the same
+for OpenID Connect as it is for SAML2.0. It is only the HTTPD OpenIDC module
+that must handle the flow in accordance with the spec.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="federated_identity.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Federated Identity"></i></a>
+          
+          
+            <a href="configure_federation.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Configuring Keystone for Federation"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2024-11-19 18:02:47</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Administrator Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration.html">Keystone Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../operations.html">Keystone Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tokens.html">All about keystone tokens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../service-api-protection.html">Default Roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keystone-features.html">Advanced Keystone Features</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../authentication-mechanisms.html">Authentication Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../oauth2-usage-guide.html">OAuth2.0 Client Credentials Grant Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configure-https.html">Configure HTTPS in Identity Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../oauth2-mtls-usage-guide.html">OAuth 2.0 Mutual-TLS Client Authentication Flow</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Introduction to Keystone Federation</a><ul>
+<li><a class="reference internal" href="#what-is-keystone-federation">What is keystone federation?</a></li>
+<li><a class="reference internal" href="#glossary">Glossary</a></li>
+<li><a class="reference internal" href="#authentication-flows">Authentication Flows</a><ul>
+<li><a class="reference internal" href="#normal-keystone">Normal keystone</a></li>
+<li><a class="reference internal" href="#id2">SAML2.0</a><ul>
+<li><a class="reference internal" href="#saml2-0-websso">SAML2.0 WebSSO</a></li>
+<li><a class="reference internal" href="#saml2-0-ecp">SAML2.0 ECP</a></li>
+<li><a class="reference internal" href="#websso-with-keystone-and-horizon">WebSSO with keystone and horizon</a></li>
+<li><a class="reference internal" href="#keystone-to-keystone">Keystone to Keystone</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4">OpenID Connect</a><ul>
+<li><a class="reference internal" href="#openid-connect-authentication-flow">OpenID Connect Authentication Flow</a></li>
+<li><a class="reference internal" href="#openid-connect-with-keystone-and-horizon">OpenID Connect with keystone and horizon</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "admin/federation/introduction" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "Introduction to Keystone Federation in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2024-11-19 18:02:47";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "admin/federation/introduction";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

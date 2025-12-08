@@ -1,0 +1,7 @@
+keystone.token.token\_formatters module
+=======================================
+
+.. automodule:: keystone.token.token_formatters
+   :members:
+   :undoc-members:
+   :show-inheritance:

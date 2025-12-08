@@ -1,0 +1,30 @@
+keystone.federation package
+===========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.federation.backends
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.federation.constants
+   keystone.federation.core
+   keystone.federation.idp
+   keystone.federation.schema
+   keystone.federation.utils
+
+Module contents
+---------------
+
+.. automodule:: keystone.federation
+   :members:
+   :undoc-members:
+   :show-inheritance:

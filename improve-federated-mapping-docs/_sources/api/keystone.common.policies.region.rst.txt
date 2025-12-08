@@ -1,0 +1,7 @@
+keystone.common.policies.region module
+======================================
+
+.. automodule:: keystone.common.policies.region
+   :members:
+   :undoc-members:
+   :show-inheritance:

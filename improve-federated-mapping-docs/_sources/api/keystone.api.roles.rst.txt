@@ -1,0 +1,7 @@
+keystone.api.roles module
+=========================
+
+.. automodule:: keystone.api.roles
+   :members:
+   :undoc-members:
+   :show-inheritance:

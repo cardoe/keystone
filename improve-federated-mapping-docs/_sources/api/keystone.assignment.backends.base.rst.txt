@@ -1,0 +1,7 @@
+keystone.assignment.backends.base module
+========================================
+
+.. automodule:: keystone.assignment.backends.base
+   :members:
+   :undoc-members:
+   :show-inheritance:

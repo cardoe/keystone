@@ -1,0 +1,7 @@
+keystone.api.s3tokens module
+============================
+
+.. automodule:: keystone.api.s3tokens
+   :members:
+   :undoc-members:
+   :show-inheritance:

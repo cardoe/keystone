@@ -1,0 +1,7 @@
+keystone.assignment.role\_backends.resource\_options module
+===========================================================
+
+.. automodule:: keystone.assignment.role_backends.resource_options
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+keystone.endpoint\_policy.backends.sql module
+=============================================
+
+.. automodule:: keystone.endpoint_policy.backends.sql
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+keystone.common.policies.role\_assignment module
+================================================
+
+.. automodule:: keystone.common.policies.role_assignment
+   :members:
+   :undoc-members:
+   :show-inheritance:

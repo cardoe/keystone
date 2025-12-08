@@ -1,0 +1,27 @@
+keystone.policy package
+=======================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.policy.backends
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.policy.core
+   keystone.policy.schema
+
+Module contents
+---------------
+
+.. automodule:: keystone.policy
+   :members:
+   :undoc-members:
+   :show-inheritance:

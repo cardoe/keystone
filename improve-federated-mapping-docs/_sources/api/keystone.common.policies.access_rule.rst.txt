@@ -1,0 +1,7 @@
+keystone.common.policies.access\_rule module
+============================================
+
+.. automodule:: keystone.common.policies.access_rule
+   :members:
+   :undoc-members:
+   :show-inheritance:

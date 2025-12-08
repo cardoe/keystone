@@ -1,0 +1,7 @@
+keystone.api.discovery module
+=============================
+
+.. automodule:: keystone.api.discovery
+   :members:
+   :undoc-members:
+   :show-inheritance:

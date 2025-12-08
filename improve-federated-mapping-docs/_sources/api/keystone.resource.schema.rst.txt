@@ -1,0 +1,7 @@
+keystone.resource.schema module
+===============================
+
+.. automodule:: keystone.resource.schema
+   :members:
+   :undoc-members:
+   :show-inheritance:

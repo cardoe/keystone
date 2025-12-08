@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Setting up Keystone &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/support-matrix.css" />
+    <script src="../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Identity API v2.0 and v3 History" href="http-api.html" />
+    <link rel="prev" title="How Can I Help?" href="how-can-i-help.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/contributor/set-up-keystone.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Setting up Keystone</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="how-can-i-help.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: How Can I Help?"></i></a>
+    
+    
+    <a href="http-api.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Identity API v2.0 and v3 History"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="setting-up-keystone">
+<span id="dev-environment"></span><h1>Setting up Keystone<a class="headerlink" href="#setting-up-keystone" title="Link to this heading">¶</a></h1>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h2>
+<p>This document assumes you are using an Ubuntu, Fedora, or openSUSE platform and
+that you have the following tools pre-installed on your system:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://www.python.org">python</a> 3.11 or later, as the programming language;</p></li>
+<li><p><a class="reference external" href="http://git-scm.com/">git</a>, as the version control tool;</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Keystone dropped the support of <a class="reference external" href="http://www.python.org">python</a> 2.7 in the Ussuri release of Openstack.</p>
+</div>
+<p><strong>Reminder</strong>: If you are successfully using a different platform, or a
+different version of the above, please document your configuration here!</p>
+</section>
+<section id="installing-from-source">
+<h2>Installing from source<a class="headerlink" href="#installing-from-source" title="Link to this heading">¶</a></h2>
+<p>The source install instructions specifically avoid using platform specific
+packages. Instead, we recommend using the source for the code and the Python
+Package Index (<a class="reference external" href="https://pypi.org/project/pypi">PyPi</a>) for development environment installations..</p>
+<p>It’s expected that your system already has <a class="reference external" href="http://www.python.org">python</a>, <a class="reference external" href="http://www.pip-installer.org/en/latest/installing.html">pip</a>, and <a class="reference external" href="http://git-scm.com/">git</a> available.</p>
+<p>Clone the keystone repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://opendev.org/openstack/keystone.git
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>keystone
+</pre></div>
+</div>
+<p>Prepare dedicated virtual environment (python 3.11 is used here as an example.
+Please use any supported version)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>py311<span class="w"> </span>--notest
+$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>.tox/py311/bin/activate
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This step is guaranteed to fail if you do not have the proper binary
+dependencies already installed on your development system. Maintaining a
+list of platform-specific dependencies is outside the scope of this
+documentation, but is within scope of <a class="reference external" href="https://docs.openstack.org/devstack/latest">DEVSTACK</a>.</p>
+</div>
+</section>
+<section id="development-environment">
+<h2>Development environment<a class="headerlink" href="#development-environment" title="Link to this heading">¶</a></h2>
+<p>For setting up the Python development environment and running <cite>tox</cite> testing
+environments, please refer to the <a class="reference external" href="https://docs.openstack.org/project-team-guide/project-setup/python.html">Project Team Guide: Python Project Guide</a>,
+the OpenStack guide on wide standard practices around the use of Python.</p>
+<p>That documentation will help you configure your development environment and run
+keystone tests using <cite>tox</cite>, which uses <a class="reference external" href="http://www.virtualenv.org/">virtualenv</a> to isolate the Python
+environment. After running it, notice the existence of a <cite>.tox</cite> directory.</p>
+</section>
+<section id="deploying-configuration-files">
+<h2>Deploying configuration files<a class="headerlink" href="#deploying-configuration-files" title="Link to this heading">¶</a></h2>
+<p>You should be able to run keystone after installing via pip. Additional
+configuration files are required. The following file is required in order to
+run keystone:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">keystone.conf</span></code></p></li>
+</ul>
+<section id="configuring-keystone-with-a-sample-file">
+<h3>Configuring Keystone with a sample file<a class="headerlink" href="#configuring-keystone-with-a-sample-file" title="Link to this heading">¶</a></h3>
+<p>Keystone requires a configuration file. Keystone’s sample configuration file
+<code class="docutils literal notranslate"><span class="pre">etc/keystone.conf.sample</span></code> is automatically generated based upon all of the
+options available within Keystone. These options are sourced from the many
+files around Keystone as well as some external libraries.</p>
+<p>The sample configuration file will be updated as the end of the development
+cycle approaches. Developers should <em>NOT</em> generate the config file and propose
+it as part of their patches, this will cause unnecessary conflicts.
+You can generate one locally using the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>genconfig
+</pre></div>
+</div>
+<p>The tox command will place an updated sample config in <code class="docutils literal notranslate"><span class="pre">etc/keystone.conf.sample</span></code>.
+The defaults are enough to get you going, but you can make any changes if
+needed.</p>
+<p>If there is a new external library (e.g. <code class="docutils literal notranslate"><span class="pre">oslo.messaging</span></code>) that utilizes the
+<code class="docutils literal notranslate"><span class="pre">oslo.config</span></code> package for configuration, it can be added to the list of libraries
+found in <code class="docutils literal notranslate"><span class="pre">config-generator/keystone.conf</span></code>.</p>
+<p>You can also generate sample policy files using <code class="docutils literal notranslate"><span class="pre">tox</span> <span class="pre">-e</span> <span class="pre">genpolicy</span></code>. Please refer
+to <a class="reference internal" href="../configuration/config-options.html"><span class="doc">API Configuration options</span></a> for guidance on specific configuration options or to
+view a sample paste file.</p>
+</section>
+</section>
+<section id="bootstrapping-a-test-deployment">
+<h2>Bootstrapping a test deployment<a class="headerlink" href="#bootstrapping-a-test-deployment" title="Link to this heading">¶</a></h2>
+<p>By default an internal sqlite database can be used for local development. Under
+certain conditions (i.e. when exception is being raised during runtime) sqlite
+switches into the read only mode. After restart it is working again. It is
+therefore suggested to use real mysql or postgresql database instead.</p>
+<section id="database-setup">
+<h3>Database setup<a class="headerlink" href="#database-setup" title="Link to this heading">¶</a></h3>
+<p>Dedicated mysql/postgresql database can be prepared using the script
+<code class="docutils literal notranslate"><span class="pre">tools/test-setup.sh</span></code>. In such case be sure to set <code class="docutils literal notranslate"><span class="pre">[database].connection</span></code>
+option in the <code class="docutils literal notranslate"><span class="pre">etc/keystone.conf</span></code> file properly.</p>
+</section>
+<section id="initializing-keystone">
+<h3>Initializing Keystone<a class="headerlink" href="#initializing-keystone" title="Link to this heading">¶</a></h3>
+<p>Before using keystone, it is necessary to create the database tables and ensure
+the database schemas are up to date. This is can be done as following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>keystone-manage<span class="w"> </span>db_sync
+</pre></div>
+</div>
+<p>If the above commands result in a <code class="docutils literal notranslate"><span class="pre">KeyError</span></code>, or they fail on a
+<code class="docutils literal notranslate"><span class="pre">.pyc</span></code> file with the message, <code class="docutils literal notranslate"><span class="pre">You</span> <span class="pre">can</span> <span class="pre">only</span> <span class="pre">have</span> <span class="pre">one</span> <span class="pre">Python</span> <span class="pre">script</span> <span class="pre">per</span>
+<span class="pre">version</span></code>, then it is possible that there are out-of-date compiled Python
+bytecode files in the Keystone directory tree that are causing problems. This
+can occur if you have previously installed and ran older versions of Keystone.
+These out-of-date files can be easily removed by running a command like the
+following from the Keystone root project directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>find<span class="w"> </span>.<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.pyc&quot;</span><span class="w"> </span>-delete
+</pre></div>
+</div>
+<p>Once the database itself is prepared use to command <code class="docutils literal notranslate"><span class="pre">keystone-manage</span> <span class="pre">db_sync</span></code>
+to create necessary objects in a database.</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">keystone-manage</span> <span class="pre">bootstrap</span></code> command to pre-populate the
+database with necessary data. It requires <code class="docutils literal notranslate"><span class="pre">--bootstrap-password</span></code> parameter to
+be given with the password for the admin user.</p>
+</section>
+<section id="initial-sample-data">
+<h3>Initial Sample Data<a class="headerlink" href="#initial-sample-data" title="Link to this heading">¶</a></h3>
+<p>There is an included script which is helpful in setting up some initial sample
+data for use with keystone:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nv">ADMIN_PASSWORD</span><span class="o">=</span>s3cr3t<span class="w"> </span>tools/sample_data.sh
+</pre></div>
+</div>
+<p>Once run, you can see the sample data that has been created by using the
+<a class="reference external" href="https://opendev.org/openstack/python-openstackclient">python-openstackclient</a> command-line interface:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">OS_USERNAME</span><span class="o">=</span>admin
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">OS_PASSWORD</span><span class="o">=</span>s3cr3t
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">OS_PROJECT_NAME</span><span class="o">=</span>admin
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">OS_USER_DOMAIN_ID</span><span class="o">=</span>default
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">OS_PROJECT_DOMAIN_ID</span><span class="o">=</span>default
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">OS_IDENTITY_API_VERSION</span><span class="o">=</span><span class="m">3</span>
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">OS_AUTH_URL</span><span class="o">=</span>http://localhost:5000/v3
+$<span class="w"> </span>openstack<span class="w"> </span>user<span class="w"> </span>list
+</pre></div>
+</div>
+<p>The <a class="reference external" href="https://opendev.org/openstack/python-openstackclient">python-openstackclient</a> can be installed using the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>python-openstackclient
+</pre></div>
+</div>
+</section>
+<section id="verifying-keystone-is-set-up">
+<h3>Verifying keystone is set up<a class="headerlink" href="#verifying-keystone-is-set-up" title="Link to this heading">¶</a></h3>
+<p>Once set up, you should be able to invoke Python and import the libraries:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>.tox/py311/bin/python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import keystone&quot;</span>
+</pre></div>
+</div>
+<p>If you can import keystone without a traceback, you should be ready to move on
+to the next sections.</p>
+</section>
+<section id="running-keystone">
+<h3>Running Keystone<a class="headerlink" href="#running-keystone" title="Link to this heading">¶</a></h3>
+<p>You can run keystone using a host of wsgi implementations or web servers. The
+following uses <code class="docutils literal notranslate"><span class="pre">uwsgi</span></code> (you may first need to install uwsgi for example with
+<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">uwsgi</span></code>):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>uwsgi<span class="w"> </span>--http-socket<span class="w"> </span>:5000<span class="w"> </span>-w<span class="w"> </span><span class="s2">&quot;keystone.server.wsgi:initialize_public_application()&quot;</span>
+</pre></div>
+</div>
+<p>This runs Keystone with the configuration the etc/ directory of the project.
+See <a class="reference internal" href="../configuration/config-options.html"><span class="doc">API Configuration options</span></a> for details on how Keystone is
+configured. By default, Keystone is configured with SQL backends.</p>
+<p>Depending on use case (i.e. there is an apache webserver deploed in front of
+the Keystone to be able to test the federation setup) it may be required to
+also expose wsgi socket in the uwsgi (i.e. adding <code class="docutils literal notranslate"><span class="pre">-s</span> <span class="pre">:5001</span> <span class="pre">-b</span> <span class="pre">65535</span></code> runtime
+options).</p>
+</section>
+</section>
+<section id="interacting-with-keystone">
+<h2>Interacting with Keystone<a class="headerlink" href="#interacting-with-keystone" title="Link to this heading">¶</a></h2>
+<p>You can also interact with keystone through its REST API. There is a Python
+keystone client library <a class="reference external" href="https://opendev.org/openstack/python-keystoneclient">python-keystoneclient</a> which interacts exclusively
+through the REST API, and a command-line interface <a class="reference external" href="https://opendev.org/openstack/python-openstackclient">python-openstackclient</a>
+command-line interface.</p>
+</section>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="how-can-i-help.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: How Can I Help?"></i></a>
+          
+          
+            <a href="http-api.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Identity API v2.0 and v3 History"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2024-07-26 14:00:06</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Contributor Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">So You Want to Contribute…</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-can-i-help.html">How Can I Help?</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Setting up Keystone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http-api.html">Identity API v2.0 and v3 History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="proposing-features.html">Proposing Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release-notes.html">Working with Release Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing-keystone.html">Testing Keystone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doctor-checks.html">Developing <code class="docutils literal notranslate"><span class="pre">doctor</span></code> checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_change_tutorial.html">Making an API Change</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auth-plugins.html">Authentication Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database-migrations.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="id-manage.html">Identity entity ID management for domain-specific backends</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Learning Architecture Internals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services.html">Keystone for Other Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing-drivers.html">Developing Keystone Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service-catalog.html">Service Catalog Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vision-reflection.html">Technical Vision for Keystone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="programming-exercises.html">Programming Exercises for Interns and New Contributors</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Setting up Keystone</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#installing-from-source">Installing from source</a></li>
+<li><a class="reference internal" href="#development-environment">Development environment</a></li>
+<li><a class="reference internal" href="#deploying-configuration-files">Deploying configuration files</a><ul>
+<li><a class="reference internal" href="#configuring-keystone-with-a-sample-file">Configuring Keystone with a sample file</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bootstrapping-a-test-deployment">Bootstrapping a test deployment</a><ul>
+<li><a class="reference internal" href="#database-setup">Database setup</a></li>
+<li><a class="reference internal" href="#initializing-keystone">Initializing Keystone</a></li>
+<li><a class="reference internal" href="#initial-sample-data">Initial Sample Data</a></li>
+<li><a class="reference internal" href="#verifying-keystone-is-set-up">Verifying keystone is set up</a></li>
+<li><a class="reference internal" href="#running-keystone">Running Keystone</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#interacting-with-keystone">Interacting with Keystone</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "contributor/set-up-keystone" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "Setting up Keystone in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2024-07-26 14:00:06";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "contributor/set-up-keystone";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

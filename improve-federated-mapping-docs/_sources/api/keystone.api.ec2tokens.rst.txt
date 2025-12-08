@@ -1,0 +1,7 @@
+keystone.api.ec2tokens module
+=============================
+
+.. automodule:: keystone.api.ec2tokens
+   :members:
+   :undoc-members:
+   :show-inheritance:

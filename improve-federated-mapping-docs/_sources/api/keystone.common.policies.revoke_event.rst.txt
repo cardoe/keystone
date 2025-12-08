@@ -1,0 +1,7 @@
+keystone.common.policies.revoke\_event module
+=============================================
+
+.. automodule:: keystone.common.policies.revoke_event
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,30 @@
+keystone.cmd package
+====================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.cmd.doctor
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.cmd.bootstrap
+   keystone.cmd.cli
+   keystone.cmd.idutils
+   keystone.cmd.manage
+   keystone.cmd.status
+
+Module contents
+---------------
+
+.. automodule:: keystone.cmd
+   :members:
+   :undoc-members:
+   :show-inheritance:

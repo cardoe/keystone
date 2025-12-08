@@ -1,0 +1,7 @@
+keystone.common.policies.registered\_limit module
+=================================================
+
+.. automodule:: keystone.common.policies.registered_limit
+   :members:
+   :undoc-members:
+   :show-inheritance:

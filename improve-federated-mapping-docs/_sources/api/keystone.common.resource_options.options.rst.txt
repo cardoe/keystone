@@ -1,0 +1,18 @@
+keystone.common.resource\_options.options package
+=================================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.common.resource_options.options.immutable
+
+Module contents
+---------------
+
+.. automodule:: keystone.common.resource_options.options
+   :members:
+   :undoc-members:
+   :show-inheritance:

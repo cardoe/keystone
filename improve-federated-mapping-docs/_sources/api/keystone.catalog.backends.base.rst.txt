@@ -1,0 +1,7 @@
+keystone.catalog.backends.base module
+=====================================
+
+.. automodule:: keystone.catalog.backends.base
+   :members:
+   :undoc-members:
+   :show-inheritance:

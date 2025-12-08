@@ -1,0 +1,7 @@
+keystone.common.manager module
+==============================
+
+.. automodule:: keystone.common.manager
+   :members:
+   :undoc-members:
+   :show-inheritance:

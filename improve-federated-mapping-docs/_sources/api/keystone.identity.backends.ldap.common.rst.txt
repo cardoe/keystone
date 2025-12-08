@@ -1,0 +1,7 @@
+keystone.identity.backends.ldap.common module
+=============================================
+
+.. automodule:: keystone.identity.backends.ldap.common
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,19 @@
+keystone.identity.shadow\_backends package
+==========================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.identity.shadow_backends.base
+   keystone.identity.shadow_backends.sql
+
+Module contents
+---------------
+
+.. automodule:: keystone.identity.shadow_backends
+   :members:
+   :undoc-members:
+   :show-inheritance:

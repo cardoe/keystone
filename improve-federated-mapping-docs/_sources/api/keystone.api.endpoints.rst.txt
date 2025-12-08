@@ -1,0 +1,7 @@
+keystone.api.endpoints module
+=============================
+
+.. automodule:: keystone.api.endpoints
+   :members:
+   :undoc-members:
+   :show-inheritance:

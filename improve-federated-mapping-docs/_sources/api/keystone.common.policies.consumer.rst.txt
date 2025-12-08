@@ -1,0 +1,7 @@
+keystone.common.policies.consumer module
+========================================
+
+.. automodule:: keystone.common.policies.consumer
+   :members:
+   :undoc-members:
+   :show-inheritance:

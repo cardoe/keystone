@@ -1,0 +1,7 @@
+keystone.token.providers.fernet.core module
+===========================================
+
+.. automodule:: keystone.token.providers.fernet.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

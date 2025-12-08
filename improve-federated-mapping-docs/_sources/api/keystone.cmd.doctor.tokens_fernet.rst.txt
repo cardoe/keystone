@@ -1,0 +1,7 @@
+keystone.cmd.doctor.tokens\_fernet module
+=========================================
+
+.. automodule:: keystone.cmd.doctor.tokens_fernet
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,27 @@
+keystone.auth package
+=====================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.auth.plugins
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.auth.core
+   keystone.auth.schema
+
+Module contents
+---------------
+
+.. automodule:: keystone.auth
+   :members:
+   :undoc-members:
+   :show-inheritance:

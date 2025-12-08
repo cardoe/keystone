@@ -1,0 +1,52 @@
+keystone.api package
+====================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.api.validation
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.api.auth
+   keystone.api.credentials
+   keystone.api.discovery
+   keystone.api.domains
+   keystone.api.ec2tokens
+   keystone.api.endpoints
+   keystone.api.groups
+   keystone.api.limits
+   keystone.api.os_ep_filter
+   keystone.api.os_federation
+   keystone.api.os_inherit
+   keystone.api.os_oauth1
+   keystone.api.os_oauth2
+   keystone.api.os_revoke
+   keystone.api.os_simple_cert
+   keystone.api.policy
+   keystone.api.projects
+   keystone.api.regions
+   keystone.api.registered_limits
+   keystone.api.role_assignments
+   keystone.api.role_inferences
+   keystone.api.roles
+   keystone.api.s3tokens
+   keystone.api.services
+   keystone.api.system
+   keystone.api.trusts
+   keystone.api.users
+
+Module contents
+---------------
+
+.. automodule:: keystone.api
+   :members:
+   :undoc-members:
+   :show-inheritance:

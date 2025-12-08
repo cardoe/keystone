@@ -1,0 +1,20 @@
+keystone.identity.mapping\_backends package
+===========================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.identity.mapping_backends.base
+   keystone.identity.mapping_backends.mapping
+   keystone.identity.mapping_backends.sql
+
+Module contents
+---------------
+
+.. automodule:: keystone.identity.mapping_backends
+   :members:
+   :undoc-members:
+   :show-inheritance:

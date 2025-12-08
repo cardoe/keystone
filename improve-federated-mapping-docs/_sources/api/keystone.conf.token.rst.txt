@@ -1,0 +1,7 @@
+keystone.conf.token module
+==========================
+
+.. automodule:: keystone.conf.token
+   :members:
+   :undoc-members:
+   :show-inheritance:

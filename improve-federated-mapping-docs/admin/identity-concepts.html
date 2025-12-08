@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Identity concepts &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/support-matrix.css" />
+    <script src="../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Configuring Keystone" href="identity-sources.html" />
+    <link rel="prev" title="Getting Started" href="getting-started.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/admin/identity-concepts.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Identity concepts</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="getting-started.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Getting Started"></i></a>
+    
+    
+    <a href="identity-sources.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Configuring Keystone"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="identity-concepts">
+<h1>Identity concepts<a class="headerlink" href="#identity-concepts" title="Link to this heading">¶</a></h1>
+<dl class="simple">
+<dt>Authentication</dt><dd><p>The process of confirming the identity of a user. To confirm an incoming
+request, OpenStack Identity validates a set of credentials users
+supply. Initially, these credentials are a user name and password, or a
+user name and API key. When OpenStack Identity validates user credentials,
+it issues an authentication token. Users provide the token in
+subsequent requests.</p>
+</dd>
+<dt>Credentials</dt><dd><p>Data that confirms the identity of the user. For example, user
+name and password, user name and API key, or an authentication
+token that the Identity service provides.</p>
+</dd>
+<dt>Domain</dt><dd><p>An Identity service API v3 entity. Domains are a collection of
+projects and users that define administrative boundaries for
+managing Identity entities. Domains can represent an
+individual, company, or operator-owned space. They expose
+administrative activities directly to system users. Users can be
+granted the administrator role for a domain. A domain
+administrator can create projects, users, and groups in a domain
+and assign roles to users and groups in a domain.</p>
+</dd>
+<dt>Endpoint</dt><dd><p>A network-accessible address, usually a URL, through which you can
+access a service. If you are using an extension for templates, you
+can create an endpoint template that represents the templates of
+all consumable services that are available across the regions.</p>
+</dd>
+<dt>Group</dt><dd><p>An Identity service API v3 entity. Groups are a collection of
+users owned by a domain. A group role, granted to a domain
+or project, applies to all users in the group. Adding or removing
+users to or from a group grants or revokes their role and
+authentication to the associated domain or project.</p>
+</dd>
+<dt>OpenStackClient</dt><dd><p>A command-line interface for several OpenStack services including
+the Identity API. For example, a user can run the
+<strong class="command">openstack service create</strong> and
+<strong class="command">openstack endpoint create</strong> commands to register services
+in their OpenStack installation.</p>
+</dd>
+<dt>Project</dt><dd><p>A container that groups or isolates resources or identity objects.
+Depending on the service operator, a project might map to a
+customer, account, organization, or tenant.</p>
+</dd>
+<dt>Region</dt><dd><p>An Identity service API v3 entity. Represents a general division
+in an OpenStack deployment. You can associate zero or more
+sub-regions with a region to make a tree-like structured hierarchy.
+Although a region does not have a geographical connotation, a
+deployment can use a geographical name for a region, such as <code class="docutils literal notranslate"><span class="pre">us-east</span></code>.</p>
+</dd>
+<dt>Role</dt><dd><p>A personality with a defined set of user rights and privileges to
+perform a specific set of operations. The Identity service issues
+a token to a user that includes a list of roles. When a user calls
+a service, that service interprets the user role set, and
+determines to which operations or resources each role grants
+access.</p>
+</dd>
+<dt>Service</dt><dd><p>An OpenStack service, such as Compute (nova), Object Storage
+(swift), or Image service (glance), that provides one or more
+endpoints through which users can access resources and perform
+operations.</p>
+</dd>
+<dt>Token</dt><dd><p>An alpha-numeric text string that enables access to OpenStack APIs
+and resources. A token may be revoked at any time and is valid for
+a finite duration. While OpenStack Identity supports token-based
+authentication in this release, it intends to support additional
+protocols in the future. OpenStack Identity is an integration
+service that does not aspire to be a full-fledged identity store
+and management solution.</p>
+</dd>
+<dt>User</dt><dd><p>A digital representation of a person, system, or service that uses
+OpenStack cloud services. The Identity service validates that
+incoming requests are made by the user who claims to be making the
+call. Users have a login and can access resources by using
+assigned tokens. Users can be directly assigned to a particular
+project and behave as if they are contained in that project.</p>
+</dd>
+</dl>
+<section id="user-management">
+<h2>User management<a class="headerlink" href="#user-management" title="Link to this heading">¶</a></h2>
+<p>Identity user management examples:</p>
+<ul>
+<li><p>Create a user named <code class="docutils literal notranslate"><span class="pre">alice</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>user<span class="w"> </span>create<span class="w"> </span>--password-prompt<span class="w"> </span>--email<span class="w"> </span>alice@example.com<span class="w"> </span>alice
+</pre></div>
+</div>
+</li>
+<li><p>Create a project named <code class="docutils literal notranslate"><span class="pre">acme</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>project<span class="w"> </span>create<span class="w"> </span>acme<span class="w"> </span>--domain<span class="w"> </span>default
+</pre></div>
+</div>
+</li>
+<li><p>Create a domain named <code class="docutils literal notranslate"><span class="pre">emea</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>--os-identity-api-version<span class="o">=</span><span class="m">3</span><span class="w"> </span>domain<span class="w"> </span>create<span class="w"> </span>emea
+</pre></div>
+</div>
+</li>
+<li><p>Create a role named <code class="docutils literal notranslate"><span class="pre">compute-user</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>create<span class="w"> </span>compute-user
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Individual services assign meaning to roles, typically through
+limiting or granting access to users with the role to the
+operations that the service supports. Role access is typically
+configured in the service’s <code class="docutils literal notranslate"><span class="pre">policy.yaml</span></code> file. For example,
+to limit Compute access to the <code class="docutils literal notranslate"><span class="pre">compute-user</span></code> role, edit the
+Compute service’s <code class="docutils literal notranslate"><span class="pre">policy.yaml</span></code> file to require this role for
+Compute operations.</p>
+</div>
+</li>
+</ul>
+<p>The Identity service assigns a project and a role to a user. You might
+assign the <code class="docutils literal notranslate"><span class="pre">compute-user</span></code> role to the <code class="docutils literal notranslate"><span class="pre">alice</span></code> user in the <code class="docutils literal notranslate"><span class="pre">acme</span></code>
+project:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>add<span class="w"> </span>--project<span class="w"> </span>acme<span class="w"> </span>--user<span class="w"> </span>alice<span class="w"> </span>compute-user
+</pre></div>
+</div>
+<p>A user can have different roles in different projects. For example, Alice
+might also have the <code class="docutils literal notranslate"><span class="pre">admin</span></code> role in the <code class="docutils literal notranslate"><span class="pre">Cyberdyne</span></code> project. A user
+can also have multiple roles in the same project.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">/etc/[SERVICE_CODENAME]/policy.yaml</span></code> file controls the
+tasks that users can perform for a given service. For example, the
+<code class="docutils literal notranslate"><span class="pre">/etc/nova/policy.yaml</span></code> file specifies the access policy for the
+Compute service, the <code class="docutils literal notranslate"><span class="pre">/etc/glance/policy.yaml</span></code> file specifies
+the access policy for the Image service, and the
+<code class="docutils literal notranslate"><span class="pre">/etc/keystone/policy.yaml</span></code> file specifies the access policy for
+the Identity service.</p>
+<p>The default <code class="docutils literal notranslate"><span class="pre">policy.yaml</span></code> files in the Compute, Identity, and
+Image services recognize only the <code class="docutils literal notranslate"><span class="pre">admin</span></code> role. Any user with
+any role in a project can access all operations that do not require the
+<code class="docutils literal notranslate"><span class="pre">admin</span></code> role.</p>
+<p>To restrict users from performing operations in, for example, the
+Compute service, you must create a role in the Identity service and
+then modify the <code class="docutils literal notranslate"><span class="pre">/etc/nova/policy.yaml</span></code> file so that this role
+is required for Compute operations.</p>
+<p>For example, the following line in the <code class="docutils literal notranslate"><span class="pre">/etc/cinder/policy.yaml</span></code>
+file does not restrict which users can create volumes:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;volume:create&quot;: &quot;&quot;,
+</pre></div>
+</div>
+<p>If the user has any role in a project, he can create volumes in that
+project.</p>
+<p>To restrict the creation of volumes to users who have the
+<code class="docutils literal notranslate"><span class="pre">compute-user</span></code> role in a particular project, you add <code class="docutils literal notranslate"><span class="pre">&quot;role:compute-user&quot;</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;volume:create&quot;: &quot;role:compute-user&quot;,
+</pre></div>
+</div>
+<p>To restrict all Compute service requests to require this role, the
+resulting file looks like:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">   </span><span class="nt">&quot;admin_or_owner&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:admin or project_id:%(project_id)s&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_or_owner&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute:create&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute:create:attach_network&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute:create:attach_volume&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute:get_all&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute:unlock_override&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;admin_api&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:admin&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:accounts&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:admin_actions&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:admin_actions:pause&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_or_owner&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:admin_actions:unpause&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_or_owner&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:admin_actions:suspend&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_or_owner&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:admin_actions:resume&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_or_owner&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:admin_actions:lock&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_or_owner&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:admin_actions:unlock&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_or_owner&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:admin_actions:resetNetwork&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:admin_actions:injectNetworkInfo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:admin_actions:createBackup&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_or_owner&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:admin_actions:migrateLive&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:admin_actions:migrate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:aggregates&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:certificates&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:cloudpipe&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:console_output&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:consoles&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:createserverext&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:deferred_delete&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:disk_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:evacuate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:extended_server_attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:extended_status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:flavorextradata&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:flavorextraspecs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:flavormanage&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:floating_ip_dns&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:floating_ip_pools&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:floating_ips&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:hosts&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:keypairs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:multinic&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:networks&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:quotas&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:rescue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:security_groups&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:server_action_list&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:server_diagnostics&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:simple_tenant_usage:show&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_or_owner&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:simple_tenant_usage:list&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:users&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rule:admin_api&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:virtual_interfaces&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:virtual_storage_arrays&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:volumes&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:volume_attachments:index&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:volume_attachments:show&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:volume_attachments:create&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:volume_attachments:delete&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;compute_extension:volumetypes&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;volume:create&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;volume:get_all&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;volume:get_volume_metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;volume:get_snapshot&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;volume:get_all_snapshots&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:get_all_networks&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:get_network&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:delete_network&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:disassociate_network&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:get_vifs_by_instance&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:allocate_for_instance&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:deallocate_for_instance&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:validate_networks&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:get_instance_uuids_by_ip_filter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:get_floating_ip&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:get_floating_ip_pools&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:get_floating_ip_by_address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:get_floating_ips_by_project&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:get_floating_ips_by_fixed_address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:allocate_floating_ip&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:deallocate_floating_ip&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:associate_floating_ip&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:disassociate_floating_ip&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:get_fixed_ip&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:add_fixed_ip_to_instance&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:remove_fixed_ip_from_instance&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:add_network_to_project&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:get_instance_nw_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:get_dns_domains&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:add_dns_entry&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:modify_dns_entry&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:delete_dns_entry&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:get_dns_entries_by_address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:get_dns_entries_by_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:create_private_dns_domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:create_public_dns_domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;network:delete_dns_domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;role:compute-user&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="service-management">
+<h2>Service management<a class="headerlink" href="#service-management" title="Link to this heading">¶</a></h2>
+<p>The Identity service provides identity, token, catalog, and policy
+services. It consists of:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>keystone Web Server Gateway Interface (WSGI) service</dt><dd><p>Can be run in a WSGI-capable web server such as Apache httpd to provide
+the Identity service. The service and administrative APIs are run as
+separate instances of the WSGI service.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Identity service functions</dt><dd><p>Each has a pluggable back end that allow different ways to use the
+particular service. Most support standard back ends like LDAP or SQL.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>The Identity service also maintains a user that corresponds to each
+service, such as, a user named <code class="docutils literal notranslate"><span class="pre">nova</span></code> for the Compute service, and a
+special service project called <code class="docutils literal notranslate"><span class="pre">service</span></code>.</p>
+<p>For information about how to create services and endpoints, see the
+<a class="reference internal" href="manage-services.html#manage-services"><span class="std std-ref">Administrator Guide</span></a>.</p>
+</section>
+<section id="groups">
+<h2>Groups<a class="headerlink" href="#groups" title="Link to this heading">¶</a></h2>
+<p>A group is a collection of users in a domain. Administrators can
+create groups and add users to them. A role can then be assigned to
+the group, rather than individual users. Groups were introduced with
+the Identity API v3.</p>
+<p>Identity API V3 provides the following group-related operations:</p>
+<ul class="simple">
+<li><p>Create a group</p></li>
+<li><p>Delete a group</p></li>
+<li><p>Update a group (change its name or description)</p></li>
+<li><p>Add a user to a group</p></li>
+<li><p>Remove a user from a group</p></li>
+<li><p>List group members</p></li>
+<li><p>List groups for a user</p></li>
+<li><p>Assign a role on a project to a group</p></li>
+<li><p>Assign a role on a domain to a group</p></li>
+<li><p>Query role assignments to groups</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Identity service server might not allow all operations. For
+example, if you use the Identity server with the LDAP Identity
+back end and group updates are disabled, a request to create,
+delete, or update a group fails.</p>
+</div>
+<p>Here are a couple of examples:</p>
+<ul class="simple">
+<li><p>Group A is granted Role A on Project A. If User A is a member of Group
+A, when User A gets a token scoped to Project A, the token also
+includes Role A.</p></li>
+<li><p>Group B is granted Role B on Domain B. If User B is a member of
+Group B, when User B gets a token scoped to Domain B, the token also
+includes Role B.</p></li>
+</ul>
+</section>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="getting-started.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Getting Started"></i></a>
+          
+          
+            <a href="identity-sources.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Configuring Keystone"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2020-11-25 14:04:22</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Administrator Guides</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Keystone Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html">Keystone Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tokens.html">All about keystone tokens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service-api-protection.html">Default Roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="keystone-features.html">Advanced Keystone Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authentication-mechanisms.html">Authentication Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2-usage-guide.html">OAuth2.0 Client Credentials Grant Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure-https.html">Configure HTTPS in Identity Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2-mtls-usage-guide.html">OAuth 2.0 Mutual-TLS Client Authentication Flow</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Identity concepts</a><ul>
+<li><a class="reference internal" href="#user-management">User management</a></li>
+<li><a class="reference internal" href="#service-management">Service management</a></li>
+<li><a class="reference internal" href="#groups">Groups</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "admin/identity-concepts" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "Identity concepts in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2020-11-25 14:04:22";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "admin/identity-concepts";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

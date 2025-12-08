@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>keystone.server.flask package &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/support-matrix.css" />
+    <script src="../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="keystone.server.flask.request_processing package" href="keystone.server.flask.request_processing.html" />
+    <link rel="prev" title="keystone.server package" href="keystone.server.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/api/keystone.server.flask.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>keystone.server.flask package</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="keystone.server.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: keystone.server package"></i></a>
+    
+    
+    <a href="keystone.server.flask.request_processing.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: keystone.server.flask.request_processing package"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="keystone-server-flask-package">
+<h1>keystone.server.flask package<a class="headerlink" href="#keystone-server-flask-package" title="Link to this heading">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="keystone.server.flask.request_processing.html">keystone.server.flask.request_processing package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.request_processing.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.request_processing.middleware.html">keystone.server.flask.request_processing.middleware package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="keystone.server.flask.request_processing.middleware.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="keystone.server.flask.request_processing.middleware.html#module-keystone.server.flask.request_processing.middleware">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.request_processing.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.request_processing.json_body.html">keystone.server.flask.request_processing.json_body module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="keystone.server.flask.request_processing.json_body.html#keystone.server.flask.request_processing.json_body.json_body_before_request"><code class="docutils literal notranslate"><span class="pre">json_body_before_request()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.request_processing.req_logging.html">keystone.server.flask.request_processing.req_logging module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="keystone.server.flask.request_processing.req_logging.html#keystone.server.flask.request_processing.req_logging.log_request_info"><code class="docutils literal notranslate"><span class="pre">log_request_info()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.request_processing.html#module-keystone.server.flask.request_processing">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="keystone.server.flask.application.html">keystone.server.flask.application module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.application.html#keystone.server.flask.application.application_factory"><code class="docutils literal notranslate"><span class="pre">application_factory()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.application.html#keystone.server.flask.application.fail_gracefully"><code class="docutils literal notranslate"><span class="pre">fail_gracefully()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="keystone.server.flask.common.html">keystone.server.flask.common module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.APIBase"><code class="docutils literal notranslate"><span class="pre">APIBase</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.APIBase.api"><code class="docutils literal notranslate"><span class="pre">APIBase.api</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.APIBase.blueprint"><code class="docutils literal notranslate"><span class="pre">APIBase.blueprint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.APIBase.instantiate_and_register_to_app"><code class="docutils literal notranslate"><span class="pre">APIBase.instantiate_and_register_to_app()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.APIBase.resource_mapping"><code class="docutils literal notranslate"><span class="pre">APIBase.resource_mapping</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.APIBase.resources"><code class="docutils literal notranslate"><span class="pre">APIBase.resources</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.JsonHomeData"><code class="docutils literal notranslate"><span class="pre">JsonHomeData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.JsonHomeData.path_vars"><code class="docutils literal notranslate"><span class="pre">JsonHomeData.path_vars</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.JsonHomeData.rel"><code class="docutils literal notranslate"><span class="pre">JsonHomeData.rel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.JsonHomeData.status"><code class="docutils literal notranslate"><span class="pre">JsonHomeData.status</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase"><code class="docutils literal notranslate"><span class="pre">ResourceBase</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase.api_prefix"><code class="docutils literal notranslate"><span class="pre">ResourceBase.api_prefix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase.audit_initiator"><code class="docutils literal notranslate"><span class="pre">ResourceBase.audit_initiator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase.auth_context"><code class="docutils literal notranslate"><span class="pre">ResourceBase.auth_context</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase.build_driver_hints"><code class="docutils literal notranslate"><span class="pre">ResourceBase.build_driver_hints()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase.collection_key"><code class="docutils literal notranslate"><span class="pre">ResourceBase.collection_key</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase.filter_by_attributes"><code class="docutils literal notranslate"><span class="pre">ResourceBase.filter_by_attributes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase.filter_params"><code class="docutils literal notranslate"><span class="pre">ResourceBase.filter_params()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase.get_token_ref"><code class="docutils literal notranslate"><span class="pre">ResourceBase.get_token_ref()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase.limit"><code class="docutils literal notranslate"><span class="pre">ResourceBase.limit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase.member_key"><code class="docutils literal notranslate"><span class="pre">ResourceBase.member_key</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase.method_decorators"><code class="docutils literal notranslate"><span class="pre">ResourceBase.method_decorators</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase.oslo_context"><code class="docutils literal notranslate"><span class="pre">ResourceBase.oslo_context</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase.query_filter_is_true"><code class="docutils literal notranslate"><span class="pre">ResourceBase.query_filter_is_true()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase.request_body_json"><code class="docutils literal notranslate"><span class="pre">ResourceBase.request_body_json</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase.wrap_collection"><code class="docutils literal notranslate"><span class="pre">ResourceBase.wrap_collection()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase.wrap_member"><code class="docutils literal notranslate"><span class="pre">ResourceBase.wrap_member()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceMap"><code class="docutils literal notranslate"><span class="pre">ResourceMap</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceMap.alternate_urls"><code class="docutils literal notranslate"><span class="pre">ResourceMap.alternate_urls</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceMap.json_home_data"><code class="docutils literal notranslate"><span class="pre">ResourceMap.json_home_data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceMap.kwargs"><code class="docutils literal notranslate"><span class="pre">ResourceMap.kwargs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceMap.resource"><code class="docutils literal notranslate"><span class="pre">ResourceMap.resource</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceMap.url"><code class="docutils literal notranslate"><span class="pre">ResourceMap.url</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.base_url"><code class="docutils literal notranslate"><span class="pre">base_url()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.construct_json_home_data"><code class="docutils literal notranslate"><span class="pre">construct_json_home_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.construct_resource_map"><code class="docutils literal notranslate"><span class="pre">construct_resource_map()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.full_url"><code class="docutils literal notranslate"><span class="pre">full_url()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.set_unenforced_ok"><code class="docutils literal notranslate"><span class="pre">set_unenforced_ok()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.unenforced_api"><code class="docutils literal notranslate"><span class="pre">unenforced_api()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="keystone.server.flask.core.html">keystone.server.flask.core module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.core.html#keystone.server.flask.core.initialize_application"><code class="docutils literal notranslate"><span class="pre">initialize_application()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="keystone.server.flask.core.html#keystone.server.flask.core.setup_app_middleware"><code class="docutils literal notranslate"><span class="pre">setup_app_middleware()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-keystone.server.flask">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-keystone.server.flask" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.server.flask.APIBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.server.flask.</span></span><span class="sig-name descname"><span class="pre">APIBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blueprint_url_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_url_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_mediatype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'application/json'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decorators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/server/flask/common.html#APIBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.server.flask.APIBase" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="keystone.server.flask.APIBase.api">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">api</span></span><a class="headerlink" href="#keystone.server.flask.APIBase.api" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="keystone.server.flask.APIBase.blueprint">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">blueprint</span></span><a class="headerlink" href="#keystone.server.flask.APIBase.blueprint" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.server.flask.APIBase.instantiate_and_register_to_app">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate_and_register_to_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flask_app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/server/flask/common.html#APIBase.instantiate_and_register_to_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.server.flask.APIBase.instantiate_and_register_to_app" title="Link to this definition">¶</a></dt>
+<dd><p>Build the API object and register to the passed in flask_app.</p>
+<p>This is a simplistic loader that makes assumptions about how the
+blueprint is loaded. Anything beyond defaults should be done
+explicitly via normal instantiation where more values may be passed
+via <code class="xref py py-meth docutils literal notranslate"><span class="pre">__init__()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.APIBase" title="keystone.server.flask.common.APIBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">keystone.server.flask.common.APIBase</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="keystone.server.flask.APIBase.resource_mapping">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resource_mapping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceMap" title="keystone.server.flask.common.ResourceMap"><span class="pre">ResourceMap</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#keystone.server.flask.APIBase.resource_mapping" title="Link to this definition">¶</a></dt>
+<dd><p>An attr containing of an iterable of <a class="reference internal" href="#keystone.server.flask.ResourceMap" title="keystone.server.flask.ResourceMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceMap</span></code></a>.</p>
+<p>Each <a class="reference internal" href="#keystone.server.flask.ResourceMap" title="keystone.server.flask.ResourceMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceMap</span></code></a> is a NamedTuple with the following elements:</p>
+<blockquote>
+<div><ul>
+<li><p>resource: a <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_restful.Resource</span></code> class or subclass</p></li>
+<li><dl class="simple">
+<dt>url: a url route to match for the resource, standard flask</dt><dd><p>routing rules apply. Any url variables will be passed
+to the resource method as args. (str)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>alternate_urls: an iterable of url routes to match for the</dt><dd><p>resource, standard flask routing rules apply.
+These rules are in addition (for API compat) to
+the primary url. Any url variables will be
+passed to the resource method as args. (iterable)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>json_home_data: <a class="reference internal" href="#keystone.server.flask.JsonHomeData" title="keystone.server.flask.JsonHomeData"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonHomeData</span></code></a> populated with relevant</dt><dd><p>info for populated JSON Home Documents or None.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>kwargs: a dict of optional value(s) that can further modify the</dt><dd><p>handling of the routing.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>endpoint: endpoint name (defaults to</dt><dd><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Resource.__name__.lower()</span></code>
+Can be used to reference this route in
+<code class="xref py py-class docutils literal notranslate"><span class="pre">fields.Url</span></code> fields (str)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>resource_class_args: args to be forwarded to the</dt><dd><p>constructor of the resource.
+(tuple)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>resource_class_kwargs: kwargs to be forwarded to the</dt><dd><p>constructor of the resource.
+(dict)</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Additional keyword arguments not specified above will be
+passed as-is to <code class="xref py py-meth docutils literal notranslate"><span class="pre">flask.Flask.add_url_rule()</span></code>.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="keystone.server.flask.APIBase.resources">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resources</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="keystone.server.flask.common.html#keystone.server.flask.common.ResourceBase" title="keystone.server.flask.common.ResourceBase"><span class="pre">ResourceBase</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#keystone.server.flask.APIBase.resources" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.server.flask.JsonHomeData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.server.flask.</span></span><span class="sig-name descname"><span class="pre">JsonHomeData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_vars</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keystone.server.flask.JsonHomeData" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.server.flask.JsonHomeData.path_vars">
+<span class="sig-name descname"><span class="pre">path_vars</span></span><a class="headerlink" href="#keystone.server.flask.JsonHomeData.path_vars" title="Link to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.server.flask.JsonHomeData.rel">
+<span class="sig-name descname"><span class="pre">rel</span></span><a class="headerlink" href="#keystone.server.flask.JsonHomeData.rel" title="Link to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.server.flask.JsonHomeData.status">
+<span class="sig-name descname"><span class="pre">status</span></span><a class="headerlink" href="#keystone.server.flask.JsonHomeData.status" title="Link to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.server.flask.</span></span><span class="sig-name descname"><span class="pre">ResourceBase</span></span><a class="reference internal" href="../_modules/keystone/server/flask/common.html#ResourceBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.server.flask.ResourceBase" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Resource</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase.api_prefix">
+<span class="sig-name descname"><span class="pre">api_prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#keystone.server.flask.ResourceBase.api_prefix" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase.audit_initiator">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">audit_initiator</span></span><a class="headerlink" href="#keystone.server.flask.ResourceBase.audit_initiator" title="Link to this definition">¶</a></dt>
+<dd><p>A pyCADF initiator describing the current authenticated context.</p>
+<p>As a property.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase.auth_context">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">auth_context</span></span><a class="headerlink" href="#keystone.server.flask.ResourceBase.auth_context" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase.build_driver_hints">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">build_driver_hints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">supported_filters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/server/flask/common.html#ResourceBase.build_driver_hints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.server.flask.ResourceBase.build_driver_hints" title="Link to this definition">¶</a></dt>
+<dd><p>Build list hints based on the context query string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>supported_filters</strong> – list of filters supported, so ignore any
+keys in query_dict that are not in this list.</p></li>
+<li><p><strong>default_limit</strong> – default page size (PROVIDER._get_list_limit)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase.collection_key">
+<span class="sig-name descname"><span class="pre">collection_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#keystone.server.flask.ResourceBase.collection_key" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase.filter_by_attributes">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filter_by_attributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">refs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hints</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/server/flask/common.html#ResourceBase.filter_by_attributes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.server.flask.ResourceBase.filter_by_attributes" title="Link to this definition">¶</a></dt>
+<dd><p>Filter a list of references by filter values.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase.filter_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filter_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/server/flask/common.html#ResourceBase.filter_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.server.flask.ResourceBase.filter_params" title="Link to this definition">¶</a></dt>
+<dd><p>Remove unspecified parameters from the dictionary.</p>
+<p>This function removes unspecified parameters from the dictionary.
+This method checks only root-level keys from a ref dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ref</strong> – a dictionary representing deserialized response to be
+serialized</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase.get_token_ref">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_token_ref</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/server/flask/common.html#ResourceBase.get_token_ref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.server.flask.ResourceBase.get_token_ref" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieve KeystoneToken object from the auth context and returns it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="keystone.exception.html#keystone.exception.Unauthorized" title="keystone.exception.Unauthorized"><strong>keystone.exception.Unauthorized</strong></a> – If auth context cannot be
+found.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The KeystoneToken object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase.limit">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">refs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hints</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/server/flask/common.html#ResourceBase.limit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.server.flask.ResourceBase.limit" title="Link to this definition">¶</a></dt>
+<dd><p>Limit a list of entities.</p>
+<p>The underlying driver layer may have already truncated the collection
+for us, but in case it was unable to handle truncation we check here.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>refs</strong> – the list of members of the collection</p></li>
+<li><p><strong>hints</strong> – hints, containing, among other things, the limit
+requested</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>boolean indicating whether the list was truncated, as well
+as the list of (truncated if necessary) entities.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase.member_key">
+<span class="sig-name descname"><span class="pre">member_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#keystone.server.flask.ResourceBase.member_key" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase.method_decorators">
+<span class="sig-name descname"><span class="pre">method_decorators</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#keystone.server.flask.ResourceBase.method_decorators" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase.oslo_context">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">oslo_context</span></span><a class="headerlink" href="#keystone.server.flask.ResourceBase.oslo_context" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase.query_filter_is_true">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query_filter_is_true</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/server/flask/common.html#ResourceBase.query_filter_is_true"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.server.flask.ResourceBase.query_filter_is_true" title="Link to this definition">¶</a></dt>
+<dd><p>Determine if bool query param is ‘True’.</p>
+<p>We treat this the same way as we do for policy
+enforcement:</p>
+<p>{bool_param}=0 is treated as False</p>
+<p>Any other value is considered to be equivalent to
+True, including the absence of a value (but existence
+as a parameter).</p>
+<p>False Examples for param named <cite>p</cite>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="http://host/url">http://host/url</a></p></li>
+<li><p><a class="reference external" href="http://host/url?p=0">http://host/url?p=0</a></p></li>
+</ul>
+</div></blockquote>
+<p>All other forms of the param ‘p’ would be result in a True value
+including: <cite>http://host/url?param</cite>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase.request_body_json">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">request_body_json</span></span><a class="headerlink" href="#keystone.server.flask.ResourceBase.request_body_json" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase.wrap_collection">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wrap_collection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">refs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/server/flask/common.html#ResourceBase.wrap_collection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.server.flask.ResourceBase.wrap_collection" title="Link to this definition">¶</a></dt>
+<dd><p>Wrap a collection, checking for filtering and pagination.</p>
+<p>Returns the wrapped collection, which includes:
+- Executing any filtering not already carried out
+- Truncate to a set limit if necessary
+- Adds ‘self’ links in every member
+- Adds ‘next’, ‘self’ and ‘prev’ links for the whole collection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>refs</strong> – the list of members of the collection</p></li>
+<li><p><strong>hints</strong> – list hints, containing any relevant filters and limit.
+Any filters already satisfied by managers will have been
+removed</p></li>
+<li><p><strong>collection_name</strong> – optional override for the ‘collection key’
+class attribute. This is to be used when
+wrapping a collection for a different api,
+e.g. ‘roles’ from the ‘trust’ api.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceBase.wrap_member">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wrap_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">member_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/server/flask/common.html#ResourceBase.wrap_member"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.server.flask.ResourceBase.wrap_member" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceMap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">keystone.server.flask.</span></span><span class="sig-name descname"><span class="pre">ResourceMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alternate_urls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json_home_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#keystone.server.flask.ResourceMap" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceMap.alternate_urls">
+<span class="sig-name descname"><span class="pre">alternate_urls</span></span><a class="headerlink" href="#keystone.server.flask.ResourceMap.alternate_urls" title="Link to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceMap.json_home_data">
+<span class="sig-name descname"><span class="pre">json_home_data</span></span><a class="headerlink" href="#keystone.server.flask.ResourceMap.json_home_data" title="Link to this definition">¶</a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceMap.kwargs">
+<span class="sig-name descname"><span class="pre">kwargs</span></span><a class="headerlink" href="#keystone.server.flask.ResourceMap.kwargs" title="Link to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceMap.resource">
+<span class="sig-name descname"><span class="pre">resource</span></span><a class="headerlink" href="#keystone.server.flask.ResourceMap.resource" title="Link to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="keystone.server.flask.ResourceMap.url">
+<span class="sig-name descname"><span class="pre">url</span></span><a class="headerlink" href="#keystone.server.flask.ResourceMap.url" title="Link to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.server.flask.base_url">
+<span class="sig-prename descclassname"><span class="pre">keystone.server.flask.</span></span><span class="sig-name descname"><span class="pre">base_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/server/flask/common.html#base_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.server.flask.base_url" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.server.flask.construct_json_home_data">
+<span class="sig-prename descclassname"><span class="pre">keystone.server.flask.</span></span><span class="sig-name descname"><span class="pre">construct_json_home_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status='stable'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_vars=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource_relation_func=&lt;function</span> <span class="pre">build_v3_resource_relation&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/server/flask/common.html#construct_json_home_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.server.flask.construct_json_home_data" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.server.flask.construct_resource_map">
+<span class="sig-prename descclassname"><span class="pre">keystone.server.flask.</span></span><span class="sig-name descname"><span class="pre">construct_resource_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource_kwargs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alternate_urls=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status='stable'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_vars=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource_relation_func=&lt;function</span> <span class="pre">build_v3_resource_relation&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/server/flask/common.html#construct_resource_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.server.flask.construct_resource_map" title="Link to this definition">¶</a></dt>
+<dd><p>Construct the ResourceMap Named Tuple.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>resource</strong> (<a class="reference internal" href="#keystone.server.flask.ResourceMap" title="keystone.server.flask.ResourceMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceMap</span></code></a>) – The flask-RESTful resource class implementing the methods
+for the API.</p></li>
+<li><p><strong>url</strong> (<em>str</em>) – Flask-standard url route, all flask url routing rules apply.
+url variables will be passed to the Resource methods as
+arguments.</p></li>
+<li><p><strong>resource_kwargs</strong> – <p>a dict of optional value(s) that can further modify
+the handling of the routing.</p>
+<ul>
+<li><dl class="simple">
+<dt>endpoint: endpoint name (defaults to</dt><dd><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Resource.__name__.lower()</span></code>
+Can be used to reference this route in
+<code class="xref py py-class docutils literal notranslate"><span class="pre">fields.Url</span></code> fields (str)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>resource_class_args: args to be forwarded to the</dt><dd><p>constructor of the resource.
+(tuple)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>resource_class_kwargs: kwargs to be forwarded to</dt><dd><p>the constructor of the
+resource. (dict)</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Additional keyword arguments not specified above
+will be passed as-is to
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">flask.Flask.add_url_rule()</span></code>.</p>
+</p></li>
+<li><p><strong>alternate_urls</strong> – An iterable (list) of dictionaries containing urls
+and associated json home REL data. Each element is
+expected to be a dictionary with a ‘url’ key and an
+optional ‘json_home’ key for a ‘JsonHomeData’ named
+tuple  These urls will also map to the resource.
+These are used to ensure API compatibility when a
+“new” path is more correct for the API but old paths
+must continue to work. Example:
+<cite>/auth/domains</cite> being the new path for
+<cite>/OS-FEDERATION/domains</cite>. The <cite>OS-FEDERATION</cite> part
+would be listed as an alternate url. If a
+‘json_home’ key is provided, the original path
+with the new json_home data will be added to the
+JSON Home Document.</p></li>
+<li><p><strong>rel</strong> (<em>str</em><em> or </em><em>None</em>)</p></li>
+<li><p><strong>status</strong> (<em>str</em>) – JSON Home API Status, e.g. “STABLE”</p></li>
+<li><p><strong>path_vars</strong> (<em>dict</em><em> or </em><em>None</em>) – JSON Home Path Var Data (arguments)</p></li>
+<li><p><strong>resource_relation_func</strong> (<em>callable</em>) – function to build expected resource rel data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>iterable or None</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.server.flask.full_url">
+<span class="sig-prename descclassname"><span class="pre">keystone.server.flask.</span></span><span class="sig-name descname"><span class="pre">full_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/server/flask/common.html#full_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.server.flask.full_url" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="keystone.server.flask.unenforced_api">
+<span class="sig-prename descclassname"><span class="pre">keystone.server.flask.</span></span><span class="sig-name descname"><span class="pre">unenforced_api</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keystone/server/flask/common.html#unenforced_api"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keystone.server.flask.unenforced_api" title="Link to this definition">¶</a></dt>
+<dd><p>Decorate a resource method to mark is as an unenforced API.</p>
+<p>Explicitly exempts an API from receiving the enforced API check,
+specifically for cases such as user self-service password changes (or
+other APIs that must work without already having a token).</p>
+<p>This decorator may also be used if the API has extended enforcement
+logic/varying enforcement logic (such as some of the AUTH paths) where
+the full enforcement will be implemented directly within the methods.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="keystone.server.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: keystone.server package"></i></a>
+          
+          
+            <a href="keystone.server.flask.request_processing.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: keystone.server.flask.request_processing package"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2025-12-08 16:08:08</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../code_documentation.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html">keystone</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">keystone.server.flask package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-keystone.server.flask">Module contents</a><ul>
+<li><a class="reference internal" href="#keystone.server.flask.APIBase"><code class="docutils literal notranslate"><span class="pre">APIBase</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.server.flask.APIBase.api"><code class="docutils literal notranslate"><span class="pre">APIBase.api</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.APIBase.blueprint"><code class="docutils literal notranslate"><span class="pre">APIBase.blueprint</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.APIBase.instantiate_and_register_to_app"><code class="docutils literal notranslate"><span class="pre">APIBase.instantiate_and_register_to_app()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.APIBase.resource_mapping"><code class="docutils literal notranslate"><span class="pre">APIBase.resource_mapping</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.APIBase.resources"><code class="docutils literal notranslate"><span class="pre">APIBase.resources</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.server.flask.JsonHomeData"><code class="docutils literal notranslate"><span class="pre">JsonHomeData</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.server.flask.JsonHomeData.path_vars"><code class="docutils literal notranslate"><span class="pre">JsonHomeData.path_vars</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.JsonHomeData.rel"><code class="docutils literal notranslate"><span class="pre">JsonHomeData.rel</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.JsonHomeData.status"><code class="docutils literal notranslate"><span class="pre">JsonHomeData.status</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase"><code class="docutils literal notranslate"><span class="pre">ResourceBase</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase.api_prefix"><code class="docutils literal notranslate"><span class="pre">ResourceBase.api_prefix</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase.audit_initiator"><code class="docutils literal notranslate"><span class="pre">ResourceBase.audit_initiator</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase.auth_context"><code class="docutils literal notranslate"><span class="pre">ResourceBase.auth_context</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase.build_driver_hints"><code class="docutils literal notranslate"><span class="pre">ResourceBase.build_driver_hints()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase.collection_key"><code class="docutils literal notranslate"><span class="pre">ResourceBase.collection_key</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase.filter_by_attributes"><code class="docutils literal notranslate"><span class="pre">ResourceBase.filter_by_attributes()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase.filter_params"><code class="docutils literal notranslate"><span class="pre">ResourceBase.filter_params()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase.get_token_ref"><code class="docutils literal notranslate"><span class="pre">ResourceBase.get_token_ref()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase.limit"><code class="docutils literal notranslate"><span class="pre">ResourceBase.limit()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase.member_key"><code class="docutils literal notranslate"><span class="pre">ResourceBase.member_key</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase.method_decorators"><code class="docutils literal notranslate"><span class="pre">ResourceBase.method_decorators</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase.oslo_context"><code class="docutils literal notranslate"><span class="pre">ResourceBase.oslo_context</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase.query_filter_is_true"><code class="docutils literal notranslate"><span class="pre">ResourceBase.query_filter_is_true()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase.request_body_json"><code class="docutils literal notranslate"><span class="pre">ResourceBase.request_body_json</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase.wrap_collection"><code class="docutils literal notranslate"><span class="pre">ResourceBase.wrap_collection()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceBase.wrap_member"><code class="docutils literal notranslate"><span class="pre">ResourceBase.wrap_member()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceMap"><code class="docutils literal notranslate"><span class="pre">ResourceMap</span></code></a><ul>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceMap.alternate_urls"><code class="docutils literal notranslate"><span class="pre">ResourceMap.alternate_urls</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceMap.json_home_data"><code class="docutils literal notranslate"><span class="pre">ResourceMap.json_home_data</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceMap.kwargs"><code class="docutils literal notranslate"><span class="pre">ResourceMap.kwargs</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceMap.resource"><code class="docutils literal notranslate"><span class="pre">ResourceMap.resource</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.ResourceMap.url"><code class="docutils literal notranslate"><span class="pre">ResourceMap.url</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keystone.server.flask.base_url"><code class="docutils literal notranslate"><span class="pre">base_url()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.construct_json_home_data"><code class="docutils literal notranslate"><span class="pre">construct_json_home_data()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.construct_resource_map"><code class="docutils literal notranslate"><span class="pre">construct_resource_map()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.full_url"><code class="docutils literal notranslate"><span class="pre">full_url()</span></code></a></li>
+<li><a class="reference internal" href="#keystone.server.flask.unenforced_api"><code class="docutils literal notranslate"><span class="pre">unenforced_api()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "api/keystone.server.flask" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "keystone.server.flask package in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2025-12-08 16:08:08";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "api/keystone.server.flask";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

@@ -1,0 +1,7 @@
+keystone.oauth2.handlers module
+===============================
+
+.. automodule:: keystone.oauth2.handlers
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,51 @@
+keystone package
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.api
+   keystone.application_credential
+   keystone.assignment
+   keystone.auth
+   keystone.catalog
+   keystone.cmd
+   keystone.common
+   keystone.conf
+   keystone.credential
+   keystone.endpoint_policy
+   keystone.federation
+   keystone.identity
+   keystone.limit
+   keystone.models
+   keystone.oauth1
+   keystone.oauth2
+   keystone.policy
+   keystone.receipt
+   keystone.resource
+   keystone.revoke
+   keystone.server
+   keystone.token
+   keystone.trust
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.exception
+   keystone.i18n
+   keystone.notifications
+   keystone.version
+
+Module contents
+---------------
+
+.. automodule:: keystone
+   :members:
+   :undoc-members:
+   :show-inheritance:

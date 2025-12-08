@@ -1,0 +1,7 @@
+keystone.federation.constants module
+====================================
+
+.. automodule:: keystone.federation.constants
+   :members:
+   :undoc-members:
+   :show-inheritance:

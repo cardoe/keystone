@@ -1,0 +1,7 @@
+keystone.api.projects module
+============================
+
+.. automodule:: keystone.api.projects
+   :members:
+   :undoc-members:
+   :show-inheritance:

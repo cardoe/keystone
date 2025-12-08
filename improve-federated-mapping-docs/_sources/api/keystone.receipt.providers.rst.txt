@@ -1,0 +1,26 @@
+keystone.receipt.providers package
+==================================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.receipt.providers.fernet
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.receipt.providers.base
+
+Module contents
+---------------
+
+.. automodule:: keystone.receipt.providers
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+keystone.common.policies.token\_revocation module
+=================================================
+
+.. automodule:: keystone.common.policies.token_revocation
+   :members:
+   :undoc-members:
+   :show-inheritance:

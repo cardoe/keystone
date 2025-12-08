@@ -1,0 +1,7 @@
+keystone.resource.backends.sql\_model module
+============================================
+
+.. automodule:: keystone.resource.backends.sql_model
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+keystone.endpoint\_policy.core module
+=====================================
+
+.. automodule:: keystone.endpoint_policy.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

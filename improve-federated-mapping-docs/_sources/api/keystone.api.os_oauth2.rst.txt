@@ -1,0 +1,7 @@
+keystone.api.os\_oauth2 module
+==============================
+
+.. automodule:: keystone.api.os_oauth2
+   :members:
+   :undoc-members:
+   :show-inheritance:

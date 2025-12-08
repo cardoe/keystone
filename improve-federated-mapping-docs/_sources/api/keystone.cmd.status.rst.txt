@@ -1,0 +1,7 @@
+keystone.cmd.status module
+==========================
+
+.. automodule:: keystone.cmd.status
+   :members:
+   :undoc-members:
+   :show-inheritance:

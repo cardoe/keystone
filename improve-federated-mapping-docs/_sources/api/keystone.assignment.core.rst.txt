@@ -1,0 +1,7 @@
+keystone.assignment.core module
+===============================
+
+.. automodule:: keystone.assignment.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

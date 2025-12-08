@@ -1,0 +1,7 @@
+keystone.common.policies.service module
+=======================================
+
+.. automodule:: keystone.common.policies.service
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keystone.exception &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/support-matrix.css" />
+    <script src="../../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- TEMPLATE_NAME: _modules/keystone/exception -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>keystone.exception</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <h1>Source code for keystone.exception</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2012 OpenStack Foundation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may</span>
+<span class="c1"># not use this file except in compliance with the License. You may obtain</span>
+<span class="c1"># a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#      http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT</span>
+<span class="c1"># WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the</span>
+<span class="c1"># License for the specific language governing permissions and limitations</span>
+<span class="c1"># under the License.</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">http.client</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ty</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_log</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">encodeutils</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">keystone.conf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.i18n</span><span class="w"> </span><span class="kn">import</span> <span class="n">_</span>
+
+<span class="n">CONF</span> <span class="o">=</span> <span class="n">keystone</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">CONF</span>
+<span class="n">LOG</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">KEYSTONE_API_EXCEPTIONS</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+<span class="c1"># Tests use this to make exception message format errors fatal</span>
+<span class="n">_FATAL_EXCEPTION_FORMAT_ERRORS</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_format_with_unicode_kwargs</span><span class="p">(</span><span class="n">msg_format</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">msg_format</span> <span class="o">%</span> <span class="n">kwargs</span>
+    <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">encodeutils</span><span class="o">.</span><span class="n">safe_decode</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+            <span class="c1"># NOTE(jamielennox): This is the complete failure case</span>
+            <span class="c1"># at least by showing the template we have some idea</span>
+            <span class="c1"># of where the error is coming from</span>
+            <span class="k">return</span> <span class="n">msg_format</span>
+
+        <span class="k">return</span> <span class="n">msg_format</span> <span class="o">%</span> <span class="n">kwargs</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_KeystoneExceptionMeta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Automatically Register the Exceptions in &#39;KEYSTONE_API_EXCEPTIONS&#39; list.</span>
+
+<span class="sd">    The `KEYSTONE_API_EXCEPTIONS` list is utilized by flask to register a</span>
+<span class="sd">    handler to emit sane details when the exception occurs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__new__</span><span class="p">(</span><span class="n">mcs</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a new instance and register with KEYSTONE_API_EXCEPTIONS.&quot;&quot;&quot;</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">mcs</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">)</span>
+        <span class="n">KEYSTONE_API_EXCEPTIONS</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span>
+
+
+<div class="viewcode-block" id="Error">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.Error">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Error</span><span class="p">(</span><span class="ne">Exception</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">_KeystoneExceptionMeta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base error class.</span>
+
+<span class="sd">    Child classes should define an HTTP status code, title, and a</span>
+<span class="sd">    message_format.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">code</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">message_format</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_message</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="c1"># if you see this warning in your logs, please raise a bug report</span>
+            <span class="k">if</span> <span class="n">_FATAL_EXCEPTION_FORMAT_ERRORS</span><span class="p">:</span>
+                <span class="k">raise</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;missing exception kwargs (programmer error)&#39;</span><span class="p">)</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">message_format</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build and returns an exception message.</span>
+
+<span class="sd">        :raises KeyError: given insufficient kwargs</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">message</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">message</span>
+        <span class="k">return</span> <span class="n">_format_with_unicode_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message_format</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ValidationError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ValidationError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ValidationError</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Expecting to find </span><span class="si">%(attribute)s</span><span class="s2"> in </span><span class="si">%(target)s</span><span class="s2">.&quot;</span>
+        <span class="s2">&quot; The server could not comply with the request&quot;</span>
+        <span class="s2">&quot; since it is either malformed or otherwise&quot;</span>
+        <span class="s2">&quot; incorrect. The client is assumed to be in error.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">BAD_REQUEST</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">responses</span><span class="p">[</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">BAD_REQUEST</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="URLValidationError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.URLValidationError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">URLValidationError</span><span class="p">(</span><span class="n">ValidationError</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Cannot create an endpoint with an invalid URL: </span><span class="si">%(url)s</span><span class="s2">.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="PasswordValidationError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.PasswordValidationError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PasswordValidationError</span><span class="p">(</span><span class="n">ValidationError</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Password validation error: </span><span class="si">%(detail)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="PasswordRequirementsValidationError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.PasswordRequirementsValidationError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PasswordRequirementsValidationError</span><span class="p">(</span><span class="n">PasswordValidationError</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;The password does not match the requirements: </span><span class="si">%(detail)s</span><span class="s2">.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="PasswordHistoryValidationError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.PasswordHistoryValidationError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PasswordHistoryValidationError</span><span class="p">(</span><span class="n">PasswordValidationError</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;The new password cannot be identical to a &quot;</span>
+        <span class="s2">&quot;previous password. The total number which &quot;</span>
+        <span class="s2">&quot;includes the new password must be unique is &quot;</span>
+        <span class="s2">&quot;</span><span class="si">%(unique_count)s</span><span class="s2">.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="PasswordAgeValidationError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.PasswordAgeValidationError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PasswordAgeValidationError</span><span class="p">(</span><span class="n">PasswordValidationError</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;You cannot change your password at this time due &quot;</span>
+        <span class="s2">&quot;to the minimum password age. Once you change your &quot;</span>
+        <span class="s2">&quot;password, it must be used for </span><span class="si">%(min_age_days)d</span><span class="s2"> day(s) &quot;</span>
+        <span class="s2">&quot;before it can be changed. Please try again in &quot;</span>
+        <span class="s2">&quot;</span><span class="si">%(days_left)d</span><span class="s2"> day(s) or contact your administrator to &quot;</span>
+        <span class="s2">&quot;reset your password.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="PasswordSelfServiceDisabled">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.PasswordSelfServiceDisabled">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PasswordSelfServiceDisabled</span><span class="p">(</span><span class="n">PasswordValidationError</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;You cannot change your password at this time due &quot;</span>
+        <span class="s2">&quot;to password policy disallowing password changes. &quot;</span>
+        <span class="s2">&quot;Please contact your administrator to reset your &quot;</span>
+        <span class="s2">&quot;password.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SchemaValidationError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.SchemaValidationError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SchemaValidationError</span><span class="p">(</span><span class="n">ValidationError</span><span class="p">):</span>
+    <span class="c1"># NOTE(lbragstad): For whole OpenStack message consistency, this error</span>
+    <span class="c1"># message has been written in a format consistent with WSME.</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%(detail)s</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ValidationTimeStampError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ValidationTimeStampError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ValidationTimeStampError</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Timestamp not in expected format.&quot;</span>
+        <span class="s2">&quot; The server could not comply with the request&quot;</span>
+        <span class="s2">&quot; since it is either malformed or otherwise&quot;</span>
+        <span class="s2">&quot; incorrect. The client is assumed to be in error.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">BAD_REQUEST</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">responses</span><span class="p">[</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">BAD_REQUEST</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="InvalidOperatorError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.InvalidOperatorError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">InvalidOperatorError</span><span class="p">(</span><span class="n">ValidationError</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;The given operator </span><span class="si">%(_op)s</span><span class="s2"> is not valid.&quot;</span>
+        <span class="s2">&quot; It must be one of the following:&quot;</span>
+        <span class="s2">&quot; &#39;eq&#39;, &#39;neq&#39;, &#39;lt&#39;, &#39;lte&#39;, &#39;gt&#39;, or &#39;gte&#39;.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ValidationExpirationError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ValidationExpirationError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ValidationExpirationError</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;The &#39;expires_at&#39; must not be before now.&quot;</span>
+        <span class="s2">&quot; The server could not comply with the request&quot;</span>
+        <span class="s2">&quot; since it is either malformed or otherwise&quot;</span>
+        <span class="s2">&quot; incorrect. The client is assumed to be in error.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">BAD_REQUEST</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">responses</span><span class="p">[</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">BAD_REQUEST</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="StringLengthExceeded">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.StringLengthExceeded">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">StringLengthExceeded</span><span class="p">(</span><span class="n">ValidationError</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;String length exceeded. The length of&quot;</span>
+        <span class="s2">&quot; string &#39;</span><span class="si">%(string)s</span><span class="s2">&#39; exceeds the limit&quot;</span>
+        <span class="s2">&quot; of column </span><span class="si">%(type)s</span><span class="s2">(CHAR(</span><span class="si">%(length)d</span><span class="s2">)).&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="AmbiguityError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.AmbiguityError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AmbiguityError</span><span class="p">(</span><span class="n">ValidationError</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;There are multiple </span><span class="si">%(resource)s</span><span class="s2"> entities named&quot;</span>
+        <span class="s2">&quot; &#39;</span><span class="si">%(name)s</span><span class="s2">&#39;. Please use ID instead of names to&quot;</span>
+        <span class="s2">&quot; resolve the ambiguity.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ApplicationCredentialValidationError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ApplicationCredentialValidationError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ApplicationCredentialValidationError</span><span class="p">(</span><span class="n">ValidationError</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Invalid application credential: </span><span class="si">%(detail)s</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="CircularRegionHierarchyError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.CircularRegionHierarchyError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CircularRegionHierarchyError</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;The specified parent region </span><span class="si">%(parent_region_id)s</span><span class="s2"> &quot;</span>
+        <span class="s2">&quot;would create a circular region hierarchy.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">BAD_REQUEST</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">responses</span><span class="p">[</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">BAD_REQUEST</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="ForbiddenNotSecurity">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ForbiddenNotSecurity">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ForbiddenNotSecurity</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;When you want to return a 403 Forbidden response but not security.</span>
+
+<span class="sd">    Use this for errors where the message is always safe to present to the user</span>
+<span class="sd">    and won&#39;t give away extra information.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">FORBIDDEN</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">responses</span><span class="p">[</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">FORBIDDEN</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="PasswordVerificationError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.PasswordVerificationError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PasswordVerificationError</span><span class="p">(</span><span class="n">ForbiddenNotSecurity</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;The password length must be less than or equal &quot;</span>
+        <span class="s2">&quot;to </span><span class="si">%(size)i</span><span class="s2">. The server could not comply with the &quot;</span>
+        <span class="s2">&quot;request because the password is invalid.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="RegionDeletionError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.RegionDeletionError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RegionDeletionError</span><span class="p">(</span><span class="n">ForbiddenNotSecurity</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Unable to delete region </span><span class="si">%(region_id)s</span><span class="s2"> because it or &quot;</span>
+        <span class="s2">&quot;its child regions have associated endpoints.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ApplicationCredentialLimitExceeded">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ApplicationCredentialLimitExceeded">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ApplicationCredentialLimitExceeded</span><span class="p">(</span><span class="n">ForbiddenNotSecurity</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Unable to create additional application credentials, &quot;</span>
+        <span class="s2">&quot;maximum of </span><span class="si">%(limit)d</span><span class="s2"> already exceeded for user.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="CredentialLimitExceeded">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.CredentialLimitExceeded">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CredentialLimitExceeded</span><span class="p">(</span><span class="n">ForbiddenNotSecurity</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Unable to create additional credentials, maximum &quot;</span>
+        <span class="s2">&quot;of </span><span class="si">%(limit)d</span><span class="s2"> already exceeded for user.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SecurityError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.SecurityError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SecurityError</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Security error exception.</span>
+
+<span class="sd">    Avoids exposing details of security errors, unless in insecure_debug mode.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">amendment</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;(Disable insecure_debug mode to suppress these details.)&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Override the default deepcopy.</span>
+
+<span class="sd">        Keystone :class:`keystone.exception.Error` accepts an optional message</span>
+<span class="sd">        that will be used when rendering the exception object as a string. If</span>
+<span class="sd">        not provided the object&#39;s message_format attribute is used instead.</span>
+<span class="sd">        :class:`keystone.exception.SecurityError` is a little different in</span>
+<span class="sd">        that it only uses the message provided to the initializer when</span>
+<span class="sd">        keystone is in `insecure_debug` mode. Instead it will use its</span>
+<span class="sd">        `message_format`. This is to ensure that sensitive details are not</span>
+<span class="sd">        leaked back to the caller in a production deployment.</span>
+
+<span class="sd">        This dual mode for string rendering causes some odd behaviour when</span>
+<span class="sd">        combined with oslo_i18n translation. Any object used as a value for</span>
+<span class="sd">        formatting a translated string is deep copied.</span>
+
+<span class="sd">        The copy causes an issue. The deep copy process actually creates a new</span>
+<span class="sd">        exception instance with the rendered string. Then when that new</span>
+<span class="sd">        instance is rendered as a string to use for substitution a warning is</span>
+<span class="sd">        logged. This is because the code tries to use the `message_format` in</span>
+<span class="sd">        secure mode, but the required kwargs are not in the deep copy.</span>
+
+<span class="sd">        The end result is not an error because when the KeyError is caught the</span>
+<span class="sd">        instance&#39;s ``message`` is used instead and this has the properly</span>
+<span class="sd">        translated message. The only indication that something is wonky is a</span>
+<span class="sd">        message in the warning log.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Only returns detailed messages in insecure_debug mode.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">CONF</span><span class="o">.</span><span class="n">insecure_debug</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="c1"># Only do replacement if message is string. The message is</span>
+                <span class="c1"># sometimes a different exception or bytes, which would raise</span>
+                <span class="c1"># TypeError.</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="n">_format_with_unicode_kwargs</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%(message)s</span><span class="s1"> </span><span class="si">%(amendment)s</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">%</span> <span class="p">{</span>
+                <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="n">message</span><span class="p">,</span>
+                <span class="s1">&#39;amendment&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">amendment</span><span class="p">,</span>
+            <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">_format_with_unicode_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message_format</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Unauthorized">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.Unauthorized">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Unauthorized</span><span class="p">(</span><span class="n">SecurityError</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;The request you have made requires authentication.&quot;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">UNAUTHORIZED</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">responses</span><span class="p">[</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">UNAUTHORIZED</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="InsufficientAuthMethods">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.InsufficientAuthMethods">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">InsufficientAuthMethods</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
+    <span class="c1"># NOTE(adriant): This is an internal only error that is built into</span>
+    <span class="c1"># an auth receipt response.</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Insufficient auth methods received for </span><span class="si">%(user_id)s</span><span class="s2">. &quot;</span>
+        <span class="s2">&quot;Auth Methods Provided: </span><span class="si">%(methods)s</span><span class="s2">.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="mi">401</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Unauthorized&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">methods_str</span> <span class="o">=</span> <span class="s1">&#39;[</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">methods</span><span class="p">))</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="n">methods_str</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">methods</span> <span class="o">=</span> <span class="n">methods</span></div>
+
+
+
+<div class="viewcode-block" id="ReceiptNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ReceiptNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ReceiptNotFound</span><span class="p">(</span><span class="n">Unauthorized</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find auth receipt: </span><span class="si">%(receipt_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="PasswordExpired">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.PasswordExpired">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PasswordExpired</span><span class="p">(</span><span class="n">Unauthorized</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;The password is expired and needs to be changed for &quot;</span>
+        <span class="s2">&quot;user: </span><span class="si">%(user_id)s</span><span class="s2">.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="AuthPluginException">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.AuthPluginException">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AuthPluginException</span><span class="p">(</span><span class="n">Unauthorized</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Authentication plugin error.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">authentication</span> <span class="o">=</span> <span class="p">{}</span></div>
+
+
+
+<div class="viewcode-block" id="UserDisabled">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.UserDisabled">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserDisabled</span><span class="p">(</span><span class="n">Unauthorized</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;The account is disabled for user: </span><span class="si">%(user_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="AccountLocked">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.AccountLocked">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AccountLocked</span><span class="p">(</span><span class="n">Unauthorized</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;The account is locked for user: </span><span class="si">%(user_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="AuthMethodNotSupported">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.AuthMethodNotSupported">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AuthMethodNotSupported</span><span class="p">(</span><span class="n">AuthPluginException</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Attempted to authenticate with an unsupported method.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">authentication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;methods&#39;</span><span class="p">:</span> <span class="n">CONF</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">methods</span><span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="ApplicationCredentialAuthError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ApplicationCredentialAuthError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ApplicationCredentialAuthError</span><span class="p">(</span><span class="n">AuthPluginException</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Error authenticating with application credential: </span><span class="si">%(detail)s</span><span class="s2">&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="AdditionalAuthRequired">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.AdditionalAuthRequired">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AdditionalAuthRequired</span><span class="p">(</span><span class="n">AuthPluginException</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Additional authentications steps required.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auth_response</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">authentication</span> <span class="o">=</span> <span class="n">auth_response</span></div>
+
+
+
+<div class="viewcode-block" id="Forbidden">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.Forbidden">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Forbidden</span><span class="p">(</span><span class="n">SecurityError</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;You are not authorized to perform the requested action.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">FORBIDDEN</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">responses</span><span class="p">[</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">FORBIDDEN</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="ForbiddenAction">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ForbiddenAction">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ForbiddenAction</span><span class="p">(</span><span class="n">Forbidden</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;You are not authorized to perform the requested action: </span><span class="si">%(action)s</span><span class="s2">.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="CrossBackendNotAllowed">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.CrossBackendNotAllowed">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CrossBackendNotAllowed</span><span class="p">(</span><span class="n">Forbidden</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Group membership across backend boundaries is not &quot;</span>
+        <span class="s2">&quot;allowed. Group in question is </span><span class="si">%(group_id)s</span><span class="s2">, &quot;</span>
+        <span class="s2">&quot;user is </span><span class="si">%(user_id)s</span><span class="s2">.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="InvalidPolicyAssociation">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.InvalidPolicyAssociation">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">InvalidPolicyAssociation</span><span class="p">(</span><span class="n">Forbidden</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Invalid mix of entities for policy association: &quot;</span>
+        <span class="s2">&quot;only Endpoint, Service, or Region+Service allowed. &quot;</span>
+        <span class="s2">&quot;Request was - Endpoint: </span><span class="si">%(endpoint_id)s</span><span class="s2">, &quot;</span>
+        <span class="s2">&quot;Service: </span><span class="si">%(service_id)s</span><span class="s2">, Region: </span><span class="si">%(region_id)s</span><span class="s2">.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="InvalidDomainConfig">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.InvalidDomainConfig">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">InvalidDomainConfig</span><span class="p">(</span><span class="n">Forbidden</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Invalid domain specific configuration: </span><span class="si">%(reason)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="InvalidLimit">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.InvalidLimit">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">InvalidLimit</span><span class="p">(</span><span class="n">Forbidden</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Invalid resource limit: </span><span class="si">%(reason)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="LimitTreeExceedError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.LimitTreeExceedError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LimitTreeExceedError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_id</span><span class="p">,</span> <span class="n">max_limit_depth</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">_</span><span class="p">(</span>
+                <span class="s2">&quot;Keystone cannot start due to project hierarchical depth in the &quot;</span>
+                <span class="s2">&quot;current deployment (project_ids: </span><span class="si">%(project_id)s</span><span class="s2">) exceeds the &quot;</span>
+                <span class="s2">&quot;enforcement model&#39;s maximum limit of </span><span class="si">%(max_limit_depth)s</span><span class="s2">. Please &quot;</span>
+                <span class="s2">&quot;use a different enforcement model to correct the issue.&quot;</span>
+            <span class="p">)</span>
+            <span class="o">%</span> <span class="p">{</span><span class="s1">&#39;project_id&#39;</span><span class="p">:</span> <span class="n">project_id</span><span class="p">,</span> <span class="s1">&#39;max_limit_depth&#39;</span><span class="p">:</span> <span class="n">max_limit_depth</span><span class="p">}</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="NotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.NotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NotFound</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find: </span><span class="si">%(target)s</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">NOT_FOUND</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">responses</span><span class="p">[</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">NOT_FOUND</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="MarkerNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.MarkerNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MarkerNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Marker </span><span class="si">%(marker)s</span><span class="s2"> could not be found.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="EndpointNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.EndpointNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EndpointNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find endpoint: </span><span class="si">%(endpoint_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="PolicyNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.PolicyNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PolicyNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find policy: </span><span class="si">%(policy_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="PolicyAssociationNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.PolicyAssociationNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PolicyAssociationNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find policy association.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="RoleNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.RoleNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RoleNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find role: </span><span class="si">%(role_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ImpliedRoleNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ImpliedRoleNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ImpliedRoleNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%(prior_role_id)s</span><span class="s2"> does not imply </span><span class="si">%(implied_role_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="InvalidImpliedRole">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.InvalidImpliedRole">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">InvalidImpliedRole</span><span class="p">(</span><span class="n">Forbidden</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%(role_id)s</span><span class="s2"> cannot be an implied roles.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="DomainSpecificRoleMismatch">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.DomainSpecificRoleMismatch">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DomainSpecificRoleMismatch</span><span class="p">(</span><span class="n">Forbidden</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Project </span><span class="si">%(project_id)s</span><span class="s2"> must be in the same domain &quot;</span>
+        <span class="s2">&quot;as the role </span><span class="si">%(role_id)s</span><span class="s2"> being assigned.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="DomainSpecificRoleNotWithinIdPDomain">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.DomainSpecificRoleNotWithinIdPDomain">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DomainSpecificRoleNotWithinIdPDomain</span><span class="p">(</span><span class="n">Forbidden</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;role: </span><span class="si">%(role_name)s</span><span class="s2"> must be within the same domain as &quot;</span>
+        <span class="s2">&quot;the identity provider: </span><span class="si">%(identity_provider)s</span><span class="s2">.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="DomainIdInvalid">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.DomainIdInvalid">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DomainIdInvalid</span><span class="p">(</span><span class="n">ValidationError</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Domain ID does not conform to required UUID format.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="RoleAssignmentNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.RoleAssignmentNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RoleAssignmentNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Could not find role assignment with role: &quot;</span>
+        <span class="s2">&quot;</span><span class="si">%(role_id)s</span><span class="s2">, user or group: </span><span class="si">%(actor_id)s</span><span class="s2">, &quot;</span>
+        <span class="s2">&quot;project, domain, or system: </span><span class="si">%(target_id)s</span><span class="s2">.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="RegionNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.RegionNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RegionNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find region: </span><span class="si">%(region_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ServiceNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ServiceNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ServiceNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find service: </span><span class="si">%(service_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="DomainNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.DomainNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DomainNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find domain: </span><span class="si">%(domain_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ProjectNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ProjectNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ProjectNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find project: </span><span class="si">%(project_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ProjectTagNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ProjectTagNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ProjectTagNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find project tag: </span><span class="si">%(project_tag)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="TokenNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.TokenNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TokenNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find token: </span><span class="si">%(token_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="UserNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.UserNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find user: </span><span class="si">%(user_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="GroupNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.GroupNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GroupNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find group: </span><span class="si">%(group_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="MappingNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.MappingNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MappingNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find mapping: </span><span class="si">%(mapping_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="TrustNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.TrustNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TrustNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find trust: </span><span class="si">%(trust_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="TrustUseLimitReached">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.TrustUseLimitReached">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TrustUseLimitReached</span><span class="p">(</span><span class="n">Forbidden</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;No remaining uses for trust: </span><span class="si">%(trust_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="CredentialNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.CredentialNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CredentialNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find credential: </span><span class="si">%(credential_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="VersionNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.VersionNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">VersionNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find version: </span><span class="si">%(version)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="EndpointGroupNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.EndpointGroupNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EndpointGroupNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find Endpoint Group: </span><span class="si">%(endpoint_group_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="IdentityProviderNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.IdentityProviderNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">IdentityProviderNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find Identity Provider: </span><span class="si">%(idp_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ServiceProviderNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ServiceProviderNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ServiceProviderNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find Service Provider: </span><span class="si">%(sp_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="FederatedProtocolNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.FederatedProtocolNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FederatedProtocolNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Could not find federated protocol </span><span class="si">%(protocol_id)s</span><span class="s2"> for&quot;</span>
+        <span class="s2">&quot; Identity Provider: </span><span class="si">%(idp_id)s</span><span class="s2">.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="PublicIDNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.PublicIDNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PublicIDNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="c1"># This is used internally and mapped to either User/GroupNotFound or,</span>
+    <span class="c1"># Assertion before the exception leaves Keystone.</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%(id)s</span><span class="s2">&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="RegisteredLimitNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.RegisteredLimitNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RegisteredLimitNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find registered limit for </span><span class="si">%(id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="LimitNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.LimitNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LimitNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find limit for </span><span class="si">%(id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="NoLimitReference">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.NoLimitReference">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NoLimitReference</span><span class="p">(</span><span class="n">Forbidden</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Unable to create a limit that has no corresponding registered limit.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="RegisteredLimitError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.RegisteredLimitError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RegisteredLimitError</span><span class="p">(</span><span class="n">ForbiddenNotSecurity</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Unable to update or delete registered limit </span><span class="si">%(id)s</span><span class="s2"> &quot;</span>
+        <span class="s2">&quot;because there are project limits associated with it.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="DomainConfigNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.DomainConfigNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DomainConfigNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s1">&#39;Could not find </span><span class="si">%(group_or_option)s</span><span class="s1"> in domain &#39;</span>
+        <span class="s1">&#39;configuration for domain </span><span class="si">%(domain_id)s</span><span class="s1">.&#39;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ConfigRegistrationNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ConfigRegistrationNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConfigRegistrationNotFound</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="c1"># This is used internally between the domain config backend and the</span>
+    <span class="c1"># manager, so should not escape to the client.  If it did, it is a coding</span>
+    <span class="c1"># error on our part, and would end up, appropriately, as a 500 error.</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="ApplicationCredentialNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ApplicationCredentialNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ApplicationCredentialNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Could not find Application Credential: </span><span class="si">%(application_credential_id)s</span><span class="s2">.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="AccessRuleNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.AccessRuleNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AccessRuleNotFound</span><span class="p">(</span><span class="n">NotFound</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Could not find Access Rule: </span><span class="si">%(access_rule_id)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Conflict">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.Conflict">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Conflict</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Conflict occurred attempting to store </span><span class="si">%(type)s</span><span class="s2"> - </span><span class="si">%(details)s</span><span class="s2">.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">CONFLICT</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">responses</span><span class="p">[</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">CONFLICT</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="UnexpectedError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.UnexpectedError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UnexpectedError</span><span class="p">(</span><span class="n">SecurityError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Avoids exposing details of failures, unless in insecure_debug mode.&quot;&quot;&quot;</span>
+
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;An unexpected error prevented the server &quot;</span>
+        <span class="s2">&quot;from fulfilling your request.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">debug_message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;An unexpected error prevented the server &quot;</span>
+        <span class="s2">&quot;from fulfilling your request: </span><span class="si">%(exception)s</span><span class="s2">.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># Ensure that exception has a value to be extra defensive for</span>
+        <span class="c1"># substitutions and make sure the exception doesn&#39;t raise an</span>
+        <span class="c1"># exception.</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;exception&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_build_message</span><span class="p">(</span>
+            <span class="n">message</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug_message_format</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+
+    <span class="n">code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">INTERNAL_SERVER_ERROR</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">responses</span><span class="p">[</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">INTERNAL_SERVER_ERROR</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="TrustConsumeMaximumAttempt">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.TrustConsumeMaximumAttempt">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TrustConsumeMaximumAttempt</span><span class="p">(</span><span class="n">UnexpectedError</span><span class="p">):</span>
+    <span class="n">debug_message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Unable to consume trust </span><span class="si">%(trust_id)s</span><span class="s2">. Unable to acquire lock.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="MalformedEndpoint">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.MalformedEndpoint">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MalformedEndpoint</span><span class="p">(</span><span class="n">UnexpectedError</span><span class="p">):</span>
+    <span class="n">debug_message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Malformed endpoint URL (</span><span class="si">%(endpoint)s</span><span class="s2">), see ERROR log for details.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="MappedGroupNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.MappedGroupNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MappedGroupNotFound</span><span class="p">(</span><span class="n">UnexpectedError</span><span class="p">):</span>
+    <span class="n">debug_message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Group </span><span class="si">%(group_id)s</span><span class="s2"> returned by mapping &quot;</span>
+        <span class="s2">&quot;</span><span class="si">%(mapping_id)s</span><span class="s2"> was not found in the backend.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="MetadataFileError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.MetadataFileError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MetadataFileError</span><span class="p">(</span><span class="n">UnexpectedError</span><span class="p">):</span>
+    <span class="n">debug_message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Error while reading metadata file: </span><span class="si">%(reason)s</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="DirectMappingError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.DirectMappingError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DirectMappingError</span><span class="p">(</span><span class="n">UnexpectedError</span><span class="p">):</span>
+    <span class="n">debug_message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;Local section in mapping </span><span class="si">%(mapping_id)s</span><span class="s2"> refers &quot;</span>
+        <span class="s2">&quot;to a remote match that doesn&#39;t exist &quot;</span>
+        <span class="s2">&quot;(e.g. </span><span class="si">{0}</span><span class="s2"> in a local section).&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="AssignmentTypeCalculationError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.AssignmentTypeCalculationError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AssignmentTypeCalculationError</span><span class="p">(</span><span class="n">UnexpectedError</span><span class="p">):</span>
+    <span class="n">debug_message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s1">&#39;Unexpected combination of grant attributes - &#39;</span>
+        <span class="s1">&#39;User: </span><span class="si">%(user_id)s</span><span class="s1">, Group: </span><span class="si">%(group_id)s</span><span class="s1">, Project: </span><span class="si">%(project_id)s</span><span class="s1">, &#39;</span>
+        <span class="s1">&#39;Domain: </span><span class="si">%(domain_id)s</span><span class="s1">.&#39;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="NotImplemented">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.NotImplemented">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NotImplemented</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;The action you have requested has not been implemented.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">NOT_IMPLEMENTED</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">responses</span><span class="p">[</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">NOT_IMPLEMENTED</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="Gone">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.Gone">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Gone</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;The service you have requested is no longer available on this server.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">GONE</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">responses</span><span class="p">[</span><span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">GONE</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="ConfigFileNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ConfigFileNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConfigFileNotFound</span><span class="p">(</span><span class="n">UnexpectedError</span><span class="p">):</span>
+    <span class="n">debug_message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;The Keystone configuration file </span><span class="si">%(config_file)s</span><span class="s2"> could not be found.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="KeysNotFound">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.KeysNotFound">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">KeysNotFound</span><span class="p">(</span><span class="n">UnexpectedError</span><span class="p">):</span>
+    <span class="n">debug_message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s1">&#39;No encryption keys found; run keystone-manage &#39;</span>
+        <span class="s1">&#39;fernet_setup to bootstrap one.&#39;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="MultipleSQLDriversInConfig">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.MultipleSQLDriversInConfig">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MultipleSQLDriversInConfig</span><span class="p">(</span><span class="n">UnexpectedError</span><span class="p">):</span>
+    <span class="n">debug_message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s1">&#39;The Keystone domain-specific configuration has &#39;</span>
+        <span class="s1">&#39;specified more than one SQL driver (only one is &#39;</span>
+        <span class="s1">&#39;permitted): </span><span class="si">%(source)s</span><span class="s1">.&#39;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="MigrationNotProvided">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.MigrationNotProvided">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MigrationNotProvided</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mod_name</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">_</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">%(mod_name)s</span><span class="s2"> doesn&#39;t provide database migrations. The migration&quot;</span>
+                <span class="s2">&quot; repository path at </span><span class="si">%(path)s</span><span class="s2"> doesn&#39;t exist or isn&#39;t a directory.&quot;</span>
+            <span class="p">)</span>
+            <span class="o">%</span> <span class="p">{</span><span class="s1">&#39;mod_name&#39;</span><span class="p">:</span> <span class="n">mod_name</span><span class="p">,</span> <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="n">path</span><span class="p">}</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="UnsupportedTokenVersionException">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.UnsupportedTokenVersionException">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UnsupportedTokenVersionException</span><span class="p">(</span><span class="n">UnexpectedError</span><span class="p">):</span>
+    <span class="n">debug_message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Token version is unrecognizable or unsupported.&#39;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SAMLSigningError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.SAMLSigningError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SAMLSigningError</span><span class="p">(</span><span class="n">UnexpectedError</span><span class="p">):</span>
+    <span class="n">debug_message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s1">&#39;Unable to sign SAML assertion. It is likely &#39;</span>
+        <span class="s1">&#39;that this server does not have xmlsec1 &#39;</span>
+        <span class="s1">&#39;installed or this is the result of &#39;</span>
+        <span class="s1">&#39;misconfiguration. Reason </span><span class="si">%(reason)s</span><span class="s1">.&#39;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="OAuthHeadersMissingError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.OAuthHeadersMissingError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OAuthHeadersMissingError</span><span class="p">(</span><span class="n">UnexpectedError</span><span class="p">):</span>
+    <span class="n">debug_message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s1">&#39;No Authorization headers found, cannot proceed &#39;</span>
+        <span class="s1">&#39;with OAuth related calls. If running under &#39;</span>
+        <span class="s1">&#39;HTTPd or Apache, ensure WSGIPassAuthorization &#39;</span>
+        <span class="s1">&#39;is set to On.&#39;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="TokenlessAuthConfigError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.TokenlessAuthConfigError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TokenlessAuthConfigError</span><span class="p">(</span><span class="n">ValidationError</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s1">&#39;Could not determine Identity Provider ID. The &#39;</span>
+        <span class="s1">&#39;configuration option </span><span class="si">%(issuer_attribute)s</span><span class="s1"> &#39;</span>
+        <span class="s1">&#39;was not found in the request environment.&#39;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="CredentialEncryptionError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.CredentialEncryptionError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CredentialEncryptionError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;An unexpected error prevented the server &quot;</span>
+        <span class="s2">&quot;from accessing encrypted credentials.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="LDAPServerConnectionError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.LDAPServerConnectionError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LDAPServerConnectionError</span><span class="p">(</span><span class="n">UnexpectedError</span><span class="p">):</span>
+    <span class="n">debug_message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s1">&#39;Unable to establish a connection to LDAP Server (</span><span class="si">%(url)s</span><span class="s1">).&#39;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="LDAPInvalidCredentialsError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.LDAPInvalidCredentialsError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LDAPInvalidCredentialsError</span><span class="p">(</span><span class="n">UnexpectedError</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s1">&#39;Unable to authenticate against Identity backend - &#39;</span>
+        <span class="s1">&#39;Invalid username or password&#39;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="LDAPSizeLimitExceeded">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.LDAPSizeLimitExceeded">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LDAPSizeLimitExceeded</span><span class="p">(</span><span class="n">UnexpectedError</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s1">&#39;Number of User/Group entities returned by LDAP &#39;</span>
+        <span class="s1">&#39;exceeded size limit. Contact your LDAP &#39;</span>
+        <span class="s1">&#39;administrator.&#39;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="CacheDeserializationError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.CacheDeserializationError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CacheDeserializationError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Failed to deserialize </span><span class="si">%(obj)s</span><span class="s1">. Data is </span><span class="si">%(data)s</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="o">%</span> <span class="p">{</span><span class="s1">&#39;obj&#39;</span><span class="p">:</span> <span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">}</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ResourceUpdateForbidden">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ResourceUpdateForbidden">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ResourceUpdateForbidden</span><span class="p">(</span><span class="n">ForbiddenNotSecurity</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s1">&#39;Unable to update immutable </span><span class="si">%(type)s</span><span class="s1"> resource: &#39;</span>
+        <span class="s1">&#39;`</span><span class="si">%(resource_id)s</span><span class="s1">. Set resource option &quot;immutable&quot; &#39;</span>
+        <span class="s1">&#39;to false first.&#39;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ResourceDeleteForbidden">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.ResourceDeleteForbidden">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ResourceDeleteForbidden</span><span class="p">(</span><span class="n">ForbiddenNotSecurity</span><span class="p">):</span>
+    <span class="n">message_format</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s1">&#39;Unable to delete immutable </span><span class="si">%(type)s</span><span class="s1"> resource: &#39;</span>
+        <span class="s1">&#39;`</span><span class="si">%(resource_id)s</span><span class="s1">. Set resource option &quot;immutable&quot; &#39;</span>
+        <span class="s1">&#39;to false first.&#39;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="OAuth2Error">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.OAuth2Error">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OAuth2Error</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">error_title</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">code</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_title</span> <span class="o">=</span> <span class="n">error_title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_format</span> <span class="o">=</span> <span class="n">message</span></div>
+
+
+
+<div class="viewcode-block" id="OAuth2InvalidClient">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.OAuth2InvalidClient">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OAuth2InvalidClient</span><span class="p">(</span><span class="n">OAuth2Error</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="n">error_title</span> <span class="o">=</span> <span class="s1">&#39;invalid_client&#39;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">error_title</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="OAuth2InvalidRequest">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.OAuth2InvalidRequest">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OAuth2InvalidRequest</span><span class="p">(</span><span class="n">OAuth2Error</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="n">error_title</span> <span class="o">=</span> <span class="s1">&#39;invalid_request&#39;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">error_title</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="OAuth2UnsupportedGrantType">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.OAuth2UnsupportedGrantType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OAuth2UnsupportedGrantType</span><span class="p">(</span><span class="n">OAuth2Error</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="n">error_title</span> <span class="o">=</span> <span class="s1">&#39;unsupported_grant_type&#39;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">error_title</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="OAuth2OtherError">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.OAuth2OtherError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OAuth2OtherError</span><span class="p">(</span><span class="n">OAuth2Error</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="n">error_title</span> <span class="o">=</span> <span class="s1">&#39;other_error&#39;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">error_title</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="RedirectRequired">
+<a class="viewcode-back" href="../../api/keystone.exception.html#keystone.exception.RedirectRequired">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RedirectRequired</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error class for redirection.</span>
+
+<span class="sd">    Child classes should define an HTTP redirect url</span>
+<span class="sd">    message_format.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">redirect_url</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">FOUND</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">redirect_url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">redirect_url</span> <span class="o">=</span> <span class="n">redirect_url</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+</pre></div>
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2025-12-08 16:08:08</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "_modules/keystone/exception" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "keystone.exception in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2025-12-08 16:08:08";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "_modules/keystone/exception";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

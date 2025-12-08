@@ -1,0 +1,7 @@
+keystone.notifications module
+=============================
+
+.. automodule:: keystone.notifications
+   :members:
+   :undoc-members:
+   :show-inheritance:

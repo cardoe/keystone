@@ -1,0 +1,28 @@
+keystone.resource package
+=========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.resource.backends
+   keystone.resource.config_backends
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.resource.core
+   keystone.resource.schema
+
+Module contents
+---------------
+
+.. automodule:: keystone.resource
+   :members:
+   :undoc-members:
+   :show-inheritance:

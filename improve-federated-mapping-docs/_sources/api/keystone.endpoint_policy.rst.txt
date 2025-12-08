@@ -1,0 +1,26 @@
+keystone.endpoint\_policy package
+=================================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.endpoint_policy.backends
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.endpoint_policy.core
+
+Module contents
+---------------
+
+.. automodule:: keystone.endpoint_policy
+   :members:
+   :undoc-members:
+   :show-inheritance:

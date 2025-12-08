@@ -1,0 +1,7 @@
+keystone.federation.core module
+===============================
+
+.. automodule:: keystone.federation.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

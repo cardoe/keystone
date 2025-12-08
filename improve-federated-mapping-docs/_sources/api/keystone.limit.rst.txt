@@ -1,0 +1,28 @@
+keystone.limit package
+======================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.limit.backends
+   keystone.limit.models
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.limit.core
+   keystone.limit.schema
+
+Module contents
+---------------
+
+.. automodule:: keystone.limit
+   :members:
+   :undoc-members:
+   :show-inheritance:

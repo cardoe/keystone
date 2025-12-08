@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Create and manage services and service users &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/support-matrix.css" />
+    <script src="../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Keystone Configuration" href="configuration.html" />
+    <link rel="prev" title="Manage projects, users, and roles" href="cli-manage-projects-users-and-roles.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/admin/manage-services.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Create and manage services and service users</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="cli-manage-projects-users-and-roles.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Manage projects, users, and roles"></i></a>
+    
+    
+    <a href="configuration.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Keystone Configuration"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="create-and-manage-services-and-service-users">
+<span id="manage-services"></span><h1>Create and manage services and service users<a class="headerlink" href="#create-and-manage-services-and-service-users" title="Link to this heading">¶</a></h1>
+<section id="service-catalog">
+<h2>Service Catalog<a class="headerlink" href="#service-catalog" title="Link to this heading">¶</a></h2>
+<p>OpenStack services can be discovered when registered in keystone’s service
+catalog. The service catalog can be managed as either a static file template or
+as a dynamic database table.</p>
+<section id="file-based-service-catalog-templated-catalog">
+<h3>File-based Service Catalog (<code class="docutils literal notranslate"><span class="pre">templated.Catalog</span></code>)<a class="headerlink" href="#file-based-service-catalog-templated-catalog" title="Link to this heading">¶</a></h3>
+<p>The templated catalog is an in-memory backend initialized from a read-only
+<code class="docutils literal notranslate"><span class="pre">template_file</span></code>. Choose this option only if you know that your service
+catalog will not change very much over time.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Attempting to change your service catalog against this driver will result
+in <code class="docutils literal notranslate"><span class="pre">HTTP</span> <span class="pre">501</span> <span class="pre">Not</span> <span class="pre">Implemented</span></code> errors. This is the expected behavior. If
+you want to use these commands, you must instead use the SQL-based Service
+Catalog driver.</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">keystone.conf</span></code> example:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[catalog]</span>
+<span class="na">driver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">templated</span>
+<span class="na">template_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/opt/stack/keystone/etc/default_catalog.templates</span>
+</pre></div>
+</div>
+<p>The value of <code class="docutils literal notranslate"><span class="pre">template_file</span></code> is expected to be an absolute path to your
+service catalog configuration. An example <code class="docutils literal notranslate"><span class="pre">template_file</span></code> is included in
+keystone, however you should create your own to reflect your deployment.</p>
+</section>
+<section id="sql-based-service-catalog-sql-catalog">
+<h3>SQL-based Service Catalog (<code class="docutils literal notranslate"><span class="pre">sql.Catalog</span></code>)<a class="headerlink" href="#sql-based-service-catalog-sql-catalog" title="Link to this heading">¶</a></h3>
+<p>A dynamic database-backed driver fully supporting persistent configuration.</p>
+<p><code class="docutils literal notranslate"><span class="pre">keystone.conf</span></code> example:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[catalog]</span>
+<span class="na">driver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">sql</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A <cite>template_file</cite> does not need to be defined for the sql based catalog.</p>
+</div>
+<p>To build your service catalog using this driver, see the built-in help:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>openstack<span class="w"> </span>--help
+$<span class="w"> </span>openstack<span class="w"> </span>service<span class="w"> </span>create<span class="w"> </span>--help
+$<span class="w"> </span>openstack<span class="w"> </span>endpoint<span class="w"> </span>create<span class="w"> </span>--help
+</pre></div>
+</div>
+<section id="create-a-service">
+<h4>Create a service<a class="headerlink" href="#create-a-service" title="Link to this heading">¶</a></h4>
+<ol class="arabic">
+<li><p>List the available services:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>service<span class="w"> </span>list
+<span class="go">+----------------------------------+----------+------------+</span>
+<span class="go">| ID                               | Name     | Type       |</span>
+<span class="go">+----------------------------------+----------+------------+</span>
+<span class="go">| 9816f1faaa7c4842b90fb4821cd09223 | cinder   | volume     |</span>
+<span class="go">| 1250f64f31e34dcd9a93d35a075ddbe1 | cinderv2 | volumev2   |</span>
+<span class="go">| da8cf9f8546b4a428c43d5e032fe4afc | ec2      | ec2        |</span>
+<span class="go">| 5f105eeb55924b7290c8675ad7e294ae | glance   | image      |</span>
+<span class="go">| dcaa566e912e4c0e900dc86804e3dde0 | keystone | identity   |</span>
+<span class="go">| 4a715cfbc3664e9ebf388534ff2be76a | nova     | compute    |</span>
+<span class="go">| 1aed4a6cf7274297ba4026cf5d5e96c5 | novav21  | computev21 |</span>
+<span class="go">| bed063c790634c979778551f66c8ede9 | neutron  | network    |</span>
+<span class="go">| 6feb2e0b98874d88bee221974770e372 |    s3    |    s3      |</span>
+<span class="go">+----------------------------------+----------+------------+</span>
+</pre></div>
+</div>
+</li>
+<li><p>To create a service, run this command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>service<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>SERVICE_NAME<span class="w"> </span>--description<span class="w"> </span>SERVICE_DESCRIPTION<span class="w"> </span>SERVICE_TYPE
+</pre></div>
+</div>
+<dl class="simple">
+<dt>The arguments are:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">service_name</span></code>: the unique name of the new service.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">service_type</span></code>: the service type, such as <code class="docutils literal notranslate"><span class="pre">identity</span></code>,
+<code class="docutils literal notranslate"><span class="pre">compute</span></code>, <code class="docutils literal notranslate"><span class="pre">network</span></code>, <code class="docutils literal notranslate"><span class="pre">image</span></code>, <code class="docutils literal notranslate"><span class="pre">object-store</span></code>
+or any other service identifier string.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">service_description</span></code>: the description of the service.</p></li>
+</ul>
+</dd>
+</dl>
+<p>For example, to create a <code class="docutils literal notranslate"><span class="pre">swift</span></code> service of type
+<code class="docutils literal notranslate"><span class="pre">object-store</span></code>, run this command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>service<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>swift<span class="w"> </span>--description<span class="w"> </span><span class="s2">&quot;object store service&quot;</span><span class="w"> </span>object-store
+<span class="go">+-------------+----------------------------------+</span>
+<span class="go">| Field       | Value                            |</span>
+<span class="go">+-------------+----------------------------------+</span>
+<span class="go">| description | object store service             |</span>
+<span class="go">| enabled     | True                             |</span>
+<span class="go">| id          | 84c23f4b942c44c38b9c42c5e517cd9a |</span>
+<span class="go">| name        | swift                            |</span>
+<span class="go">| type        | object-store                     |</span>
+<span class="go">+-------------+----------------------------------+</span>
+</pre></div>
+</div>
+</li>
+<li><p>To get details for a service, run this command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>service<span class="w"> </span>show<span class="w"> </span>SERVICE_TYPE<span class="p">|</span>SERVICE_NAME<span class="p">|</span>SERVICE_ID
+</pre></div>
+</div>
+<p>For example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>service<span class="w"> </span>show<span class="w"> </span>object-store
+<span class="go">+-------------+----------------------------------+</span>
+<span class="go">| Field       | Value                            |</span>
+<span class="go">+-------------+----------------------------------+</span>
+<span class="go">| description | object store service             |</span>
+<span class="go">| enabled     | True                             |</span>
+<span class="go">| id          | 84c23f4b942c44c38b9c42c5e517cd9a |</span>
+<span class="go">| name        | swift                            |</span>
+<span class="go">| type        | object-store                     |</span>
+<span class="go">+-------------+----------------------------------+</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="create-an-endpoint">
+<h4>Create an endpoint<a class="headerlink" href="#create-an-endpoint" title="Link to this heading">¶</a></h4>
+<ol class="arabic">
+<li><p>Once a service is created, register it at an endpoint:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>endpoint<span class="w"> </span>create<span class="w"> </span>nova<span class="w"> </span>public<span class="w"> </span>http://example.com/compute/v2.1
+<span class="go">+--------------+----------------------------------+</span>
+<span class="go">| Field        | Value                            |</span>
+<span class="go">+--------------+----------------------------------+</span>
+<span class="go">| enabled      | True                             |</span>
+<span class="go">| id           | c219aa779e90403eb4a78cf0aa7d38b1 |</span>
+<span class="go">| interface    | public                           |</span>
+<span class="go">| region       | None                             |</span>
+<span class="go">| region_id    | None                             |</span>
+<span class="go">| service_id   | 0f5da035b8e94629bf35e7ec1703a8eb |</span>
+<span class="go">| service_name | nova                             |</span>
+<span class="go">| service_type | compute                          |</span>
+<span class="go">| url          | http://example.com/compute/v2.1  |</span>
+<span class="go">+--------------+----------------------------------+</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="delete-a-service">
+<h4>Delete a service<a class="headerlink" href="#delete-a-service" title="Link to this heading">¶</a></h4>
+<p>To delete a specified service, specify its ID.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>service<span class="w"> </span>delete<span class="w"> </span>SERVICE_TYPE<span class="p">|</span>SERVICE_NAME<span class="p">|</span>SERVICE_ID
+</pre></div>
+</div>
+<p>For example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>service<span class="w"> </span>delete<span class="w"> </span>object-store
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="service-users">
+<h2>Service users<a class="headerlink" href="#service-users" title="Link to this heading">¶</a></h2>
+<p>To authenticate users against the Identity service, you must
+create a service user for each OpenStack service. For example,
+create a service user for the Compute, Block Storage, and
+Networking services.</p>
+<p>To configure the OpenStack services with service users,
+create a project for all services and create users for each
+service. Assign the admin role to each service user and
+project pair. This role enables users to validate tokens and
+authenticate and authorize other user requests.</p>
+<section id="create-service-users">
+<h3>Create service users<a class="headerlink" href="#create-service-users" title="Link to this heading">¶</a></h3>
+<ol class="arabic">
+<li><p>Create a project for the service users.
+Typically, this project is named <code class="docutils literal notranslate"><span class="pre">service</span></code>,
+but choose any name you like:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>project<span class="w"> </span>create<span class="w"> </span>service<span class="w"> </span>--domain<span class="w"> </span>default
+<span class="go">+-------------+----------------------------------+</span>
+<span class="go">| Field       | Value                            |</span>
+<span class="go">+-------------+----------------------------------+</span>
+<span class="go">| description | None                             |</span>
+<span class="go">| domain_id   | e601210181f54843b51b3edff41d4980 |</span>
+<span class="go">| enabled     | True                             |</span>
+<span class="go">| id          | 3e9f3f5399624b2db548d7f871bd5322 |</span>
+<span class="go">| is_domain   | False                            |</span>
+<span class="go">| name        | service                          |</span>
+<span class="go">| parent_id   | e601210181f54843b51b3edff41d4980 |</span>
+<span class="go">+-------------+----------------------------------+</span>
+</pre></div>
+</div>
+</li>
+<li><p>Create service users for the relevant services for your
+deployment. For example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>user<span class="w"> </span>create<span class="w"> </span>nova<span class="w"> </span>--password<span class="w"> </span>Sekr3tPass
+<span class="go">+---------------------+----------------------------------+</span>
+<span class="go">| Field               | Value                            |</span>
+<span class="go">+---------------------+----------------------------------+</span>
+<span class="go">| domain_id           | default                          |</span>
+<span class="go">| enabled             | True                             |</span>
+<span class="go">| id                  | 95ec3e1d5dd747f5a512d261731d29c7 |</span>
+<span class="go">| name                | nova                             |</span>
+<span class="go">| options             | {}                               |</span>
+<span class="go">| password_expires_at | None                             |</span>
+<span class="go">+---------------------+----------------------------------+</span>
+</pre></div>
+</div>
+</li>
+<li><p>Assign the admin role to the user-project pair.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack<span class="w"> </span>role<span class="w"> </span>add<span class="w"> </span>--project<span class="w"> </span>service<span class="w"> </span>--user<span class="w"> </span>nova<span class="w"> </span>admin
+<span class="go">+-------+----------------------------------+</span>
+<span class="go">| Field | Value                            |</span>
+<span class="go">+-------+----------------------------------+</span>
+<span class="go">| id    | 233109e756c1465292f31e7662b429b1 |</span>
+<span class="go">| name  | admin                            |</span>
+<span class="go">+-------+----------------------------------+</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="configuring-service-tokens">
+<h3>Configuring service tokens<a class="headerlink" href="#configuring-service-tokens" title="Link to this heading">¶</a></h3>
+<p>A lot of operations in OpenStack require communication between multiple
+services on behalf of the user. For example, the Image service storing the
+user’s images in the Object Storage service. If the image is significantly
+large, the operation might fail due to the user’s token having expired
+during upload.</p>
+<p>In the above scenarios, the Image service will attach both the user’s token
+and its own token (called the service token), as per the diagram below.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">+----------------+</span>
+<span class="go">|      User      |</span>
+<span class="go">+-------+--------+</span>
+<span class="go">        | Access Image Data Request</span>
+<span class="go">        | X-AUTH-TOKEN: &lt;end user token&gt;</span>
+<span class="go">        |</span>
+<span class="go">+-------v---------+</span>
+<span class="go">|     Glance      |</span>
+<span class="go">+-------+---------+</span>
+<span class="go">        | Access Image Data Request</span>
+<span class="go">        | X-AUTH-TOKEN: &lt;original end user token&gt;</span>
+<span class="go">        | X-SERVICE-TOKEN: &lt;glance service user token&gt;</span>
+<span class="go">        |</span>
+<span class="go">+-------v---------+</span>
+<span class="go">|      Swift      |</span>
+<span class="go">+-----------------+</span>
+</pre></div>
+</div>
+<p>When a service receives a call from another service, it validates that the
+token has the appropriate roles for a service user. This is configured in each
+individual service configuration, under the section <code class="docutils literal notranslate"><span class="pre">[keystone_authtoken]</span></code>.</p>
+<p>If the service token is valid, the operation will be allowed even if the
+user’s token has expired.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">service_token_roles</span></code> option is the list of roles that the service
+token must contain to be a valid service token. In the previous steps, we have
+assigned the <cite>admin</cite> role to service users, so set the option to that and set
+<code class="docutils literal notranslate"><span class="pre">service_token_roles_required</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[keystone_authtoken]</span>
+<span class="na">service_token_roles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">admin</span>
+<span class="na">service_token_roles_required</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+</pre></div>
+</div>
+<p>For more information regarding service tokens, please see the
+<code class="docutils literal notranslate"><span class="pre">keystonemiddleware</span></code> <a class="reference external" href="https://docs.openstack.org/releasenotes/keystonemiddleware/ocata.html">release notes</a>.</p>
+</section>
+</section>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="cli-manage-projects-users-and-roles.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Manage projects, users, and roles"></i></a>
+          
+          
+            <a href="configuration.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Keystone Configuration"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2019-08-09 16:18:51</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Administrator Guides</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Keystone Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html">Keystone Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tokens.html">All about keystone tokens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service-api-protection.html">Default Roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="keystone-features.html">Advanced Keystone Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authentication-mechanisms.html">Authentication Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2-usage-guide.html">OAuth2.0 Client Credentials Grant Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure-https.html">Configure HTTPS in Identity Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2-mtls-usage-guide.html">OAuth 2.0 Mutual-TLS Client Authentication Flow</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Create and manage services and service users</a><ul>
+<li><a class="reference internal" href="#service-catalog">Service Catalog</a><ul>
+<li><a class="reference internal" href="#file-based-service-catalog-templated-catalog">File-based Service Catalog (<code class="docutils literal notranslate"><span class="pre">templated.Catalog</span></code>)</a></li>
+<li><a class="reference internal" href="#sql-based-service-catalog-sql-catalog">SQL-based Service Catalog (<code class="docutils literal notranslate"><span class="pre">sql.Catalog</span></code>)</a><ul>
+<li><a class="reference internal" href="#create-a-service">Create a service</a></li>
+<li><a class="reference internal" href="#create-an-endpoint">Create an endpoint</a></li>
+<li><a class="reference internal" href="#delete-a-service">Delete a service</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#service-users">Service users</a><ul>
+<li><a class="reference internal" href="#create-service-users">Create service users</a></li>
+<li><a class="reference internal" href="#configuring-service-tokens">Configuring service tokens</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "admin/manage-services" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "Create and manage services and service users in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2019-08-09 16:18:51";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "admin/manage-services";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

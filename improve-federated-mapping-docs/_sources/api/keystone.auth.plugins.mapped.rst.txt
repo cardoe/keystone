@@ -1,0 +1,7 @@
+keystone.auth.plugins.mapped module
+===================================
+
+.. automodule:: keystone.auth.plugins.mapped
+   :members:
+   :undoc-members:
+   :show-inheritance:

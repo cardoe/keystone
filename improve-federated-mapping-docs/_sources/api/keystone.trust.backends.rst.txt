@@ -1,0 +1,19 @@
+keystone.trust.backends package
+===============================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.trust.backends.base
+   keystone.trust.backends.sql
+
+Module contents
+---------------
+
+.. automodule:: keystone.trust.backends
+   :members:
+   :undoc-members:
+   :show-inheritance:

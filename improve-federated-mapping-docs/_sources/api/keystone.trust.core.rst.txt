@@ -1,0 +1,7 @@
+keystone.trust.core module
+==========================
+
+.. automodule:: keystone.trust.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

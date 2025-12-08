@@ -1,0 +1,19 @@
+keystone.common.rbac\_enforcer package
+======================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.common.rbac_enforcer.enforcer
+   keystone.common.rbac_enforcer.policy
+
+Module contents
+---------------
+
+.. automodule:: keystone.common.rbac_enforcer
+   :members:
+   :undoc-members:
+   :show-inheritance:

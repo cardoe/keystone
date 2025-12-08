@@ -1,0 +1,27 @@
+keystone.catalog package
+========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.catalog.backends
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.catalog.core
+   keystone.catalog.schema
+
+Module contents
+---------------
+
+.. automodule:: keystone.catalog
+   :members:
+   :undoc-members:
+   :show-inheritance:

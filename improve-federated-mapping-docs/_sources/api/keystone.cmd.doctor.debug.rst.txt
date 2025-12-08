@@ -1,0 +1,7 @@
+keystone.cmd.doctor.debug module
+================================
+
+.. automodule:: keystone.cmd.doctor.debug
+   :members:
+   :undoc-members:
+   :show-inheritance:

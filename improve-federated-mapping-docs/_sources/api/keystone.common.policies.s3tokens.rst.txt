@@ -1,0 +1,7 @@
+keystone.common.policies.s3tokens module
+========================================
+
+.. automodule:: keystone.common.policies.s3tokens
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+keystone.oauth1.backends.base module
+====================================
+
+.. automodule:: keystone.oauth1.backends.base
+   :members:
+   :undoc-members:
+   :show-inheritance:

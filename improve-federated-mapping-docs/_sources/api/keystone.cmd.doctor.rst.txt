@@ -1,0 +1,26 @@
+keystone.cmd.doctor package
+===========================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   keystone.cmd.doctor.caching
+   keystone.cmd.doctor.credential
+   keystone.cmd.doctor.database
+   keystone.cmd.doctor.debug
+   keystone.cmd.doctor.federation
+   keystone.cmd.doctor.ldap
+   keystone.cmd.doctor.security_compliance
+   keystone.cmd.doctor.tokens
+   keystone.cmd.doctor.tokens_fernet
+
+Module contents
+---------------
+
+.. automodule:: keystone.cmd.doctor
+   :members:
+   :undoc-members:
+   :show-inheritance:

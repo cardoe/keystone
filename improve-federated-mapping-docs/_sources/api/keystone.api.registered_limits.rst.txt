@@ -1,0 +1,7 @@
+keystone.api.registered\_limits module
+======================================
+
+.. automodule:: keystone.api.registered_limits
+   :members:
+   :undoc-members:
+   :show-inheritance:

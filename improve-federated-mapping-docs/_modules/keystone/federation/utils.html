@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keystone.federation.utils &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/support-matrix.css" />
+    <script src="../../../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../../../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- TEMPLATE_NAME: _modules/keystone/federation/utils -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../../../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>keystone.federation.utils</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <h1>Source code for keystone.federation.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may</span>
+<span class="c1"># not use this file except in compliance with the License. You may obtain</span>
+<span class="c1"># a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#      http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT</span>
+<span class="c1"># WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the</span>
+<span class="c1"># License for the specific language governing permissions and limitations</span>
+<span class="c1"># under the License.</span>
+
+<span class="sd">&quot;&quot;&quot;Utilities for Federation Extension.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">flask</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jsonschema</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">cfg</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_log</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_serialization</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsonutils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oslo_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">timeutils</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">provider_api</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">keystone.conf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone</span><span class="w"> </span><span class="kn">import</span> <span class="n">exception</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keystone.i18n</span><span class="w"> </span><span class="kn">import</span> <span class="n">_</span>
+
+<span class="n">CONF</span> <span class="o">=</span> <span class="n">keystone</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">CONF</span>
+<span class="n">LOG</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">PROVIDERS</span> <span class="o">=</span> <span class="n">provider_api</span><span class="o">.</span><span class="n">ProviderAPIs</span>
+
+
+<div class="viewcode-block" id="UserType">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.UserType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserType</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;User mapping type.&quot;&quot;&quot;</span>
+
+    <span class="n">EPHEMERAL</span> <span class="o">=</span> <span class="s1">&#39;ephemeral&#39;</span>
+    <span class="n">LOCAL</span> <span class="o">=</span> <span class="s1">&#39;local&#39;</span></div>
+
+
+
+<span class="n">ROLE_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">}},</span>
+        <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="n">PROJECTS_SCHEMA</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;roles&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span> <span class="s2">&quot;roles&quot;</span><span class="p">:</span> <span class="n">ROLE_PROPERTIES</span><span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="n">IDP_ATTRIBUTE_MAPPING_SCHEMA_1_0</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;rules&#39;</span><span class="p">],</span>
+    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;rules&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;minItems&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;remote&#39;</span><span class="p">],</span>
+                <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;local&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                                        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                                        <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                                        <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/domain&quot;</span>
+                                        <span class="p">},</span>
+                                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                                            <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                                <span class="n">UserType</span><span class="o">.</span><span class="n">EPHEMERAL</span><span class="p">,</span>
+                                                <span class="n">UserType</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">,</span>
+                                            <span class="p">],</span>
+                                        <span class="p">},</span>
+                                    <span class="p">},</span>
+                                    <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                                <span class="p">},</span>
+                                <span class="s2">&quot;projects&quot;</span><span class="p">:</span> <span class="n">PROJECTS_SCHEMA</span><span class="p">,</span>
+                                <span class="s2">&quot;group&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;oneOf&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                        <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/group_by_id&quot;</span><span class="p">},</span>
+                                        <span class="p">{</span>
+                                            <span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/group_by_name&quot;</span>
+                                        <span class="p">},</span>
+                                    <span class="p">],</span>
+                                <span class="p">},</span>
+                                <span class="s2">&quot;groups&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                                <span class="s2">&quot;group_ids&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                                <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/domain&quot;</span><span class="p">},</span>
+                            <span class="p">},</span>
+                        <span class="p">},</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;remote&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;minItems&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;oneOf&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/empty&quot;</span><span class="p">},</span>
+                                <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/any_one_of&quot;</span><span class="p">},</span>
+                                <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/not_any_of&quot;</span><span class="p">},</span>
+                                <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/blacklist&quot;</span><span class="p">},</span>
+                                <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/whitelist&quot;</span><span class="p">},</span>
+                            <span class="p">],</span>
+                        <span class="p">},</span>
+                    <span class="p">},</span>
+                <span class="p">},</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;schema_version&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;empty&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">}},</span>
+            <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;any_one_of&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;any_one_of&#39;</span><span class="p">],</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                <span class="s2">&quot;any_one_of&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">},</span>
+                <span class="s2">&quot;regex&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">},</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;not_any_of&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;not_any_of&#39;</span><span class="p">],</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                <span class="s2">&quot;not_any_of&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">},</span>
+                <span class="s2">&quot;regex&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">},</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;blacklist&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;blacklist&#39;</span><span class="p">],</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                <span class="s2">&quot;blacklist&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">},</span>
+                <span class="s2">&quot;regex&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">},</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;whitelist&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;whitelist&#39;</span><span class="p">],</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                <span class="s2">&quot;whitelist&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">},</span>
+                <span class="s2">&quot;regex&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">},</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;group_by_id&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">}},</span>
+            <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;group_by_name&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/domain&quot;</span><span class="p">},</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;domain&quot;</span><span class="p">],</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="c1"># `IDP_ATTRIBUTE_MAPPING_SCHEMA_2_0` adds the domain option for projects,</span>
+<span class="c1"># the goal is to work in a similar fashion as `user` and `groups` properties</span>
+<span class="n">IDP_ATTRIBUTE_MAPPING_SCHEMA_2_0</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span>
+    <span class="n">IDP_ATTRIBUTE_MAPPING_SCHEMA_1_0</span>
+<span class="p">)</span>
+
+<span class="n">PROJECTS_SCHEMA_2_0</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">PROJECTS_SCHEMA</span><span class="p">)</span>
+<span class="n">PROJECTS_SCHEMA_2_0</span><span class="p">[</span><span class="s2">&quot;items&quot;</span><span class="p">][</span><span class="s2">&quot;properties&quot;</span><span class="p">][</span><span class="s2">&quot;domain&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># type: ignore[index]</span>
+    <span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/domain&quot;</span>
+<span class="p">}</span>
+
+<span class="n">IDP_ATTRIBUTE_MAPPING_SCHEMA_2_0</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;rules&#39;</span><span class="p">][</span><span class="s1">&#39;items&#39;</span><span class="p">][</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span>  <span class="c1"># type: ignore[index]</span>
+    <span class="s1">&#39;local&#39;</span>
+<span class="p">][</span><span class="s1">&#39;items&#39;</span><span class="p">][</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;projects&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PROJECTS_SCHEMA_2_0</span>
+
+
+<div class="viewcode-block" id="get_default_attribute_mapping_schema_version">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.get_default_attribute_mapping_schema_version">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_default_attribute_mapping_schema_version</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">CONF</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">attribute_mapping_default_schema_version</span></div>
+
+
+
+<div class="viewcode-block" id="DirectMaps">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.DirectMaps">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DirectMaps</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An abstraction around the remote matches.</span>
+
+<span class="sd">    Each match is treated internally as a list.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_matches</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the direct map array as a string.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_matches</span><span class="si">}</span><span class="s1">&#39;</span>
+
+<div class="viewcode-block" id="DirectMaps.add">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.DirectMaps.add">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a matched value to the list of matches.</span>
+
+<span class="sd">        :param list value: the match to save</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Used by Python when executing ``&#39;&#39;.format(*DirectMaps())``.&quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matches</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">value</span></div>
+
+
+
+<div class="viewcode-block" id="validate_mapping_structure">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.validate_mapping_structure">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_mapping_structure</span><span class="p">(</span><span class="n">ref</span><span class="p">):</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s1">&#39;schema_version&#39;</span><span class="p">,</span> <span class="n">get_default_attribute_mapping_schema_version</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;Validating mapping [</span><span class="si">%s</span><span class="s2">] using validator from version [</span><span class="si">%s</span><span class="s2">].&quot;</span><span class="p">,</span>
+        <span class="n">ref</span><span class="p">,</span>
+        <span class="n">version</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">v</span> <span class="o">=</span> <span class="n">jsonschema</span><span class="o">.</span><span class="n">Draft4Validator</span><span class="p">(</span>
+        <span class="n">IDP_ATTRIBUTE_MAPPING_SCHEMAS</span><span class="p">[</span><span class="n">version</span><span class="p">][</span><span class="s1">&#39;schema&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">messages</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">iter_errors</span><span class="p">(</span><span class="n">ref</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="p">):</span>
+        <span class="n">messages</span> <span class="o">=</span> <span class="n">messages</span> <span class="o">+</span> <span class="n">error</span><span class="o">.</span><span class="n">message</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="k">if</span> <span class="n">messages</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="validate_expiration">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.validate_expiration">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_expiration</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
+    <span class="n">token_expiration_datetime</span> <span class="o">=</span> <span class="n">timeutils</span><span class="o">.</span><span class="n">normalize_time</span><span class="p">(</span>
+        <span class="n">timeutils</span><span class="o">.</span><span class="n">parse_isotime</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">expires_at</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">timeutils</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">token_expiration_datetime</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">Unauthorized</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Federation token is expired&#39;</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="get_remote_id_parameter">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.get_remote_id_parameter">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_remote_id_parameter</span><span class="p">(</span><span class="n">idp</span><span class="p">,</span> <span class="n">protocol</span><span class="p">):</span>
+    <span class="c1"># NOTE(marco-fargetta): Since we support any protocol ID, we attempt to</span>
+    <span class="c1"># retrieve the remote_id_attribute of the protocol ID. It will look up</span>
+    <span class="c1"># first if the remote_id_attribute exists.</span>
+    <span class="n">protocol_ref</span> <span class="o">=</span> <span class="n">PROVIDERS</span><span class="o">.</span><span class="n">federation_api</span><span class="o">.</span><span class="n">get_protocol</span><span class="p">(</span><span class="n">idp</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">protocol</span><span class="p">)</span>
+    <span class="n">remote_id_parameter</span> <span class="o">=</span> <span class="n">protocol_ref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;remote_id_attribute&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">remote_id_parameter</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">remote_id_parameter</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># If it&#39;s not registered in the config, then register the option and</span>
+        <span class="c1"># try again. This allows the user to register protocols other than</span>
+        <span class="c1"># oidc and saml2.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">remote_id_parameter</span> <span class="o">=</span> <span class="n">CONF</span><span class="p">[</span><span class="n">protocol</span><span class="p">][</span><span class="s1">&#39;remote_id_attribute&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="c1"># TODO(dolph): Move configuration registration to keystone.conf</span>
+            <span class="n">CONF</span><span class="o">.</span><span class="n">register_opt</span><span class="p">(</span>
+                <span class="n">cfg</span><span class="o">.</span><span class="n">StrOpt</span><span class="p">(</span><span class="s1">&#39;remote_id_attribute&#39;</span><span class="p">),</span> <span class="n">group</span><span class="o">=</span><span class="n">protocol</span>
+            <span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">remote_id_parameter</span> <span class="o">=</span> <span class="n">CONF</span><span class="p">[</span><span class="n">protocol</span><span class="p">][</span><span class="s1">&#39;remote_id_attribute&#39;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># nosec</span>
+                <span class="c1"># No remote ID attr, will be logged and use the default</span>
+                <span class="c1"># instead.</span>
+                <span class="k">pass</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">remote_id_parameter</span><span class="p">:</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s1">&#39;Cannot find &quot;remote_id_attribute&quot; in configuration &#39;</span>
+            <span class="s1">&#39;group </span><span class="si">%s</span><span class="s1">. Trying default location in &#39;</span>
+            <span class="s1">&#39;group federation.&#39;</span><span class="p">,</span>
+            <span class="n">protocol</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">remote_id_parameter</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">remote_id_attribute</span>
+
+    <span class="k">return</span> <span class="n">remote_id_parameter</span></div>
+
+
+
+<div class="viewcode-block" id="validate_idp">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.validate_idp">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_idp</span><span class="p">(</span><span class="n">idp</span><span class="p">,</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">assertion</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The IdP providing the assertion should be registered for the mapping.&quot;&quot;&quot;</span>
+    <span class="n">remote_id_parameter</span> <span class="o">=</span> <span class="n">get_remote_id_parameter</span><span class="p">(</span><span class="n">idp</span><span class="p">,</span> <span class="n">protocol</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">remote_id_parameter</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">idp</span><span class="p">[</span><span class="s1">&#39;remote_ids&#39;</span><span class="p">]:</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Impossible to identify the IdP </span><span class="si">%s</span><span class="s1"> &#39;</span><span class="p">,</span> <span class="n">idp</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+        <span class="c1"># If nothing is defined, the administrator may want to</span>
+        <span class="c1"># allow the mapping of every IdP</span>
+        <span class="k">return</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">idp_remote_identifier</span> <span class="o">=</span> <span class="n">assertion</span><span class="p">[</span><span class="n">remote_id_parameter</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Could not find Identity Provider identifier in environment&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">idp_remote_identifier</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">idp</span><span class="p">[</span><span class="s1">&#39;remote_ids&#39;</span><span class="p">]:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+            <span class="s1">&#39;Incoming identity provider identifier not included &#39;</span>
+            <span class="s1">&#39;among the accepted identifiers.&#39;</span>
+        <span class="p">)</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">Forbidden</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="validate_mapped_group_ids">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.validate_mapped_group_ids">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_mapped_group_ids</span><span class="p">(</span><span class="n">group_ids</span><span class="p">,</span> <span class="n">mapping_id</span><span class="p">,</span> <span class="n">identity_api</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Iterate over group ids and make sure they are present in the backend.</span>
+
+<span class="sd">    This call is not transactional.</span>
+<span class="sd">    :param group_ids: IDs of the groups to be checked</span>
+<span class="sd">    :type group_ids: list of str</span>
+
+<span class="sd">    :param mapping_id: id of the mapping used for this operation</span>
+<span class="sd">    :type mapping_id: str</span>
+
+<span class="sd">    :param identity_api: Identity Manager object used for communication with</span>
+<span class="sd">                         backend</span>
+<span class="sd">    :type identity_api: identity.Manager</span>
+
+<span class="sd">    :raises keystone.exception.MappedGroupNotFound: If the group returned by</span>
+<span class="sd">        mapping was not found in the backend.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">group_id</span> <span class="ow">in</span> <span class="n">group_ids</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">identity_api</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">group_id</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">exception</span><span class="o">.</span><span class="n">GroupNotFound</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">MappedGroupNotFound</span><span class="p">(</span>
+                <span class="n">group_id</span><span class="o">=</span><span class="n">group_id</span><span class="p">,</span> <span class="n">mapping_id</span><span class="o">=</span><span class="n">mapping_id</span>
+            <span class="p">)</span></div>
+
+
+
+<span class="c1"># TODO(marek-denis): Optimize this function, so the number of calls to the</span>
+<span class="c1"># backend are minimized.</span>
+<div class="viewcode-block" id="transform_to_group_ids">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.transform_to_group_ids">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">transform_to_group_ids</span><span class="p">(</span>
+    <span class="n">group_names</span><span class="p">,</span> <span class="n">mapping_id</span><span class="p">,</span> <span class="n">identity_api</span><span class="p">,</span> <span class="n">resource_api</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transform groups identified by name/domain to their ids.</span>
+
+<span class="sd">    Function accepts list of groups identified by a name and domain giving</span>
+<span class="sd">    a list of group ids in return. A message is logged if the group doesn&#39;t</span>
+<span class="sd">    exist in the backend.</span>
+
+<span class="sd">    Example of group_names parameter::</span>
+
+<span class="sd">        [</span>
+<span class="sd">            {&quot;name&quot;: &quot;group_name&quot;, &quot;domain&quot;: {&quot;id&quot;: &quot;domain_id&quot;}},</span>
+<span class="sd">            {&quot;name&quot;: &quot;group_name_2&quot;, &quot;domain&quot;: {&quot;name&quot;: &quot;domain_name&quot;}},</span>
+<span class="sd">        ]</span>
+
+<span class="sd">    :param group_names: list of group identified by name and its domain.</span>
+<span class="sd">    :type group_names: list</span>
+
+<span class="sd">    :param mapping_id: id of the mapping used for mapping assertion into</span>
+<span class="sd">        local credentials</span>
+<span class="sd">    :type mapping_id: str</span>
+
+<span class="sd">    :param identity_api: identity_api object</span>
+<span class="sd">    :param resource_api: resource manager object</span>
+
+<span class="sd">    :returns: generator object with group ids</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">resolve_domain</span><span class="p">(</span><span class="n">domain</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return domain id.</span>
+
+<span class="sd">        Input is a dictionary with a domain identified either by a ``id`` or a</span>
+<span class="sd">        ``name``. In the latter case system will attempt to fetch domain object</span>
+<span class="sd">        from the backend.</span>
+
+<span class="sd">        :returns: domain&#39;s id</span>
+<span class="sd">        :rtype: str</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">domain_id</span> <span class="o">=</span> <span class="n">domain</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">resource_api</span><span class="o">.</span><span class="n">get_domain_by_name</span><span class="p">(</span>
+            <span class="n">domain</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">domain_id</span>
+
+    <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">group_names</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">group_dict</span> <span class="o">=</span> <span class="n">identity_api</span><span class="o">.</span><span class="n">get_group_by_name</span><span class="p">(</span>
+                <span class="n">group</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">resolve_domain</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">])</span>
+            <span class="p">)</span>
+            <span class="k">yield</span> <span class="n">group_dict</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="n">exception</span><span class="o">.</span><span class="n">GroupNotFound</span><span class="p">:</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Group </span><span class="si">%s</span><span class="s1"> has no entry in the backend&#39;</span><span class="p">,</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="get_assertion_params_from_env">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.get_assertion_params_from_env">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_assertion_params_from_env</span><span class="p">():</span>
+    <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Environment variables: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="p">)</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="n">CONF</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">assertion_prefix</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="c1"># These bytes may be decodable as ISO-8859-1 according to Section</span>
+        <span class="c1"># 3.2.4 of RFC 7230. Let&#39;s assume that our web server plugins are</span>
+        <span class="c1"># correctly encoding the data.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;decode&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;ISO-8859-1&#39;</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="RuleProcessor">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.RuleProcessor">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RuleProcessor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A class to process assertions and mapping rules.&quot;&quot;&quot;</span>
+
+    <span class="k">class</span><span class="w"> </span><span class="nc">_EvalType</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mapping rule evaluation types.&quot;&quot;&quot;</span>
+
+        <span class="n">ANY_ONE_OF</span> <span class="o">=</span> <span class="s1">&#39;any_one_of&#39;</span>
+        <span class="n">NOT_ANY_OF</span> <span class="o">=</span> <span class="s1">&#39;not_any_of&#39;</span>
+        <span class="n">BLACKLIST</span> <span class="o">=</span> <span class="s1">&#39;blacklist&#39;</span>
+        <span class="n">WHITELIST</span> <span class="o">=</span> <span class="s1">&#39;whitelist&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mapping_id</span><span class="p">,</span> <span class="n">rules</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize RuleProcessor.</span>
+
+<span class="sd">        Example rules can be found at:</span>
+<span class="sd">        :class:`keystone.tests.mapping_fixtures`</span>
+
+<span class="sd">        :param mapping_id: id for the mapping</span>
+<span class="sd">        :type mapping_id: string</span>
+<span class="sd">        :param rules: rules from a mapping</span>
+<span class="sd">        :type rules: dict</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapping_id</span> <span class="o">=</span> <span class="n">mapping_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="o">=</span> <span class="n">rules</span>
+
+<div class="viewcode-block" id="RuleProcessor.process">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.RuleProcessor.process">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">assertion_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform assertion to a dictionary.</span>
+
+<span class="sd">        The dictionary contains mapping of user name and group ids</span>
+<span class="sd">        based on mapping rules.</span>
+
+<span class="sd">        This function will iterate through the mapping rules to find</span>
+<span class="sd">        assertions that are valid.</span>
+
+<span class="sd">        :param assertion_data: an assertion containing values from an IdP</span>
+<span class="sd">        :type assertion_data: dict</span>
+
+<span class="sd">        Example assertion_data::</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &#39;Email&#39;: &#39;testacct@example.com&#39;,</span>
+<span class="sd">                &#39;UserName&#39;: &#39;testacct&#39;,</span>
+<span class="sd">                &#39;FirstName&#39;: &#39;Test&#39;,</span>
+<span class="sd">                &#39;LastName&#39;: &#39;Account&#39;,</span>
+<span class="sd">                &#39;orgPersonType&#39;: &#39;Tester&#39;,</span>
+<span class="sd">            }</span>
+
+<span class="sd">        :returns: dictionary with user and group_ids</span>
+
+<span class="sd">        The expected return structure is::</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &#39;name&#39;: &#39;foobar&#39;,</span>
+<span class="sd">                &#39;group_ids&#39;: [&#39;abc123&#39;, &#39;def456&#39;],</span>
+<span class="sd">                &#39;group_names&#39;: [</span>
+<span class="sd">                    {&#39;name&#39;: &#39;group_name_1&#39;, &#39;domain&#39;: {&#39;name&#39;: &#39;domain1&#39;}},</span>
+<span class="sd">                    {&#39;name&#39;: &#39;group_name_1_1&#39;, &#39;domain&#39;: {&#39;name&#39;: &#39;domain1&#39;}},</span>
+<span class="sd">                    {&#39;name&#39;: &#39;group_name_2&#39;, &#39;domain&#39;: {&#39;id&#39;: &#39;xyz132&#39;}},</span>
+<span class="sd">                ],</span>
+<span class="sd">            }</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Assertions will come in as string key-value pairs, and will use a</span>
+        <span class="c1"># semi-colon to indicate multiple values, i.e. groups.</span>
+        <span class="c1"># This will create a new dictionary where the values are arrays, and</span>
+        <span class="c1"># any multiple values are stored in the arrays.</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;assertion data: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">assertion_data</span><span class="p">)</span>
+        <span class="n">assertion</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">n</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">assertion_data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;assertion: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">assertion</span><span class="p">)</span>
+        <span class="n">identity_values</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;rules: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules</span><span class="p">:</span>
+            <span class="n">direct_maps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verify_all_requirements</span><span class="p">(</span>
+                <span class="n">rule</span><span class="p">[</span><span class="s1">&#39;remote&#39;</span><span class="p">],</span> <span class="n">assertion</span>
+            <span class="p">)</span>
+
+            <span class="c1"># If the compare comes back as None, then the rule did not apply</span>
+            <span class="c1"># to the assertion data, go on to the next rule</span>
+            <span class="k">if</span> <span class="n">direct_maps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># If there are no direct mappings, then add the local mapping</span>
+            <span class="c1"># directly to the array of saved values. However, if there is</span>
+            <span class="c1"># a direct mapping, then perform variable replacement.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">direct_maps</span><span class="p">:</span>
+                <span class="n">identity_values</span> <span class="o">+=</span> <span class="n">rule</span><span class="p">[</span><span class="s1">&#39;local&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">local</span> <span class="ow">in</span> <span class="n">rule</span><span class="p">[</span><span class="s1">&#39;local&#39;</span><span class="p">]:</span>
+                    <span class="n">new_local</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_local_mapping</span><span class="p">(</span><span class="n">local</span><span class="p">,</span> <span class="n">direct_maps</span><span class="p">)</span>
+                    <span class="n">identity_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_local</span><span class="p">)</span>
+
+        <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;identity_values: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">identity_values</span><span class="p">)</span>
+        <span class="n">mapped_properties</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">identity_values</span><span class="p">)</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;mapped_properties: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">mapped_properties</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mapped_properties</span></div>
+
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_ast_literal_eval</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="c1"># We expect a list here, but literal_eval will successfully</span>
+            <span class="c1"># parse and return a single value. We raise ValueError if so.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">SyntaxError</span><span class="p">):</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">values</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_normalize_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity_value</span><span class="p">):</span>
+        <span class="c1"># In this case, identity_value[&#39;groups&#39;] is a string</span>
+        <span class="c1"># representation of a list, and we want a real list.  This is</span>
+        <span class="c1"># due to the way we do direct mapping substitutions today (see</span>
+        <span class="c1"># function _update_local_mapping() )</span>
+        <span class="k">if</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">identity_value</span><span class="p">[</span><span class="s1">&#39;groups&#39;</span><span class="p">]:</span>
+            <span class="n">group_names_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ast_literal_eval</span><span class="p">(</span><span class="n">identity_value</span><span class="p">[</span><span class="s1">&#39;groups&#39;</span><span class="p">])</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">convert_json</span><span class="p">(</span><span class="n">group</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;JSON:&#39;</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">jsonutils</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;JSON:&#39;</span><span class="p">))</span>
+                <span class="k">return</span> <span class="n">group</span>
+
+            <span class="n">group_dicts</span> <span class="o">=</span> <span class="p">[</span><span class="n">convert_json</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">group_names_list</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">group_dicts</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;domain&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">g</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+                        <span class="s2">&quot;Invalid rule: </span><span class="si">%(identity_value)s</span><span class="s2">. Both &quot;</span>
+                        <span class="s2">&quot;&#39;groups&#39; and &#39;domain&#39; keywords must be &quot;</span>
+                        <span class="s2">&quot;specified.&quot;</span>
+                    <span class="p">)</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span> <span class="o">%</span> <span class="p">{</span><span class="s1">&#39;identity_value&#39;</span><span class="p">:</span> <span class="n">identity_value</span><span class="p">}</span>
+                    <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;domain&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">identity_value</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+                    <span class="s2">&quot;Invalid rule: </span><span class="si">%(identity_value)s</span><span class="s2">. Both &quot;</span>
+                    <span class="s2">&quot;&#39;groups&#39; and &#39;domain&#39; keywords must be &quot;</span>
+                    <span class="s2">&quot;specified.&quot;</span>
+                <span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span> <span class="o">%</span> <span class="p">{</span><span class="s1">&#39;identity_value&#39;</span><span class="p">:</span> <span class="n">identity_value</span><span class="p">}</span>
+                <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">group_names_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ast_literal_eval</span><span class="p">(</span><span class="n">identity_value</span><span class="p">[</span><span class="s1">&#39;groups&#39;</span><span class="p">])</span>
+            <span class="n">domain</span> <span class="o">=</span> <span class="n">identity_value</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">]</span>
+            <span class="n">group_dicts</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s1">&#39;domain&#39;</span><span class="p">:</span> <span class="n">domain</span><span class="p">}</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">group_names_list</span>
+            <span class="p">]</span>
+        <span class="k">return</span> <span class="n">group_dicts</span>
+
+<div class="viewcode-block" id="RuleProcessor.normalize_user">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.RuleProcessor.normalize_user">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">normalize_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">default_mapping_domain</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse and validate user mapping.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">user</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">UserType</span><span class="o">.</span><span class="n">EPHEMERAL</span>
+        <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">UserType</span><span class="o">.</span><span class="n">EPHEMERAL</span><span class="p">,</span> <span class="n">UserType</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;User type </span><span class="si">%s</span><span class="s2"> not supported&quot;</span><span class="p">)</span> <span class="o">%</span> <span class="n">user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RuleProcessor.extract_groups">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.RuleProcessor.extract_groups">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">extract_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groups_by_domain</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">groups</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">groups_by_domain</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+            <span class="k">yield from</span> <span class="nb">list</span><span class="p">({</span><span class="n">g</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span> <span class="n">g</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">}</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity_values</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform local mappings, to an easier to understand format.</span>
+
+<span class="sd">        Transform the incoming array to generate the return value for</span>
+<span class="sd">        the process function. Generating content for Keystone tokens will</span>
+<span class="sd">        be easier if some pre-processing is done at this level.</span>
+
+<span class="sd">        :param identity_values: local mapping from valid evaluations</span>
+<span class="sd">        :type identity_values: array of dict</span>
+
+<span class="sd">        Example identity_values::</span>
+
+<span class="sd">            [</span>
+<span class="sd">                {</span>
+<span class="sd">                    &#39;group&#39;: {&#39;id&#39;: &#39;0cd5e9&#39;},</span>
+<span class="sd">                    &#39;user&#39;: {</span>
+<span class="sd">                        &#39;email&#39;: &#39;bob@example.com&#39;</span>
+<span class="sd">                    },</span>
+<span class="sd">                },</span>
+<span class="sd">                {</span>
+<span class="sd">                    &#39;groups&#39;: [&#39;member&#39;, &#39;admin&#39;, tester&#39;],</span>
+<span class="sd">                    &#39;domain&#39;: {</span>
+<span class="sd">                        &#39;name&#39;: &#39;default_domain&#39;</span>
+<span class="sd">                    }</span>
+<span class="sd">                },</span>
+<span class="sd">                {</span>
+<span class="sd">                    &#39;group_ids&#39;: [&#39;abc123&#39;, &#39;def456&#39;, &#39;0cd5e9&#39;]</span>
+<span class="sd">                }</span>
+<span class="sd">            ]</span>
+
+<span class="sd">        :returns: dictionary with user name, group_ids and group_names.</span>
+<span class="sd">        :rtype: dict</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># initialize the group_ids as a set to eliminate duplicates</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">group_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">group_names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">groups_by_domain</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">projects</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># if mapping yield no valid identity values, we should bail right away</span>
+        <span class="c1"># instead of continuing on with a normalized bogus user</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">identity_values</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Could not map any federated user properties to identity &quot;</span>
+                <span class="s2">&quot;values. Check debug logs or the mapping used for &quot;</span>
+                <span class="s2">&quot;additional details.&quot;</span>
+            <span class="p">)</span>
+            <span class="n">tr_msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+                <span class="s2">&quot;Could not map any federated user properties to &quot;</span>
+                <span class="s2">&quot;identity values. Check debug logs or the mapping &quot;</span>
+                <span class="s2">&quot;used for additional details.&quot;</span>
+            <span class="p">)</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">tr_msg</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">identity_value</span> <span class="ow">in</span> <span class="n">identity_values</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;user&#39;</span> <span class="ow">in</span> <span class="n">identity_value</span><span class="p">:</span>
+                <span class="c1"># if a mapping outputs more than one user name, log it</span>
+                <span class="k">if</span> <span class="n">user</span><span class="p">:</span>
+                    <span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                        <span class="s1">&#39;Ignoring user [</span><span class="si">%s</span><span class="s1">]&#39;</span><span class="p">,</span> <span class="n">identity_value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">user</span> <span class="o">=</span> <span class="n">identity_value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="s1">&#39;group&#39;</span> <span class="ow">in</span> <span class="n">identity_value</span><span class="p">:</span>
+                <span class="n">group</span> <span class="o">=</span> <span class="n">identity_value</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                    <span class="n">group_ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                    <span class="n">groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_group_by_name</span><span class="p">(</span>
+                        <span class="n">group</span><span class="p">,</span> <span class="n">groups_by_domain</span>
+                    <span class="p">)</span>
+                    <span class="n">group_names</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">&#39;groups&#39;</span> <span class="ow">in</span> <span class="n">identity_value</span><span class="p">:</span>
+                <span class="n">group_dicts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_groups</span><span class="p">(</span><span class="n">identity_value</span><span class="p">)</span>
+                <span class="n">group_names</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">group_dicts</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">&#39;group_ids&#39;</span> <span class="ow">in</span> <span class="n">identity_value</span><span class="p">:</span>
+                <span class="c1"># If identity_values[&#39;group_ids&#39;] is a string representation</span>
+                <span class="c1"># of a list, parse it to a real list. Also, if the provided</span>
+                <span class="c1"># group_ids parameter contains only one element, it will be</span>
+                <span class="c1"># parsed as a simple string, and not a list or the</span>
+                <span class="c1"># representation of a list.</span>
+                <span class="n">group_ids</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_ast_literal_eval</span><span class="p">(</span><span class="n">identity_value</span><span class="p">[</span><span class="s1">&#39;group_ids&#39;</span><span class="p">])</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="s1">&#39;projects&#39;</span> <span class="ow">in</span> <span class="n">identity_value</span><span class="p">:</span>
+                <span class="n">projects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_projects</span><span class="p">(</span><span class="n">identity_value</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalize_user</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">identity_value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;domain&#39;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span>
+            <span class="s1">&#39;group_ids&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">group_ids</span><span class="p">),</span>
+            <span class="s1">&#39;group_names&#39;</span><span class="p">:</span> <span class="n">group_names</span><span class="p">,</span>
+            <span class="s1">&#39;projects&#39;</span><span class="p">:</span> <span class="n">projects</span><span class="p">,</span>
+        <span class="p">}</span>
+
+<div class="viewcode-block" id="RuleProcessor.process_group_by_name">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.RuleProcessor.process_group_by_name">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">process_group_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">groups_by_domain</span><span class="p">):</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+        <span class="n">groups_by_domain</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_groups</span><span class="p">(</span><span class="n">groups_by_domain</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RuleProcessor.extract_projects">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.RuleProcessor.extract_projects">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">extract_projects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity_value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">identity_value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;projects&#39;</span><span class="p">,</span> <span class="p">[])</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_local_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">local</span><span class="p">,</span> <span class="n">direct_maps</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Replace any {0}, {1} ... values with data from the assertion.</span>
+
+<span class="sd">        :param local: local mapping reference that needs to be updated</span>
+<span class="sd">        :type local: dict</span>
+<span class="sd">        :param direct_maps: identity values used to update local</span>
+<span class="sd">        :type direct_maps: keystone.federation.utils.DirectMaps</span>
+
+<span class="sd">        Example local::</span>
+
+<span class="sd">            {&#39;user&#39;: {&#39;name&#39;: &#39;{0} {1}&#39;, &#39;email&#39;: &#39;{2}&#39;}}</span>
+
+<span class="sd">        Example direct_maps::</span>
+
+<span class="sd">            [[&#39;Bob&#39;], [&#39;Thompson&#39;], [&#39;bob@example.com&#39;]]</span>
+
+<span class="sd">        :returns: new local mapping reference with replaced values.</span>
+
+<span class="sd">        The expected return structure is::</span>
+
+<span class="sd">            {&#39;user&#39;: {&#39;name&#39;: &#39;Bob Thompson&#39;, &#39;email&#39;: &#39;bob@example.org&#39;}}</span>
+
+<span class="sd">        :raises keystone.exception.DirectMappingError: when referring to a</span>
+<span class="sd">            remote match from a local section of a rule</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;direct_maps: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">direct_maps</span><span class="p">)</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;local: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">local</span><span class="p">)</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">local</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">new_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_local_mapping</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">direct_maps</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">new_value</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_update_local_mapping</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">direct_maps</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">v</span>
+                <span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">new_value</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">direct_maps</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">DirectMappingError</span><span class="p">(</span>
+                        <span class="n">mapping_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mapping_id</span>
+                    <span class="p">)</span>
+
+            <span class="n">new</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_value</span>
+        <span class="k">return</span> <span class="n">new</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_verify_all_requirements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">requirements</span><span class="p">,</span> <span class="n">assertion</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compare remote requirements of a rule against the assertion.</span>
+
+<span class="sd">        If a value of ``None`` is returned, the rule with this assertion</span>
+<span class="sd">        doesn&#39;t apply.</span>
+<span class="sd">        If an array of zero length is returned, then there are no direct</span>
+<span class="sd">        mappings to be performed, but the rule is valid.</span>
+<span class="sd">        Otherwise, then it will first attempt to filter the values according</span>
+<span class="sd">        to blacklist or whitelist rules and finally return the values in</span>
+<span class="sd">        order, to be directly mapped.</span>
+
+<span class="sd">        :param requirements: list of remote requirements from rules</span>
+<span class="sd">        :type requirements: list</span>
+
+<span class="sd">        Example requirements::</span>
+
+<span class="sd">            [</span>
+<span class="sd">                {&quot;type&quot;: &quot;UserName&quot;},</span>
+<span class="sd">                {&quot;type&quot;: &quot;orgPersonType&quot;, &quot;any_one_of&quot;: [&quot;Customer&quot;]},</span>
+<span class="sd">                {&quot;type&quot;: &quot;ADFS_GROUPS&quot;, &quot;whitelist&quot;: [&quot;g1&quot;, &quot;g2&quot;, &quot;g3&quot;, &quot;g4&quot;]},</span>
+<span class="sd">            ]</span>
+
+<span class="sd">        :param assertion: dict of attributes from an IdP</span>
+<span class="sd">        :type assertion: dict</span>
+
+<span class="sd">        Example assertion::</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &#39;UserName&#39;: [&#39;testacct&#39;],</span>
+<span class="sd">                &#39;LastName&#39;: [&#39;Account&#39;],</span>
+<span class="sd">                &#39;orgPersonType&#39;: [&#39;Tester&#39;],</span>
+<span class="sd">                &#39;Email&#39;: [&#39;testacct@example.com&#39;],</span>
+<span class="sd">                &#39;FirstName&#39;: [&#39;Test&#39;],</span>
+<span class="sd">                &#39;ADFS_GROUPS&#39;: [&#39;g1&#39;, &#39;g2&#39;],</span>
+<span class="sd">            }</span>
+
+<span class="sd">        :returns: identity values used to update local</span>
+<span class="sd">        :rtype: keystone.federation.utils.DirectMaps or None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">direct_maps</span> <span class="o">=</span> <span class="n">DirectMaps</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">requirement</span> <span class="ow">in</span> <span class="n">requirements</span><span class="p">:</span>
+            <span class="n">requirement_type</span> <span class="o">=</span> <span class="n">requirement</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+            <span class="n">direct_map_values</span> <span class="o">=</span> <span class="n">assertion</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">requirement_type</span><span class="p">)</span>
+            <span class="n">regex</span> <span class="o">=</span> <span class="n">requirement</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;regex&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">direct_map_values</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="n">any_one_values</span> <span class="o">=</span> <span class="n">requirement</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_EvalType</span><span class="o">.</span><span class="n">ANY_ONE_OF</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">any_one_values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_requirement</span><span class="p">(</span>
+                    <span class="n">any_one_values</span><span class="p">,</span>
+                    <span class="n">direct_map_values</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_EvalType</span><span class="o">.</span><span class="n">ANY_ONE_OF</span><span class="p">,</span>
+                    <span class="n">regex</span><span class="p">,</span>
+                <span class="p">):</span>
+                    <span class="k">continue</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="n">not_any_values</span> <span class="o">=</span> <span class="n">requirement</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_EvalType</span><span class="o">.</span><span class="n">NOT_ANY_OF</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">not_any_values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_requirement</span><span class="p">(</span>
+                    <span class="n">not_any_values</span><span class="p">,</span>
+                    <span class="n">direct_map_values</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_EvalType</span><span class="o">.</span><span class="n">NOT_ANY_OF</span><span class="p">,</span>
+                    <span class="n">regex</span><span class="p">,</span>
+                <span class="p">):</span>
+                    <span class="k">continue</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="c1"># If &#39;any_one_of&#39; or &#39;not_any_of&#39; are not found, then values are</span>
+            <span class="c1"># within &#39;type&#39;. Attempt to find that &#39;type&#39; within the assertion,</span>
+            <span class="c1"># and filter these values if &#39;whitelist&#39; or &#39;blacklist&#39; is set.</span>
+            <span class="n">blacklisted_values</span> <span class="o">=</span> <span class="n">requirement</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_EvalType</span><span class="o">.</span><span class="n">BLACKLIST</span><span class="p">)</span>
+            <span class="n">whitelisted_values</span> <span class="o">=</span> <span class="n">requirement</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_EvalType</span><span class="o">.</span><span class="n">WHITELIST</span><span class="p">)</span>
+
+            <span class="c1"># If a blacklist or whitelist is used, we want to map to the</span>
+            <span class="c1"># whole list instead of just its values separately.</span>
+            <span class="k">if</span> <span class="n">blacklisted_values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">direct_map_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_requirement</span><span class="p">(</span>
+                    <span class="n">blacklisted_values</span><span class="p">,</span>
+                    <span class="n">direct_map_values</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_EvalType</span><span class="o">.</span><span class="n">BLACKLIST</span><span class="p">,</span>
+                    <span class="n">regex</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">whitelisted_values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">direct_map_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_requirement</span><span class="p">(</span>
+                    <span class="n">whitelisted_values</span><span class="p">,</span>
+                    <span class="n">direct_map_values</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_EvalType</span><span class="o">.</span><span class="n">WHITELIST</span><span class="p">,</span>
+                    <span class="n">regex</span><span class="p">,</span>
+                <span class="p">)</span>
+
+            <span class="n">direct_maps</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">direct_map_values</span><span class="p">)</span>
+
+            <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;updating a direct mapping: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">direct_map_values</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">direct_maps</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate_values_by_regex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">assertion_values</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">assertion</span>
+            <span class="k">for</span> <span class="n">assertion</span> <span class="ow">in</span> <span class="n">assertion_values</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">assertion</span><span class="p">)</span> <span class="k">for</span> <span class="n">regex</span> <span class="ow">in</span> <span class="n">values</span><span class="p">)</span>
+        <span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate_requirement</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">assertion_values</span><span class="p">,</span> <span class="n">eval_type</span><span class="p">,</span> <span class="n">regex</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the incoming requirement and assertion.</span>
+
+<span class="sd">        Filter the incoming assertions against the requirement values. If regex</span>
+<span class="sd">        is specified, the assertion list is filtered by checking if any of the</span>
+<span class="sd">        requirement regexes matches. Otherwise, the list is filtered by string</span>
+<span class="sd">        equality with any of the allowed values.</span>
+
+<span class="sd">        Once the assertion values are filtered, the output is determined by the</span>
+<span class="sd">        evaluation type:</span>
+<span class="sd">            any_one_of: return True if there are any matches, False otherwise</span>
+<span class="sd">            not_any_of: return True if there are no matches, False otherwise</span>
+<span class="sd">            blacklist: return the incoming values minus any matches</span>
+<span class="sd">            whitelist: return only the matched values</span>
+
+<span class="sd">        :param values: list of allowed values, defined in the requirement</span>
+<span class="sd">        :type values: list</span>
+<span class="sd">        :param assertion_values: The values from the assertion to evaluate</span>
+<span class="sd">        :type assertion_values: list/string</span>
+<span class="sd">        :param eval_type: determine how to evaluate requirements</span>
+<span class="sd">        :type eval_type: string</span>
+<span class="sd">        :param regex: perform evaluation with regex</span>
+<span class="sd">        :type regex: boolean</span>
+
+<span class="sd">        :returns: list of filtered assertion values (if evaluation type is</span>
+<span class="sd">                  &#39;blacklist&#39; or &#39;whitelist&#39;), or boolean indicating if the</span>
+<span class="sd">                  assertion values fulfill the requirement (if evaluation type</span>
+<span class="sd">                  is &#39;any_one_of&#39; or &#39;not_any_of&#39;)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">regex</span><span class="p">:</span>
+            <span class="n">matches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_values_by_regex</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">assertion_values</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">matches</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">assertion_values</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">eval_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_EvalType</span><span class="o">.</span><span class="n">ANY_ONE_OF</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">eval_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_EvalType</span><span class="o">.</span><span class="n">NOT_ANY_OF</span><span class="p">:</span>
+            <span class="k">return</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">eval_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_EvalType</span><span class="o">.</span><span class="n">BLACKLIST</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">assertion_values</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">matches</span><span class="p">)))</span>
+        <span class="k">elif</span> <span class="n">eval_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_EvalType</span><span class="o">.</span><span class="n">WHITELIST</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">UnexpectedError</span><span class="p">(</span>
+                <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Unexpected evaluation type &quot;</span><span class="si">%(eval_type)s</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
+                <span class="o">%</span> <span class="p">{</span><span class="s1">&#39;eval_type&#39;</span><span class="p">:</span> <span class="n">eval_type</span><span class="p">}</span>
+            <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="assert_enabled_identity_provider">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.assert_enabled_identity_provider">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">assert_enabled_identity_provider</span><span class="p">(</span><span class="n">federation_api</span><span class="p">,</span> <span class="n">idp_id</span><span class="p">):</span>
+    <span class="n">identity_provider</span> <span class="o">=</span> <span class="n">federation_api</span><span class="o">.</span><span class="n">get_idp</span><span class="p">(</span><span class="n">idp_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">identity_provider</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;enabled&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Identity Provider </span><span class="si">{</span><span class="n">idp_id</span><span class="si">}</span><span class="s1"> is disabled&#39;</span>
+        <span class="n">tr_msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Identity Provider </span><span class="si">%(idp)s</span><span class="s1"> is disabled&#39;</span><span class="p">)</span> <span class="o">%</span> <span class="p">{</span><span class="s1">&#39;idp&#39;</span><span class="p">:</span> <span class="n">idp_id</span><span class="p">}</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">Forbidden</span><span class="p">(</span><span class="n">tr_msg</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="assert_enabled_service_provider_object">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.assert_enabled_service_provider_object">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">assert_enabled_service_provider_object</span><span class="p">(</span><span class="n">service_provider</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">service_provider</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;enabled&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">sp_id</span> <span class="o">=</span> <span class="n">service_provider</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Service Provider </span><span class="si">{</span><span class="n">sp_id</span><span class="si">}</span><span class="s1"> is disabled&#39;</span>
+        <span class="n">tr_msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Service Provider </span><span class="si">%(sp)s</span><span class="s1"> is disabled&#39;</span><span class="p">)</span> <span class="o">%</span> <span class="p">{</span><span class="s1">&#39;sp&#39;</span><span class="p">:</span> <span class="n">sp_id</span><span class="p">}</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">exception</span><span class="o">.</span><span class="n">Forbidden</span><span class="p">(</span><span class="n">tr_msg</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="RuleProcessorToHonorDomainOption">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.RuleProcessorToHonorDomainOption">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RuleProcessorToHonorDomainOption</span><span class="p">(</span><span class="n">RuleProcessor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handles the default domain configured in the attribute mapping.</span>
+
+<span class="sd">    This rule processor is designed to handle the `domain` attribute</span>
+<span class="sd">    configured at the root of the attribute mapping. When this attribute is</span>
+<span class="sd">    configured, we should take it as the default one for the attribute</span>
+<span class="sd">    mapping, instead of the domain of the IdP. Moreover, we should respect</span>
+<span class="sd">    the override to it that can take place at the `groups`, `user`,</span>
+<span class="sd">    and `projects` attributes definition.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mapping_id</span><span class="p">,</span> <span class="n">rules</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">mapping_id</span><span class="p">,</span> <span class="n">rules</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RuleProcessorToHonorDomainOption.extract_projects">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.RuleProcessorToHonorDomainOption.extract_projects">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">extract_projects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity_value</span><span class="p">):</span>
+        <span class="n">projects</span> <span class="o">=</span> <span class="n">identity_value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;projects&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">default_mapping_domain</span> <span class="o">=</span> <span class="n">identity_value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;domain&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">project</span> <span class="ow">in</span> <span class="n">projects</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">project</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;domain&quot;</span><span class="p">):</span>
+                <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s2">&quot;Configuring the domain [</span><span class="si">%s</span><span class="s2">] for project [</span><span class="si">%s</span><span class="s2">].&quot;</span><span class="p">,</span>
+                    <span class="n">default_mapping_domain</span><span class="p">,</span>
+                    <span class="n">project</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">project</span><span class="p">[</span><span class="s2">&quot;domain&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">default_mapping_domain</span>
+        <span class="k">return</span> <span class="n">projects</span></div>
+
+
+<div class="viewcode-block" id="RuleProcessorToHonorDomainOption.normalize_user">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.RuleProcessorToHonorDomainOption.normalize_user">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">normalize_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">default_mapping_domain</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">normalize_user</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">default_mapping_domain</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;domain&quot;</span><span class="p">):</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;Configuring the domain [</span><span class="si">%s</span><span class="s2">] for user [</span><span class="si">%s</span><span class="s2">].&quot;</span><span class="p">,</span>
+                <span class="n">default_mapping_domain</span><span class="p">,</span>
+                <span class="n">user</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">user</span><span class="p">[</span><span class="s2">&quot;domain&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">default_mapping_domain</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;The user [</span><span class="si">%s</span><span class="s2">] was configured with a domain. &quot;</span>
+                <span class="s2">&quot;Therefore, we do not need to define.&quot;</span><span class="p">,</span>
+                <span class="n">user</span><span class="p">,</span>
+            <span class="p">)</span></div>
+</div>
+
+
+
+<span class="n">IDP_ATTRIBUTE_MAPPING_SCHEMAS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;1.0&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="n">IDP_ATTRIBUTE_MAPPING_SCHEMA_1_0</span><span class="p">,</span>
+        <span class="s2">&quot;processor&quot;</span><span class="p">:</span> <span class="n">RuleProcessor</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;2.0&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="n">IDP_ATTRIBUTE_MAPPING_SCHEMA_2_0</span><span class="p">,</span>
+        <span class="s2">&quot;processor&quot;</span><span class="p">:</span> <span class="n">RuleProcessorToHonorDomainOption</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="create_attribute_mapping_rules_processor">
+<a class="viewcode-back" href="../../../api/keystone.federation.utils.html#keystone.federation.utils.create_attribute_mapping_rules_processor">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_attribute_mapping_rules_processor</span><span class="p">(</span><span class="n">mapping</span><span class="p">):</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s1">&#39;schema_version&#39;</span><span class="p">,</span> <span class="n">get_default_attribute_mapping_schema_version</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">IDP_ATTRIBUTE_MAPPING_SCHEMAS</span><span class="p">[</span><span class="n">version</span><span class="p">][</span><span class="s1">&#39;processor&#39;</span><span class="p">](</span>
+        <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;rules&#39;</span><span class="p">]</span>
+    <span class="p">)</span></div>
+
+</pre></div>
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2025-12-08 16:08:08</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../../../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributor/index.html">Contributor Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../../../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../../../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "_modules/keystone/federation/utils" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "keystone.federation.utils in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2025-12-08 16:08:08";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "_modules/keystone/federation/utils";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

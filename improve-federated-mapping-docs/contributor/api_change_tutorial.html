@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Making an API Change &#8212; keystone 28.1.0.dev22 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fe63c2af" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=5c69cfe2" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/support-matrix.css" />
+    <script src="../_static/documentation_options.js?v=1362d459"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Authentication Plugins" href="auth-plugins.html" />
+    <link rel="prev" title="Developing doctor checks" href="doctor-checks.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Search CSS -->
+<link href="../_static/css/search.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+
+<!-- SOURCE_FILE: https://opendev.org/openstack/keystone/src/doc/source/contributor/api_change_tutorial.rst -->
+
+<script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://search.openstack.org/widget/embed.min.js?t="+Date.now();
+            tag.parentNode.insertBefore(script, tag);
+        };
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+</script>
+
+<nav class="navbar navbar-default navbar-expand-md" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/">
+        <img src="../_static/images/logo-full.svg" width="135px" height="35px"/>
+        </a>
+      </div>
+      <button class="navbar-toggler" data-bs-target="#navbar-main-1" aria-controls="navbar-main-1" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div>
+      <div class="collapse navbar-collapse" id="navbar-main-1">
+<div class="search-container tiny">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</div>
+      <ul class="nav navbar-nav navbar-main ms-auto mb-2 mb-lg-0 justify-content-end show" role="navigation">
+<li class="search-container-mobile">
+    <div class="openstack-search-bar" data-baseUrl="search.openstack.org" data-context="docs-openstack"></div>
+</li>
+        <li class="nav-item dropdown"> <!--Software -->
+          <a href="https://www.openstack.org/software/" class="nav-link dropdown-toggle" aria-expanded="false">Software</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/">Overview</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/openstack-components">OpenStack Components</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/sdks">SDKs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/project-navigator/deployment-tools">Deployment Tools</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/assets/software/projectmap/openstack-map.pdf" target="_blank">OpenStack Map</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+          </ul>
+        </li>
+        <li class="nav-item drop-down"> <!-- Use Cases -->
+          <a href="https://www.openstack.org/use-cases/" class="nav-link dropdown-toggle" role="button">Use Cases</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/">Users in Production</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/bare-metal/">Ironic Bare Metal</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/edge-computing/">Edge Computing</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/telecoms-and-nfv/">Telecom &amp; NFV</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/science/">Science and HPC</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/containers/">Containers</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/use-cases/enterprise/">Enterprise</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"> <!-- Events -->
+          <a href="https://openinfra.dev/summit" class="nav-link dropdown-toggle" role="button" id="dropdownMenuEvents">Events</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://openinfra.dev/summit">OpenInfra Summit</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/ptg/">Project Teams Gathering</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/opendev-2020/">OpenDev</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/community-events/">Community Events</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/events/openstackdays">OpenStack &amp; OpenInfra Days</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Community -->
+          <a href="https://www.openstack.org/community/" class="nav-link dropdown-toggle" role="button">Community</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/tech-committee">OpenStack Technical Committee</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li><a class="dropdown-item" href="http://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/coa/">Get Certified (COA)</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketing/">Marketing Resources</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/news/">Community News</a></li>
+            <li><a class="dropdown-item" href="http://superuser.openstack.org">Superuser Magazine</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/community/supporting-organizations/">OpenInfra Foundation Supporting Organizations</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">OpenInfra Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown"><!-- Marketplace -->
+          <a href="https://www.openstack.org/marketplace/" class="nav-link dropdown-toggle" role="button">Marketplace</a>
+          <ul class="dropdown-menu dropdown-hover">
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/distros/">Distros &amp; Appliances</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/public-clouds/">Public Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/hosted-private-clouds/">Hosted Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/remotely-managed-private-clouds/">Remotely Managed Private Clouds</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/consulting/">Consulting &amp; Integrators</a></li>
+            <li><a class="dropdown-item" href="https://www.openstack.org/marketplace/drivers/">Drivers</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><!-- Blog -->
+          <a class="nav-link" href="https://www.openstack.org/blog/">Blog</a>
+        </li>
+        <li class="nav-item"><!-- Docs -->
+          <a class="nav-link" href="http://docs.openstack.org/">Docs</a>
+        </li>
+        <li class="nav-item dropdown join-nav-section"> <!-- Join -->
+          <a href="https://openinfra.dev/join/" class="nav-link dropdown-toggle" role="button">Join</a>
+          <ul class="dropdown-menu" style="display: none;">
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sign up for Foundation Membership</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev/join/">Sponsor the Foundation</a></li>
+            <li><a class="dropdown-item" href="https://openinfra.dev">More about the Foundation</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"> <!-- Login -->
+          <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4 order-4">
+<div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Making an API Change</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="doctor-checks.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Developing doctor checks"></i></a>
+    
+    
+    <a href="auth-plugins.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Authentication Plugins"></i></a>
+    
+    <a id="pdfLink1" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-body" role="main">
+
+  <section id="making-an-api-change">
+<h1>Making an API Change<a class="headerlink" href="#making-an-api-change" title="Link to this heading">¶</a></h1>
+<p>This document will guide you through the process of proposing and submitting
+an API change to keystone.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h2>
+<p>In order to follow this tutorial, it is assumed that you have read our
+<a class="reference internal" href="index.html"><span class="doc">Contributor Documentation</span></a> and
+<a class="reference internal" href="../getting-started/architecture.html"><span class="doc">Keystone Architecture</span></a> documents.</p>
+</section>
+<section id="proposing-a-change">
+<h2>Proposing a change<a class="headerlink" href="#proposing-a-change" title="Link to this heading">¶</a></h2>
+<p>You need to create a RFE bug report, submit a specification against the <a class="reference external" href="https://opendev.org/openstack/keystone-specs/">keystone-specs</a>
+repository and bring it up to discussion with the <a class="reference external" href="https://review.opendev.org/#/admin/groups/9,members">keystone core team</a> for
+agreement. Please refer to the <a class="reference internal" href="proposing-features.html#proposing-features"><span class="std std-ref">guide for proposing features</span></a> to learn more about the process.</p>
+<section id="create">
+<h3>Create<a class="headerlink" href="#create" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://bugs.launchpad.net/keystone/+filebug">Create a RFE bug report</a> in launchpad;</p></li>
+<li><p>git clone <a class="reference external" href="https://opendev.org/openstack/keystone-specs">https://opendev.org/openstack/keystone-specs</a>;</p></li>
+<li><p>cp <cite>specs/template.rst</cite> <cite>specs/backlog/&lt;feature&gt;.rst</cite>;</p></li>
+<li><p>Write the spec based on the template. Ensure the bug link points to the one
+created in step 1;</p></li>
+<li><p>Also update the documentation at <cite>api/v3/identity-api-v3.rst</cite> to reflect the
+proposed API changes;</p></li>
+<li><p>Push to gerrit for review;</p></li>
+<li><p>Propose agenda items to the <a class="reference external" href="https://wiki.openstack.org/wiki/Meetings/KeystoneMeeting">keystone meeting</a>, and make sure someone
+who understands the subject can attend the meeting to answer questions.</p></li>
+</ol>
+</section>
+<section id="agreement">
+<h3>Agreement<a class="headerlink" href="#agreement" title="Link to this heading">¶</a></h3>
+<p>The <a class="reference external" href="https://review.opendev.org/#/admin/groups/9,members">keystone core team</a> will evaluate the specification and vote on accepting
+it or not. If accepted, the proposal will be targeted to a release; otherwise,
+the specification will be abandoned.</p>
+<p>As soon as there is an agreement on the specification, the change may start
+rolling out.</p>
+</section>
+</section>
+<section id="implementing-a-change">
+<h2>Implementing a change<a class="headerlink" href="#implementing-a-change" title="Link to this heading">¶</a></h2>
+<p>In this section, let’s assume that a specification proposing the addition of a
+<cite>description</cite> field to the roles API was accepted. In the next subsections, you
+will find a detailed explanation on the needed code changes to the keystone
+code to implement such change.</p>
+<section id="architectural-recapitulation">
+<h3>Architectural Recapitulation<a class="headerlink" href="#architectural-recapitulation" title="Link to this heading">¶</a></h3>
+<p>As you saw in the <a class="reference internal" href="../getting-started/architecture.html"><span class="doc">Keystone Architecture</span></a> document, there are
+three logical levels of code at which a request passes: the API routing and
+request handling layer, the resource manager, and the driver.</p>
+<p>For the role backend, the API resource can be found under the <cite>keystone/api</cite>
+directory in the <cite>roles.py</cite> file, and the manager and driver can be found in
+the <cite>keystone/assignment</cite> directory in the <cite>core.py</cite> and <cite>role_backends/sql.py</cite>
+files, respectively (currently only the SQL driver is supported).</p>
+</section>
+<section id="changing-the-sql-model-and-driver">
+<h3>Changing the SQL Model and Driver<a class="headerlink" href="#changing-the-sql-model-and-driver" title="Link to this heading">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The below guidance is out-of-date and refers to the legacy <code class="docutils literal notranslate"><span class="pre">migrate_repo</span></code>
+migration repository, which was removed in 21.0.0 (Yoga). Nowadays, for a
+change like this, you would create an additive or “expand” migration in the
+<code class="docutils literal notranslate"><span class="pre">expand_repo</span></code> repository along with null migrations in the
+<code class="docutils literal notranslate"><span class="pre">contract_repo</span></code> and <code class="docutils literal notranslate"><span class="pre">data_migration_repo</span></code> repositories. For more
+information, refer to <a class="reference internal" href="database-migrations.html"><span class="doc">Database Migrations</span></a>.</p>
+</div>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Update this section to reflect the new migration model.</p>
+</div>
+<p>First, you need to change the role model to include the description attribute.
+Go to <cite>keystone/assignment/role_backends/sql.py</cite> and update it like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">RoleTable</span><span class="p">(</span><span class="n">sql</span><span class="o">.</span><span class="n">ModelBase</span><span class="p">,</span> <span class="n">sql</span><span class="o">.</span><span class="n">ModelDictMixin</span><span class="p">):</span>
+
+    <span class="n">attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;domain_id&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">]</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">sql</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>Now, when keystone runs, the table will be created with the new attribute.
+However, what about existing deployments which already have the role table
+created? You need to migrate their database schema!</p>
+<p>The directory <cite>keystone/common/sql/migrate_repo/versions</cite> owns all the
+migrations since keystone day 1. Create a new file there with the next
+migration number. For example, if the latest migration number there is <cite>101</cite>,
+create yours as <cite>102_add_role_description.py</cite>, which will look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">upgrade</span><span class="p">(</span><span class="n">migrate_engine</span><span class="p">):</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+    <span class="n">meta</span><span class="o">.</span><span class="n">bind</span> <span class="o">=</span> <span class="n">migrate_engine</span>
+
+    <span class="n">role_table</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">Table</span><span class="p">(</span><span class="s1">&#39;role&#39;</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span> <span class="n">autoload</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+                             <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">role_table</span><span class="o">.</span><span class="n">create_column</span><span class="p">(</span><span class="n">description</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Do not forget to add tests for your migration at
+<cite>keystone/tests/unit/test_sql_upgrade.py</cite>, you may take other tests as example
+and learn how to develop yours. In this case, you would need to upgrade to
+<cite>102</cite> check the migration has added the <cite>description</cite> column to the role table.</p>
+<p>Changing the role driver itself in <cite>keystone/assignment/role_backends/sql.py</cite>
+will not be necessary, because the driver handles the role entities as Python
+dictionaries, thus the new attribute will be handled automatically.</p>
+</section>
+<section id="changing-the-manager">
+<h3>Changing the Manager<a class="headerlink" href="#changing-the-manager" title="Link to this heading">¶</a></h3>
+<p>Managers handle the business logic. Keystone provides the basic CRUD for role
+entities, that means that the role manager simply calls the driver with the
+arguments received from the API resource, and then returns the driver’s result
+back to API resource. Additionally, it handles the cache management.</p>
+<p>Thus, there is no manager change needed to make it able to operate role
+entities with the new <cite>description</cite> attribute.</p>
+<p>However, you should add tests for the role CRUD operations with the new
+attribute to <cite>keystone/tests/unit/assignment/test_core.py</cite>.</p>
+<p>When trying to determine whether a change goes in the driver or in the manager,
+the test is whether the code is business logic and/or needs to be executed for
+each driver. Both common and business logics go in the manager, while backend
+specific logic goes in the drivers.</p>
+</section>
+<section id="changing-the-api-interface">
+<h3>Changing the API Interface<a class="headerlink" href="#changing-the-api-interface" title="Link to this heading">¶</a></h3>
+<p>Business logic should not go in the API resource. The API resource should be
+viewed as a binding between the business logic and the HTTP protocol. Thus, it is in
+charge of calling the appropriate manager call and wrapping responses into HTTP
+format.</p>
+<p>API resource use JSON schemas do determine whether a provided role is a
+valid representation or not. Role create and role update schemas are available at
+<cite>keystone/assignment/schema.py</cite>. You will need to update their properties to
+include a <cite>description</cite> attribute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">_role_properties</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">parameter_types</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+    <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="n">parameter_types</span><span class="o">.</span><span class="n">description</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Besides doing the entity validation using such schemas, API resource pass and
+accept all the attributes to and from the manager. Thus, there is no further
+change needed at the API resource level.</p>
+<p>You should add tests for API unit test to <cite>keystone/tests/unit/test_v3_role.py</cite>
+and document about the new parameter in the <a class="reference external" href="https://docs.openstack.org/api-ref/identity/">api-ref</a>.</p>
+<p>Furthermore, as role entities are passed in the request body to keystone calls,
+the role routes do not need to be changed; i.e the routes still are:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">POST</span> <span class="o">/</span><span class="n">v3</span><span class="o">/</span><span class="n">roles</span>
+<span class="n">GET</span> <span class="o">/</span><span class="n">v3</span><span class="o">/</span><span class="n">roles</span><span class="o">/</span><span class="p">{</span><span class="nb">id</span><span class="p">}</span>
+<span class="n">HEAD</span> <span class="o">/</span><span class="n">v3</span><span class="o">/</span><span class="n">roles</span><span class="o">/</span><span class="p">{</span><span class="nb">id</span><span class="p">}</span>
+<span class="n">PATCH</span> <span class="o">/</span><span class="n">v3</span><span class="o">/</span><span class="n">roles</span><span class="o">/</span><span class="p">{</span><span class="nb">id</span><span class="p">}</span>
+<span class="n">DELETE</span> <span class="o">/</span><span class="n">v3</span><span class="o">/</span><span class="n">roles</span><span class="o">/</span><span class="p">{</span><span class="nb">id</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">¶</a></h2>
+<p>At this point, keystone role entities contain a <cite>description</cite> attribute. In
+order to make it happen, you have learned how the keystone architecture is,
+what is the responsibility of each layer, how database migrations occur and the
+way entities are represented into tables.</p>
+<p>The pattern of the change made in this tutorial applies to other keystone
+subsystems as well, such as <cite>resource</cite> and <cite>identity</cite>.</p>
+</section>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="doctor-checks.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Developing doctor checks"></i></a>
+          
+          
+            <a href="auth-plugins.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Authentication Plugins"></i></a>
+          
+          <a id="pdfLink2" href="" target="_blank" title="Download the manuals as PDF"><i class="fa fa-file-pdf-o" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">this page last updated: 2021-12-23 19:09:37</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="https://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 order-1 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="OpenStack Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button type="button" data-bs-toggle="dropdown" class="btn dropdown-toggle docs-sidebar-release-select">OpenStack Documentation</button>
+<ul class="dropdown-menu docs-sidebar-dropdown" role="menu">
+  <li class="dropdown-header">Guides</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+  <li class="dropdown-header">Languages</li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/de/">Deutsch (German)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/fr/">Français (French)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/id/">Bahasa Indonesia (Indonesian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/it/">Italiano (Italian)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/tr_TR/">Türkçe (Türkiye)</a></li>
+  <li><a class="dropdown-item" href="https://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+</ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>keystone 28.1.0.dev22</h4></a>
+      <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Keystone Installation Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_documentation.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indices-tables.html">Indices and tables</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Contributor Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">So You Want to Contribute…</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-can-i-help.html">How Can I Help?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="set-up-keystone.html">Setting up Keystone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http-api.html">Identity API v2.0 and v3 History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="proposing-features.html">Proposing Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release-notes.html">Working with Release Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing-keystone.html">Testing Keystone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doctor-checks.html">Developing <code class="docutils literal notranslate"><span class="pre">doctor</span></code> checks</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Making an API Change</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auth-plugins.html">Authentication Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database-migrations.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="id-manage.html">Identity entity ID management for domain-specific backends</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Learning Architecture Internals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services.html">Keystone for Other Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing-drivers.html">Developing Keystone Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service-catalog.html">Service Catalog Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vision-reflection.html">Technical Vision for Keystone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="programming-exercises.html">Programming Exercises for Interns and New Contributors</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">CLI Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../admin/index.html">Administrator Guides</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/index.html">Keystone Configuration Options</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Making an API Change</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#proposing-a-change">Proposing a change</a><ul>
+<li><a class="reference internal" href="#create">Create</a></li>
+<li><a class="reference internal" href="#agreement">Agreement</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#implementing-a-change">Implementing a change</a><ul>
+<li><a class="reference internal" href="#architectural-recapitulation">Architectural Recapitulation</a></li>
+<li><a class="reference internal" href="#changing-the-sql-model-and-driver">Changing the SQL Model and Driver</a></li>
+<li><a class="reference internal" href="#changing-the-manager">Changing the Manager</a></li>
+<li><a class="reference internal" href="#changing-the-api-interface">Changing the API Interface</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="https://www.openstack.org/software/project-navigator/">Projects</a></li>
+          <li><a href="https://security.openstack.org/">OpenStack Security</a></li>
+          <li><a href="https://openstack.org/blog/">Blog</a></li>
+          <li><a href="https://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://www.meetup.com/pro/openinfradev/">User Groups</a></li>
+          <li><a href="https://openstack.org/community/events/">Events</a></li>
+          <li><a href="https://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="https://openinfra.dev/members/">Companies</a></li>
+          <li><a href="https://docs.openstack.org/contributors">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="https://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="https://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="https://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding &amp; Legal</h3>
+        <ul>
+          <li><a href="https://openinfra.dev/legal">Legal Docs</a></li>
+          <li><a href="https://openstack.org/brand/">Logos &amp; Guidelines</a></li>
+          <li><a href="https://openinfra.dev/legal/trademark-policy">Trademark Policy</a></li>
+          <li><a href="https://openinfra.dev/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement">OpenInfra CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openinfradev" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/open-infrastructure-foundation" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Docs.openstack.org is powered by
+          <a href="https://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="../_static/js/bootstrap.bundle.min.js"></script>
+
+<!-- The rest of the JS -->
+<script src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script src="../_static/js/docs.js"></script>
+
+<!-- Javascript for page -->
+<script>
+  /* Build a description of this page including SHA, source location on git
+   * repo, build time and the project's launchpad bug tag. Set the HREF of the
+   * bug buttons
+   */
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+    /* "giturl" is the URL of the source file on Git and is auto-generated by
+     * openstackdocstheme.
+     *
+     * "pagename" is a standard sphinx parameter containing the name of
+     * the source file, without extension.
+     */
+
+    var sourceFile = "contributor/api_change_tutorial" + ".rst";
+    gitURL = "Source: https://opendev.org/openstack/keystone/src/doc/source" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2de770ab5432eabe1243b699a24d5a4be55b9f99";
+    var repositoryName = "openstack/keystone";
+    var bugProject = "keystone";
+    var bugTitle = "Making an API Change in keystone";
+    var fieldTags = "documentation";
+    var useStoryboard = "";
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 28.1.0.dev22 on 2021-12-23 19:09:37";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, repositoryName, useStoryboard);
+    var currentSourceFile = "contributor/api_change_tutorial";
+    var pdfFileName = "doc-keystone.pdf";
+    pdfLink(currentSourceFile, pdfFileName);
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+          $.ajax({
+            context: this,
+            dataType : "html",
+            url : "https://docs.openstack.org/latest/badge.html",
+            success : function(results) {
+                $('#deprecated-badge-container').html(results);
+            }
+        });
+    });
+</script>
+<div id="deprecated-badge-container"></div>
+
+  </body>
+</html>

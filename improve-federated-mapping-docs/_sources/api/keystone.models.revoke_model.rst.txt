@@ -1,0 +1,7 @@
+keystone.models.revoke\_model module
+====================================
+
+.. automodule:: keystone.models.revoke_model
+   :members:
+   :undoc-members:
+   :show-inheritance:
