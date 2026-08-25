@@ -448,14 +448,41 @@ a hidden ``nonce`` field to it to take advantage of this feature, for example::
 
    <input type="hidden" name="nonce" id="nonce" value="$nonce"/>
 
-.. note::
+WebSSO capability discovery
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Keystone does not yet advertise nonce support through version discovery, so a
-   dashboard talking to a mix of keystone versions cannot tell whether a given
-   server echoes the nonce. Until a follow-up change adds such capability
-   discovery, dashboards should treat the returned nonce as advisory (verify it
-   when present, but degrade gracefully when it is absent) rather than strictly
-   requiring it.
+So that a dashboard can tell whether a given keystone reflects the ``nonce``
+(and therefore whether it is safe to *require* it), keystone publishes a small
+JSON capability document at ``<auth_url>/.well-known/keystone-websso`` --- for
+example ``https://cloud.example.org/identity/.well-known/keystone-websso``. The
+path is relative to where keystone is served, following the same convention as
+OpenID Connect discovery. The document is served unauthenticated and only
+advertises implementation capabilities and endpoint shapes; it never enumerates
+identity providers or protocols and never queries the federation tables, so it
+leaks no deployment topology:
+
+.. code-block:: json
+
+   {
+     "keystone_websso_metadata_version": "1.0",
+     "issuer": "https://cloud.example.org/identity/v3",
+     "websso_protocol_endpoint": "https://cloud.example.org/identity/v3/auth/OS-FEDERATION/websso/{protocol_id}",
+     "websso_idp_endpoint": "https://cloud.example.org/identity/v3/auth/OS-FEDERATION/identity_providers/{idp_id}/protocols/{protocol_id}/websso",
+     "response_mode": "form_post",
+     "response_parameters_supported": ["token", "nonce"],
+     "origin_parameter_supported": true,
+     "origin_parameter": "origin",
+     "nonce_parameter_supported": true,
+     "nonce_parameter": "nonce",
+     "nonce_value_pattern": "^[A-Za-z0-9_-]{1,128}$",
+     "service_documentation": "https://docs.openstack.org/keystone/latest/admin/federation/"
+   }
+
+A dashboard should fetch this document once and, when ``nonce_parameter_supported``
+is ``true``, generate a conforming ``nonce``, send it on the WebSSO request, and
+strictly verify the value returned in the callback. When the document is absent
+(an older keystone returns ``404``) or the flag is not set, the dashboard should
+fall back to the previous behaviour rather than failing the login.
 
 .. code-block:: console
 

@@ -13,8 +13,7 @@
 import http.client
 
 # This file handles all flask-restful resources for /v3/auth
-import re  # noqa: I202
-import string
+import string  # noqa: I202
 import urllib
 
 import flask
@@ -46,12 +45,6 @@ CONF = keystone.conf.CONF
 ENFORCER = rbac_enforcer.RBACEnforcer
 LOG = log.getLogger(__name__)
 PROVIDERS = provider_api.ProviderAPIs
-
-# The WebSSO nonce is opaque, attacker-controllable text that is reflected
-# verbatim into the callback HTML. Restrict it to a conservative character set
-# that cannot break out of an HTML attribute, which is the primary defense
-# against HTML/JavaScript injection through this value.
-_WEBSSO_NONCE_RE = re.compile(r'^[A-Za-z0-9_-]{1,128}$')
 
 
 def _combine_lists_uniquely(a, b):
@@ -129,7 +122,7 @@ def _get_sso_nonce():
     if not nonce:
         return ''
 
-    if not _WEBSSO_NONCE_RE.match(nonce):
+    if not federation_utils.WEBSSO_NONCE_RE.match(nonce):
         msg = 'Invalid nonce query parameter'
         tr_msg = _('Invalid nonce query parameter')
         LOG.error(msg)

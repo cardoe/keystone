@@ -32,6 +32,15 @@ CONF = keystone.conf.CONF
 LOG = log.getLogger(__name__)
 PROVIDERS = provider_api.ProviderAPIs
 
+# The WebSSO nonce is opaque, attacker-controllable text that is reflected
+# verbatim into the callback HTML. Restrict it to a conservative character set
+# that cannot break out of an HTML attribute, which is the primary defense
+# against HTML/JavaScript injection through this value. The pattern is also
+# advertised to dashboards via the WebSSO discovery document, so it is kept
+# here as the single source of truth.
+WEBSSO_NONCE_PATTERN = r'^[A-Za-z0-9_-]{1,128}$'
+WEBSSO_NONCE_RE = re.compile(WEBSSO_NONCE_PATTERN)
+
 
 class UserType:
     """User mapping type."""

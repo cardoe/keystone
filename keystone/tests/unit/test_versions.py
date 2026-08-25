@@ -24,6 +24,7 @@ import webob
 
 from keystone.api import discovery
 from keystone.common import json_home
+from keystone.federation import utils as federation_utils
 from keystone.tests import unit
 
 v3_MEDIA_TYPES = [
@@ -897,6 +898,47 @@ class VersionTestCase(unit.TestCase):
             expected['version'], f'http://localhost:{self.public_port}/v3/'
         )
         self.assertEqual(expected, data)
+
+    def test_websso_metadata(self):
+        # The WebSSO discovery document is served unauthenticated and reflects
+        # where this server is mounted, without enumerating any federation
+        # topology.
+        base = f'http://localhost:{self.public_port}'
+        client = TestClient(self.public_app)
+        resp = client.get('/.well-known/keystone-websso')
+
+        self.assertEqual(http.client.OK, resp.status_int)
+        self.assertEqual('application/json', resp.headers['Content-Type'])
+        self.assertIn('Cache-Control', resp.headers)
+
+        data = jsonutils.loads(resp.body)
+        self.assertEqual(
+            discovery.WEBSSO_METADATA_VERSION,
+            data['keystone_websso_metadata_version'],
+        )
+        self.assertEqual(f'{base}/v3', data['issuer'])
+        self.assertEqual(
+            f'{base}/v3/auth/OS-FEDERATION/websso/{{protocol_id}}',
+            data['websso_protocol_endpoint'],
+        )
+        self.assertEqual(
+            f'{base}/v3/auth/OS-FEDERATION/identity_providers/{{idp_id}}'
+            f'/protocols/{{protocol_id}}/websso',
+            data['websso_idp_endpoint'],
+        )
+        self.assertEqual('form_post', data['response_mode'])
+        self.assertEqual(
+            ['token', 'nonce'], data['response_parameters_supported']
+        )
+        self.assertTrue(data['origin_parameter_supported'])
+        self.assertTrue(data['nonce_parameter_supported'])
+        self.assertEqual('nonce', data['nonce_parameter'])
+        self.assertEqual(
+            federation_utils.WEBSSO_NONCE_PATTERN, data['nonce_value_pattern']
+        )
+        # The document must not leak federation topology.
+        self.assertNotIn('identity_providers_supported', data)
+        self.assertNotIn('protocols_supported', data)
 
     def test_use_site_url_if_endpoint_unset_v3(self):
         self.config_fixture.config(public_endpoint=None)

@@ -18,11 +18,21 @@ from oslo_serialization import jsonutils
 
 from keystone.common import json_home
 import keystone.conf
+from keystone.federation import utils as federation_utils
 from keystone.server import flask as ks_flask
 
 CONF = keystone.conf.CONF
 MEDIA_TYPE_JSON = 'application/vnd.openstack.identity-%s+json'
 _DISCOVERY_BLUEPRINT = flask.Blueprint('Discovery', __name__)
+
+# Schema version of the WebSSO discovery document served at
+# ``/.well-known/keystone-websso``. Bump when the document's shape changes in a
+# way clients need to branch on.
+WEBSSO_METADATA_VERSION = '1.0'
+# How long clients may cache the WebSSO discovery document. Its contents only
+# change across an upgrade or redeploy, so a modest TTL is safe and keeps load
+# off keystone.
+_WEBSSO_METADATA_MAX_AGE = 3600
 
 
 def _get_versions_list(identity_url):
@@ -100,6 +110,54 @@ def get_version_v3():
             response=jsonutils.dumps({'version': versions['v3']}),
             mimetype=MimeTypes.JSON,
         )
+
+
+def _get_websso_metadata():
+    """Build the WebSSO capability discovery document.
+
+    The document advertises the WebSSO capabilities of this keystone so a
+    dashboard can, for example, detect whether the server reflects a CSRF
+    ``nonce`` and enforce it accordingly. It only exposes implementation
+    capabilities and fixed structural facts -- it never enumerates identity
+    providers or protocols and never touches the federation tables -- so it is
+    safe to serve unauthenticated.
+    """
+    return {
+        'keystone_websso_metadata_version': WEBSSO_METADATA_VERSION,
+        # base_url() already includes the /v3 version segment.
+        'issuer': ks_flask.base_url(),
+        'websso_protocol_endpoint': ks_flask.base_url(
+            path='auth/OS-FEDERATION/websso/{protocol_id}'
+        ),
+        'websso_idp_endpoint': ks_flask.base_url(
+            path=(
+                'auth/OS-FEDERATION/identity_providers/{idp_id}'
+                '/protocols/{protocol_id}/websso'
+            )
+        ),
+        'response_mode': 'form_post',
+        'response_parameters_supported': ['token', 'nonce'],
+        'origin_parameter_supported': True,
+        'origin_parameter': 'origin',
+        'nonce_parameter_supported': True,
+        'nonce_parameter': 'nonce',
+        'nonce_value_pattern': federation_utils.WEBSSO_NONCE_PATTERN,
+        'service_documentation': (
+            'https://docs.openstack.org/keystone/latest/admin/federation/'
+        ),
+    }
+
+
+@_DISCOVERY_BLUEPRINT.route('/.well-known/keystone-websso')
+def get_websso_metadata():
+    response = flask.Response(
+        response=jsonutils.dumps(_get_websso_metadata()),
+        mimetype=MimeTypes.JSON,
+    )
+    response.headers['Cache-Control'] = (
+        f'public, max-age={_WEBSSO_METADATA_MAX_AGE}'
+    )
+    return response
 
 
 class DiscoveryAPI:

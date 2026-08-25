@@ -1,0 +1,12 @@
+---
+features:
+  - |
+    Keystone now publishes a WebSSO capability discovery document at
+    ``<auth_url>/.well-known/keystone-websso``. The unauthenticated JSON
+    document advertises the WebSSO endpoints and capabilities of the server ---
+    including whether it reflects the CSRF ``nonce`` --- so a dashboard can
+    detect support and safely enforce the nonce, falling back gracefully (the
+    path returns ``404``) against older servers. The document only exposes
+    implementation capabilities and endpoint shapes; it does not enumerate
+    identity providers or protocols and does not query the federation tables,
+    so it leaks no deployment topology.
