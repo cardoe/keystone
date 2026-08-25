@@ -4980,6 +4980,23 @@ class WebSSOTests(FederatedTokenTests):
         # Python 2 and 'bytes' in Python 3
         self.assertIn(token_id.encode('utf-8'), resp.data)
         self.assertIn(self.TRUSTED_DASHBOARD.encode('utf-8'), resp.data)
+        # With no nonce supplied the callback still renders an (empty) nonce
+        # field, preserving backwards compatibility with dashboards that do
+        # not send one.
+        self.assertIn(b'name="nonce"', resp.data)
+
+    def test_render_callback_template_with_nonce(self):
+        token_id = uuid.uuid4().hex
+        nonce = uuid.uuid4().hex
+        with self.make_request():
+            resp = (
+                auth_api._AuthFederationWebSSOBase._render_template_response(
+                    self.TRUSTED_DASHBOARD, token_id, nonce
+                )
+            )
+        self.assertIn(token_id.encode('utf-8'), resp.data)
+        self.assertIn(self.TRUSTED_DASHBOARD.encode('utf-8'), resp.data)
+        self.assertIn(nonce.encode('utf-8'), resp.data)
 
     def test_federated_sso_auth(self):
         environment = {
@@ -4995,6 +5012,35 @@ class WebSSOTests(FederatedTokenTests):
         # which is why expected value: `self.TRUSTED_DASHBOARD`
         # needs to be encoded
         self.assertIn(self.TRUSTED_DASHBOARD.encode('utf-8'), resp.data)
+
+    def test_federated_sso_auth_with_nonce(self):
+        nonce = uuid.uuid4().hex
+        environment = {
+            self.REMOTE_ID_ATTR: self.REMOTE_IDS[0],
+            'QUERY_STRING': f'origin={self.ORIGIN}&nonce={nonce}',
+        }
+        environment.update(mapping_fixtures.EMPLOYEE_ASSERTION)
+        with self.make_request(environ=environment):
+            resp = auth_api.AuthFederationWebSSOResource._perform_auth(
+                self.PROTOCOL
+            )
+        self.assertIn(self.TRUSTED_DASHBOARD.encode('utf-8'), resp.data)
+        # the supplied nonce is reflected back into the callback response
+        self.assertIn(nonce.encode('utf-8'), resp.data)
+
+    def test_federated_sso_auth_invalid_nonce(self):
+        bad_nonce = urllib.parse.quote_plus('"><script>')
+        environment = {
+            self.REMOTE_ID_ATTR: self.REMOTE_IDS[0],
+            'QUERY_STRING': f'origin={self.ORIGIN}&nonce={bad_nonce}',
+        }
+        environment.update(mapping_fixtures.EMPLOYEE_ASSERTION)
+        with self.make_request(environ=environment):
+            self.assertRaises(
+                exception.ValidationError,
+                auth_api.AuthFederationWebSSOResource._perform_auth,
+                self.PROTOCOL,
+            )
 
     def test_get_sso_origin_host_case_insensitive(self):
         # test lowercase hostname in trusted_dashboard

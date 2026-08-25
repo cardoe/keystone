@@ -428,6 +428,35 @@ use this template as an example to create your own custom HTML redirect page.
 Restart the keystone WSGI service or the Apache frontend service after making
 changes to your keystone configuration.
 
+WebSSO nonce (CSRF protection)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In addition to the ``origin`` parameter, a dashboard may pass an optional
+``nonce`` query parameter when it starts a WebSSO flow. Keystone reflects the
+value back into the callback response (the ``nonce`` field of the auto-submitted
+form), allowing the dashboard to correlate the returned token with the request
+it initiated and thereby guard against cross-site request forgery (CSRF). A
+dashboard should generate an unpredictable nonce, store it in the user's
+session, and verify that the value returned in the callback matches before
+accepting the token. The nonce must consist only of the characters ``A-Z``,
+``a-z``, ``0-9``, ``-`` and ``_`` and be at most 128 characters long; keystone
+rejects any other value.
+
+The parameter is optional and fully backwards compatible: a request without a
+``nonce`` behaves exactly as before. If you use a custom callback template, add
+a hidden ``nonce`` field to it to take advantage of this feature, for example::
+
+   <input type="hidden" name="nonce" id="nonce" value="$nonce"/>
+
+.. note::
+
+   Keystone does not yet advertise nonce support through version discovery, so a
+   dashboard talking to a mix of keystone versions cannot tell whether a given
+   server echoes the nonce. Until a follow-up change adds such capability
+   discovery, dashboards should treat the returned nonce as advisory (verify it
+   when present, but degrade gracefully when it is absent) rather than strictly
+   requiring it.
+
 .. code-block:: console
 
    # systemctl restart apache2

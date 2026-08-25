@@ -13,7 +13,8 @@
 import http.client
 
 # This file handles all flask-restful resources for /v3/auth
-import string  # noqa: I202
+import re  # noqa: I202
+import string
 import urllib
 
 import flask
@@ -45,6 +46,12 @@ CONF = keystone.conf.CONF
 ENFORCER = rbac_enforcer.RBACEnforcer
 LOG = log.getLogger(__name__)
 PROVIDERS = provider_api.ProviderAPIs
+
+# The WebSSO nonce is opaque, attacker-controllable text that is reflected
+# verbatim into the callback HTML. Restrict it to a conservative character set
+# that cannot break out of an HTML attribute, which is the primary defense
+# against HTML/JavaScript injection through this value.
+_WEBSSO_NONCE_RE = re.compile(r'^[A-Za-z0-9_-]{1,128}$')
 
 
 def _combine_lists_uniquely(a, b):
@@ -103,12 +110,40 @@ def _get_sso_origin_host():
     return host
 
 
+def _get_sso_nonce():
+    """Validate and return the optional Single Sign-On nonce.
+
+    A trusted dashboard may supply an opaque ``nonce`` query parameter that
+    keystone reflects back into the callback response, allowing the dashboard
+    to correlate the response with the request it initiated and thereby guard
+    against cross-site request forgery. The parameter is optional; when it is
+    absent keystone behaves exactly as it did before nonce support was added.
+
+    :raises keystone.exception.ValidationError: ``nonce`` was supplied but its
+        value does not match the permitted character set.
+    :returns: the validated nonce, or an empty string when none was supplied
+
+    """
+    nonce = flask.request.args.get('nonce')
+
+    if not nonce:
+        return ''
+
+    if not _WEBSSO_NONCE_RE.match(nonce):
+        msg = 'Invalid nonce query parameter'
+        tr_msg = _('Invalid nonce query parameter')
+        LOG.error(msg)
+        raise exception.ValidationError(tr_msg)
+
+    return nonce
+
+
 class _AuthFederationWebSSOBase(ks_flask.ResourceBase):
     @staticmethod
-    def _render_template_response(host, token_id):
+    def _render_template_response(host, token_id, nonce=''):
         with open(CONF.federation.sso_callback_template) as template:
             src = string.Template(template.read())
-        subs = {'host': host, 'token': token_id}
+        subs = {'host': host, 'token': token_id, 'nonce': nonce}
         body = src.substitute(subs)
         resp = flask.make_response(body, http.client.OK)
         resp.charset = 'utf-8'
@@ -372,12 +407,13 @@ class AuthFederationWebSSOResource(_AuthFederationWebSSOBase):
             raise exception.Unauthorized(tr_msg)
 
         host = _get_sso_origin_host()
+        nonce = _get_sso_nonce()
         ref = PROVIDERS.federation_api.get_idp_from_remote_id(remote_id)
         identity_provider = ref['idp_id']
         token = authentication.federated_authenticate_for_token(
             identity_provider=identity_provider, protocol_id=protocol_id
         )
-        return cls._render_template_response(host, token.id)
+        return cls._render_template_response(host, token.id, nonce)
 
     @ks_flask.unenforced_api
     def get(self, protocol_id):
@@ -392,11 +428,12 @@ class AuthFederationWebSSOIDPsResource(_AuthFederationWebSSOBase):
     @classmethod
     def _perform_auth(cls, idp_id, protocol_id):
         host = _get_sso_origin_host()
+        nonce = _get_sso_nonce()
 
         token = authentication.federated_authenticate_for_token(
             identity_provider=idp_id, protocol_id=protocol_id
         )
-        return cls._render_template_response(host, token.id)
+        return cls._render_template_response(host, token.id, nonce)
 
     @ks_flask.unenforced_api
     def get(self, idp_id, protocol_id):

@@ -1,0 +1,21 @@
+---
+features:
+  - |
+    The WebSSO federated authentication flow now accepts an optional ``nonce``
+    query parameter. When a trusted dashboard supplies one, keystone reflects
+    the value back into the callback response so the dashboard can correlate the
+    returned token with the request it initiated and guard against cross-site
+    request forgery (CSRF). The nonce is restricted to the characters ``A-Z``,
+    ``a-z``, ``0-9``, ``-`` and ``_`` (up to 128 characters); any other value is
+    rejected. The parameter is optional and fully backwards compatible: requests
+    that omit it behave exactly as before, and existing custom
+    ``sso_callback_template`` files continue to work (add a hidden ``nonce``
+    field to a custom template to make use of the feature).
+security:
+  - |
+    WebSSO now supports an optional ``nonce`` that a dashboard can round-trip
+    through keystone to protect the SSO callback against CSRF. Note that keystone
+    does not yet advertise nonce support through version discovery, so during a
+    mixed-version upgrade a dashboard cannot safely require the nonce and must
+    degrade gracefully when a server does not echo it. Advertising nonce support
+    so dashboards can hard-enforce is planned as a follow-up change.
